@@ -1,0 +1,16 @@
+.el-button{
+    border-radius: 20px;
+}
+.el-button--mini{
+    border-radius: 14px;
+}
+.line-input .el-input__inner{
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    
+}
+/* .line-input .el-input__inner{
+    
+} */

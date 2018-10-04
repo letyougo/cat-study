@@ -26,7 +26,7 @@ $--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /
 $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
 
 $--color-success: #67c23a !default;
-$--color-warning: #e6a23c !default;
+$--color-warning: #faa032 !default;
 $--color-danger: #f56c6c !default;
 $--color-info: #909399 !default;
 
@@ -411,6 +411,7 @@ $--button-small-padding-horizontal: 15px !default;
 
 $--button-mini-font-size: 12px !default;
 $--button-mini-border-radius: #{$--border-radius-base - 1} !default;
+
 $--button-mini-padding-vertical: 7px !default;
 $--button-mini-padding-horizontal: 15px !default;
 

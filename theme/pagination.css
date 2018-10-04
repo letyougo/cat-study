@@ -1803,15 +1803,15 @@
       background-color: #67c23a;
       color: #fff; }
   .el-tag--warning {
-    background-color: rgba(230, 162, 60, 0.1);
-    border-color: rgba(230, 162, 60, 0.2);
-    color: #e6a23c; }
+    background-color: rgba(250, 160, 50, 0.1);
+    border-color: rgba(250, 160, 50, 0.2);
+    color: #faa032; }
     .el-tag--warning.is-hit {
-      border-color: #e6a23c; }
+      border-color: #faa032; }
     .el-tag--warning .el-tag__close {
-      color: #e6a23c; }
+      color: #faa032; }
     .el-tag--warning .el-tag__close:hover {
-      background-color: #e6a23c;
+      background-color: #faa032;
       color: #fff; }
   .el-tag--danger {
     background-color: rgba(245, 108, 108, 0.1);

@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <el-button type="primary">你好</el-button>
+    <el-button type="primary" size="mini">你好</el-button>
+    <el-button type="warning">只能导诊</el-button>
     <el-input  placeholder=""></el-input>
   </div>
 </template>

@@ -499,42 +499,42 @@
         border-color: #e1f3d8; }
   .el-button--warning {
     color: #fff;
-    background-color: #e6a23c;
-    border-color: #e6a23c; }
+    background-color: #faa032;
+    border-color: #faa032; }
     .el-button--warning:hover, .el-button--warning:focus {
-      background: #ebb563;
-      border-color: #ebb563;
+      background: #fbb35b;
+      border-color: #fbb35b;
       color: #fff; }
     .el-button--warning:active {
-      background: #cf9236;
-      border-color: #cf9236;
+      background: #e1902d;
+      border-color: #e1902d;
       color: #fff;
       outline: none; }
     .el-button--warning.is-active {
-      background: #cf9236;
-      border-color: #cf9236;
+      background: #e1902d;
+      border-color: #e1902d;
       color: #fff; }
     .el-button--warning.is-disabled, .el-button--warning.is-disabled:hover, .el-button--warning.is-disabled:focus, .el-button--warning.is-disabled:active {
       color: #fff;
-      background-color: #f3d19e;
-      border-color: #f3d19e; }
+      background-color: #fdd099;
+      border-color: #fdd099; }
     .el-button--warning.is-plain {
-      color: #e6a23c;
-      background: #fdf6ec;
-      border-color: #f5dab1; }
+      color: #faa032;
+      background: #fff6eb;
+      border-color: #fdd9ad; }
       .el-button--warning.is-plain:hover, .el-button--warning.is-plain:focus {
-        background: #e6a23c;
-        border-color: #e6a23c;
+        background: #faa032;
+        border-color: #faa032;
         color: #fff; }
       .el-button--warning.is-plain:active {
-        background: #cf9236;
-        border-color: #cf9236;
+        background: #e1902d;
+        border-color: #e1902d;
         color: #fff;
         outline: none; }
       .el-button--warning.is-plain.is-disabled, .el-button--warning.is-plain.is-disabled:hover, .el-button--warning.is-plain.is-disabled:focus, .el-button--warning.is-plain.is-disabled:active {
-        color: #f0c78a;
-        background-color: #fdf6ec;
-        border-color: #faecd8; }
+        color: #fcc684;
+        background-color: #fff6eb;
+        border-color: #feecd6; }
   .el-button--danger {
     color: #fff;
     background-color: #f56c6c;
