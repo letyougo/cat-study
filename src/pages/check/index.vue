@@ -24,7 +24,11 @@
         </div>
         <div class="check-data">
             <el-table :data="list">
-              <el-table-column label="姓名" prop="name"></el-table-column>
+              <el-table-column label="姓名" prop="name">
+                  <template scope="scope">
+                      <router-link to="/treat">接诊</router-link>
+                  </template>
+              </el-table-column>
               <el-table-column label="年龄" prop="age"></el-table-column>
               <el-table-column label="性别" prop="sex"></el-table-column>
             </el-table>

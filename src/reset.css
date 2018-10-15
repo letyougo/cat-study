@@ -7,3 +7,32 @@
 html,body{
     background: #f2f2f2;
 }
+a{
+    color:#07b8a8;
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+#app{
+    
+}
+.main-item{
+    display: flex;
+    width: 100%;   
+}
+.main-item div{
+    width: 224px;
+    height: 44px;
+    line-height: 44px;
+}
+.el-input__prefix{
+    line-height: 42px;
+}
+.open-med-title{
+    display: flex;
+    width: 911px;
+    justify-content: space-between;
+    align-items: center;
+      
+}
