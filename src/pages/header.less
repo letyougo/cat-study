@@ -1,0 +1,61 @@
+@import url('../global.less');
+.header{
+    overflow: auto;
+    min-width: 1540px;
+    
+}
+.header-title{
+    display: flex;
+    color: #666666;
+    >div{
+        margin-left: 30px;
+    }
+    line-height: 50px;
+    margin-bottom: -19px;
+}
+.header-content{
+    display: flex;
+    overflow: auto;
+    margin-top: 19px;
+    >div{
+        min-height: 600px;
+    }
+    .left{
+        margin-right: 13px;
+        width: 261px;
+        background: #ffffff;
+        >div{
+            border-bottom: 1px solid @borderColor;
+            line-height: 56px;
+            text-indent: 38px;
+            cursor: pointer;
+
+            &.active{
+                color:@primaryColor;
+            }
+
+            &:hover{
+                color: @primaryColor;
+            }
+            span{
+                margin-right: 11px;
+            }
+
+            li{
+                cursor: pointer;
+                &:hover{
+                    color:@primaryColor;
+                }
+                
+            }
+            
+        }
+    }
+    .right{         
+    //    min-width: 1266px;
+        flex: 1;
+        background: #ffffff;
+        padding: 38px 44px 38px 38px;
+        position: relative;
+    }
+}

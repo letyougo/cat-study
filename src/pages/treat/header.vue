@@ -1,6 +1,6 @@
 <template>
-    <div class="treat">
-        <div class="treat-title">
+    <div class="header">
+        <div class="header-title">
             <div>
                 病例号：132456
             </div>
@@ -20,12 +20,12 @@
                 医生：张志刚
             </div>
         </div>
-        <div class="treat-content">
+        <div class="header-content">
             <div class="left">
-                <div>
-                    问诊
+                <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
+                    <span>O</span>问诊
                 </div>
-                <div>
+                <!-- <div>
                     <p>诊室检查</p>
                     <ul>
                         <li>
@@ -40,21 +40,21 @@
                         <li>查体</li>
 
                     </ul>
+                </div> -->
+                <div @click="$router.push('/')">
+                    <span>O</span>检查结果</div>
+                <div @click="$router.push('/treat/yizhu')" :class="{active:$route.path === '/treat/yizhu' ? true : false}">
+                   <span>O</span> 治疗与医嘱
                 </div>
-                <div>检查结果</div>
-                <div>
-                    <router-link to='/treat/yizhu'>治疗与医嘱</router-link>
+                <div @click="$router.push('/treat/mianyi')" :class="{active:$route.path === '/treat/mianyi' ? true : false}">
+                    <span>O</span>免疫与健康
                 </div>
-                <div>免疫与健康</div>
             </div>
 
             <div class="right">
                 <router-view></router-view>
             </div>
         </div>
-
-        
-        
     </div>
 </template>
 <script>
@@ -86,45 +86,14 @@ export default {
     },
     mounted(){
         // document.querySelector('#app >.tab').style.minWidth="1631px"
+    },
+    watch:{
+        $route(){
+            console.log(this.$route, 'router')
+        }
     }
 }
 </script>
 <style scoped lang="less">
-@import url('../../global.less');
-    .treat{
-        overflow: auto;
-        min-width: 1540px;
-    }
-    .treat-title{
-        display: flex;
-        color: #666666;
-        >div{
-            margin-left: 30px;
-        }
-    }
-    .treat-content{
-        display: flex;
-        overflow: auto;
-      
-        margin-top: 18px;
-        >div{
-            min-height: 600px;
-          
-        }
-        .left{
-            margin-right: 13px;
-            width: 261px;
-            background: #ffffff;
-            flex:1;
-            >div{
-                border-bottom: 1px solid @borderColor;
-                line-height: 56px;
-                text-indent: 36px;
-            }
-        }
-        .right{         
-           width: 1266px;
-        }
-    
-    }
+@import url('../header.less');
 </style>

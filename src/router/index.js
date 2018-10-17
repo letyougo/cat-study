@@ -9,10 +9,17 @@ import Checktobe from '@/pages/check/tobe.vue'
 
 import Check from '@/pages/check'
 import Doctor from '@/pages/doctor'
-import Admin from '@/pages/admin'
+
+import AdminHeader from '@/pages/admin/header'
+import AdminIndex from '@/pages/admin/index'
+
 import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
 import TreatYizhu from '@/pages/treat/yizhu/index'
+import TreatMianyi from '@/pages/treat/mianyi/index'
+
+
+import Login from '@/pages/login/index'
 Vue.use(Router)
 
 export default new Router({
@@ -41,7 +48,13 @@ export default new Router({
     {
       path: '/admin',
       name: '运营后台',
-      component: Admin
+      component: AdminHeader,
+      children:[
+        {
+          path: '/',
+          component: AdminIndex
+        }
+      ]
     },
     {
       path: '/treat',
@@ -59,8 +72,17 @@ export default new Router({
         {
           path: 'yizhu',
           component: TreatYizhu
+        },
+        {
+          path: 'mianyi',
+          component: TreatMianyi
         }
       ]
+    },
+    {
+      path:'/account',
+      name:'登陆',
+      component:Login
     }
   ]
 })

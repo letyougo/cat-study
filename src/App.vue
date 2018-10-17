@@ -139,6 +139,6 @@ export default {
   }
 
   .content{
-    padding: 20px 30px;
+    padding: 0 30px;
   } 
 </style>

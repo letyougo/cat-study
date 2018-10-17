@@ -1,0 +1,85 @@
+<template>
+    <div class="login">
+
+        <div class="login-pannel">
+					<div class="login-title">
+						Welcome
+					</div>
+					<div class="login-tip">
+						欢迎登录猫研所
+					</div>
+					<div class="login-form">
+						<el-form >
+							<el-form-item label="">
+								<el-input  placeholder="用户名" type="text"></el-input>
+							</el-form-item>
+							<el-form-item label="">
+								<el-input  placeholder="密码" type="password"></el-input>
+							</el-form-item>
+							<el-form-item label="">
+								<el-button type="primary" style="width:100%">登陆</el-button>
+							</el-form-item>
+							<el-form-item label="">
+								<router-link to="/account/forget" style="float:right">忘记密码</router-link>
+							</el-form-item>
+						</el-form>
+					</div>
+				
+				</div>
+    </div>
+</template>
+<script>
+export default {
+  name: "doctor",
+  props: {},
+  components: {},
+  data() {
+    return {};
+  },
+  computed: {},
+  methods: {},
+  created() {},
+  mounted() {}
+};
+</script>
+<style scoped lang="less">
+@import url("../../global.less");
+.login {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #ffffff;
+
+  .login-pannel {
+    position: absolute;
+    right: 20px;
+		top: 20px;
+		width: 494px;
+    background: #ffffff;
+    
+    border-radius: 4px;
+
+    .login-title {
+      line-height: 46px;
+      font-size: 46px;
+      color: @primaryColor;
+      text-align: center;
+		}
+		.login-tip{
+			margin-bottom: 48px;
+			margin-top: 34px;
+			color: #666666;
+			font-size: 24px;
+			text-align: center;
+		}
+		
+		.login-form{
+			box-shadow: 0 0 1px @primaryColor;
+
+    	padding: 39px 77px;
+		}
+  }
+}
+</style>

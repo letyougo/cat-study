@@ -334,7 +334,7 @@ export default {
 
 
  .middle{         
-    flex: 1;
+    
     padding-left: 50px;
     padding-right: 50px;
     background: #ffffff;

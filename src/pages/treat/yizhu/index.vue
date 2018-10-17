@@ -236,8 +236,7 @@ export default {
 .yizhu{
     background: #ffffff;
     min-height: 600px;
-    padding-left: 50px;
-    padding-right: 50px;
+    
     .top{
         display: flex;
         justify-content: space-between;

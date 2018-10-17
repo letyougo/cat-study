@@ -155,6 +155,7 @@ export default {
 .result-item{
     padding: 15px @left;
     border-bottom: 1px solid @borderColor;
+    
 }
 
 </style>

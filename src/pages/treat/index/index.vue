@@ -1,10 +1,9 @@
 <template>
     <div class="treat-index">
-        <div style="width:970px">
+        <div >
             <middle></middle>
         </div>
         <div style="width:280px;margin-left:15px;">
-
             <right></right>
         </div>
         
@@ -50,7 +49,6 @@ export default {
 <style scoped lang="less">
     .treat-index{
         display: flex;
-        min-width: 1260px;
         overflow: auto;
     }
 </style>
