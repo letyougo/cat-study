@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header-title">
+          <div class="header-title">
             <div>
                 病例号：132456
             </div>
@@ -23,33 +23,25 @@
         <div class="header-content">
             <div class="left">
                 <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
-                    <span>X</span><span class="title2">问诊</span>
+                    <span>X</span><span class="title2">知识库查询</span>
                 </div>
-                <div class="title2">检查结果</div>
+                <!-- <div class="title2">检查结果</div> -->
                 <div>
                     <ul>
                         <li>
-                            <span>O</span>基本情况
+                            <span>O</span>查询
                         </li>
                         <li>
-                            <span>O</span>主述症状
+                            <span>O</span>模拟病例学习
                         </li>
-                        <li><span>O</span>生活史</li>
-                        <li><span>O</span>行为异常</li>
-                        <li><span>O</span>既往史</li>
-                        <li><span>O</span>查体</li>
-
+                        <li><span>O</span>个人历史病例</li>
                     </ul>
                 </div>
-                <div @click="$router.push('/')" class="title2">
-                    诊疗
+                <div>
+                    <span>O</span>知识库查询
                 </div>
-                <div @click="$router.push('/treat/yizhu')" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
-                   治疗与医嘱
-                </div>
-                <div @click="$router.push('/treat/mianyi')" :class="{active:$route.path === '/treat/mianyi' ? true : false}" class="title2">
-                    免疫与健康
-                </div>
+                <div class="title2">文献查询</div>
+              
             </div>
 
             <div class="right">
@@ -90,7 +82,7 @@ export default {
     },
     watch:{
         $route(){
-            console.log(this.$route, 'router')
+            console.log(this.$router, 'router')
         }
     }
 }

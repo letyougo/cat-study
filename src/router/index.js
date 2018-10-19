@@ -8,7 +8,8 @@ import Checktobe from '@/pages/check/tobe.vue'
 
 
 import Check from '@/pages/check'
-import Doctor from '@/pages/doctor'
+import DoctorHeader from '@/pages/doctor/header'
+import DoctorIndex from '@/pages/doctor/index'
 
 import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
@@ -43,7 +44,13 @@ export default new Router({
     {
       path: '/doctor',
       name: '医生知识库',
-      component: Doctor
+      component: DoctorHeader,
+      children:[
+        {
+          path: '/',
+          component: DoctorIndex
+        },
+      ]
     },
     {
       path: '/admin',

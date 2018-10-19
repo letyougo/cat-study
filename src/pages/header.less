@@ -24,6 +24,10 @@
         margin-right: 13px;
         width: 261px;
         background: #ffffff;
+        .title2{
+            color: #4D4D4D;
+            font-weight: bold;
+        }
         >div{
             border-bottom: 1px solid @borderColor;
             line-height: 56px;
@@ -34,18 +38,23 @@
                 color:@primaryColor;
             }
 
-            &:hover{
-                color: @primaryColor;
-            }
-            span{
+            // &:hover{
+            //     color: @primaryColor;
+            // }
+            span:first-child{
                 margin-right: 11px;
             }
 
             li{
                 cursor: pointer;
-                &:hover{
-                    color:@primaryColor;
+                // &:hover{
+                //     color:@primaryColor;
+                // }
+                border-top: 1px solid @borderColor;
+                &:first-child{
+                    border-top: none;
                 }
+                color: #808080;
                 
             }
             
