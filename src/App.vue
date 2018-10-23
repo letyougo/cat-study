@@ -21,7 +21,7 @@
           <div class="name">x</div>
         </div>
 
-        <div class="action">
+        <div class="action" @click="$router.push('/account')">
           退出
         </div>
       </div>

@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import header from './header'
+import header from '../header'
 export default {
     name:'doctor',
     props:{
@@ -52,7 +52,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-@import url("../../global.less");
+@import url("../../../global.less");
 .doctor{
     display: flex;
     justify-content: center;
@@ -63,7 +63,7 @@ export default {
     padding: 73px 55px 144px 73px;
     width: 661px;
     height: 401px;
-    box-shadow: 0 0 4px @primaryColor;
+    box-shadow: 0 0 30px @primaryColor;
     background: #ffffff;
     
     .doctor-modal-top{

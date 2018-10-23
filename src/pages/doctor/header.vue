@@ -22,25 +22,32 @@
         </div>
         <div class="header-content">
             <div class="left">
-                <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
-                    <span>X</span><span class="title2">知识库查询</span>
+                <div @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor' ? true : false}">
+                    
+                    知识库查询
                 </div>
                 <!-- <div class="title2">检查结果</div> -->
                 <div>
                     <ul>
-                        <li>
+                        <li  @click="$router.push('/doctor/chaxun')" :class="{active:$route.path === '/doctor/chaxun' ? true : false}">
                             <span>O</span>查询
                         </li>
-                        <li>
+                    </ul>
+                </div>                            
+                <div @click="$router.push('/doctor/moni')"  class="title2">                   
+                    病例评测
+                </div>
+                 <div>
+                    <ul>
+                        <li @click="$router.push('/doctor/moni')" :class="{active:$route.path === '/doctor/moni' ? true : false}">
                             <span>O</span>模拟病例学习
                         </li>
-                        <li><span>O</span>个人历史病例</li>
+                        <li @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
+                            <span>O</span>个人历史病例
+                        </li>
                     </ul>
                 </div>
-                <div>
-                    <span>O</span>知识库查询
-                </div>
-                <div class="title2">文献查询</div>
+                <div  @click="$router.push('/doctor/wenxian')" class="title2" :class="{active:$route.path === '/doctor/wenxian' ? true : false}">文献查询</div>
               
             </div>
 

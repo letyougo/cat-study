@@ -38,7 +38,6 @@
                         <li><span>O</span>行为异常</li>
                         <li><span>O</span>既往史</li>
                         <li><span>O</span>查体</li>
-
                     </ul>
                 </div>
                 <div @click="$router.push('/')" class="title2">

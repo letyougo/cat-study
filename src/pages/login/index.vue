@@ -76,7 +76,7 @@ export default {
 		}
 		
 		.login-form{
-			box-shadow: 0 0 1px @primaryColor;
+			box-shadow: 0 0 30px @primaryColor;
 
     	padding: 39px 77px;
 		}

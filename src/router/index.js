@@ -9,7 +9,11 @@ import Checktobe from '@/pages/check/tobe.vue'
 
 import Check from '@/pages/check'
 import DoctorHeader from '@/pages/doctor/header'
-import DoctorIndex from '@/pages/doctor/index'
+import DoctorIndex from '@/pages/doctor/index/index.vue'
+import DoctorBingliGeren from '@/pages/doctor/bingli/geren.vue'
+import DoctorBingliMoni from '@/pages/doctor/bingli/moni.vue'
+import DoctorWenxian from '@/pages/doctor/wenxian/index.vue'
+import DoctorChaxun from '@/pages/doctor/chaxun/index.vue'
 
 import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
@@ -50,6 +54,22 @@ export default new Router({
           path: '/',
           component: DoctorIndex
         },
+        {
+          path: 'moni',
+          component: DoctorBingliMoni
+        },
+        {
+          path: 'geren',
+          component: DoctorBingliGeren
+        },
+        {
+          path: 'wenxian',
+          component: DoctorWenxian
+        },
+        {
+          path: 'chaxun',
+          component: DoctorChaxun,
+        }
       ]
     },
     {
