@@ -24,6 +24,7 @@
 </template>
 <script>
 import header from '../header'
+const a =1; 
 export default {
     name:'doctor',
     props:{

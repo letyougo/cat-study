@@ -4,6 +4,7 @@
 	</div>
 </template>
 <script>
+	const a=1;
 export default {
 	props:{
 

@@ -9,10 +9,18 @@ import './reset.css'
 import './global.less'
 import '../theme/index.css'
 import './element-reset.less'
+import api from './api'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(VCharts)
+
+Object.assign(global,{
+  
+})
+
+
+Vue.use(api)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

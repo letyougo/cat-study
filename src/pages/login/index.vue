@@ -11,13 +11,13 @@
 					<div class="login-form">
 						<el-form >
 							<el-form-item label="">
-								<el-input  placeholder="用户名" type="text"></el-input>
+								<el-input  placeholder="用户名" type="text" v-model="phoneNum"></el-input>
 							</el-form-item>
 							<el-form-item label="">
-								<el-input  placeholder="密码" type="password"></el-input>
+								<el-input  placeholder="密码" type="password" v-model="password"></el-input>
 							</el-form-item>
 							<el-form-item label="">
-								<el-button type="primary" style="width:100%">登陆</el-button>
+								<el-button type="primary" style="width:100%" @click="login">登陆</el-button>
 							</el-form-item>
 							<el-form-item label="">
 								<router-link to="/account/forget" style="float:right">忘记密码</router-link>
@@ -34,10 +34,22 @@ export default {
   props: {},
   components: {},
   data() {
-    return {};
+    return {
+			phoneNum:'18511586569',
+			password:'123456'
+		};
   },
   computed: {},
-  methods: {},
+  methods: {
+		async login(){
+			let res = await this.api.account.login({phoneNum:this.phoneNum,password:this.password})
+			let {data:{data,code}} = res
+			if(code === 200){
+				global.user = data 
+				this.$router.push('/')
+			}
+		}
+	},
   created() {},
   mounted() {}
 };
