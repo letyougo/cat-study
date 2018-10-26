@@ -31,7 +31,7 @@
         <el-table-column label="入院时间" prop="type"></el-table-column>
         <el-table-column label="姓名" prop="catName">
             <template scope="scope">
-              <el-button type="primary"  @click="$router.push('/treat')">接诊</el-button>
+              <el-button type="primary"  @click="route(scope)">接诊</el-button>
               <el-button type="danger">删除</el-button>
             </template>
         </el-table-column>
@@ -73,6 +73,10 @@
         if(code === 200){
             this.list = data
         }
+      },
+      route(scope){
+        this.$router.push(`/?id=${scope.row.id}`)
+          console.log(scope)
       }
     },
     created() {},
