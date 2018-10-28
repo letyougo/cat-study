@@ -17,6 +17,7 @@ import DoctorChaxun from '@/pages/doctor/chaxun/index.vue'
 
 import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
+import AdminUser from '@/pages/admin/user'
 
 import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
@@ -80,6 +81,10 @@ export default new Router({
         {
           path: '/',
           component: AdminIndex
+        },
+        {
+          path: 'user',
+          component: AdminUser
         }
       ]
     },

@@ -17,7 +17,7 @@
                         <li>
                             <span>O</span>诊疗模块管理
                         </li>
-                        <li>
+                        <li @click="$router.push('/admin/user')">
                             <span>O</span>权限管理                           
                         </li>
                         <li>

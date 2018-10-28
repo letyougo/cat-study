@@ -1,7 +1,7 @@
 import request from 'axios'
 import Vue from 'vue'
 import qs from 'qs'
-import App from '../App'
+import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
 request.interceptors.request.use(function (config) {
@@ -14,8 +14,9 @@ request.interceptors.response.use(function (res) {
   //   window.location.hash = '/account'
   // }
   let { code, desc } = res.data
+  console.log(code,desc)
   if (code !== 200) {
-    App.$message.error(code)
+    return App.$message.error(desc)
   }
   return res
 })
@@ -28,6 +29,38 @@ const api = {
       let { data: { data: { token } } } = res
       window.localStorage.setItem('cat-study-token', token)
       return res
+    },
+    async list(data){
+      const url = '/sysUser/listUserWithRole'
+      let res = await request.get(url,{params:data})
+      return res 
+    },
+    async post(data){
+      const url = '/sysUser/addUser'
+      let res = await request.post(url,data)
+      return res
+    },
+    async del(data){
+      const url = '/sysUser/deleteUser '
+      let res = await request.post(url,data)
+      return res
+    },
+  },
+
+  //角色
+  role:{
+    async list(){
+      const url = '/sysRole/listRoleWithPerm'
+      let res = await request.get(url)
+      return res 
+    }
+  },
+  // 权限
+  perm:{
+    async list(){
+      const url = '/sysPermission/listPermissionByParam'
+      let res = await request.get(url)
+      return res 
     }
   },
   // 病例
@@ -39,6 +72,14 @@ const api = {
     },
     item () {
 
+    }
+  },
+  // 药品
+  med :{
+    async list (data) {
+      const url = '/case/listByParam'
+      let res = await request.get(url, { params: data })
+      return res
     }
   }
 

@@ -22,7 +22,7 @@ Object.assign(global,{
 
 Vue.use(api)
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   components: { App },
