@@ -4,8 +4,11 @@ import qs from 'qs'
 import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
-request.interceptors.request.use(function (config) {
-  return config
+request.interceptors.request.use(function (req) {
+  if(req.method === 'post'){
+    req.data = qs.stringify(req.data)
+  }
+  return req
 }, function (error) {
   App.$message.error(error)
 })
@@ -53,6 +56,21 @@ const api = {
       const url = '/sysRole/listRoleWithPerm'
       let res = await request.get(url)
       return res 
+    },
+    async add(data){
+      const url = '/sysUser/addRoleForUser'
+      let res = await request.post(url,data)
+      return res 
+    },
+    async del(data){
+      const url = '/sysUser/deleteRoleForUser'
+      let res = await request.post(url,data)
+      return res 
+    },
+    async update(data){
+      const url = '/sysUser/updateUser'
+      let res = await request.post(url,data)
+      return res
     }
   },
   // 权限
@@ -88,5 +106,13 @@ const api = {
 export default {
   install: function (vue) {
     Vue.prototype.api = api
+    Vue.prototype.tip = function(code,succ,err,cb){
+      if(code === 200){
+        this.$message.success(succ)
+        cb()
+      }else{
+        this.$message.error(err)
+      }
+    }
   }
 }
