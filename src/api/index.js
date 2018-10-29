@@ -5,7 +5,7 @@ import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
 request.interceptors.request.use(function (req) {
-  if(req.method === 'post'){
+  if (req.method === 'post') {
     req.data = qs.stringify(req.data)
   }
   return req
@@ -17,7 +17,7 @@ request.interceptors.response.use(function (res) {
   //   window.location.hash = '/account'
   // }
   let { code, desc } = res.data
-  console.log(code,desc)
+  console.log(code, desc)
   if (code !== 200) {
     return App.$message.error(desc)
   }
@@ -33,52 +33,52 @@ const api = {
       window.localStorage.setItem('cat-study-token', token)
       return res
     },
-    async list(data){
+    async list (data) {
       const url = '/sysUser/listUserWithRole'
-      let res = await request.get(url,{params:data})
-      return res 
+      let res = await request.get(url, { params: data })
+      return res
     },
-    async post(data){
+    async post (data) {
       const url = '/sysUser/addUser'
-      let res = await request.post(url,data)
+      let res = await request.post(url, data)
       return res
     },
-    async del(data){
+    async del (data) {
       const url = '/sysUser/deleteUser '
-      let res = await request.post(url,data)
+      let res = await request.post(url, data)
       return res
-    },
+    }
   },
 
-  //角色
-  role:{
-    async list(){
+  // 角色
+  role: {
+    async list () {
       const url = '/sysRole/listRoleWithPerm'
       let res = await request.get(url)
-      return res 
+      return res
     },
-    async add(data){
+    async add (data) {
       const url = '/sysUser/addRoleForUser'
-      let res = await request.post(url,data)
-      return res 
+      let res = await request.post(url, data)
+      return res
     },
-    async del(data){
+    async del (data) {
       const url = '/sysUser/deleteRoleForUser'
-      let res = await request.post(url,data)
-      return res 
+      let res = await request.post(url, data)
+      return res
     },
-    async update(data){
+    async update (data) {
       const url = '/sysUser/updateUser'
-      let res = await request.post(url,data)
+      let res = await request.post(url, data)
       return res
     }
   },
   // 权限
-  perm:{
-    async list(){
+  perm: {
+    async list () {
       const url = '/sysPermission/listPermissionByParam'
       let res = await request.get(url)
-      return res 
+      return res
     }
   },
   // 病例
@@ -93,9 +93,17 @@ const api = {
     }
   },
   // 药品
-  med :{
+  med: {
     async list (data) {
-      const url = '/case/listByParam'
+      const url = '/medicine/listByParam'
+      let res = await request.get(url, { params: data })
+      return res
+    }
+  },
+  // 医院
+  hospital: {
+    async list (data) {
+      const url = '/hospital/listByParam'
       let res = await request.get(url, { params: data })
       return res
     }
@@ -106,11 +114,11 @@ const api = {
 export default {
   install: function (vue) {
     Vue.prototype.api = api
-    Vue.prototype.tip = function(code,succ,err,cb){
-      if(code === 200){
+    Vue.prototype.tip = function (code, succ, err, cb) {
+      if (code === 200) {
         this.$message.success(succ)
         cb()
-      }else{
+      } else {
         this.$message.error(err)
       }
     }
