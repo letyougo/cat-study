@@ -12,7 +12,7 @@
                 <el-button type="danger">删除</el-button>
               </template>
           </el-table-column>
-        </el-table>
+      </el-table>
   </div>
 </template>
 <script>
@@ -23,28 +23,39 @@
     data() {
       return {
         filter: {},
-        list: [{
-            name: "surui",
-            age: 25,
-            sex: "man"
-          },
-          {
-            name: "liuhua",
-            age: 25,
-            sex: "girl"
-          },
-          {
-            name: "aaa",
-            age: 25,
-            sex: "ccc"
-          }
-        ]
+        list: []
       };
     },
     computed: {},
+    watch:{
+      $route(){
+        this.fetch()
+      }
+    },
     methods: {
       async fetch() {
-        let res = await this.api.case.list()
+        let p = this.$route.path 
+        let status =0
+        console.log(p,'pathh')
+        switch (p){
+          case '/check/tobe':
+            status = 1
+            break;
+          case '/check/reing':
+            status = 2
+            break
+          case '/check/ing':
+            status = 3
+            break;
+          case '/check/ed':
+            status = 4
+            break;
+        }
+
+
+        let res = await this.api.case.list(
+          {status}
+        )
         let {data:{data,code}} = res 
         if(code === 200){
             this.list = data

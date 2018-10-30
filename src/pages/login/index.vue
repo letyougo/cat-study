@@ -46,7 +46,8 @@ export default {
 			let {data:{data,code}} = res
 			if(code === 200){
 				global.user = data 
-				this.$router.push('/')
+				window.localStorage.setItem("cat-study-user", JSON.stringify(data));
+				this.$router.push('/check/tobe')
 			}
 		}
 	},

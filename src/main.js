@@ -16,7 +16,7 @@ Vue.use(ElementUI)
 Vue.use(VCharts)
 
 Object.assign(global,{
-  
+  user :JSON.parse(localStorage.getItem('cat-study-user'))
 })
 
 

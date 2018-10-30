@@ -4,7 +4,7 @@
     <div class="tab">
       <div class="logo">cat study</div>
       <div class="tab-list">
-        <div @click="$router.push('/check')" :class="{active:$route.path === '/check'}">
+        <div @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check'}">
           智能诊疗
         </div>
         <div @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor'}">

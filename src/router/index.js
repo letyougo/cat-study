@@ -53,19 +53,19 @@ export default new Router({
         },
         {
           path: 'tobe',
-          component: Checktobe
+          component: Check
         },
         {
           path: 'ing',
-          component: Checking
+          component: Check
         },
         {
           path: 'reing',
-          component: Checkreing
+          component: Check
         },
         {
           path: 'ed',
-          component: Checked
+          component: Check
         }
       ]
     },
