@@ -107,8 +107,8 @@ const api = {
     },
     async item (data) {
       const url = '/case/getById'
-      let res =await request.get(url,{params:data})
-      return res 
+      let res = await request.get(url, { params: data })
+      return res
     },
     async add (data) {
       const url = '/case/add'
@@ -139,6 +139,14 @@ const api = {
     async list (data) {
       const url = '/hospital/listByParam'
       let res = await request.get(url, { params: data })
+      return res
+    }
+  },
+  // 接诊
+  visit: {
+    async list () {
+      const url = '/visit/listAllItemWithOptions'
+      let res = await request.get(url)
       return res
     }
   }

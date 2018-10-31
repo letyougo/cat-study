@@ -35,7 +35,7 @@ export default {
   components: {},
   data() {
     return {
-			phoneNum:'18511586569',
+			phoneNum:'18030086905',
 			password:'123456'
 		};
   },

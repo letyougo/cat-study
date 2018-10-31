@@ -64,6 +64,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
+    
     .admin-hospital-title{
         display: flex;
         justify-content: space-between;
