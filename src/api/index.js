@@ -105,7 +105,11 @@ const api = {
       let res = await request.get(url, { params: data })
       return res
     },
-    item () {},
+    async item (data) {
+      const url = '/case/getById'
+      let res =await request.get(url,{params:data})
+      return res 
+    },
     async add (data) {
       const url = '/case/add'
       let res = await request.post(url, data)

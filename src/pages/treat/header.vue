@@ -2,28 +2,29 @@
     <div class="header">
         <div class="header-title">
             <div>
-                病例号：132456
+                病例号：{{item.id}}
             </div>
             <div>
-                主持人：王灵微
+                主人：{{item.ownerName}}
             </div>
             <div>
-                主人电话：1234567891
+                主人电话：{{item.ownerPhone}}
             </div>
             <div>
-                猫咪姓名：咪咪
+                猫咪姓名：{{item.catName}}
             </div>
             <div>
-                入院时间:2018/08/20 15:23
+                入院时间:{{item.createTime}}
             </div>
             <div>
-                医生：张志刚
+                医生：{{item.doctorId}}
             </div>
         </div>
         <div class="header-content">
             <div class="left">
                 <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
-                    <span>X</span><span class="title2">问诊</span>
+                    <span>X</span>
+                    <span class="title2">问诊</span>
                 </div>
                 <div class="title2">检查结果</div>
                 <div>
@@ -34,17 +35,21 @@
                         <li>
                             <span>O</span>主述症状
                         </li>
-                        <li><span>O</span>生活史</li>
-                        <li><span>O</span>行为异常</li>
-                        <li><span>O</span>既往史</li>
-                        <li><span>O</span>查体</li>
+                        <li>
+                            <span>O</span>生活史</li>
+                        <li>
+                            <span>O</span>行为异常</li>
+                        <li>
+                            <span>O</span>既往史</li>
+                        <li>
+                            <span>O</span>查体</li>
                     </ul>
                 </div>
                 <div @click="$router.push('/')" class="title2">
                     诊疗
                 </div>
                 <div @click="$router.push('/treat/yizhu')" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
-                   治疗与医嘱
+                    治疗与医嘱
                 </div>
                 <div @click="$router.push('/treat/mianyi')" :class="{active:$route.path === '/treat/mianyi' ? true : false}" class="title2">
                     免疫与健康
@@ -58,42 +63,42 @@
     </div>
 </template>
 <script>
-
 export default {
-    name:'treat',
-    props:{
-
-    },
-    data(){
-        return {
-            middle:{
-                basic:{
-                    age:5,
-                    month:12
-                }
-            },
-            print:false
+  name: "treat",
+  props: {},
+  data() {
+    return {
+      middle: {
+        basic: {
+          age: 5,
+          month: 12
         }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
-        // document.querySelector('#app >.tab').style.minWidth="1631px"
-    },
-    watch:{
-        $route(){
-            console.log(this.$route, 'router')
-        }
+      },
+      print: false,
+      item:{}
+    };
+  },
+  computed: {},
+  methods: {
+    async fetch(){
+        let res = await this.api.case.item({id:this.$route.query.id})
+        let {data:{data,code}} = res
+        this.item = data
+        console.log(data,code,'header')
     }
-}
+  },
+  created() {},
+  mounted() {
+    this.fetch()
+    // document.querySelector('#app >.tab').style.minWidth="1631px"
+  },
+  watch: {
+    $route() {
+      console.log(this.$route, "router");
+    }
+  }
+};
 </script>
 <style scoped lang="less">
-@import url('../header.less');
+@import url("../header.less");
 </style>

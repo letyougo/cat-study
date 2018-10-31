@@ -212,7 +212,7 @@ export default {
       }
     },
     route(scope) {
-      this.$router.push(`/?id=${scope.row.id}`);
+      this.$router.push(`/treat?id=${scope.row.id}`);
     }
   },
   created() {},

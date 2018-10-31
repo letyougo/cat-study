@@ -333,47 +333,47 @@ export default {
 <style scoped lang="less">
 
 
- .middle{         
+//  .middle{         
     
-    padding-left: 50px;
-    padding-right: 50px;
-    background: #ffffff;
-    >.title{
-        line-height:56px;
-        font-size: 20px;
-    }
+//     padding-left: 50px;
+//     padding-right: 50px;
+//     background: #ffffff;
+//     >.title{
+//         line-height:56px;
+//         font-size: 20px;
+//     }
 
-    .main{
-         margin-top: 40px;
-        h3{
-            text-align: center;
-        }
-    }
+//     .main{
+//          margin-top: 40px;
+//         h3{
+//             text-align: center;
+//         }
+//     }
 
-    .life{
-        margin-top: 40px;
-    }
-    .behavior{
-        margin-top: 40px;
-    }
-    .past{
-        margin-top: 40px;
-    }
-    .checkbody,.skin{
-        margin-top: 40px;
+//     .life{
+//         margin-top: 40px;
+//     }
+//     .behavior{
+//         margin-top: 40px;
+//     }
+//     .past{
+//         margin-top: 40px;
+//     }
+//     .checkbody,.skin{
+//         margin-top: 40px;
 
-        .check-item{
-            display: flex;
-           .tip{
-               line-height: 42px;
-               margin-right: 30px;
-               width: 51px;
-           }
-           .con{
-               width: 800px;
-           }
-        }
-    }
+//         .check-item{
+//             display: flex;
+//            .tip{
+//                line-height: 42px;
+//                margin-right: 30px;
+//                width: 51px;
+//            }
+//            .con{
+//                width: 800px;
+//            }
+//         }
+//     }
     
-}
+// }
 </style>
