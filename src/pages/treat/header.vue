@@ -84,7 +84,6 @@ export default {
         let res = await this.api.case.item({id:this.$route.query.id})
         let {data:{data,code}} = res
         this.item = data
-        console.log(data,code,'header')
     }
   },
   created() {},
@@ -94,7 +93,6 @@ export default {
   },
   watch: {
     $route() {
-      console.log(this.$route, "router");
     }
   }
 };

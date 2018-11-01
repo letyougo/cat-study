@@ -1,14 +1,12 @@
 import request from 'axios'
 import Vue from 'vue'
-import qs from 'qs'
 import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
 request.interceptors.request.use(
   function (req) {
-    console.info('req', req)
     req.params = req.params || {}
-    req.params.JSESSIONID = localStorage.getItem('cat-study-token')
+    req.params.JSESSIONID = window.localStorage.getItem('cat-study-token')
 
     if (req.method === 'post') {
       for (let key in req.data) {
@@ -25,9 +23,7 @@ request.interceptors.response.use(function (res) {
   if (res.headers.token && res.headers.token === 'timeout') {
     window.location.hash = '/account'
   }
-
   let { code, desc } = res.data
-  console.log(code, desc)
   if (code !== 200) {
     return App.$message.error(desc)
   }
@@ -147,6 +143,11 @@ const api = {
     async list () {
       const url = '/visit/listAllItemWithOptions'
       let res = await request.get(url)
+      return res
+    },
+    async item (data) {
+      const url = '/caseVisit/getByCaseId'
+      let res = await request.get(url, { params: data })
       return res
     }
   }

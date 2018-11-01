@@ -1,8 +1,10 @@
 <template>
     <div class="middle">
-        <p class="basic title">基本情况</p>
 
-        <el-form :inline="true">
+
+        <p class="basic title" v-if="list.basic.length">基本情况</p>
+
+        <el-form :inline="true" v-if="list.basic.length">
             <template v-if="basic.age.exist">
                 <el-form-item label="年龄">
                     <el-input v-model="basic.age.value.year" :style="{width:'180px'}" class="inline-input" placeholder="ss">
@@ -15,14 +17,14 @@
             </template>
 
             <template v-if="basic.sex.exist">
-                <el-form-item label="性别" :style="{marginLeft:'20px'}">
+                <el-form-item label="性别" :style="{marginLeft:'20px'}" v-model="basic.sex.value" >
                     <!-- <el-radio label="公"></el-radio>
                     <el-radio label="去势"></el-radio> -->
-                    <el-radio  v-model="basic.age.sex"  v-for="item in basic.sex.options" :label="item.names" :key="item.id"></el-radio>
+                    <el-radio  v-model="basic.age.sex"  v-for="item in basic.sex.options" :label="item.names" :key="item.names"></el-radio>
                 </el-form-item>   
             </template>
 
-            <template v-if="basic.weight.exist">
+            <template v-if="basic.weight.exist"  v-model="basic.weight.value" >
                 <el-form-item label="体重">
                     <el-input v-model="basic.weight.value"  :style="{width:'362px'}" class="inline-input" placeholder="ss">
                         <template slot="append">kg</template>
@@ -32,8 +34,8 @@
 
              <template v-if="basic.kind.exist">
                 <el-form-item label="品种" :style="{marginLeft:'20px'}">
-                    <el-select v-model="basic.kind.value" :style="{width:'140px'}" placeholder="请选择毛发长短">
-                        <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.id">{{item.names}}</el-option>
+                    <el-select :style="{width:'140px'}" placeholder="请选择毛发长短" v-model="basic.kind.value" >
+                        <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                     </el-select>
                 </el-form-item>
             </template>
@@ -119,14 +121,14 @@
                 <el-form>
                     <el-form-item>
                         <el-select style="width:50%" v-model="lifeHistory.value" multiple placeholder="请选择">
-                            <el-option v-for="(item, index) in lifeHistory.options" :key="index" :label="item.names" :value="item.id">{{item.names}}</el-option>
+                            <el-option v-for="(item, index) in lifeHistory.options" :key="index" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
             </div>
         </template>
 
-        <template v-if="false">
+        <template v-if="checkBody.abnomalBehavior.exist">
             <div class="behavior">
                 <h2>行为异常</h2>
                 <el-form>
@@ -151,16 +153,16 @@
                 <h2>既往史</h2>
                 <el-form inline>
                     <el-form-item>
-                        <el-select style="width:400px" multiple placeholder="请选择">
+                        <el-select style="width:400px" multiple placeholder="请选择" v-model="passHistory.value">
                             <!-- <el-option label="aa" key="aa">11</el-option>
               <el-option label="bb" key="bb">22</el-option>
               <el-option label="cc" key="cc">33</el-option> -->
-                            <el-option v-for="item in passHistory.options" :label="item.names" :value="item.value" :key="item.id">{{item.names}}</el-option>
+                            <el-option v-for="item in passHistory.options" :label="item.names" :value="item.value" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item>
-                        <el-select style="width:400px" multiple placeholder="请选择">
+                        <el-select style="width:400px" multiple placeholder="请选择" v-model="passHistory.value">
                             <!-- <el-option label="aa" key="aa">11</el-option>
               <el-option label="bb" key="bb">22</el-option>
               <el-option label="cc" key="cc">33</el-option> -->
@@ -175,7 +177,7 @@
             </div>
         </template>
 
-        <template v-if="list.checkbody.length>0">
+        <template v-if="list.checkBody.length>0">
             <div class="checkbody">
             <div>查体</div>
             <div class="check-item">
@@ -243,8 +245,8 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" placeholder="未见异常">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select style="width:350px" placeholder="未见异常" v-model="checkBody.touch.value">
+                                    <el-option v-for="item in checkBody.touch.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -258,8 +260,8 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select style="width:350px" multiple placeholder="未见异常" v-model="checkBody.touch.value">
+                                    <el-option v-for="item in checkBody.hear.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -273,8 +275,8 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select style="width:350px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
+                                    <el-option v-for="item in checkBody.smell.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -288,13 +290,13 @@
                     <div class="con">
                         <el-form inline>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select style="width:350px" multiple placeholder="未见异常"  v-model="checkBody.eye.value">
+                                    <el-option v-for="item in checkBody.eye.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                <el-select style="width:350px" multiple placeholder="未见异常"  v-model="checkBody.eye.value">
                                     <el-option label="11" value="22"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -307,20 +309,20 @@
         </div>
         </template>
       
-        <template v-if="false">
+        <template v-if="skinDamage.exist">
             <div class="skin">
                 <div class="check-item">
                     <div class="tip">皮损</div>
                     <div class="con">
                         <el-form inline>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select style="width:350px" multiple placeholder="未见异常" v-model="skinDamage.value">
+                                    <el-option v-for="item in skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                <el-select style="width:350px" multiple placeholder="未见异常" >  
                                     <el-option label="11" value="22"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -448,6 +450,25 @@ export default {
   },
   computed: {},
   methods: {
+    async fetchItem(){
+      console.log('1', '')
+      let res1 = await this.api.case.item({id:this.$route.query.id })
+      console.log('2', '')
+      var {data:{data:{catMonths,catYears}}} = res1
+      console.log('3', '')
+      this.basic.age.value = {
+        year:catYears,
+        month:catMonths
+      }
+      console.log('4', '')
+      let res2 = await this.api.visit.item({caseId:this.$route.query.id })
+      var {data:{data:{bear}}} = res2
+      console.log('5', '')
+      this.basic.sex.value = bear
+      console.log(bear,catMonths,catYears)
+      
+      
+    },
     async fetch() {
       let res = await this.api.visit.list();
       let { data: { data, code } } = res;
@@ -519,7 +540,93 @@ export default {
           ).options
         };
       }
+      if(list.checkBody.find(item=>item.dimension === "体温")){
+        this.checkBody.temp = {
+          exist : true,
+          value:''
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "血压")){
+        this.checkBody.blood = {
+          exist : true,
+          value:''
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "心率")){
+        this.checkBody.heart = {
+          exist : true,
+          value:''
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "呼吸频率")){
+        this.checkBody.breath = {
+          exist : true,
+          value:''
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "毛细血管再充盈时间")){
+        this.checkBody.recharge = {
+          exist : true,
+          value:''
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "行为异常")){
+        this.checkBody.abnomalBehavior = {
+          exist : true,
+          value:'',
+          options:list.checkBody.find(
+            item => item.dimension === "行为异常" && item.isUsed
+          ).options
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "触诊")){
+        this.checkBody.touch = {
+          exist : true,
+          value:'',
+          options:list.checkBody.find(
+            item => item.dimension === "触诊" && item.isUsed
+          ).options
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "视诊")){
+        this.checkBody.eye = {
+          exist : true,
+          value:'',
+          options:list.checkBody.find(
+            item => item.dimension === "视诊" && item.isUsed
+          ).options
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "嗅诊")){
+        this.checkBody.smell = {
+          exist : true,
+          value:'',
+          options:list.checkBody.find(
+            item => item.dimension === "触诊" && item.isUsed
+          ).options
+        }
+      }
+      if(list.checkBody.find(item=>item.dimension === "听诊")){
+        this.checkBody.hear = {
+          exist : true,
+          value:'',
+          options:list.checkBody.find(
+            item => item.dimension === "听诊" && item.isUsed
+          ).options
+        }
+      }
+      if(list.skinDamage.find(item=>item.dimension === "皮损部位")){
+        this.skinDamage = {
+          exist : true,
+          value:'',
+          options:list.skinDamage.find(
+            item => item.dimension === "皮损部位" && item.isUsed
+          ).options
+        }
+      }
       this.list = list;
+      console.log('fetch-item', 'fetch-item')
+      this.fetchItem()
     }
   },
   created() {},
