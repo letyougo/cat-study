@@ -135,91 +135,91 @@
 </template>
 	<script>
 export default {
-  name: "check",
+  name: 'check',
   props: {},
   components: {},
-  data() {
+  data () {
     return {
       filter: {},
       list: [],
       addForm: {
         visible: false,
-        ownerName:'苏瑞',
-        catName:'siri',
-        gender:1,
-        ownerPhone:'13683360717',
-        catYears:'2',
-        catMonths:'3',
-        type:'1',
-        doctorId:global.user.id,
-        status:1
+        ownerName: '苏瑞',
+        catName: 'siri',
+        gender: 1,
+        ownerPhone: '13683360717',
+        catYears: '2',
+        catMonths: '3',
+        type: '1',
+        doctorId: global.user.id,
+        status: 1
       }
-    };
+    }
   },
-  watch:{
-    $route(){
+  watch: {
+    $route () {
       this.fetch()
     }
   },
   computed: {},
   methods: {
-    async fetch() {
-      let status 
-      switch (this.$route.path){
-          case '/check/tobe':
-            status = 1
-            break;
-          case '/check/reing':
-            status = 2
-            break
-          case '/check/ing':
-            status = 3
-            break;
-          case '/check/ed':
-            status = 4
-            break;
-        }
-      let res = await this.api.case.list({status});
-      let { data: { data, code } } = res;
+    async fetch () {
+      let status
+      switch (this.$route.path) {
+        case '/check/tobe':
+          status = 1
+          break
+        case '/check/reing':
+          status = 2
+          break
+        case '/check/ing':
+          status = 3
+          break
+        case '/check/ed':
+          status = 4
+          break
+      }
+      let res = await this.api.case.list({ status })
+      let { data: { data, code } } = res
       if (code === 200) {
-        this.list = data;
+        this.list = data
       }
     },
-    async add(){
+    async add () {
       let res = await this.api.case.add(this.addForm)
-      let {data:{data,code}} = res 
-      this.tip(code,'增加病例成功','增加病例失败',()=>{
+      let { data: { data, code } } = res
+      this.tip(code, '增加病例成功', '增加病例失败', () => {
         this.addForm.visible = false
         this.fetch()
       })
     },
-    async update(item){
-      delete item.updateTime 
+    async update (item) {
+      delete item.updateTime
       delete item.createTime
       let res = await this.api.case.update(item)
-      let {data:{data,code}} = res 
-      this.tip(code,'更新病例成功','更新病例失败',()=>{
+      let { data: { data, code } } = res
+      this.tip(code, '更新病例成功', '更新病例失败', () => {
         this.fetch()
       })
     },
-    async del(item){
-      try{
-        await this.$confirm("确定删除该简历吗？");
-        this.api.case.del({id:item.id})
+    async del (item) {
+      try {
+        await this.$confirm('确定删除该简历吗？')
+        this.api.case.del({ id: item.id })
         this.fetch()
-      }catch(e){
+      } catch (e) {
 
       }
     },
-    route(scope) {
-      this.$router.push(`/treat?id=${scope.row.id}`);
+    route (scope) {
+      this.$router.push(`/treat?id=${scope.row.id}`)
     }
   },
-  created() {},
-  mounted() {
-    this.fetch();
+  created () {},
+  mounted () {
+    this.fetch()
   }
-};
+}
 </script>
 	<style scoped lang="less">
 @import url("../../global.less");
