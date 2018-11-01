@@ -175,141 +175,163 @@
             </div>
         </template>
 
-        <template v-if="false">
+        <template v-if="list.checkbody.length>0">
             <div class="checkbody">
             <div>查体</div>
             <div class="check-item">
                 <div class="tip">测量</div>
                 <div class="con">
                     <el-form inline>
-                        <el-form-item label="体温">
-                            <el-input style="width:317px" placeholder="">
-                                <template slot="append">
-                                    C
-                                </template>
-                            </el-input>
-                        </el-form-item>
+                        <template v-if="checkBody.temp.exist">
+                            <el-form-item label="体温">
+                                <el-input style="width:317px" placeholder="" v-model="checkBody.temp.value">
+                                    <template slot="append">
+                                        C
+                                    </template>
+                                </el-input>
+                            </el-form-item>
+                        </template>
 
-                        <el-form-item label="血压">
-                            <el-input style="width:317px" placeholder="">
-                                <template slot="append">
-                                    mmHG
-                                </template>
-                            </el-input>
-                        </el-form-item>
+                        <template v-if="checkBody.blood.exist">
+                            <el-form-item label="血压">
+                                <el-input style="width:317px" placeholder=""  v-model="checkBody.blood.value">
+                                    <template slot="append">
+                                        mmHG
+                                    </template>
+                                </el-input>
+                            </el-form-item>
+                        </template>
 
-                        <el-form-item label="心率">
-                            <el-input style="width:317px" placeholder="">
-                                <template slot="append">
-                                    次/分
-                                </template>
-                            </el-input>
-                        </el-form-item>
-                        <el-form-item label="呼吸">
-                            <el-input style="width:317px" placeholder="">
-                                <template slot="append">
-                                    C
-                                </template>
-                            </el-input>
-                        </el-form-item>
+                        <template v-if="checkBody.heart.exist">
+                            <el-form-item label="心率">
+                                <el-input style="width:317px" placeholder="" v-model="checkBody.heart.value">
+                                    <template slot="append">
+                                        次/分
+                                    </template>
+                                </el-input>
+                            </el-form-item>
+                        </template>
 
-                        <el-form-item label="毛细血管壁再充盈时间">
-                            <el-input style="width:210px" placeholder="">
-                                <template slot="append">
-                                    C
-                                </template>
-                            </el-input>
-                        </el-form-item>
-                    </el-form>
-                </div>
+                        <template v-if="checkBody.breath.exist">
+                            <el-form-item label="呼吸">
+                                <el-input style="width:317px" placeholder="" v-model="checkBody.breath.value" >
+                                    <template slot="append">
+                                        C
+                                    </template>
+                                </el-input>
+                            </el-form-item>
+                        </template>
 
-            </div>
-
-            <div class="check-item">
-                <div class="tip">触诊</div>
-                <div class="con">
-                    <el-form>
-                        <el-form-item>
-                            <el-select style="width:350px" placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-form>
-                </div>
-            </div>
-
-            <div class="check-item">
-                <div class="tip">听诊</div>
-                <div class="con">
-                    <el-form>
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
+                        
+                        
+                        <template v-if="checkBody.recharge.exist">
+                            <el-form-item label="毛细血管壁再充盈时间">
+                                <el-input style="width:210px" placeholder="" v-model="checkBody.recharge.value">
+                                    <template slot="append">
+                                        C
+                                    </template>
+                                </el-input>
+                            </el-form-item>
+                        </template>
                     </el-form>
                 </div>
             </div>
 
-            <div class="check-item">
-                <div class="tip">嗅诊</div>
-                <div class="con">
-                    <el-form>
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-form>
+            <template v-if="checkBody.touch.exist">
+                <div class="check-item">
+                    <div class="tip">触诊</div>
+                    <div class="con">
+                        <el-form>
+                            <el-form-item>
+                                <el-select style="width:350px" placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                    </div>
                 </div>
-            </div>
+            </template>
 
-            <div class="check-item">
-                <div class="tip">视诊</div>
-                <div class="con">
-                    <el-form inline>
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-form>
-                    <el-tag closable>11</el-tag>
-                    <el-tag closable>11</el-tag>
+            <template v-if="checkBody.hear.exist">
+                <div class="check-item">
+                    <div class="tip">听诊</div>
+                    <div class="con">
+                        <el-form>
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </template>
 
-        <div class="skin">
-            <div class="check-item">
-                <div class="tip">皮损</div>
-                <div class="con">
-                    <el-form inline>
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-
-                        <el-form-item>
-                            <el-select style="width:350px" multiple placeholder="未见异常">
-                                <el-option label="11" value="22"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-form>
-                    <el-tag closable>11</el-tag>
-                    <el-tag closable>11</el-tag>
+            <template v-if="checkBody.smell.exist">
+                <div class="check-item">
+                    <div class="tip">嗅诊</div>
+                    <div class="con">
+                        <el-form>
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                    </div>
                 </div>
-            </div>
+            </template>
+
+            <template v-if="checkBody.eye.exist">
+                <div class="check-item">
+                    <div class="tip">视诊</div>
+                    <div class="con">
+                        <el-form inline>
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                        <el-tag closable>11</el-tag>
+                        <el-tag closable>11</el-tag>
+                    </div>
+                </div>
+            </template>
         </div>
         </template>
-        
+      
+        <template v-if="false">
+            <div class="skin">
+                <div class="check-item">
+                    <div class="tip">皮损</div>
+                    <div class="con">
+                        <el-form inline>
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+
+                            <el-form-item>
+                                <el-select style="width:350px" multiple placeholder="未见异常">
+                                    <el-option label="11" value="22"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                        <el-tag closable>11</el-tag>
+                        <el-tag closable>11</el-tag>
+                    </div>
+                </div>
+            </div>
+        </template>
+
 
         <el-form>
             <el-form-item>
