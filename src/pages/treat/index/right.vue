@@ -93,16 +93,39 @@ export default {
 
   },
   methods: {
-    async fetch () {
-
+    setYear (obj) {
+      let age = parseInt(obj.catYears)
+      if (age <= 1) {
+        return '幼年猫'
+      } else if (age < 8) {
+        return '青年猫'
+      } else {
+        return '老年猫'
+      }
+    },
+    setTemp (obj) {
+      let temp = ''
+      let temperature = parseInt(obj.temperature)
+      if (temperature < 38) {
+        return '体温失温'
+      } else if (temperature > 39) {
+        return '发热'
+      } else {
+        return ''
+      }
+    },
+    async fetch (obj) {
+      if (obj) {
+        console.log(obj)
+      }
     }
   },
   created () {
 
   },
   mounted () {
-    this.$bus.on('check-reload', () => {
-      console.log('check', 'reload')
+    this.$bus.on('check-reload', (obj) => {
+      this.fetch(obj)
     })
   }
 }

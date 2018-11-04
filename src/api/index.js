@@ -202,6 +202,19 @@ const api = {
       return res
     }
   },
+
+  hosmed: {
+    async list (data) {
+      const url = '/hospMedicine/listByParam'
+      let res = await request.get(url, { params: data })
+      return res
+    },
+    async add (data) {
+      const url = '/hospMedicine/add'
+      let res = await request.post(url, queryUrl(data))
+      return res
+    }
+  },
   // 药品
   med: {
     async list (data) {

@@ -15,6 +15,7 @@
     "element-ui": "^2.4.8",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "perfect-scrollbar": "^1.4.0",
     "qs": "^6.5.2",
     "v-charts": "^1.18.0",
     "vue": "^2.5.2",

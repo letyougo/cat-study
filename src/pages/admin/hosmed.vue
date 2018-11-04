@@ -4,16 +4,18 @@
         <div class="admin-med-title">
             <div style=" color: #4D4D4D;
                 font-size: 16px;">
-                <corner></corner>药品管理
+                <corner></corner>医院药品管理
             </div>
 
             <div>
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-input v-model="likeStr" placeholder="关键字"></el-input>
+                        <el-select v-model="filter.hospital" placeholder="">
+                          <el-option v-for="item in hospital" :key="item.id" :value="item.id" :label="item.names">{{item.names}}</el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary">查询</el-button>
+                        <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="add.visible=true">增加药品</el-button>
@@ -23,7 +25,7 @@
         </div>
         <br>
         <div>
-            <el-table :data="list">
+            <el-table :data="list" v-loading="loading">
                 <el-table-column type="expand">
                     <template scope="scope">
                         expand
@@ -36,13 +38,9 @@
                 <el-table-column label="规范" prop="specification"></el-table-column>
                 <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
                 <el-table-column label="天" prop="days"></el-table-column>
-                <el-table-column label="操作" width="220px">
+                <el-table-column label="操作">
                     <template scope="scope">
-                        <el-button-group>
-                            <el-button type="primary" @click="addToHospital(scope.row)">添加到医院</el-button>
-                            <el-button type="danger">删除</el-button>
-                        </el-button-group>
-                    
+                        <el-button type="danger">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -53,20 +51,6 @@
             <el-pagination background layout="prev, pager, next" @current-change="i=>pageNum=i" :page-size="20" :page-count="pageNum" :total="totalCount">
             </el-pagination>
         </div>
-
-        <el-dialog title="增加到医院" :visible="hospital.visible">
-            <el-table :data="hospital.list">
-                <el-table-column label="医院名字" prop="names"></el-table-column>
-                <el-table-column label="操作">
-                    <template scope="scope">
-                        <el-button type="primary" @click="saveMedToHos(scope.row)">选择</el-button>
-                    </template>
-                </el-table-column>
-             </el-table>
-            <span slot="footer">
-                <el-button @click="hospital.visible=false">取消</el-button>
-            </span>
-        </el-dialog>
 
         <el-dialog title="增加药品" :visible="addForm.visible">
             <el-form>
@@ -112,18 +96,15 @@ export default {
         email: '313755017@qq.com',
         visible: false
       },
-      hospital: {
-        list: [],
-        hospitalId: '',
-        medicineId: '',
-        visible: false
-      },
       pageNum: 1,
       totalCount: 0,
-      search: {
+      filter: {
         startDate: '',
-        endDate: ''
-      }
+        endDate: '',
+        hospital: 0
+      },
+      hospital: [],
+      loading: false
     }
   },
   computed: {},
@@ -133,39 +114,20 @@ export default {
     }
   },
   methods: {
-    async addToHospital (row) {
-      this.hospital.visible = true
-      this.medicineId = row.id
-    },
+
     async fetchHospital () {
       let res = await this.api.hospital.list()
-      let { data: { data, code } } = res
-      this.hospital.list = data
+      let { data: { data } } = res
+      return data
     },
-    async saveMedToHos (row) {
-      let { medicineId } = this.hospital
-      let obj = {
-        hospitalId: row.id,
-        medicineId
-      }
-      console.log('save hos', obj)
-      return
-      this.$message('添加药品中...')
 
-      let res = await this.api.hosmed.add({
-        hospitalId: id,
-        medicineId
-      })
-      let { data: { data, code } } = res
-      if (code === 200) {
-        this.$message.success('添加药品成功')
-      } else {
-        this.$message.error('添加药品失败')
-      }
-    },
     async reload () {
-      await this.fetch()
-      await this.fetchHospital()
+      let list = await this.fetchHospital()
+      this.hospital = list
+      this.filter.hospital = list[0].id
+      if (list.length > 0) {
+        this.fetch({ hospitalId: list[0].id })
+      }
     },
     async fetch () {
       // let {startDate,endDate} = this.search
@@ -175,10 +137,9 @@ export default {
       // if(endDate){
       //     endDate = moment(endDate).format('YYYYMMDD')
       // }
-      console.log('page-num', this.pageNum)
       this.loading = true
-      let res = await this.api.med.list({
-        likeStr: this.likeStr,
+      let res = await this.api.hosmed.list({
+        hospitalId: this.filter.hospital,
         start: (this.pageNum - 1) * 20
       })
       let { data: { data, code, desc, pageinfo: { totalCount } } } = res

@@ -19,6 +19,7 @@ import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
 import AdminUser from '@/pages/admin/user'
 import AdminMed from '@/pages/admin/med'
+import AdminHosMed from '@/pages/admin/hosmed'
 import AdminHospital from '@/pages/admin/hospital'
 import AdminIll from '@/pages/admin/ill'
 import AdminChufang from '@/pages/admin/chufang'
@@ -114,6 +115,10 @@ export default new Router({
         {
           path: 'med',
           component: AdminMed
+        },
+        {
+          path: 'hosmed',
+          component: AdminHosMed
         },
         {
           path: 'hospital',

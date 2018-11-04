@@ -12,7 +12,10 @@
                     权限管理
                 </div>
                 <div @click="$router.push('/admin/med')" :class="{active:$route.path === '/admin/med' ? true : false}" class="title2">
-                    药品管理
+                    系统药品管理
+                </div>
+                <div @click="$router.push('/admin/hosmed')" :class="{active:$route.path === '/admin/hosmed' ? true : false}" class="title2">
+                    医院药品管理
                 </div>
                 <div>
                     <p>诊室检查</p>

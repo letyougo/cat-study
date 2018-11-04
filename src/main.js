@@ -22,6 +22,7 @@ Object.assign(global, {
 })
 
 Vue.use(api)
+
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',

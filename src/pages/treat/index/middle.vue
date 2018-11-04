@@ -7,10 +7,10 @@
         <el-form :inline="true" v-if="list.basic.length">
             <template v-if="basic.age.exist">
                 <el-form-item label="年龄">
-                    <el-input v-model="basic.age.value.year" :style="{width:'180px'}" class="inline-input" placeholder="ss">
+                    <el-input type="number" min="0" v-model="basic.age.value.year" :style="{width:'180px'}" class="inline-input" placeholder="ss">
                         <template slot="append">岁</template>
                     </el-input>
-                    <el-input v-model="basic.age.value.month"  :style="{width:'175px'}" class="inline-input" placeholder="ss">
+                    <el-input type="number" min="0" max="12" v-model="basic.age.value.month"  :style="{width:'175px'}" class="inline-input" placeholder="ss">
                         <template slot="append">月</template>
                     </el-input>
                 </el-form-item>
@@ -587,6 +587,15 @@ export default {
     },
     async add () {
       let obj = {}
+
+      if (this.basic.age.value.year) {
+        obj.catYears = this.basic.age.value.year
+      }
+
+      if (this.basic.age.value.month) {
+        obj.catMonths = this.basic.age.value.year
+      }
+
       if (this.basic.sex.value) {
         obj.bear = this.basic.sex.value
       }
@@ -612,7 +621,7 @@ export default {
         obj.pressure = this.checkBody.blood.value
       }
       if (this.checkBody.heart.value) {
-        obj.heartRate = this.checkBody.hear.value
+        obj.heartRate = this.checkBody.heart.value
       }
       if (this.checkBody.breath.value) {
         obj.breath = this.checkBody.breath.value
@@ -639,20 +648,24 @@ export default {
         obj.visualConsult = this.checkBody2.eye.model
       }
 
-      this.$message('更新数据中...')
       obj.caseId = this.$route.query.id
       obj.id = this.id
+
+      // return this.$bus.emit('check-reload', obj)
+
+      this.$message('更新数据中...')
+
       let { data: { code } } = await this.api.caseVisit.update(obj)
       if (code === 200) {
         this.$message.success('更新数据成功')
-        this.$bus.emit('check-reload')
+        this.$bus.emit('check-reload', obj)
       }
 
       console.log('add obj', obj)
     },
     async fetch () {
-    //   let res = await this.api.visit.list();
-    //   let { data: { data, code } } = res;
+      // let res = await this.api.visit.list()
+      // let { data: { data, code } } = res
       let data = JSON.parse(window.localStorage.getItem('options'))
 
       let list = {
