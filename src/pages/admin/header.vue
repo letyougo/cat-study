@@ -17,8 +17,11 @@
                 <div>
                     <p>诊室检查</p>
                     <ul>
-                        <li>
+                        <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
                             <span>O</span>疾病管理
+                        </li>
+                        <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
+                            <span>O</span>处方管理
                         </li>
                         <li>
                             <span>O</span>医生病例管理
@@ -42,9 +45,9 @@
 </template>
 <script>
 export default {
-  name: "treat",
+  name: 'treat',
   props: {},
-  data() {
+  data () {
     return {
       middle: {
         basic: {
@@ -53,20 +56,20 @@ export default {
         }
       },
       print: false
-    };
+    }
   },
   computed: {},
   methods: {},
-  created() {},
-  mounted() {
+  created () {},
+  mounted () {
     // document.querySelector('#app >.tab').style.minWidth="1631px"
   },
   watch: {
-    $route() {
-      console.log(this.$router, "router");
+    $route () {
+      console.log(this.$router, 'router')
     }
   }
-};
+}
 </script>
 <style scoped lang="less">
 @import url("../header.less");

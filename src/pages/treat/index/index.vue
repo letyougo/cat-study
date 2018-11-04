@@ -14,41 +14,41 @@
 import middle from './middle'
 import right from './right'
 export default {
-    name:'treat',
-    props:{
+  name: 'treat',
+  props: {
 
-    },
-    components:{
-        middle,
-        right
-    },
-    data(){
-        return {
-            middle:{
-                basic:{
-                    age:5,
-                    month:12
-                }
-            }
+  },
+  components: {
+    middle,
+    right
+  },
+  data () {
+    return {
+      middle: {
+        basic: {
+          age: 5,
+          month: 12
         }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
-
+      }
     }
+  },
+  computed: {
+
+  },
+  methods: {
+
+  },
+  created () {
+
+  },
+  mounted () {
+
+  }
 }
 </script>
 <style scoped lang="less">
     .treat-index{
         display: flex;
-        overflow: auto;
+  
     }
 </style>

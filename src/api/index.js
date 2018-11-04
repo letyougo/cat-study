@@ -6,7 +6,7 @@ request.defaults.baseURL = 'http://39.104.82.5:8080'
 request.interceptors.request.use(
   function (req) {
     req.params = req.params || {}
-    req.params.JSESSIONID = window.localStorage.getItem('cat-study-token')
+    req.params.JSESSIONID = global.user.token
 
     if (req.method === 'post') {
       for (let key in req.data) {
@@ -30,19 +30,32 @@ request.interceptors.response.use(function (res) {
   return res
 })
 
+const queryUrl = (url, data) => {
+  let list = []
+  for (let key in data) {
+    list.push(`${key}=${data[key]}`)
+  }
+  let str = list.join('&')
+  str = url + '?' + str
+  return str
+}
+
 const api = {
+
+  // 通过症状，来做检查
+  symptom: {
+    async check (data) {
+      const url = '/disease/listDiseaseBySymptom'
+      const res = await request.get(url, { params: data })
+      return res
+    }
+  },
   account: {
     async login (data) {
       const url = '/login'
       let res = await request.post(
         `${url}?phoneNum=${data.phoneNum}&password=${data.password}`
       )
-      let {
-        data: {
-          data: { token }
-        }
-      } = res
-      window.localStorage.setItem('cat-study-token', token)
       return res
     },
     async list (data) {
@@ -57,6 +70,63 @@ const api = {
     },
     async del (data) {
       const url = '/sysUser/deleteUser '
+      let res = await request.post(url, data)
+      return res
+    }
+  },
+
+  // 处方
+
+  chufang: {
+    async list (params) {
+      const url = '/prescription/listByParam'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async item () {
+
+    },
+    async add (data) {
+      const url = '/prescription/add'
+      let res = await request.post(url, data)
+      return res
+    },
+    async update (data) {
+      const url = '/prescription/update'
+      let res = await request.post(url, data)
+      return res
+    },
+    async del () {
+      const url = '/prescription/delete'
+      let res = await request.post(url, data)
+      return res
+    }
+  },
+
+  // 疾病
+  ill: {
+    async list (params) {
+      const url = '/disease/listByParam'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async item (params) {
+      const url = '/disease/getById'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async add (data) {
+      const url = '/disease/add'
+      let res = await request.post(url, data)
+      return res
+    },
+    async update (data) {
+      const url = '/disease/update'
+      let res = await request.post(url, data)
+      return res
+    },
+    async del (data) {
+      const url = '/disease/delete'
       let res = await request.post(url, data)
       return res
     }
@@ -85,6 +155,16 @@ const api = {
       return res
     }
   },
+
+  // 接诊
+  caseVisit: {
+    update (data) {
+      const url = '/caseVisit/update'
+      let res = request.post(queryUrl(url, data))
+      return res
+    }
+  },
+
   // 权限
   perm: {
     async list () {

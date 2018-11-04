@@ -4,10 +4,10 @@
 			<el-form :model="filter" :inline="true">
         
 				<el-form-item label="主人信息">
-					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
+					<el-input v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="猫咪信息">
-					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
+					<el-input v-model="filter.catName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="入院时间">
 					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
@@ -16,7 +16,7 @@
 					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary">查询</el-button>
+					<el-button type="primary" @click="fetch">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button @click="addForm.visible=true">新增病例</el-button>
@@ -73,7 +73,7 @@
 			</div>
 			<br/>
 			<div class="check-table">
-				 <el-table :data="list">   
+				 <el-table :data="list" v-loading="loading">   
            <el-table-column type="expand">
              <template scope="scope">
                <div style="display:flex;justify-content:center">
@@ -140,8 +140,12 @@ export default {
   components: {},
   data () {
     return {
-      filter: {},
+      filter: {
+        ownerName: '',
+        catName: ''
+      },
       list: [],
+      loading: false,
       addForm: {
         visible: false,
         ownerName: '苏瑞',
@@ -179,9 +183,11 @@ export default {
           status = 4
           break
       }
-      let res = await this.api.case.list({ status })
+      this.loading = true
+      let res = await this.api.case.list({ status, ...this.filter })
       let { data: { data, code } } = res
       if (code === 200) {
+        this.loading = false
         this.list = data
       }
     },

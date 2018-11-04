@@ -27,40 +27,40 @@
 <script>
 import corner from '../../components/corner'
 export default {
-    props:{
+  props: {
 
-    },
-    components:{
-        corner
-    },
-    data(){
-        return {
-            list:[],
-            add:{
-                
-            },
-        
-        }
-    },
-    computed:{
+  },
+  components: {
+    corner
+  },
+  data () {
+    return {
+      list: [],
+      add: {
 
-    },
-    methods:{
-        async fetch(){
-            let res = await this.api.hospital.list()
-            let {data:{data,code}} = res
-            this.list = data
-        },
-        reload(){
-            this.fetch()
-        }
-    },
-    created(){
+      }
 
-    },
-    async mounted(){
-        this.reload()
     }
+  },
+  computed: {
+
+  },
+  methods: {
+    async fetch () {
+      let res = await this.api.hospital.list()
+      let { data: { data, code } } = res
+      this.list = data
+    },
+    reload () {
+      this.fetch()
+    }
+  },
+  created () {
+
+  },
+  async mounted () {
+    this.reload()
+  }
 }
 </script>
 <style scoped lang="less">

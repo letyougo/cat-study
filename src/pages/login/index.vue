@@ -30,30 +30,30 @@
 </template>
 <script>
 export default {
-  name: "doctor",
+  name: 'doctor',
   props: {},
   components: {},
-  data() {
+  data () {
     return {
-			phoneNum:'18030086905',
-			password:'123456'
-		};
+      phoneNum: '18030086905',
+      password: '123456'
+    }
   },
   computed: {},
   methods: {
-		async login(){
-			let res = await this.api.account.login({phoneNum:this.phoneNum,password:this.password})
-			let {data:{data,code}} = res
-			if(code === 200){
-				global.user = data 
-				window.localStorage.setItem("cat-study-user", JSON.stringify(data));
-				this.$router.push('/check/tobe')
-			}
-		}
-	},
-  created() {},
-  mounted() {}
-};
+    async login () {
+      let res = await this.api.account.login({ phoneNum: this.phoneNum, password: this.password })
+      let { data: { data, code } } = res
+      if (code === 200) {
+        global.user = data
+        window.localStorage.setItem('cat-study-user', JSON.stringify(data))
+        this.$router.push('/check/tobe')
+      }
+    }
+  },
+  created () {},
+  mounted () {}
+}
 </script>
 <style scoped lang="less">
 @import url("../../global.less");

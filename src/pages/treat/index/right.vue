@@ -77,39 +77,41 @@
 </template>
 <script>
 export default {
-    name:'right',
-    props:{
+  name: 'right',
+  props: {
 
-    },
-    components:{
+  },
+  components: {
 
-    },
-    data(){
-        return {
-
-        }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
+  },
+  data () {
+    return {
 
     }
+  },
+  computed: {
+
+  },
+  methods: {
+    async fetch () {
+
+    }
+  },
+  created () {
+
+  },
+  mounted () {
+    this.$bus.on('check-reload', () => {
+      console.log('check', 'reload')
+    })
+  }
 }
 </script>
 <style scoped lang="less">
 @import url('../../..//global.less');
 @left:27px;
  .right{
-   
     width: 280px;
-    background: #ffffff;
 }
 .title{
     font-size: 18px;

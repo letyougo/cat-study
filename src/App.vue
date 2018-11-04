@@ -1,5 +1,5 @@
 <template>
- <div id="app">
+ <div class="app">
     <!-- <img src="./assets/logo.png"> -->
     <div class="tab">
       <div class="logo">cat study</div>
@@ -27,45 +27,59 @@
       </div>
     </div>
  
-
     <div class="content">
-      <router-view></router-view>
+      <div class="content-body">
+          <router-view></router-view>
+      </div>
+      
     </div>
-    
+
+    <div class="bottom">
+      <div>台操作员：王羽西（医生）</div>
+      <div>北京猫研所医院</div>
+    </div>
   
   </div>
 </template>
 <script>
 export default {
-  name:'App',
-  props:{
+  name: 'App',
+  props: {
 
   },
-  components:{
+  components: {
 
   },
-  data(){
+  data () {
     return {
-
+      user: window.localStorage.getItem('cat-study-user')
     }
   },
-  computed:{
+  computed: {
 
   },
-  methods:{
+  methods: {
 
   },
-  created(){
+  created () {
 
   },
-  mounted(){
-    
+  mounted () {
+
   }
 }
 </script>
 <style scoped lang="less">
+
   .app{
-    width: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
   .tab{
     display: flex;
@@ -74,7 +88,7 @@ export default {
     background: #ffffff;
     height: 60px;
     color: #333333;
-
+    
    .logo{
      width: 205px;
      background: #07b8a8;
@@ -139,6 +153,26 @@ export default {
   }
 
   .content{
+    margin-top: 10px;
     padding: 0 30px;
+    flex: 1;
+    overflow-y: auto;
   } 
+
+  .bottom{
+    margin: 0 30px;
+    height: 64px;
+    line-height: 64px;
+    justify-content: flex-end;
+    display: flex;
+    background: #ffffff;
+    margin-top: 10px;
+    padding-right: 41px;
+    font-size: 12px;
+    color: #cccccc;
+    font-weight: bold;
+    >div:last-child{
+      margin-left: 20px;
+    }
+  }
 </style>

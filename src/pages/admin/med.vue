@@ -76,43 +76,43 @@
     </div>
 </template>
 <script>
-import corner from "../../components/corner";
+import corner from '../../components/corner'
 export default {
   props: {},
   components: {
     corner
   },
-  data() {
+  data () {
     return {
       list: [],
-      likeStr: "片",
+      likeStr: '片',
       loading: false,
       addForm: {
-        username: "siri",
-        phoneNum: "13683360717",
-        password: "surui123",
-        email: "313755017@qq.com",
+        username: 'siri',
+        phoneNum: '13683360717',
+        password: 'surui123',
+        email: '313755017@qq.com',
         visible: false
       },
       pageNum: 1,
       totalCount: 0,
       search: {
-        startDate: "",
-        endDate: ""
+        startDate: '',
+        endDate: ''
       }
-    };
+    }
   },
   computed: {},
   watch: {
-    pageNum() {
-      this.reload();
+    pageNum () {
+      this.reload()
     }
   },
   methods: {
-    reload() {
-      this.fetch();
+    reload () {
+      this.fetch()
     },
-    async fetch() {
+    async fetch () {
       // let {startDate,endDate} = this.search
       // if(startDate){
       //     startDate = moment(startDate).format('YYYYMMDD')
@@ -120,26 +120,26 @@ export default {
       // if(endDate){
       //     endDate = moment(endDate).format('YYYYMMDD')
       // }
-      console.log("page-num", this.pageNum);
-      this.loading = true;
+      console.log('page-num', this.pageNum)
+      this.loading = true
       let res = await this.api.med.list({
         likeStr: this.likeStr,
         start: (this.pageNum - 1) * 20
-      });
-      let { data: { data, code, desc, pageinfo: { totalCount } } } = res;
-      this.list = data;
-      this.totalCount = totalCount;
-      this.loading = false;
+      })
+      let { data: { data, code, desc, pageinfo: { totalCount } } } = res
+      this.list = data
+      this.totalCount = totalCount
+      this.loading = false
     },
-    async add() {},
-    async update() {},
-    async del() {}
+    async add () {},
+    async update () {},
+    async del () {}
   },
-  created() {},
-  mounted() {
-    this.reload();
+  created () {},
+  mounted () {
+    this.reload()
   }
-};
+}
 </script>
 <style scoped lang="less">
 .admin-med-title {

@@ -5,8 +5,10 @@
     box-sizing: border-box;
     font-family: "Microsoft YaHei"
 }
-html,body{
+html,body.app{
     background: #f2f2f2;
+    height: 100%;
+    width: 100%;
 }
 a{
     color:#07b8a8;
@@ -15,18 +17,7 @@ a{
 li{
     list-style: none;
 }
-#app{
-    
-}
-.main-item{
-    display: flex;
-    width: 100%;   
-}
-.main-item div{
-    width: 224px;
-    height: 44px;
-    line-height: 44px;
-}
+
 .el-input__prefix{
     line-height: 42px;
 }

@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
+import VueBus from 'vue-bus'
 import router from './router'
 import VCharts from 'v-charts'
 import './reset.css'
@@ -14,11 +15,11 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(VCharts)
+Vue.use(VueBus)
 
-Object.assign(global,{
-  user :JSON.parse(localStorage.getItem('cat-study-user'))
+Object.assign(global, {
+  user: JSON.parse(window.localStorage.getItem('cat-study-user'))
 })
-
 
 Vue.use(api)
 /* eslint-disable no-new */

@@ -49,3 +49,23 @@
         padding: 30px 93px 20px 91px;
     }
 }
+
+.flex-form{
+    display: flex;
+    justify-content: space-between;
+    .el-form-item{
+        &:nth-child(1){
+            flex: 1
+        }
+        &:nth-child(2){
+            flex: 1
+        }
+        .el-form-item__content{
+            width:100%;
+            >div{
+                width: 100%;
+            }
+        }
+     
+    }
+}

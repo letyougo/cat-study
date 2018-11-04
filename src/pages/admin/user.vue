@@ -115,113 +115,113 @@
     </div>
 </template>
 <script>
-import corner from "../../components/corner";
+import corner from '../../components/corner';
 export default {
   props: {},
   components: {
     corner
   },
-  data() {
+  data () {
     return {
       list: [],
       add: {
-        username: "siri",
-        phoneNum: "13683360717",
-        password: "surui123",
-        email: "313755017@qq.com",
+        username: 'siri',
+        phoneNum: '13683360717',
+        password: 'surui123',
+        email: '313755017@qq.com',
         visible: false
       },
       roles: []
-    };
+    }
   },
   computed: {},
   methods: {
-    async addUser() {
-      let res = await this.api.account.post(this.add);
-      let { data: { code, data } } = res;
-      this.tip(code, "增加用户成功", "增加用户失败", () => {
-        this.add.visible = false;
-        this.reload();
-      });
+    async addUser () {
+      let res = await this.api.account.post(this.add)
+      let { data: { code, data } } = res
+      this.tip(code, '增加用户成功', '增加用户失败', () => {
+        this.add.visible = false
+        this.reload()
+      })
     },
-    async delUser(item) {
+    async delUser (item) {
       try {
-        await this.$confirm("确定删除用户吗？");
-        let res = await this.api.account.del({ userId: item.id });
-        let { data: { code, data } } = res;
-        this.tip(code, "删除用户成功", "删除用户失败", () => {
-          this.reload();
-        });
+        await this.$confirm('确定删除用户吗？')
+        let res = await this.api.account.del({ userId: item.id })
+        let { data: { code, data } } = res
+        this.tip(code, '删除用户成功', '删除用户失败', () => {
+          this.reload()
+        })
       } catch (e) {
-        this.$message.error("删除用户失败");
+        this.$message.error('删除用户失败')
       }
     },
-    async roleChange(ids, dir, item) {
+    async roleChange (ids, dir, item) {
       for (let i = 0; i < ids.length; i++) {
-        let res;
-        if (dir === "right") {
-          res = await this.api.role.add({ userId: item.id, roleId: ids[i] });
+        let res
+        if (dir === 'right') {
+          res = await this.api.role.add({ userId: item.id, roleId: ids[i] })
         }
 
-        if (dir === "left") {
-          res = await this.api.role.del({ userId: item.id, roleId: ids[i] });
+        if (dir === 'left') {
+          res = await this.api.role.del({ userId: item.id, roleId: ids[i] })
         }
-        let { data: { code } } = res;
-        this.tip(code, "更新角色成功", "更新角色失败", () => {
-          this.reload();
-        });
+        let { data: { code } } = res
+        this.tip(code, '更新角色成功', '更新角色失败', () => {
+          this.reload()
+        })
       }
-      this.reload();
+      this.reload()
     },
-    async update(item) {
+    async update (item) {
       let data = {
         email: item.email,
         phoneNum: item.phoneNum,
         username: item.username,
         password: item.password,
         id: item.id
-      };
-      let res = await this.api.role.update(data);
-      let { data: { code } } = res;
-      this.tip(code, "更新数据成功", "更新数据失败", () => {
-        this.reload();
-      });
+      }
+      let res = await this.api.role.update(data)
+      let { data: { code } } = res
+      this.tip(code, '更新数据成功', '更新数据失败', () => {
+        this.reload()
+      })
     },
-    async fetchUser() {
-      let res = await this.api.account.list();
-      let { data: { data, code } } = res;
+    async fetchUser () {
+      let res = await this.api.account.list()
+      let { data: { data, code } } = res
       if (code === 200) {
         data = data.map(item => {
-          item.roles = item.roles || [];
-          item.roles2 = item.roles.map(item => item.roleId);
-          return item;
-        });
-        this.list = data;
+          item.roles = item.roles || []
+          item.roles2 = item.roles.map(item => item.roleId)
+          return item
+        })
+        this.list = data
       }
     },
-    async fetchRole() {
-      let res = await this.api.role.list();
+    async fetchRole () {
+      let res = await this.api.role.list()
 
-      let { data: { data, code } } = res;
+      let { data: { data, code } } = res
       data = data.map(r => {
-        r.key = r.roleId;
-        r.label = r.roleName;
-        r.permissions = r.permissions || [];
-        return r;
-      });
-      console.log(data, "roles-sss");
-      this.roles = data;
+        r.key = r.roleId
+        r.label = r.roleName
+        r.permissions = r.permissions || []
+        return r
+      })
+      console.log(data, 'roles-sss')
+      this.roles = data
     },
-    reload() {
-      this.fetchUser();
-      this.fetchRole();
+    reload () {
+      this.fetchUser()
+      this.fetchRole()
     }
   },
-  created() {},
-  async mounted() {
-    this.reload();
+  created () {},
+  async mounted () {
+    this.reload()
   }
-};
+}
 </script>
 <style scoped lang="less">
 .admin-user-title {

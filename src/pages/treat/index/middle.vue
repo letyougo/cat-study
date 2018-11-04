@@ -43,7 +43,9 @@
 
         <el-dialog title="主诉症状" :visible="mainDialog">
              <div class="main-item" v-for="(l, index) in main.options" :key="index">
-                <div v-for="(item, j) in l" :key="j">{{item.names}}</div>
+                <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':item.picked}">
+                    <span >{{item.names}}</span>
+                </div>
              </div>
              <span slot="footer">
                 <el-button @click="mainDialog=false">取消</el-button>
@@ -63,9 +65,9 @@
                     </el-form>
 
                     <div class="main-list">
-                        <el-tag closable type="primary">多饮多尿</el-tag>
-                        <el-tag closable type="warning">多饮多尿</el-tag>
-                        <el-tag closable>多饮多尿</el-tag>
+                        <span v-for="item in main.value" v-if="item" :key="item">
+                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        </span>
                     </div>
                 </div>
             </el-card>
@@ -77,7 +79,7 @@
                 <h2>生活史</h2>
                 <el-form>
                     <el-form-item>
-                        <el-select style="width:50%" v-model="lifeHistory.value" multiple placeholder="请选择">
+                        <el-select style="width:100%" v-model="lifeHistory.value" multiple placeholder="请选择">
                             <el-option v-for="(item, index) in lifeHistory.options" :key="index" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
@@ -90,28 +92,27 @@
         <template v-if="passHistory.exist">
             <div class="past">
                 <h2>既往史</h2>
-                <el-form inline>
+                <el-form inline class="flex-form">
                     <el-form-item>
-                        <el-select style="width:400px" multiple placeholder="请选择" v-model="passHistory.value">
-                            <!-- <el-option label="aa" key="aa">11</el-option>
-              <el-option label="bb" key="bb">22</el-option>
-              <el-option label="cc" key="cc">33</el-option> -->
-                            <el-option v-for="item in passHistory.options" :label="item.names" :value="item.value" :key="item.names">{{item.names}}</el-option>
+                        <el-select placeholder="请选择" v-model="passHistory.value">
+                            <el-option v-for="item in passHistory.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item>
-                        <el-select style="width:400px" multiple placeholder="请选择" v-model="passHistory.value">
-                            <!-- <el-option label="aa" key="aa">11</el-option>
-              <el-option label="bb" key="bb">22</el-option>
-              <el-option label="cc" key="cc">33</el-option> -->
+                    <el-form-item >
+                        <el-select placeholder="请选择" v-model="passHistory2.value">
+                            <el-option v-for="item in passHistory2.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
+                    </el-form-item>
+                    <el-form-item >
+                        <el-button type="primary" icon="el-icon-plus" @click="passHistory2.model.push(passHistory2.value)"> 新增</el-button>
                     </el-form-item>
                 </el-form>
                 <div class="behavior-list">
-                    <el-tag closable type="primary">多饮多尿</el-tag>
-                    <el-tag closable type="warning">多饮多尿</el-tag>
-                    <el-tag closable>多饮多尿</el-tag>
+                    <span v-for="item in passHistory2.model" v-if="item" :key="item">
+                        <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                    </span>
+                
                 </div>
             </div>
         </template>
@@ -184,7 +185,7 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" placeholder="未见异常" v-model="checkBody.touch.value">
+                                <el-select style="width:400px" placeholder="未见异常" v-model="checkBody.touch.value">
                                     <el-option v-for="item in checkBody.touch.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -199,7 +200,7 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常" v-model="checkBody.hear.value">
+                                <el-select style="width:400px" multiple placeholder="未见异常" v-model="checkBody.hear.value">
                                     <el-option v-for="item in checkBody.hear.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -214,7 +215,7 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
+                                <el-select style="width:400px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
                                     <el-option v-for="item in checkBody.smell.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -227,21 +228,27 @@
                 <div class="check-item">
                     <div class="tip">视诊</div>
                     <div class="con">
-                        <el-form inline>
+                        <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常"  v-model="checkBody.eye.value">
+                                <el-select  placeholder="未见异常"  v-model="checkBody.eye.value">
                                     <el-option v-for="item in checkBody.eye.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select style="width:350px" multiple placeholder="未见异常"  v-model="checkBody.eye.value">
-                                    <el-option label="11" value="22"></el-option>
+                                <el-select placeholder="未见异常"  v-model="checkBody2.eye.value">
+                                    <el-option v-for="item in checkBody2.eye.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
+
+                            <el-form-item >
+                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.eye.model.push(checkBody2.eye.value+';'+checkBody2.eye.value)"> 新增</el-button>
+                            </el-form-item>
                         </el-form>
-                        <el-tag closable>11</el-tag>
-                        <el-tag closable>11</el-tag>
+                        <span v-for="item in checkBody2.eye.model" v-if="item" :key="item">
+                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        </span>
+                        
                     </div>
                 </div>
             </template>
@@ -253,21 +260,27 @@
                 <div class="check-item">
                     <div class="tip">皮损</div>
                     <div class="con">
-                        <el-form inline>
+                        <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select style="width:350px"  placeholder="未见异常" v-model="checkBody.skinDamage.value">
+                                <el-select  placeholder="未见异常" v-model="checkBody.skinDamage.value">
                                     <el-option v-for="item in checkBody.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select style="width:350px"  placeholder="未见异常" >  
-                                    <el-option v-for="item in checkBody.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                                <el-select placeholder="未见异常" v-model="checkBody2.skinDamage.value" >  
+                                    <el-option v-for="item in checkBody2.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
+
+                            <el-form-item >
+                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.skinDamage.model.push(checkBody.skinDamage.value+';'+checkBody2.skinDamage.value)"> 新增</el-button>
+                            </el-form-item>
                         </el-form>
-                        <el-tag closable>11</el-tag>
-                        <el-tag closable>11</el-tag>
+                        
+                        <span v-for="item in checkBody2.skinDamage.model" v-if="item" :key="item">
+                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        </span>
                     </div>
                 </div>
             </div>
@@ -275,25 +288,34 @@
 
         <template v-if="checkBody.abnomalBehavior.exist">
             <div class="behavior">
-                <el-form>
+                <el-form inline class="flex-form">
                     <el-form-item label="行为异常">
-                        <el-select style="width:50%" v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
+                        <el-select v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
                             <el-option v-for="item in checkBody.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
+
+                    <el-form-item>
+                      <el-select  placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
+                          <el-option v-for="item in checkBody2.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                      </el-select>
+                    </el-form-item>
+
+                  <el-form-item >
+                    <el-button type="primary" icon="el-icon-plus" @click="checkBody2.abnomalBehavior.model.push(checkBody.abnomalBehavior.value+';'+checkBody2.abnomalBehavior.value)"> 新增</el-button>
+                  </el-form-item>
                 </el-form>
-                <div class="behavior-list">
-                    <el-tag closable type="primary">多饮多尿</el-tag>
-                    <el-tag closable type="warning">多饮多尿</el-tag>
-                    <el-tag closable>多饮多尿</el-tag>
+                <div class="behavior-list" style="padding-left: 51px">
+                  <span v-for="item in checkBody2.abnomalBehavior.model" v-if="item" :key="item">
+                    <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                  </span>
                 </div>
             </div>
         </template>
 
-
         <el-form>
             <el-form-item>
-                <el-button type="primary" style="float:right">保存</el-button>
+                <el-button type="primary" style="float:right" @click="add">保存</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -303,6 +325,51 @@ export default {
   name: 'middle',
   props: {},
   components: {},
+  watch: {
+    passHistory: {
+      handler (obj) {
+        let item = this.passHistory.options.find(item => item.names === obj.value)
+        this.passHistory2.options = item.child || []
+      },
+      deep: true
+    },
+    checkBody: {
+      handler (check) {
+        console.log('check', check)
+        let item = this.checkBody.eye.options.find(item => item.names === check.eye.value)
+        if (item) {
+          this.checkBody2.eye.options = item.child
+        }
+        console.log(1)
+        item = this.checkBody.skinDamage.options.find(item => item.names === check.skinDamage.value)
+        if (item) {
+          this.checkBody2.skinDamage.options = item.child
+        }
+        console.log(2)
+        item = this.checkBody.abnomalBehavior.options.find(item => item.names === check.abnomalBehavior.value)
+        if (item) {
+          this.checkBody2.abnomalBehavior.options = item.child
+        }
+        console.log(item, 'checkBody-abnornal')
+      },
+      deep: true
+    },
+    main: {
+      handler (obj) {
+        let v = []
+        console.log('tag', 'aaa')
+        // this.main.options.forEach(element => {
+        //   element.forEach(item => {
+        //     if (item.picked) {
+        //       v.push(item.names)
+        //     }
+        //   })
+        // })
+        // this.main.value = v
+      },
+      deep: true
+    }
+  },
   data () {
     return {
       list: {
@@ -313,6 +380,7 @@ export default {
         checkBody: [], // 查体
         skinDamage: [] // 皮损部位
       },
+      it: 0,
       mainDialog: false,
       main: {
         exist: true,
@@ -351,10 +419,34 @@ export default {
         value: '',
         options: []
       },
+      passHistory2: {
+        value: '',
+        options: [],
+        model: []
+      },
+      eyeValue: [],
       main: {
         exist: false,
-        value: '',
+        value: [],
         options: [[]]
+      },
+      checkBody2: {
+        eye: {
+          value: '',
+          options: [],
+          model: []
+        },
+        skinDamage: {
+          value: '',
+          options: [],
+          model: []
+        },
+        abnomalBehavior: {
+          exist: false,
+          value: '',
+          options: [],
+          model: []
+        }
       },
       checkBody: {
         temp: {
@@ -412,6 +504,24 @@ export default {
   },
   computed: {},
   methods: {
+
+    setMain (index, j) {
+      let v = this.main.value
+      console.log('set-main', index, j, this.main, this.main.value, 'sss')
+      let options = this.main.options
+      if (options[index][j].picked) {
+        options[index][j].picked = false
+        let n = this.main.value.indexOf(options[index][j].names)
+        v.splice(n, 1)
+      } else {
+        options[index][j].picked = true
+        v.push(options[index][j].names)
+      }
+      this.main.value = v
+      this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
+      this.mainDialog = false
+    },
+
     async fetchItem () {
       let res1 = await this.api.case.item({ id: this.$route.query.id })
 
@@ -438,62 +548,107 @@ export default {
         bear,
         fillTime,
         breathRate,
-        skinLesion
+        visualConsult,
+        skinLesion, id
       } } } = res2
-
-      console.log(
-        pastHistory,
-        '1',
-        behaviorAbnormal,
-        '2',
-        weight,
-        '3',
-        mainSymptom,
-        '4',
-        pressure,
-        '5',
-        auscultation,
-        '6',
-        palpation,
-        '7',
-        heartRate,
-        '8',
-        variety,
-        '9',
-        lifeHistory,
-        '10',
-        noseConsult,
-        '11',
-        temperature,
-        '12',
-        bear,
-        '13',
-        fillTime,
-        '14',
-        breathRate,
-        '15',
-        skinLesion)
-
+      this.id = id
       this.basic.sex.value = bear
       this.basic.weight.value = weight
       this.basic.kind.value = variety
 
-      this.lifeHistory.value = [lifeHistory]
-      this.passHistory.value = [pastHistory]
+      this.lifeHistory.value = [...(lifeHistory.split(','))]
+      this.passHistory2.model = [...(pastHistory.split(','))]
 
-      this.checkBody.smell.value = [noseConsult]
+      this.checkBody.smell.value = [...(noseConsult.split(','))]
       this.checkBody.temp.value = temperature
       this.checkBody.recharge.value = fillTime
       this.checkBody.breath.value = breathRate
       this.checkBody.heart.value = heartRate
-      this.checkBody.abnomalBehavior.value = behaviorAbnormal
+      this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')]
       this.checkBody.touch.value = palpation
-      this.checkBody.hear.value = [auscultation]
+      this.checkBody.hear.value = [...(auscultation.split(','))]
       this.checkBody.blood.value = pressure
-      this.checkBody.skinDamage.value = skinLesion
-      this.main.value = mainSymptom
+      this.checkBody2.skinDamage.model = [...(skinLesion.split(','))]
+      this.checkBody2.eye.model = [...(visualConsult.split(','))]
+      this.main.value = [...(mainSymptom.split(','))]
+      this.main.options = this.main.options.map(item => {
+        item = item.map(l => {
+          l.picked = false
+          if (this.main.value.includes(l.names)) {
+            l.picked = true
+          }
+          return l
+        })
+        return item
+      })
+      console.log(this.main.options)
 
       console.log(bear, catMonths, catYears)
+    },
+    async add () {
+      let obj = {}
+      if (this.basic.sex.value) {
+        obj.bear = this.basic.sex.value
+      }
+      if (this.basic.weight.value) {
+        obj.weight = this.basic.weight.value
+      }
+      if (this.basic.kind.value) {
+        obj.variety = this.basic.kind.value
+      }
+      if (this.lifeHistory.value) {
+        obj.lifeHistory = this.lifeHistory.value
+      }
+      if (this.passHistory.value) {
+        obj.pastHistory = this.passHistory2.model
+      }
+      if (this.main.value) {
+        obj.mainSymptom = this.main.value
+      }
+      if (this.checkBody.temp.value) {
+        obj.temperature = this.checkBody.temp.value
+      }
+      if (this.checkBody.blood.value) {
+        obj.pressure = this.checkBody.blood.value
+      }
+      if (this.checkBody.heart.value) {
+        obj.heartRate = this.checkBody.hear.value
+      }
+      if (this.checkBody.breath.value) {
+        obj.breath = this.checkBody.breath.value
+      }
+      if (this.checkBody.recharge.value) {
+        obj.recharge = this.checkBody.recharge.value
+      }
+      if (this.checkBody.abnomalBehavior.value) {
+        obj.behaviorAbnormal = this.checkBody.abnomalBehavior.value
+      }
+      if (this.checkBody.touch.value) {
+        obj.palpation = this.checkBody2.eye.model
+      }
+      if (this.checkBody.hear.value) {
+        obj.auscultation = this.checkBody.hear.value
+      }
+      if (this.checkBody.smell.value) {
+        obj.noseConsult = this.checkBody.smell.value
+      }
+      if (this.checkBody2.skinDamage.model) {
+        obj.skinLesion = this.checkBody2.skinDamage.model
+      }
+      if (this.checkBody2.eye.model) {
+        obj.visualConsult = this.checkBody2.eye.model
+      }
+
+      this.$message('更新数据中...')
+      obj.caseId = this.$route.query.id
+      obj.id = this.id
+      let { data: { code } } = await this.api.caseVisit.update(obj)
+      if (code === 200) {
+        this.$message.success('更新数据成功')
+        this.$bus.emit('check-reload')
+      }
+
+      console.log('add obj', obj)
     },
     async fetch () {
     //   let res = await this.api.visit.list();
@@ -560,12 +715,14 @@ export default {
         }
       }
       if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
+        let options = list.main.find(
+          item => item.dimension === '主诉症状' && item.isUsed
+        ).options
+
         this.main = {
           exist: true,
-          value: '',
-          options: list.main.find(
-            item => item.dimension === '主诉症状' && item.isUsed
-          ).options
+          value: [],
+          options
         }
       }
       if (list.checkBody.find(item => item.dimension === '体温')) {
@@ -666,7 +823,6 @@ export default {
           }
           arr.push(l)
         }
-        console.log(arr, 'this is arr')
 
         this.main = {
           exist: true,
@@ -689,7 +845,6 @@ export default {
 .middle {
   padding-left: 50px;
   padding-right: 50px;
-  background: #ffffff;
 
   > .title {
     line-height: 56px;

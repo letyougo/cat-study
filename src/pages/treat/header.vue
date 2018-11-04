@@ -24,10 +24,13 @@
             <div class="left">
                 <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
                     <span>X</span>
-                    <span class="title2">问诊</span>
+                    <span class="title2">诊室</span>
                 </div>
-                <div class="title2">检查结果</div>
-                <div>
+                <div @click="$router.push('/treat/index?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}">
+                    <!-- <span>X</span> -->
+                    <span class="title2">检查结果</span>
+                </div>
+                <!-- <div>
                     <ul>
                         <li>
                             <span>O</span>基本情况
@@ -44,14 +47,14 @@
                         <li>
                             <span>O</span>查体</li>
                     </ul>
-                </div>
-                <div @click="$router.push('/')" class="title2">
+                </div> -->
+                <!-- <div @click="$router.push('/')" class="title2">
                     诊疗
-                </div>
-                <div @click="$router.push('/treat/yizhu')" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
+                </div> -->
+                <div @click="$router.push('/treat/yizhu?id='+$route.query.id)" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
                     治疗与医嘱
                 </div>
-                <div @click="$router.push('/treat/mianyi')" :class="{active:$route.path === '/treat/mianyi' ? true : false}" class="title2">
+                <div @click="$router.push('/treat/mianyi?id='+$route.query.id)" :class="{active:$route.path === '/treat/mianyi' ? true : false}" class="title2">
                     免疫与健康
                 </div>
             </div>
@@ -64,9 +67,9 @@
 </template>
 <script>
 export default {
-  name: "treat",
+  name: 'treat',
   props: {},
-  data() {
+  data () {
     return {
       middle: {
         basic: {
@@ -75,27 +78,27 @@ export default {
         }
       },
       print: false,
-      item:{}
-    };
+      item: {}
+    }
   },
   computed: {},
   methods: {
-    async fetch(){
-        let res = await this.api.case.item({id:this.$route.query.id})
-        let {data:{data,code}} = res
-        this.item = data
+    async fetch () {
+      let res = await this.api.case.item({ id: this.$route.query.id })
+      let { data: { data, code } } = res
+      this.item = data
     }
   },
-  created() {},
-  mounted() {
+  created () {},
+  mounted () {
     this.fetch()
     // document.querySelector('#app >.tab').style.minWidth="1631px"
   },
   watch: {
-    $route() {
+    $route () {
     }
   }
-};
+}
 </script>
 <style scoped lang="less">
 @import url("../header.less");
