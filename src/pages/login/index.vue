@@ -3,7 +3,7 @@
 
         <div class="login-pannel">
 					<div class="login-title">
-						Welcome
+						<img src="/static/img/登录 后台/Welcome.png"/>
 					</div>
 					<div class="login-tip">
 						欢迎登录猫研所
@@ -63,14 +63,14 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  background: #ffffff;
+  background:url('/static/img/登录 后台/色阶1.png') no-repeat center;
+  background-size: cover;
 
   .login-pannel {
     position: absolute;
     right: 20px;
-		top: 20px;
+		top: 85px;
 		width: 494px;
-    background: #ffffff;
     
     border-radius: 4px;
 

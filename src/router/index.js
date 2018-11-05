@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/',
       name: '接诊',
-      component: Check
+      component: Login
     },
     {
       path: '/check',

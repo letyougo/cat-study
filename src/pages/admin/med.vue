@@ -135,7 +135,7 @@ export default {
   methods: {
     async addToHospital (row) {
       this.hospital.visible = true
-      this.medicineId = row.id
+      this.hospital.medicineId = row.id
     },
     async fetchHospital () {
       let res = await this.api.hospital.list()
@@ -148,12 +148,11 @@ export default {
         hospitalId: row.id,
         medicineId
       }
-      console.log('save hos', obj)
-      return
+     
       this.$message('添加药品中...')
 
       let res = await this.api.hosmed.add({
-        hospitalId: id,
+        hospitalId: row.id,
         medicineId
       })
       let { data: { data, code } } = res
@@ -162,6 +161,7 @@ export default {
       } else {
         this.$message.error('添加药品失败')
       }
+      this.hospital.visible = false
     },
     async reload () {
       await this.fetch()

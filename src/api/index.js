@@ -211,7 +211,7 @@ const api = {
     },
     async add (data) {
       const url = '/hospMedicine/add'
-      let res = await request.post(url, queryUrl(data))
+      let res = await request.post(queryUrl(url, data))
       return res
     }
   },

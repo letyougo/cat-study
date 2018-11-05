@@ -2,7 +2,8 @@
     <div class="middle">
 
 
-        <p class="basic title" v-if="list.basic.length">基本情况</p>
+        <p class="basic title" v-if="list.basic.length">
+          <tip></tip>基本情况</p>
 
         <el-form :inline="true" v-if="list.basic.length">
             <template v-if="basic.age.exist">
@@ -53,11 +54,11 @@
              </span>
         </el-dialog>
 
-        <template v-if="true">
+        <template v-if="main.exist">
             <div class="main">
             <el-card>
                 <div slot="header" class="clearfix">
-                    <h2>主述症状</h2>
+                    <h2><tip></tip>主述症状</h2>
                     <el-form>
                         <el-form-item>
                             <el-input @focus="mainDialog=true"></el-input>
@@ -76,7 +77,7 @@
 
         <template v-if="lifeHistory.exist">
             <div class="life">
-                <h2>生活史</h2>
+                <h2><tip></tip>生活史</h2>
                 <el-form>
                     <el-form-item>
                         <el-select style="width:100%" v-model="lifeHistory.value" multiple placeholder="请选择">
@@ -119,7 +120,7 @@
 
         <template v-if="list.checkBody.length>0">
             <div class="checkbody">
-            <div>查体</div>
+            <div><tip></tip>查体</div>
             <div class="check-item">
                 <div class="tip">测量</div>
                 <div class="con">
@@ -321,10 +322,13 @@
     </div>
 </template>
 <script>
+  import tip from '../../../components/tip'
 export default {
   name: 'middle',
   props: {},
-  components: {},
+  components: {
+    tip
+  },
   watch: {
     passHistory: {
       handler (obj) {
@@ -664,9 +668,9 @@ export default {
       console.log('add obj', obj)
     },
     async fetch () {
-      // let res = await this.api.visit.list()
-      // let { data: { data, code } } = res
-      let data = JSON.parse(window.localStorage.getItem('options'))
+      let res = await this.api.visit.list()
+      let { data: { data, code } } = res
+      // let data = JSON.parse(window.localStorage.getItem('options'))
 
       let list = {
         basic: data.filter(item => item.title === '基本情况'),
@@ -855,6 +859,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
+  
 .middle {
   padding-left: 50px;
   padding-right: 50px;

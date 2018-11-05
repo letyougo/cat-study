@@ -129,6 +129,9 @@ export default {
         this.fetch({ hospitalId: list[0].id })
       }
     },
+    async del(){
+        
+    },
     async fetch () {
       // let {startDate,endDate} = this.search
       // if(startDate){
