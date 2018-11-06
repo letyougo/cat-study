@@ -65,7 +65,7 @@
             </div>
   
             <div class="action">
-                <el-button type="primary">去化验</el-button>
+                <el-button type="primary" @click="addReport">去化验</el-button>
             </div>
 
             <div class="result">            
@@ -80,6 +80,7 @@
 </template>
 <script>
     import huayan from '../../../components/huayan'
+    import kd from '../../../api/kd'
 export default {
   name: 'right',
   props: {
@@ -183,6 +184,30 @@ export default {
             this.names = names
             this.exams = exams
           }
+    },
+    async addReport(){
+        console.log('ssss', '')
+        let id =this.$route.query.id 
+        let res = await kd.check.addReport(id,{
+            "data":[
+        {
+            "checkName": "血常规",
+            "doctorName": "skd",
+            "checkDoctorName": "surui",
+            "creataTime":"1541412021000",
+            "updateTime":"1541412021000"
+        },
+        {
+            "checkName": "PCR-心丝虫",
+            "doctorName": "surui",
+            "checkDoctorName": "skd",
+            "creataTime":"1541412268000",
+            "updateTime":"1541412021000"
+        }
+    ]
+        })
+        let {data} = res 
+        console.log('add-report', data)
     }
   },
   created () {

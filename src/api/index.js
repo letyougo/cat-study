@@ -6,6 +6,7 @@ request.defaults.baseURL = 'http://39.104.82.5:8080'
 
 request.interceptors.request.use(
   function (req) {
+    console.log('api', 'api-yafeng')
     req.params = req.params || {}
     req.params.JSESSIONID = global.user.token
 
@@ -51,6 +52,14 @@ const api = {
       return res
     }
   },
+
+  // 检查相关
+  check: {
+    addExport () {
+      const url = `/check/addReport?caseId=`
+    }
+  },
+
   account: {
     async login (data) {
       const url = '/login'
