@@ -10,10 +10,10 @@
 					<el-input v-model="filter.catName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="入院时间">
-					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
+					<el-date-picker v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
 				</el-form-item>
-				<el-form-item label="主人信息">
-					<el-input v-model="filter.owner" placeholder="" class="line-input"></el-input>
+				<el-form-item >
+					<el-date-picker v-model="filter.endTime" placeholder="" class="line-input"></el-date-picker>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="fetch">查询</el-button>
@@ -134,6 +134,8 @@
 	</div>
 </template>
 	<script>
+import moment from 'moment'
+global.moment = moment
 export default {
   name: 'check',
   props: {},
@@ -142,7 +144,9 @@ export default {
     return {
       filter: {
         ownerName: '',
-        catName: ''
+        catName: '',
+        startTime: '',
+        endTime: ''
       },
       list: [],
       loading: false,

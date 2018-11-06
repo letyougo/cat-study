@@ -1,6 +1,6 @@
 <template>
     <div class="right">
-        <div class="title">疑似诊断提示</div>
+        <div class="title">疑似 &nbsp;{{names}}</div>
         <div class="suggest dia-item">
             <div class="top">
                 <div class="title-tip">症状推荐检查</div>
@@ -9,16 +9,19 @@
                 </div>
             </div>
             <div class="check">
-                <div><el-checkbox label="血常规"></el-checkbox></div>
-                <div><el-checkbox label="FIV/FeLV"></el-checkbox></div>
-                <div><el-checkbox label="血气"></el-checkbox></div>
-                <div><el-checkbox label="生化"></el-checkbox></div>
-                <div><el-checkbox label="粪便镜检"></el-checkbox></div>  
+                <div v-for="item in exams">
+                    <div><el-checkbox :label="item"></el-checkbox></div>
+                </div>
             </div>
             <div class="action">
-                <el-button type="primary" >去化验</el-button>
+                <el-button type="primary" @click="huay.visible=true">去化验</el-button>
             </div>
         </div>
+        <el-dialog title="化验" :visible="huay.visible">
+                <el-table :data="huay.list">
+                  <el-table-column label=""></el-table-column>
+                </el-table>
+              </el-dialog>
         <div class="guess">
              <div class="title">疑似疾病</div>
             <div class="top">
@@ -76,17 +79,23 @@
     </div>
 </template>
 <script>
+    import huayan from '../../../components/huayan'
 export default {
   name: 'right',
   props: {
 
   },
   components: {
-
+        huayan
   },
   data () {
     return {
-
+          exams: [],
+          names: '',
+          huay: {
+            visible: false,
+            list: []
+          }
     }
   },
   computed: {
@@ -94,30 +103,86 @@ export default {
   },
   methods: {
     setYear (obj) {
-      let age = parseInt(obj.catYears)
-      if (age <= 1) {
-        return '幼年猫'
-      } else if (age < 8) {
-        return '青年猫'
-      } else {
-        return '老年猫'
-      }
+          let age = parseInt(obj.catYears)
+          if (age <= 1) {
+            return '幼年猫'
+          } else if (age < 8) {
+            return '青年猫'
+          } else {
+            return '老年猫'
+          }
     },
     setTemp (obj) {
-      let temp = ''
-      let temperature = parseInt(obj.temperature)
-      if (temperature < 38) {
-        return '体温失温'
-      } else if (temperature > 39) {
-        return '发热'
-      } else {
-        return ''
-      }
+          let temp = ''
+          let temperature = parseInt(obj.temperature)
+          if (temperature < 38) {
+            return '体温失温'
+          } else if (temperature > 39) {
+            return '发热'
+          } else {
+            return ''
+          }
+    },
+    setHeartRate (obj) {
+          let rate = parseInt(obj.heartRate)
+          if (rate < 100) {
+            return '心动过缓'
+          }
+          if (rate > 140) {
+            return '心跳过速'
+          }
+          return ''
+    },
+    setAbnormal (obj) {
+
+    },
+    setMuti (arr) {
+          arr = arr.map(item => {
+            item = item.split(';')
+            return item[item.length - 1]
+          })
+          return arr.join(',')
     },
     async fetch (obj) {
-      if (obj) {
-        console.log(obj)
-      }
+          let arr = []
+          if (obj) {
+            console.log(obj)
+            obj.catYears && arr.push(this.setYear(obj))
+            obj.temperature && arr.push(this.setTemp(obj))
+            obj.heartRate && arr.push(this.setHeartRate(obj))
+            if (obj.auscultation && obj.auscultation.length > 0) {
+              arr.push(this.setMuti(obj.auscultation))
+            }
+            if (obj.lifeHistory && obj.lifeHistory.length > 0) {
+              arr.push(this.setMuti(obj.lifeHistory))
+            }
+            if (obj.mainSymptom && obj.mainSymptom.length > 0) {
+              arr.push(this.setMuti(obj.mainSymptom))
+            }
+            if (obj.noseConsult && obj.noseConsult.length > 0) {
+              arr.push(this.setMuti(obj.noseConsult))
+            }
+            if (obj.palpation) {
+              arr.push(obj.palpation)
+            }
+            if (obj.skinLesion && obj.skinLesion.length > 0) {
+              arr.push(this.setMuti(obj.skinLesion))
+            }
+            if (obj.visualConsult && obj.visualConsult.length > 0) {
+              arr.push(this.setMuti(obj.visualConsult))
+            }
+            if (obj.skinLesion) {
+              arr.push(obj.skinLesion)
+            }
+            if (obj.variety) {
+              arr.push(obj.variety)
+            }
+
+            let res = await this.api.disease.list({ caseId: obj.caseId, symptoms: arr.join(',') })
+            let { data: { data: { names, exams } } } = res
+            this.names = names
+            this.exams = exams
+          }
     }
   },
   created () {
@@ -125,7 +190,7 @@ export default {
   },
   mounted () {
     this.$bus.on('check-reload', (obj) => {
-      this.fetch(obj)
+          this.fetch(obj)
     })
   }
 }

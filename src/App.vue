@@ -2,7 +2,9 @@
  <div class="app">
     <!-- <img src="./assets/logo.png"> -->
     <div class="tab">
-      <div class="logo">cat study</div>
+      <div class="logo">
+         cat study
+      </div>
       <div class="tab-list">
         <div @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check'}">
           智能诊疗
@@ -16,14 +18,11 @@
         </div>
       </div>
       <div class="sign">
-        <div class="user">
           <div class="logo">x</div>
-          <div class="name">x</div>
-        </div>
-
-        <div class="action" @click="$router.push('/account')">
-          退出
-        </div>
+          <div class="name">{{user.username}}</div>
+          <div class="action" @click="$router.push('/account')">
+            退出
+          </div>
       </div>
     </div>
  
@@ -35,7 +34,7 @@
     </div>
 
     <div class="bottom">
-      <div>台操作员：王羽西（医生）</div>
+      <div>台操作员：{{user.username}}（医生）</div>
       <div>北京猫研所医院</div>
     </div>
   
@@ -45,6 +44,7 @@
 
 export default {
   name: 'App',
+
   props: {
 
   },
@@ -53,7 +53,7 @@ export default {
   },
   data () {
     return {
-      user: window.localStorage.getItem('cat-study-user')
+      user: global.user
     }
   },
   computed: {
@@ -122,35 +122,33 @@ export default {
   }
   .sign{
     display: flex;
-    justify-content: space-between;
+    
     align-items: center;
-    width: 130px;
+  
     margin-right: 20px;
-    .user{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
-      >.logo{
+    .name{
+      margin-right: 29px;
+      margin-left:9px;
+    }
+    .logo{
         width: 40px;
         height: 40px;
         border-radius: 50%;
         text-align: center;
         line-height: 40px;
         background:  #faa032; 
-      }
-      >.name{
-        margin-left: 10px;
-      }
     }
-    
-    .action{
+
+  .action{
       background: #f56c6c;
       padding: 7px 15px;
       border-radius: 20px; 
       color: #fff;
       cursor: pointer;
     }
+    
+    
   }
 
   .content{

@@ -1,4 +1,5 @@
 import request from 'axios'
+import moment from 'moment'
 import Vue from 'vue'
 import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
@@ -236,11 +237,21 @@ const api = {
     async list () {
       const url = '/visit/listAllItemWithOptions'
       let res = await request.get(url)
+      let { data: { data } } = res
+
       return res
     },
     async item (data) {
       const url = '/caseVisit/getByCaseId'
       let res = await request.get(url, { params: data })
+      return res
+    }
+  },
+  // 检查
+  disease: {
+    list (params) {
+      const url = '/disease/listDiseaseBySymptom'
+      let res = request.get(url, { params })
       return res
     }
   }
@@ -257,6 +268,7 @@ export default {
         this.$message.error(err)
       }
     }
+    Vue.prototype.moment = moment
     Vue.prototype.config = {
       ghxm: [
         { name: '问诊', id: 1 },

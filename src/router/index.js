@@ -40,11 +40,11 @@ export default new Router({
     //   component: HelloWorld
     // },
 
-    {
-      path: '/',
-      name: '接诊',
-      component: Login
-    },
+    // {
+    //   path: '/',
+    //   name: '接诊',
+    //   component: Login
+    // },
     {
       path: '/check',
       name: '接诊',
