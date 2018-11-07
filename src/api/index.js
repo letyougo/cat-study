@@ -4,11 +4,11 @@ import Vue from 'vue'
 import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
-const kongdongApi = [
-  '/check'
-]
 const noCheck = [
   '/login'
+]
+const kongdongApi = [
+  '/check'
 ]
 request.interceptors.request.use(
   function (req) {
