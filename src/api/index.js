@@ -4,17 +4,41 @@ import Vue from 'vue'
 import App from '../main'
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
+const kongdongApi = [
+  '/check'
+]
+const noCheck = [
+  '/login'
+]
 request.interceptors.request.use(
   function (req) {
-    console.log('api', 'api-yafeng')
+    console.log('api', 'api-yafeng', req.url)
     req.params = req.params || {}
-    req.params.JSESSIONID = global.user.token
-
-    if (req.method === 'post') {
-      for (let key in req.data) {
-        req.params[key] = req.data[key]
+    let isNoCheck = false
+    for (let i = 0; i < noCheck.length; i++) {
+      if (req.url.startsWith(noCheck[i])) {
+        isNoCheck = true
       }
     }
+    if (!isNoCheck) {
+      req.params.JSESSIONID = global.user.token
+    }
+
+    console.log(req.url, 'req.url')
+    let isKongDongApi = false
+    for (let i = 0; i < kongdongApi.length; i++) {
+      if (req.url.startsWith(kongdongApi[i])) {
+        isKongDongApi = true
+      }
+    }
+    if (!isKongDongApi) {
+      if (req.method === 'post') {
+        for (let key in req.data) {
+          req.params[key] = req.data[key]
+        }
+      }
+    }
+
     return req
   },
   function (error) {
@@ -55,8 +79,20 @@ const api = {
 
   // 检查相关
   check: {
-    addExport () {
-      const url = `/check/addReport?caseId=`
+    async addReport (caseId, data) {
+      const url = `/check/addReport?caseId=${caseId}`
+      const res = await request.post(url, data)
+      return res
+    },
+    async list (caseId) {
+      const url = `/check/listReportByCaseId?caseId=${caseId}`
+      const res = await request.get(url)
+      return res
+    },
+    async getCheckInfo (reportId) {
+      const url = `/check/getCheckInfo?reportId=${reportId}`
+      const res = await request.get(url)
+      return res
     }
   },
 
@@ -291,7 +327,19 @@ export default {
         { name: '接诊中', id: 2 },
         { name: '检查中', id: 3 },
         { name: '已出检查结果', id: 4 }
-      ]
+      ],
+      check: {
+        0: {
+          options: [
+            { label: '项目名称', prop: 'projectName', width: 350 },
+            { label: '单位名称', prop: 'unit' },
+            { label: '最大', prop: 'refMax' },
+            { label: '最小', prop: 'refMin' },
+            { label: '结果值', prop: 'param' }
+          ],
+          title: '血常规'
+        }
+      }
     }
   }
 }

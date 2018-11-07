@@ -22,11 +22,11 @@
         </div>
         <div class="header-content">
             <div class="left">
-                <div @click="$router.push('/treat/index')" :class="{active:$route.path === '/treat/index' ? true : false}">
+                <div @click="$router.push('/treat/index?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}">
                     <span>X</span>
                     <span class="title2">诊室</span>
                 </div>
-                <div @click="$router.push('/treat/index?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}">
+                <div @click="$router.push('/treat/result?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}">
                     <!-- <span>X</span> -->
                     <span class="title2">检查结果</span>
                 </div>

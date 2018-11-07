@@ -53,7 +53,10 @@ export default {
   },
   data () {
     return {
-      user: global.user
+      // user: global.user
+      user: {
+        username: 'ss'
+      }
     }
   },
   computed: {
@@ -66,7 +69,16 @@ export default {
 
   },
   mounted () {
-
+    console.log(global.user, 'global.user')
+  },
+  watch: {
+    $route () {
+      if (!global.user) {
+        this.$router.push('/account')
+      }else {
+        this.user = global.user
+      }
+    }
   }
 }
 </script>

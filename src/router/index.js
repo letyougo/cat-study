@@ -28,6 +28,7 @@ import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
 import TreatYizhu from '@/pages/treat/yizhu/index'
 import TreatMianyi from '@/pages/treat/mianyi/index'
+import TreatResult from '@/pages/treat/result'
 
 import Login from '@/pages/login/index'
 Vue.use(Router)
@@ -154,6 +155,10 @@ export default new Router({
         {
           path: 'mianyi',
           component: TreatMianyi
+        },
+        {
+          path: 'result',
+          component: TreatResult
         }
       ]
     },

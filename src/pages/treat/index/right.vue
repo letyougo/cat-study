@@ -21,6 +21,10 @@
                 <el-table :data="huay.list">
                   <el-table-column label=""></el-table-column>
                 </el-table>
+                <span slot="footer">
+                    <el-button @click="huay.visible=false">取消</el-button>
+                    <el-button type="primary" @click="addReport">确定</el-button>
+                </span>
               </el-dialog>
         <div class="guess">
              <div class="title">疑似疾病</div>
@@ -79,24 +83,23 @@
     </div>
 </template>
 <script>
-    import huayan from '../../../components/huayan'
-    import kd from '../../../api/kd'
+import huayan from '../../../components/huayan'
 export default {
   name: 'right',
   props: {
 
   },
   components: {
-        huayan
+    huayan
   },
   data () {
     return {
-          exams: [],
-          names: '',
-          huay: {
-            visible: false,
-            list: []
-          }
+      exams: [],
+      names: '',
+      huay: {
+        visible: false,
+        list: []
+      }
     }
   },
   computed: {
@@ -104,110 +107,111 @@ export default {
   },
   methods: {
     setYear (obj) {
-          let age = parseInt(obj.catYears)
-          if (age <= 1) {
-            return '幼年猫'
-          } else if (age < 8) {
-            return '青年猫'
-          } else {
-            return '老年猫'
-          }
+      let age = parseInt(obj.catYears)
+      if (age <= 1) {
+        return '幼年猫'
+      } else if (age < 8) {
+        return '青年猫'
+      } else {
+        return '老年猫'
+      }
     },
     setTemp (obj) {
-          let temp = ''
-          let temperature = parseInt(obj.temperature)
-          if (temperature < 38) {
-            return '体温失温'
-          } else if (temperature > 39) {
-            return '发热'
-          } else {
-            return ''
-          }
+      let temp = ''
+      let temperature = parseInt(obj.temperature)
+      if (temperature < 38) {
+        return '体温失温'
+      } else if (temperature > 39) {
+        return '发热'
+      } else {
+        return ''
+      }
     },
     setHeartRate (obj) {
-          let rate = parseInt(obj.heartRate)
-          if (rate < 100) {
-            return '心动过缓'
-          }
-          if (rate > 140) {
-            return '心跳过速'
-          }
-          return ''
+      let rate = parseInt(obj.heartRate)
+      if (rate < 100) {
+        return '心动过缓'
+      }
+      if (rate > 140) {
+        return '心跳过速'
+      }
+      return ''
     },
     setAbnormal (obj) {
 
     },
     setMuti (arr) {
-          arr = arr.map(item => {
-            item = item.split(';')
-            return item[item.length - 1]
-          })
-          return arr.join(',')
+      arr = arr.map(item => {
+        item = item.split(';')
+        return item[item.length - 1]
+      })
+      return arr.join(',')
     },
     async fetch (obj) {
-          let arr = []
-          if (obj) {
-            console.log(obj)
-            obj.catYears && arr.push(this.setYear(obj))
-            obj.temperature && arr.push(this.setTemp(obj))
-            obj.heartRate && arr.push(this.setHeartRate(obj))
-            if (obj.auscultation && obj.auscultation.length > 0) {
-              arr.push(this.setMuti(obj.auscultation))
-            }
-            if (obj.lifeHistory && obj.lifeHistory.length > 0) {
-              arr.push(this.setMuti(obj.lifeHistory))
-            }
-            if (obj.mainSymptom && obj.mainSymptom.length > 0) {
-              arr.push(this.setMuti(obj.mainSymptom))
-            }
-            if (obj.noseConsult && obj.noseConsult.length > 0) {
-              arr.push(this.setMuti(obj.noseConsult))
-            }
-            if (obj.palpation) {
-              arr.push(obj.palpation)
-            }
-            if (obj.skinLesion && obj.skinLesion.length > 0) {
-              arr.push(this.setMuti(obj.skinLesion))
-            }
-            if (obj.visualConsult && obj.visualConsult.length > 0) {
-              arr.push(this.setMuti(obj.visualConsult))
-            }
-            if (obj.skinLesion) {
-              arr.push(obj.skinLesion)
-            }
-            if (obj.variety) {
-              arr.push(obj.variety)
-            }
-
-            let res = await this.api.disease.list({ caseId: obj.caseId, symptoms: arr.join(',') })
-            let { data: { data: { names, exams } } } = res
-            this.names = names
-            this.exams = exams
-          }
-    },
-    async addReport(){
-        console.log('ssss', '')
-        let id =this.$route.query.id 
-        let res = await kd.check.addReport(id,{
-            "data":[
-        {
-            "checkName": "血常规",
-            "doctorName": "skd",
-            "checkDoctorName": "surui",
-            "creataTime":"1541412021000",
-            "updateTime":"1541412021000"
-        },
-        {
-            "checkName": "PCR-心丝虫",
-            "doctorName": "surui",
-            "checkDoctorName": "skd",
-            "creataTime":"1541412268000",
-            "updateTime":"1541412021000"
+      let arr = []
+      if (obj) {
+        console.log(obj)
+        obj.catYears && arr.push(this.setYear(obj))
+        obj.temperature && arr.push(this.setTemp(obj))
+        obj.heartRate && arr.push(this.setHeartRate(obj))
+        if (obj.auscultation && obj.auscultation.length > 0) {
+          arr.push(this.setMuti(obj.auscultation))
         }
-    ]
-        })
-        let {data} = res 
-        console.log('add-report', data)
+        if (obj.lifeHistory && obj.lifeHistory.length > 0) {
+          arr.push(this.setMuti(obj.lifeHistory))
+        }
+        if (obj.mainSymptom && obj.mainSymptom.length > 0) {
+          arr.push(this.setMuti(obj.mainSymptom))
+        }
+        if (obj.noseConsult && obj.noseConsult.length > 0) {
+          arr.push(this.setMuti(obj.noseConsult))
+        }
+        if (obj.palpation) {
+          arr.push(obj.palpation)
+        }
+        if (obj.skinLesion && obj.skinLesion.length > 0) {
+          arr.push(this.setMuti(obj.skinLesion))
+        }
+        if (obj.visualConsult && obj.visualConsult.length > 0) {
+          arr.push(this.setMuti(obj.visualConsult))
+        }
+        if (obj.skinLesion) {
+          arr.push(obj.skinLesion)
+        }
+        if (obj.variety) {
+          arr.push(obj.variety)
+        }
+
+        let res = await this.api.disease.list({ caseId: obj.caseId, symptoms: arr.join(',') })
+        let { data: { data: { names, exams } } } = res
+        this.names = names
+        this.exams = exams
+      }
+    },
+    async addReport () {
+      console.log('ssss', '')
+      let id = this.$route.query.id
+
+      let res = await this.api.check.addReport(id, {
+        'data': [
+          {
+            'checkName': '血常规',
+            'doctorName': 'skd',
+            'checkDoctorName': 'surui',
+            'creataTime': '1541412021000',
+            'updateTime': '1541412021000'
+          },
+          {
+            'checkName': 'PCR-心丝虫',
+            'doctorName': 'surui',
+            'checkDoctorName': 'skd',
+            'creataTime': '1541412268000',
+            'updateTime': '1541412021000'
+          }
+        ]
+      })
+      let { data } = res
+      console.log('add-report', data)
     }
   },
   created () {
@@ -215,7 +219,7 @@ export default {
   },
   mounted () {
     this.$bus.on('check-reload', (obj) => {
-          this.fetch(obj)
+      this.fetch(obj)
     })
   }
 }
