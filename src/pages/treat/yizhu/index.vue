@@ -17,23 +17,11 @@
         <div class="action">
             <div>
                 <el-form inline>
-                    <el-form-item>
-                        <el-button type="primary">猫瘟</el-button>
+                    <el-form-item v-for="(item,i) in list" :key="item.id">
+                        <el-button @click="pickItem(item,i)" :type=" item.pick? 'primary' : 'default' ">{{item.names}}</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="ghost">消化道寄生虫病</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">炎性肠病</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">肠胃炎</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">急性胃炎</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">不能确定</el-button>
+                        <el-button type="text">不能确定?</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -128,29 +116,20 @@
         </div>
 
         <div class="record">
-            <div class="record-item" v-for="i in 3">
-                <p class="record-title">猫瘟</p>
+            <div class="record-item" v-for="item in pickedList">
+                <p class="record-title">{{item.names}}</p>
                 <p class="title-tip">治疗原则</p>
-                <div class="desc">饮食疗法 饮食治疗的原则是口味清淡、 低热能、营养平衡和热量负平衡。 目前应用最广泛的饮食疗法是低热量饮食疗法
-
-                </div>
+                <div class="desc">{{item.principle}}</div>
                 <p class="title-tip">预后</p>
-                <div class="desc">饮食疗法 饮食治疗的原则是口味清淡、 低热能、营养平衡和热量负平衡。 目前应用最广泛的饮食疗法是低热量饮食疗法
-                </div>
+                <div class="desc">{{item.prognosis}}</div>
+                <p class="title-tip">处置/处方</p>
                 <div class="check">
-                    <p>
-                        <el-checkbox label="抗细菌感染"></el-checkbox>
+                    <p v-for="op in item.treatments">
+                        <el-checkbox :label="op"></el-checkbox>
                     </p>
-                    <p>
-                        <el-checkbox label="抗细菌感染"></el-checkbox>
-                    </p>
-                    <p>
-                        <el-checkbox label="抗细菌感染"></el-checkbox>
-                    </p>
-                    <p>
-                        <el-checkbox label="抗细菌感染"></el-checkbox>
-                    </p>
-                    <p>
+                </div>
+
+                    <!-- <p>
                         <el-checkbox label="抗细菌感染"></el-checkbox>
                         <el-popover placement="top-start" width="481" trigger="click">
                             <div class="pover-med-detail">
@@ -168,8 +147,8 @@
                     <p>
                         <el-checkbox label="抗细菌感染"></el-checkbox>
                     </p>
-                </div>
-                <p class="title-tip">预后</p>
+                </div>  -->
+                <p class="title-tip">医嘱</p>
                 <div class="desc">
                     <el-input type="textarea" placeholder=""></el-input>
                 </div>
@@ -188,16 +167,44 @@
 export default {
   props: {},
   components: {},
-  data() {
+  data () {
     return {
-      print: false
-    };
+      print: false,
+      list: []
+    }
   },
-  computed: {},
-  methods: {},
-  created() {},
-  mounted() {}
-};
+  computed: {
+    pickedList () {
+      return this.list.filter(item => item.pick)
+    }
+  },
+  methods: {
+    async fetch () {
+      console.log(this.api, 'zhiliao2')
+      let res = await this.api.zhiliao2.diseaseList(this.$route.query.id)
+
+      let { data: { data } } = res
+      data = data.map(item => {
+        item.pick = false
+        return item
+      })
+      this.list = data
+    },
+    pickItem (item, i) {
+      let data = this.list
+      data = data.map(item => {
+        item.pick = false
+        return item
+      })
+      data[i].pick = true
+      this.list = data
+    }
+  },
+  created () {},
+  mounted () {
+    this.fetch()
+  }
+}
 </script>
 <style scoped lang="less">
 @import url("../../../global.less");
@@ -229,7 +236,7 @@ export default {
     display: flex;
 
     .record-item {
-      width: 416px;
+      /* width: 416px; */
       min-height: 300px;
       justify-content: space-between;
       border: 1px solid @borderColor;

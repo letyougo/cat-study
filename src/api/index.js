@@ -77,6 +77,15 @@ const api = {
     }
   },
 
+  // 治疗相关
+  zhiliao2: {
+    diseaseList (caseId) {
+      const url = '/disease/listDiagDisease'
+      const res = request.get(`${url}?caseId=${caseId}`)
+      return res
+    }
+  },
+
   // 检查相关
   check: {
     async addReport (caseId, data) {
@@ -94,6 +103,8 @@ const api = {
       const res = await request.get(url)
       return res
     }
+
+
   },
 
   account: {
