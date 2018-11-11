@@ -8,19 +8,19 @@
                 <div class="item-name">免疫</div>
                 <div>
                     <div>
-                        <el-radio label="首次"></el-radio>
+                        <el-radio label="首次" v-model="immune[0]"></el-radio>
                     </div>
                     <div>
-                        <el-radio label="非首次"></el-radio>
+                        <el-radio label="非首次" v-model="immune[0]"></el-radio>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <el-checkbox label="妙三多"></el-checkbox>
-                        <el-checkbox label="狂犬"></el-checkbox>
+                        <el-checkbox label="妙三多" v-model="immune[1]"></el-checkbox>
+                        <el-checkbox label="狂犬" v-model="immune[1]"></el-checkbox>
                     </div>
                     <div>
-                        <el-checkbox label="猫三联"></el-checkbox>
+                        <el-checkbox label="猫三联" v-model="immune[1]"></el-checkbox>
                     </div>
                 </div>
             </div>
@@ -29,32 +29,32 @@
                 <div class="item-name">驱虫</div>
                 <div>
                     <div>
-                        <el-radio label="首次"></el-radio>
+                        <el-radio label="首次" v-model="expel[0]" ></el-radio>
                     </div>
                     <div>
-                        <el-radio label="非首次"></el-radio>
+                        <el-radio label="非首次" v-model="expel[0]" ></el-radio>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <el-checkbox label="体内"></el-checkbox>
+                        <el-checkbox label="体内" v-model="expel[1]" ></el-checkbox>
                     </div>
                     <div>
-                        <el-checkbox label="体外"></el-checkbox>
+                        <el-checkbox label="体外" v-model="expel[1]" ></el-checkbox>
                     </div>
                 </div>
                  <div>
                     <div>
-                        <el-checkbox label="大宠爱"></el-checkbox>
-                        <el-checkbox label="拜耳"></el-checkbox>
-                        <el-checkbox label="爱沃克"></el-checkbox>
-                        <el-checkbox label="希福"></el-checkbox>
+                        <el-checkbox label="大宠爱" v-model="expel[2]" ></el-checkbox>
+                        <el-checkbox label="拜耳" v-model="expel[2]" ></el-checkbox>
+                        <el-checkbox label="爱沃克" v-model="expel[2]"></el-checkbox>
+                        <el-checkbox label="希福" v-model="expel[2]"></el-checkbox>
                     </div>
                     <div>
-                        <el-checkbox label="博来恩"></el-checkbox>
-                        <el-checkbox label="福来恩"></el-checkbox>
-                        <el-checkbox label="邦尼"></el-checkbox>
-                        <el-checkbox label="恩倍多"></el-checkbox>
+                        <el-checkbox label="博来恩" v-model="expel[2]"></el-checkbox>
+                        <el-checkbox label="福来恩" v-model="expel[2]"></el-checkbox>
+                        <el-checkbox label="邦尼" v-model="expel[2]"></el-checkbox>
+                        <el-checkbox label="恩倍多" v-model="expel[2]"></el-checkbox>
                     </div>
                 </div>
             </div>
@@ -63,21 +63,21 @@
                 <div class="item-name">绝育/去势</div>
                 <div>
                     <div>
-                        <el-radio label="公"></el-radio>
+                        <el-radio label="公" v-model="bear[0]"></el-radio>
                     </div>
                     <div>
-                        <el-radio label="母"></el-radio>
+                        <el-radio label="母" v-model="bear[0]"></el-radio>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <el-radio label="有过生育"></el-radio>
+                        <el-radio label="有过生育" v-model="bear[1]"></el-radio>
                     </div>
                     <div>
-                        <el-radio label="没有过生育"></el-radio>
+                        <el-radio label="没有过生育" v-model="bear[1]"></el-radio>
                     </div>
                 </div>
-                 <div class="item-detail">
+                 <div class="item-detail"  @click="fetchOperation(bear[1])">
                     处置详情
                 </div>
             </div>
@@ -85,22 +85,26 @@
                 <div class="item-name">牙齿</div>
                 <div>
                     <div>
-                        <el-checkbox label="洗牙"></el-checkbox> 
+                        <el-checkbox label="洗牙" v-model="tooth"></el-checkbox> 
                     </div>
                     <div>
-                        <el-checkbox label="拔牙"></el-checkbox> 
+                        <el-checkbox label="拔牙"  v-model="tooth"></el-checkbox> 
                     </div>
                 </div>
-                 <div class="item-detail">
+                 <div class="item-detail" @click="fetchOperation(tooth)">
                     处置详情
                 </div>
             </div>
         </div>
 
-        <el-dialog title="绝育" :visible="dialog" class="center-dialog" width="677px">
+        <el-dialog :title="operation.data.names" :visible="operation.visible" class="center-dialog" width="677px">
 
             <div class="dialog-content">
-                <div class="content-title">处置/处方</div>
+                <div class="content-item">
+                    {{operation.data.process}}
+                </div>
+            </div>
+                <!-- <div class="content-title">处置/处方</div>
                 <div class="content-item">术前禁饲12h以上，禁水2h以上，对猫进行全身检查</div>
 
                 <div class="content-title">手术通路</div>
@@ -131,44 +135,88 @@
 
                 <div class="content-title">保定和麻醉</div>
                 <div class="content-item">创口处做保护绷带，全身应用抗生素，给予易消化的食物，1周内限制剧烈运动。</div>
-            </div>
+            </div> -->
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialog = false">关闭</el-button>
+                <el-button @click="operation.visible = false">关闭</el-button>
             </span>
         </el-dialog>
 
         <div class="mianyi-action">
-            <el-button type="primary" @click="dialog=true">开具处方</el-button>
+            <el-button type="primary" @click="med.visible=true">开具处方</el-button>
         </div>
+
+        <chufang v-if="med.visible" v-bind="med" @close="med.visible=false"></chufang>
     </div>
 </template>
 <script>
+import chufang from '../../../components/chufang'
 export default {
-    name:'mianyi',
-    props:{
+  name: 'mianyi',
+  components: {
+    chufang
+  },
+  data () {
+    return {
+      expel: ['', [], []],
+      tooth: ['', ''],
+      immune: ['', []],
+      bear: ['', ''],
+      med: {
+        visible: true,
+        st: [],
+        diseaseId: 0,
+        docAdvice: '',
+        otherTreatment: ''
+      },
+      operation: {
+        visible: false,
+        data: {
 
-    },
-    components:{
-
-    },
-    data(){
-        return {
-            dialog:false
         }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
+      }
+    }
+  },
+  computed: {
+    tooth2 () {
 
     }
+  },
+  methods: {
+    async fetch () {
+      let res = await this.api.mianyi.item(this.$route.query.id)
+      let { data: { data: { expel, immune, bear, tooth } } } = res
+      console.log(expel, immune, bear, tooth, 'fetch-item')
+      let ex = expel.split(';')
+      ex[1] = ex[1].split(',')
+      ex[2] = ex[2].split(',')
+      this.expel = ex
+      this.tooth = tooth.split(',')
+      let im = immune.split(';')
+      im[1] = im[1].split(',')
+      this.immune = im
+      this.bear = bear.split(';')
+      console.log('expel', this.expel)
+      console.log('tooth', this.tooth)
+      console.log('immune', this.immune)
+      console.log('bear', this.bear)
+    },
+    async fetchOperation (names) {
+      console.log(names, 'name')
+      //   this.operation.visible = true
+      //   console.log(this.api.operation, 'operation')
+
+      let res = await this.api.opration.list({ names })
+      let { data: { data } } = res
+      this.operation.data = data[0]
+    }
+  },
+  created () {
+
+  },
+  mounted () {
+    this.fetch()
+  }
 }
 </script>
 <style scoped lang="less">

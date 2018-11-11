@@ -8,7 +8,8 @@ const noCheck = [
   '/login'
 ]
 const kongdongApi = [
-  '/check'
+  '/check',
+  '/prescription'
 ]
 request.interceptors.request.use(
   function (req) {
@@ -79,9 +80,22 @@ const api = {
 
   // 治疗相关
   zhiliao2: {
-    diseaseList (caseId) {
+    async diseaseList (caseId) {
       const url = '/disease/listDiagDisease'
-      const res = request.get(`${url}?caseId=${caseId}`)
+      const res = await request.get(`${url}?caseId=${caseId}`)
+      return res
+    },
+    async getMedByST (st) {
+      const url = '/disease/getMedByST'
+      let res = await request.get(url, { params: { st } })
+      return res
+    }
+
+  },
+  mianyi: {
+    async item (caseId) {
+      const url = '/caseImmune/getByCaseId'
+      const res = await request.get(url, { params: { caseId } })
       return res
     }
   },
@@ -103,7 +117,6 @@ const api = {
       const res = await request.get(url)
       return res
     }
-
 
   },
 
@@ -185,6 +198,16 @@ const api = {
     async del (data) {
       const url = '/disease/delete'
       let res = await request.post(url, data)
+      return res
+    },
+    async listUncertainTreatments (params) {
+      const url = '/disease/listUncertainTreatments'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async listDiagDisease (params) {
+      const url = '/disease/listDiseaseBySymptom'
+      let res = await request.get(url, { params })
       return res
     }
   },
@@ -305,9 +328,23 @@ const api = {
   },
   // 检查
   disease: {
-    list (params) {
+    async list (params) {
       const url = '/disease/listDiseaseBySymptom'
-      let res = request.get(url, { params })
+      let res = await request.get(url, { params })
+      return res
+    }
+
+  },
+  // operation
+  operation: {
+    async list (params) {
+      const url = '/operation/listByParam'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async addPrescription (data) {
+      const url = '/prescription/addPrescription'
+      let res = await request.post(url, data)
       return res
     }
   }

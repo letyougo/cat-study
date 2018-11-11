@@ -116,7 +116,8 @@
                   </div>
                 </div>
              </template>
-          </el-table-column>   
+          </el-table-column> 
+          <el-table-column label="病例id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
           <el-table-column label="猫咪姓名" prop="catName"></el-table-column>

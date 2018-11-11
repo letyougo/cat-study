@@ -7,7 +7,11 @@
 </template>
 <script>
 export default {
-  name: 'huayan'
+  name: 'huayan',
+  props: {
+    visible: Boolean,
+    list: []
+  }
 }
 </script>
 <style>

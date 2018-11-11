@@ -322,46 +322,46 @@
     </div>
 </template>
 <script>
-  import tip from '../../../components/tip'
+import tip from '../../../components/tip'
 export default {
   name: 'middle',
   props: {},
   components: {
-      tip
+    tip
   },
   watch: {
-      passHistory: {
-        handler (obj) {
-          let item = this.passHistory.options.find(item => item.names === obj.value)
-          this.passHistory2.options = item.child || []
-        },
-        deep: true
+    passHistory: {
+      handler (obj) {
+        let item = this.passHistory.options.find(item => item.names === obj.value)
+        this.passHistory2.options = item.child || []
       },
-      checkBody: {
-        handler (check) {
-          console.log('check', check)
-          let item = this.checkBody.eye.options.find(item => item.names === check.eye.value)
-          if (item) {
-            this.checkBody2.eye.options = item.child
-          }
-          console.log(1)
-          item = this.checkBody.skinDamage.options.find(item => item.names === check.skinDamage.value)
-          if (item) {
-            this.checkBody2.skinDamage.options = item.child
-          }
-          console.log(2)
-          item = this.checkBody.abnomalBehavior.options.find(item => item.names === check.abnomalBehavior.value)
-          if (item) {
-            this.checkBody2.abnomalBehavior.options = item.child
-          }
-          console.log(item, 'checkBody-abnornal')
-        },
-        deep: true
+      deep: true
+    },
+    checkBody: {
+      handler (check) {
+        console.log('check', check)
+        let item = this.checkBody.eye.options.find(item => item.names === check.eye.value)
+        if (item) {
+          this.checkBody2.eye.options = item.child
+        }
+        console.log(1)
+        item = this.checkBody.skinDamage.options.find(item => item.names === check.skinDamage.value)
+        if (item) {
+          this.checkBody2.skinDamage.options = item.child
+        }
+        console.log(2)
+        item = this.checkBody.abnomalBehavior.options.find(item => item.names === check.abnomalBehavior.value)
+        if (item) {
+          this.checkBody2.abnomalBehavior.options = item.child
+        }
+        console.log(item, 'checkBody-abnornal')
       },
-      main: {
-        handler (obj) {
-          let v = []
-          console.log('tag', 'aaa')
+      deep: true
+    },
+    main: {
+      handler (obj) {
+        let v = []
+        console.log('tag', 'aaa')
         // this.main.options.forEach(element => {
         //   element.forEach(item => {
         //     if (item.picked) {
@@ -370,492 +370,492 @@ export default {
         //   })
         // })
         // this.main.value = v
-        },
-        deep: true
-      }
+      },
+      deep: true
+    }
   },
   data () {
-      return {
-        list: {
-          basic: [], // 基本情况
-          lifeHistory: [], // 生活史
-          passHistory: [], // 既往史
-          main: [], // 主诉症状
-          checkBody: [], // 查体
-          skinDamage: [] // 皮损部位
-        },
-        it: 0,
-        mainDialog: false,
-        main: {
-          exist: true,
-          value: [],
-          options: []
-        },
-        basic: {
-          age: {
-            exist: false,
-            value: {
-              month: '',
-              year: ''
-            }
-          },
-          sex: {
-            exist: false,
-            value: '',
-            options: []
-          },
-          weight: {
-            exist: false,
-            value: ''
-          },
-          kind: {
-            exist: false,
-            value: ''
+    return {
+      list: {
+        basic: [], // 基本情况
+        lifeHistory: [], // 生活史
+        passHistory: [], // 既往史
+        main: [], // 主诉症状
+        checkBody: [], // 查体
+        skinDamage: [] // 皮损部位
+      },
+      it: 0,
+      mainDialog: false,
+      main: {
+        exist: true,
+        value: [],
+        options: []
+      },
+      basic: {
+        age: {
+          exist: false,
+          value: {
+            month: '',
+            year: ''
           }
         },
-        lifeHistory: {
-          exist: false,
-          value: [],
-          options: []
-        },
-        passHistory: {
+        sex: {
           exist: false,
           value: '',
           options: []
         },
-        passHistory2: {
+        weight: {
+          exist: false,
+          value: ''
+        },
+        kind: {
+          exist: false,
+          value: ''
+        }
+      },
+      lifeHistory: {
+        exist: false,
+        value: [],
+        options: []
+      },
+      passHistory: {
+        exist: false,
+        value: '',
+        options: []
+      },
+      passHistory2: {
+        value: '',
+        options: [],
+        model: []
+      },
+      eyeValue: [],
+      main: {
+        exist: false,
+        value: [],
+        options: [[]]
+      },
+      checkBody2: {
+        eye: {
           value: '',
           options: [],
           model: []
         },
-        eyeValue: [],
-        main: {
+        skinDamage: {
+          value: '',
+          options: [],
+          model: []
+        },
+        abnomalBehavior: {
+          exist: false,
+          value: '',
+          options: [],
+          model: []
+        }
+      },
+      checkBody: {
+        temp: {
+          exist: false,
+          value: ''
+        },
+        blood: {
+          exist: false,
+          value: ''
+        },
+        heart: {
+          exist: false,
+          value: ''
+        },
+        breath: {
+          exist: false,
+          value: ''
+        },
+        recharge: {
+          exist: false,
+          value: ''
+        },
+        abnomalBehavior: {
+          exist: false,
+          value: '',
+          options: []
+        },
+        touch: {
+          exist: false,
+          value: '',
+          options: []
+        },
+        eye: {
+          exist: false,
+          value: '',
+          options: []
+        },
+        smell: {
           exist: false,
           value: [],
-          options: [[]]
+          options: []
         },
-        checkBody2: {
-          eye: {
-            value: '',
-            options: [],
-            model: []
-          },
-          skinDamage: {
-            value: '',
-            options: [],
-            model: []
-          },
-          abnomalBehavior: {
-            exist: false,
-            value: '',
-            options: [],
-            model: []
-          }
+        hear: {
+          exist: false,
+          value: [],
+          options: []
         },
-        checkBody: {
-          temp: {
-            exist: false,
-            value: ''
-          },
-          blood: {
-            exist: false,
-            value: ''
-          },
-          heart: {
-            exist: false,
-            value: ''
-          },
-          breath: {
-            exist: false,
-            value: ''
-          },
-          recharge: {
-            exist: false,
-            value: ''
-          },
-          abnomalBehavior: {
-            exist: false,
-            value: '',
-            options: []
-          },
-          touch: {
-            exist: false,
-            value: '',
-            options: []
-          },
-          eye: {
-            exist: false,
-            value: '',
-            options: []
-          },
-          smell: {
-            exist: false,
-            value: [],
-            options: []
-          },
-          hear: {
-            exist: false,
-            value: [],
-            options: []
-          },
-          skinDamage: {
-            exist: false,
-            value: '',
-            options: []
-          }
+        skinDamage: {
+          exist: false,
+          value: '',
+          options: []
         }
       }
+    }
   },
   computed: {},
   methods: {
 
-      setMain (index, j) {
-        let v = this.main.value
-        console.log('set-main', index, j, this.main, this.main.value, 'sss')
-        let options = this.main.options
-        if (options[index][j].picked) {
-          options[index][j].picked = false
-          let n = this.main.value.indexOf(options[index][j].names)
-          v.splice(n, 1)
-        } else {
-          options[index][j].picked = true
-          v.push(options[index][j].names)
-        }
-        this.main.value = v
-        this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
-        this.mainDialog = false
-      },
-
-      async fetchItem () {
-        let res1 = await this.api.case.item({ id: this.$route.query.id })
-
-        var { data: { data: { catMonths, catYears } } } = res1
-        this.basic.age.value = {
-          year: catYears,
-          month: catMonths
-        }
-
-        let res2 = await this.api.visit.item({ caseId: this.$route.query.id })
-        var { data: { data: {
-          pastHistory,
-          behaviorAbnormal,
-          weight,
-          mainSymptom,
-          pressure,
-          auscultation,
-          palpation,
-          heartRate,
-          variety,
-          lifeHistory,
-          noseConsult,
-          temperature,
-          bear,
-          fillTime,
-          breathRate,
-          visualConsult,
-          skinLesion, id
-        } } } = res2
-        this.id = id
-        this.basic.sex.value = bear
-        this.basic.weight.value = weight
-        this.basic.kind.value = variety
-
-        this.lifeHistory.value = [...(lifeHistory.split(','))]
-        this.passHistory2.model = [...(pastHistory.split(','))]
-
-        this.checkBody.smell.value = [...(noseConsult.split(','))]
-        this.checkBody.temp.value = temperature
-        this.checkBody.recharge.value = fillTime
-        this.checkBody.breath.value = breathRate
-        this.checkBody.heart.value = heartRate
-        this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')]
-        this.checkBody.touch.value = palpation
-        this.checkBody.hear.value = [...(auscultation.split(','))]
-        this.checkBody.blood.value = pressure
-        this.checkBody2.skinDamage.model = [...(skinLesion.split(','))]
-        this.checkBody2.eye.model = [...(visualConsult.split(','))]
-        this.main.value = [...(mainSymptom.split(','))]
-        this.main.options = this.main.options.map(item => {
-          item = item.map(l => {
-            l.picked = false
-            if (this.main.value.includes(l.names)) {
-              l.picked = true
-            }
-            return l
-          })
-          return item
-        })
-        console.log(this.main.options)
-
-        console.log(bear, catMonths, catYears)
-      },
-      async add () {
-        let obj = {}
-
-        if (this.basic.age.value.year) {
-          obj.catYears = this.basic.age.value.year
-        }
-
-        if (this.basic.age.value.month) {
-          obj.catMonths = this.basic.age.value.year
-        }
-
-        if (this.basic.sex.value) {
-          obj.bear = this.basic.sex.value
-        }
-        if (this.basic.weight.value) {
-          obj.weight = this.basic.weight.value
-        }
-        if (this.basic.kind.value) {
-          obj.variety = this.basic.kind.value
-        }
-        if (this.lifeHistory.value) {
-          obj.lifeHistory = this.lifeHistory.value
-        }
-        if (this.passHistory.value) {
-          obj.pastHistory = this.passHistory2.model
-        }
-        if (this.main.value) {
-          obj.mainSymptom = this.main.value
-        }
-        if (this.checkBody.temp.value) {
-          obj.temperature = this.checkBody.temp.value
-        }
-        if (this.checkBody.blood.value) {
-          obj.pressure = this.checkBody.blood.value
-        }
-        if (this.checkBody.heart.value) {
-          obj.heartRate = this.checkBody.heart.value
-        }
-        if (this.checkBody.breath.value) {
-          obj.breath = this.checkBody.breath.value
-        }
-        if (this.checkBody.recharge.value) {
-          obj.recharge = this.checkBody.recharge.value
-        }
-        if (this.checkBody.abnomalBehavior.value) {
-          obj.behaviorAbnormal = this.checkBody.abnomalBehavior.value
-        }
-        if (this.checkBody.touch.value) {
-          obj.palpation = this.checkBody.touch.value
-        }
-        if (this.checkBody.hear.value) {
-          obj.auscultation = this.checkBody.hear.value
-        }
-        if (this.checkBody.smell.value) {
-          obj.noseConsult = this.checkBody.smell.value
-        }
-        if (this.checkBody2.skinDamage.model) {
-          obj.skinLesion = this.checkBody2.skinDamage.model
-        }
-        if (this.checkBody2.eye.model) {
-          obj.visualConsult = this.checkBody2.eye.model
-        }
-
-        obj.caseId = this.$route.query.id
-        obj.id = this.id
-
-        // return this.$bus.emit('check-reload', obj)
-
-        this.$message('更新数据中...')
-
-        let { data: { code } } = await this.api.caseVisit.update(obj)
-        if (code === 200) {
-          this.$message.success('更新数据成功')
-          this.$bus.emit('check-reload', obj)
-        }
-
-        console.log('add obj', obj)
-      },
-      async fetch () {
-        // let res = await this.api.visit.list()
-        // let { data: { data, code } } = res
-        // localStorage.setItem('options',JSON.stringify(data))
-        let data = JSON.parse(window.localStorage.getItem('options'))
-
-        let list = {
-          basic: data.filter(item => item.title === '基本情况'),
-          lifeHistory: data.filter(item => item.title === '生活史'),
-          passHistory: data.filter(item => item.title === '既往史'),
-          main: data.filter(item => item.title === '主诉症状'),
-          checkBody: data.filter(item => item.title === '查体'),
-          skinDamage: data.filter(item => item.title === '皮损部位')
-        }
-        if (list.basic.find(item => item.dimension === '年龄' && item.isUsed)) {
-          this.basic.age = {
-            exist: true,
-            value: {
-              year: '',
-              month: ''
-            }
-          }
-        }
-        if (list.basic.find(item => item.dimension === '性别' && item.isUsed)) {
-          this.basic.sex = {
-            exist: true,
-            value: '',
-            options: list.basic.find(
-              item => item.dimension === '性别' && item.isUsed
-            ).options
-          }
-        }
-        if (list.basic.find(item => item.dimension === '体重' && item.isUsed)) {
-          this.basic.weight = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.basic.find(item => item.dimension === '品种' && item.isUsed)) {
-          this.basic.kind = {
-            exist: true,
-            value: '',
-            options: list.basic.find(item => item.dimension === '品种' && item.isUsed).options
-          }
-        }
-
-        if (list.lifeHistory.find(item => item.dimension === '生活史' && item.isUsed)) {
-          this.lifeHistory = {
-            exist: true,
-            value: [],
-            options: list.lifeHistory.find(
-              item => item.dimension === '生活史' && item.isUsed
-            ).options
-          }
-        }
-
-        if (list.passHistory.find(item => item.dimension === '既往史' && item.isUsed)) {
-          this.passHistory = {
-            exist: true,
-            value: '',
-            options: list.passHistory.find(
-              item => item.dimension === '既往史' && item.isUsed
-            ).options
-          }
-        }
-        if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
-          let options = list.main.find(
-            item => item.dimension === '主诉症状' && item.isUsed
-          ).options
-
-          this.main = {
-            exist: true,
-            value: [],
-            options
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '体温')) {
-          this.checkBody.temp = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '血压')) {
-          this.checkBody.blood = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '心率')) {
-          this.checkBody.heart = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '呼吸频率')) {
-          this.checkBody.breath = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '毛细血管再充盈时间')) {
-          this.checkBody.recharge = {
-            exist: true,
-            value: ''
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '行为异常')) {
-          this.checkBody.abnomalBehavior = {
-            exist: true,
-            value: '',
-            options: list.checkBody.find(
-              item => item.dimension === '行为异常' && item.isUsed
-            ).options
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '触诊')) {
-          this.checkBody.touch = {
-            exist: true,
-            value: '',
-            options: list.checkBody.find(
-              item => item.dimension === '触诊' && item.isUsed
-            ).options
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '视诊')) {
-          this.checkBody.eye = {
-            exist: true,
-            value: '',
-            options: list.checkBody.find(
-              item => item.dimension === '视诊' && item.isUsed
-            ).options
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '嗅诊')) {
-          this.checkBody.smell = {
-            exist: true,
-            value: [],
-            options: list.checkBody.find(
-              item => item.dimension === '触诊' && item.isUsed
-            ).options
-          }
-        }
-        if (list.checkBody.find(item => item.dimension === '听诊')) {
-          this.checkBody.hear = {
-            exist: true,
-            value: [],
-            options: list.checkBody.find(
-              item => item.dimension === '听诊' && item.isUsed
-            ).options
-          }
-        }
-        if (list.skinDamage.find(item => item.dimension === '皮损部位')) {
-          this.checkBody.skinDamage = {
-            exist: true,
-            value: '',
-            options: list.skinDamage.find(
-              item => item.dimension === '皮损部位' && item.isUsed
-            ).options
-          }
-        }
-        if (list.main.find(item => item.dimension === '主诉症状')) {
-          let options = list.main.find(
-            item => item.dimension === '主诉症状' && item.isUsed
-          ).options
-          let arr = []
-          while (options.length > 0) {
-            let l = []
-            for (let i = 0; i < 3; i++) {
-              if (options.length > 0) {
-                l.push(options.shift())
-              }
-            }
-            arr.push(l)
-          }
-
-          this.main = {
-            exist: true,
-            value: '',
-            options: arr
-          }
-        }
-        this.list = list
-        console.log('fetch-item', 'fetch-item')
-        this.fetchItem()
+    setMain (index, j) {
+      let v = this.main.value
+      console.log('set-main', index, j, this.main, this.main.value, 'sss')
+      let options = this.main.options
+      if (options[index][j].picked) {
+        options[index][j].picked = false
+        let n = this.main.value.indexOf(options[index][j].names)
+        v.splice(n, 1)
+      } else {
+        options[index][j].picked = true
+        v.push(options[index][j].names)
       }
+      this.main.value = v
+      this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
+      this.mainDialog = false
+    },
+
+    async fetchItem () {
+      let res1 = await this.api.case.item({ id: this.$route.query.id })
+
+      var { data: { data: { catMonths, catYears } } } = res1
+      this.basic.age.value = {
+        year: catYears,
+        month: catMonths
+      }
+
+      let res2 = await this.api.visit.item({ caseId: this.$route.query.id })
+      var { data: { data: {
+        pastHistory,
+        behaviorAbnormal,
+        weight,
+        mainSymptom,
+        pressure,
+        auscultation,
+        palpation,
+        heartRate,
+        variety,
+        lifeHistory,
+        noseConsult,
+        temperature,
+        bear,
+        fillTime,
+        breathRate,
+        visualConsult,
+        skinLesion, id
+      } } } = res2
+      this.id = id
+      this.basic.sex.value = bear
+      this.basic.weight.value = weight
+      this.basic.kind.value = variety
+
+      this.lifeHistory.value = [...(lifeHistory.split(','))]
+      this.passHistory2.model = [...(pastHistory.split(','))]
+
+      this.checkBody.smell.value = [...(noseConsult.split(','))]
+      this.checkBody.temp.value = temperature
+      this.checkBody.recharge.value = fillTime
+      this.checkBody.breath.value = breathRate
+      this.checkBody.heart.value = heartRate
+      this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')]
+      this.checkBody.touch.value = palpation
+      this.checkBody.hear.value = [...(auscultation.split(','))]
+      this.checkBody.blood.value = pressure
+      this.checkBody2.skinDamage.model = [...(skinLesion.split(','))]
+      this.checkBody2.eye.model = [...(visualConsult.split(','))]
+      this.main.value = [...(mainSymptom.split(','))]
+      this.main.options = this.main.options.map(item => {
+        item = item.map(l => {
+          l.picked = false
+          if (this.main.value.includes(l.names)) {
+            l.picked = true
+          }
+          return l
+        })
+        return item
+      })
+      console.log(this.main.options)
+
+      console.log(bear, catMonths, catYears)
+    },
+    async add () {
+      let obj = {}
+
+      if (this.basic.age.value.year) {
+        obj.catYears = this.basic.age.value.year
+      }
+
+      if (this.basic.age.value.month) {
+        obj.catMonths = this.basic.age.value.year
+      }
+
+      if (this.basic.sex.value) {
+        obj.bear = this.basic.sex.value
+      }
+      if (this.basic.weight.value) {
+        obj.weight = this.basic.weight.value
+      }
+      if (this.basic.kind.value) {
+        obj.variety = this.basic.kind.value
+      }
+      if (this.lifeHistory.value) {
+        obj.lifeHistory = this.lifeHistory.value
+      }
+      if (this.passHistory.value) {
+        obj.pastHistory = this.passHistory2.model
+      }
+      if (this.main.value) {
+        obj.mainSymptom = this.main.value
+      }
+      if (this.checkBody.temp.value) {
+        obj.temperature = this.checkBody.temp.value
+      }
+      if (this.checkBody.blood.value) {
+        obj.pressure = this.checkBody.blood.value
+      }
+      if (this.checkBody.heart.value) {
+        obj.heartRate = this.checkBody.heart.value
+      }
+      if (this.checkBody.breath.value) {
+        obj.breath = this.checkBody.breath.value
+      }
+      if (this.checkBody.recharge.value) {
+        obj.recharge = this.checkBody.recharge.value
+      }
+      if (this.checkBody.abnomalBehavior.value) {
+        obj.behaviorAbnormal = this.checkBody.abnomalBehavior.value
+      }
+      if (this.checkBody.touch.value) {
+        obj.palpation = this.checkBody.touch.value
+      }
+      if (this.checkBody.hear.value) {
+        obj.auscultation = this.checkBody.hear.value
+      }
+      if (this.checkBody.smell.value) {
+        obj.noseConsult = this.checkBody.smell.value
+      }
+      if (this.checkBody2.skinDamage.model) {
+        obj.skinLesion = this.checkBody2.skinDamage.model
+      }
+      if (this.checkBody2.eye.model) {
+        obj.visualConsult = this.checkBody2.eye.model
+      }
+
+      obj.caseId = this.$route.query.id
+      obj.id = this.id
+
+      // return this.$bus.emit('check-reload', obj)
+
+      this.$message('更新数据中...')
+
+      let { data: { code } } = await this.api.caseVisit.update(obj)
+      if (code === 200) {
+        this.$message.success('更新数据成功')
+        this.$bus.emit('check-reload', obj)
+      }
+
+      console.log('add obj', obj)
+    },
+    async fetch () {
+      // let res = await this.api.visit.list()
+      // let { data: { data, code } } = res
+      // localStorage.setItem('options',JSON.stringify(data))
+      let data = JSON.parse(window.localStorage.getItem('options'))
+
+      let list = {
+        basic: data.filter(item => item.title === '基本情况'),
+        lifeHistory: data.filter(item => item.title === '生活史'),
+        passHistory: data.filter(item => item.title === '既往史'),
+        main: data.filter(item => item.title === '主诉症状'),
+        checkBody: data.filter(item => item.title === '查体'),
+        skinDamage: data.filter(item => item.title === '皮损部位')
+      }
+      if (list.basic.find(item => item.dimension === '年龄' && item.isUsed)) {
+        this.basic.age = {
+          exist: true,
+          value: {
+            year: '',
+            month: ''
+          }
+        }
+      }
+      if (list.basic.find(item => item.dimension === '性别' && item.isUsed)) {
+        this.basic.sex = {
+          exist: true,
+          value: '',
+          options: list.basic.find(
+            item => item.dimension === '性别' && item.isUsed
+          ).options
+        }
+      }
+      if (list.basic.find(item => item.dimension === '体重' && item.isUsed)) {
+        this.basic.weight = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.basic.find(item => item.dimension === '品种' && item.isUsed)) {
+        this.basic.kind = {
+          exist: true,
+          value: '',
+          options: list.basic.find(item => item.dimension === '品种' && item.isUsed).options
+        }
+      }
+
+      if (list.lifeHistory.find(item => item.dimension === '生活史' && item.isUsed)) {
+        this.lifeHistory = {
+          exist: true,
+          value: [],
+          options: list.lifeHistory.find(
+            item => item.dimension === '生活史' && item.isUsed
+          ).options
+        }
+      }
+
+      if (list.passHistory.find(item => item.dimension === '既往史' && item.isUsed)) {
+        this.passHistory = {
+          exist: true,
+          value: '',
+          options: list.passHistory.find(
+            item => item.dimension === '既往史' && item.isUsed
+          ).options
+        }
+      }
+      if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
+        let options = list.main.find(
+          item => item.dimension === '主诉症状' && item.isUsed
+        ).options
+
+        this.main = {
+          exist: true,
+          value: [],
+          options
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '体温')) {
+        this.checkBody.temp = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '血压')) {
+        this.checkBody.blood = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '心率')) {
+        this.checkBody.heart = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '呼吸频率')) {
+        this.checkBody.breath = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '毛细血管再充盈时间')) {
+        this.checkBody.recharge = {
+          exist: true,
+          value: ''
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '行为异常')) {
+        this.checkBody.abnomalBehavior = {
+          exist: true,
+          value: '',
+          options: list.checkBody.find(
+            item => item.dimension === '行为异常' && item.isUsed
+          ).options
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '触诊')) {
+        this.checkBody.touch = {
+          exist: true,
+          value: '',
+          options: list.checkBody.find(
+            item => item.dimension === '触诊' && item.isUsed
+          ).options
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '视诊')) {
+        this.checkBody.eye = {
+          exist: true,
+          value: '',
+          options: list.checkBody.find(
+            item => item.dimension === '视诊' && item.isUsed
+          ).options
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '嗅诊')) {
+        this.checkBody.smell = {
+          exist: true,
+          value: [],
+          options: list.checkBody.find(
+            item => item.dimension === '触诊' && item.isUsed
+          ).options
+        }
+      }
+      if (list.checkBody.find(item => item.dimension === '听诊')) {
+        this.checkBody.hear = {
+          exist: true,
+          value: [],
+          options: list.checkBody.find(
+            item => item.dimension === '听诊' && item.isUsed
+          ).options
+        }
+      }
+      if (list.skinDamage.find(item => item.dimension === '皮损部位')) {
+        this.checkBody.skinDamage = {
+          exist: true,
+          value: '',
+          options: list.skinDamage.find(
+            item => item.dimension === '皮损部位' && item.isUsed
+          ).options
+        }
+      }
+      if (list.main.find(item => item.dimension === '主诉症状')) {
+        let options = list.main.find(
+          item => item.dimension === '主诉症状' && item.isUsed
+        ).options
+        let arr = []
+        while (options.length > 0) {
+          let l = []
+          for (let i = 0; i < 3; i++) {
+            if (options.length > 0) {
+              l.push(options.shift())
+            }
+          }
+          arr.push(l)
+        }
+
+        this.main = {
+          exist: true,
+          value: '',
+          options: arr
+        }
+      }
+      this.list = list
+      console.log('fetch-item', 'fetch-item')
+      this.fetchItem()
+    }
   },
   created () {},
   mounted () {
-      this.fetch()
+    this.fetch()
   }
 }
 </script>
