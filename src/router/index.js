@@ -41,11 +41,33 @@ export default new Router({
     //   component: HelloWorld
     // },
 
-    // {
-    //   path: '/',
-    //   name: '接诊',
-    //   component: Login
-    // },
+    {
+      path: '/',
+      name: '接诊',
+      component: CheckHeader,
+      children: [
+        {
+          path: '/',
+          component: Check
+        },
+        {
+          path: 'tobe',
+          component: Check
+        },
+        {
+          path: 'ing',
+          component: Check
+        },
+        {
+          path: 'reing',
+          component: Check
+        },
+        {
+          path: 'ed',
+          component: Check
+        }
+      ]
+    },
     {
       path: '/check',
       name: '接诊',

@@ -668,10 +668,10 @@ export default {
       console.log('add obj', obj)
     },
     async fetch () {
-      // let res = await this.api.visit.list()
-      // let { data: { data, code } } = res
+      let res = await this.api.visit.list()
+      let { data: { data, code } } = res
       // localStorage.setItem('options',JSON.stringify(data))
-      let data = JSON.parse(window.localStorage.getItem('options'))
+      // let data = JSON.parse(window.localStorage.getItem('options'))
 
       let list = {
         basic: data.filter(item => item.title === '基本情况'),

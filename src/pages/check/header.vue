@@ -121,8 +121,13 @@
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
           <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
-          <el-table-column label="挂号项目" prop="type"></el-table-column>
-          <el-table-column label="入院时间" prop="type"></el-table-column>
+          <el-table-column label="挂号项目" prop="type">
+            <template scope="scope">
+            
+              <div v-for="item in config.ghxm" :key="item.id" v-if="item.id == scope.row.type">{{item.name}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="入院时间" prop="createTime"></el-table-column>
           <el-table-column label="姓名" prop="catName">
               <template scope="scope">
                 <el-button type="primary"  @click="route(scope)">接诊</el-button>
@@ -153,13 +158,20 @@ export default {
       loading: false,
       addForm: {
         visible: false,
-        ownerName: '苏瑞',
-        catName: 'siri',
+        // ownerName: '苏瑞',
+        // catName: 'siri',
+        // gender: 1,
+        // ownerPhone: '13683360717',
+        // catYears: '2',
+        // catMonths: '3',
+        // type: '1',
+        ownerName: '',
+        catName: '',
         gender: 1,
-        ownerPhone: '13683360717',
-        catYears: '2',
-        catMonths: '3',
-        type: '1',
+        ownerPhone: '',
+        catYears: '',
+        catMonths: '',
+        type: 1,
         doctorId: global.user.id,
         status: 1
       }
@@ -189,7 +201,15 @@ export default {
           break
       }
       this.loading = true
-      let res = await this.api.case.list({ status, ...this.filter })
+
+      let filter = {}
+      if (this.filter.startTime) {
+        filter.startTime = new Date(this.filter.startTime).getTime()
+      }
+      if (this.filter.endTime) {
+        filter.endTime = new Date(this.filter.endTime).getTime()
+      }
+      let res = await this.api.case.list({ status, ...filter })
       let { data: { data, code } } = res
       if (code === 200) {
         this.loading = false

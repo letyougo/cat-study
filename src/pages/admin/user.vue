@@ -94,7 +94,7 @@
         <div>
             <el-table :data="roles">
                 <!-- <el-table-column label="类型" prop="type"></el-table-column> -->
-                <el-table-column label="权限" type="expand" width="100px">
+                <!-- <el-table-column label="权限" type="expand" width="100px">
                     <template scope="scope">
                         <template v-if="scope.row.permissions.length>0">
                             <el-tag style="margin:4px" v-for="item in scope.row.permissions" type="primary">
@@ -106,7 +106,7 @@
                         </template>
 
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column label="roleId" prop="roleId"></el-table-column>
                 <el-table-column label="角色名称" prop="roleName"></el-table-column>
             </el-table>

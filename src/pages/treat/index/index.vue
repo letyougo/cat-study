@@ -1,8 +1,8 @@
 <template>
     <div class="treat-index">
-        <!-- <div >
+        <div >
             <middle></middle>
-        </div> -->
+        </div>
         <div style="width:280px;margin-left:15px;">
             <right></right>
         </div>
