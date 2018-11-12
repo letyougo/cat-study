@@ -3,7 +3,8 @@
     <!-- <img src="./assets/logo.png"> -->
     <div class="tab">
       <div class="logo">
-         cat study
+        <img src="/static/img/check/logo.png"/>
+        <div>猫研所</div>
       </div>
       <div class="tab-list">
         <div @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check/tobe'}">
@@ -109,6 +110,14 @@ export default {
      color: #ffffff;
      height: 60px;
      line-height: 60px;
+     display: flex;
+     align-items:center;
+     padding-left:47px;
+
+     div{
+       margin-left: 11px;
+       font-size: 20px;
+     }
    }
   }
   .tab-list{

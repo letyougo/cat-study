@@ -17,7 +17,7 @@
                 入院时间:{{item.createTime}}
             </div>
             <div>
-                医生：{{item.doctorId}}
+                医生：{{item.username}}
             </div>
         </div>
         <div class="header-content">
@@ -86,6 +86,7 @@ export default {
     async fetch () {
       let res = await this.api.case.item({ id: this.$route.query.id })
       let { data: { data, code } } = res
+      item.username = global.user.username
       this.item = data
     }
   },
