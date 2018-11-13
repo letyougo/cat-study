@@ -8,16 +8,19 @@
                     <el-checkbox label="">全选</el-checkbox>
                 </div>
             </div>
-            <div class="check">
-                <div v-for="item in exams">
-                    <div><el-checkbox :label="item"></el-checkbox></div>
-                </div>
+            <div >
+              <el-form >
+                  <el-checkbox-group v-model="kdmodel">
+                    <div style="margin: 6px 0" v-for="(item,index) in kdexams" :key="item.item"  >
+                        <el-checkbox :label="item"></el-checkbox>
+                    </div>
+                </el-checkbox-group>
+              </el-form>       
             </div>
-            <div class="action">
-                <el-button type="primary" @click="huay.visible=true">去化验</el-button>
-            </div>
+            <el-button type="primary" @click="startHuayan2(kdmodel)">去化验</el-button>
+           
         </div>
-      
+        <br/>
         <div class="guess">
 
             <el-dialog :visible="dialog.visible" class="exams-dia">
@@ -171,7 +174,8 @@ export default {
   },
   data () {
     return {
-      exams: [],
+      kdexams: [],
+      kdmodel: [],
       names: '',
       list: [],
       dialog: {
@@ -255,17 +259,19 @@ export default {
         if (obj.visualConsult && obj.visualConsult.length > 0) {
           arr.push(this.setMuti(obj.visualConsult))
         }
-        if (obj.skinLesion) {
-          arr.push(obj.skinLesion)
-        }
+
         if (obj.variety) {
           arr.push(obj.variety)
         }
 
-        let res = await this.api.disease.list({ caseId: obj.caseId, symptoms: arr.join(',') })
-        let { data: { data: { names, exams } } } = res
-        this.names = names
-        this.exams = exams
+        let query = arr.filter(item => !!item).join(',')
+        console.log('query', query)
+
+        this.fetchDiagDisease(query)
+        let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query })
+        let { data: { data } } = res
+        console.log(data, 'kdexams')
+        this.kdexams = data
       }
     },
     async addReport () {
@@ -317,10 +323,23 @@ export default {
         }
       })
       this.dialog.list = list
-      console.log(item, index, 'item-index')
+    },
+    startHuayan2 (l) {
+      let list = []
+      this.dialog.visible = true
+      list = l.map(item => {
+        return {
+          checkName: item,
+          creataTime: new Date().getTime(),
+          updateTime: new Date().getTime(),
+          doctorName: global.user.username,
+          checkDoctorName: ''
+        }
+      })
+      this.dialog.list = list
     },
     async huayan () {
-      let res = await this.api.check.addReport({ data: this.dialog.list })
+      let res = await this.api.check.addReport(this.$route.query.id, { data: this.dialog.list })
       this.dialog.visible = false
     }
   },
@@ -328,10 +347,10 @@ export default {
 
   },
   mounted () {
-    // this.$bus.on('check-reload', (obj) => {
-    //   this.fetch(obj)
-    // })
-    this.fetchDiagDisease('多饮多尿')
+    this.$bus.on('check-reload', (obj) => {
+      console.log(obj)
+      this.fetch(obj)
+    })
   }
 }
 </script>

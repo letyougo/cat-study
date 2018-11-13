@@ -288,9 +288,13 @@
         </template>
 
         <template v-if="checkBody.abnomalBehavior.exist">
-            <div class="behavior">
-                <el-form inline class="flex-form">
-                    <el-form-item label="行为异常">
+            <div class="skin">
+              <div class="check-item">
+                  <div class="tip">行为异常</div>
+                  <div class="con">
+                  <el-form inline class="flex-form">
+                  
+                    <el-form-item >
                         <el-select v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
                             <el-option v-for="item in checkBody.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
@@ -311,7 +315,9 @@
                     <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
                   </span>
                 </div>
+              </div>
             </div>
+          </div>
         </template>
 
         <el-form>
@@ -653,7 +659,7 @@ export default {
       }
 
       obj.caseId = this.$route.query.id
-      obj.id = this.id
+      obj.id = this.$route.query.id
 
       // return this.$bus.emit('check-reload', obj)
 
@@ -668,10 +674,19 @@ export default {
       console.log('add obj', obj)
     },
     async fetch () {
-      let res = await this.api.visit.list()
-      let { data: { data, code } } = res
-      // localStorage.setItem('options',JSON.stringify(data))
-      // let data = JSON.parse(window.localStorage.getItem('options'))
+      let options = window.localStorage.getItem('options')
+      let data
+      if (options) {
+        data = JSON.parse(window.localStorage.getItem('options'))
+        this.api.visit.list().then(res => {
+          let { data: { data, code } } = res
+          window.localStorage.setItem('options', JSON.stringify(data))
+        })
+      } else {
+        let res = await this.api.visit.list()
+        let { data: { data, code } } = res
+        window.localStorage.setItem('options', JSON.stringify(data))
+      }
 
       let list = {
         basic: data.filter(item => item.title === '基本情况'),
@@ -844,7 +859,7 @@ export default {
 
         this.main = {
           exist: true,
-          value: '',
+          value: [],
           options: arr
         }
       }
@@ -900,7 +915,7 @@ export default {
       .tip {
         line-height: 42px;
         margin-right: 30px;
-        width: 51px;
+        width: 60px;
       }
 
       .con {

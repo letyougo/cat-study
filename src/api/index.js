@@ -116,6 +116,11 @@ const api = {
       const url = `/check/getCheckInfo?reportId=${reportId}`
       const res = await request.get(url)
       return res
+    },
+    async listCheckBySymptom (params) {
+      const url = '/check/listCheckBySymptom'
+      const res = await request.get(url, { params })
+      return res
     }
 
   },
