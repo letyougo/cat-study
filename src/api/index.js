@@ -329,6 +329,11 @@ const api = {
       const url = '/caseVisit/getByCaseId'
       let res = await request.get(url, { params: data })
       return res
+    },
+    async update(data){
+      const url = '/visit/update'
+      let res = await request.post(url, data)
+      return res
     }
   },
   // 检查
