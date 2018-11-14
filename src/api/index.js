@@ -121,6 +121,32 @@ const api = {
       const url = '/check/listCheckBySymptom'
       const res = await request.get(url, { params })
       return res
+    },
+    manager:{
+      async getCheckType(){
+        const url = '/manager/check/getCheckType'
+        const res = await request.get(url)
+        return res
+      },
+      async getCheckByType(params){
+        const url = '/manager/check/getCheckByType'
+        const res = await request.get(url,{params})
+        return res
+      },
+      async list(param){
+        const url = '/manager/check/listCheckHospita'
+        const res = await request.get(url,{params})
+        return res
+      },
+      async listCheckHospital(params){
+        const url = '/manager/check/listCheckHospital'
+        const res = await request.get(url,{params})
+        return res
+      },
+      async addCheck(params){
+        const url = '/manager/check/addCheck'
+        const res = await request.get(url,{params})
+      }
     }
 
   },

@@ -1,7 +1,6 @@
 <template>
  <div class="app">
-    <img src="./assets/logo.png">
-    <div class="tab">
+    <!-- <div class="tab">
       <div class="logo">
         <img src="/static/img/check/logo.png"/>
         <div>猫研所</div>
@@ -25,7 +24,7 @@
             退出
           </div>
       </div>
-    </div>
+    </div> -->
  
     <div class="content">
       <div class="content-body">

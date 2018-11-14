@@ -24,6 +24,7 @@ import AdminHospital from '@/pages/admin/hospital'
 import AdminIll from '@/pages/admin/ill'
 import AdminChufang from '@/pages/admin/chufang'
 import AdminTreat from '@/pages/admin/treat'
+import AdminCheck from '@/pages/admin/check'
 
 import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
@@ -159,6 +160,10 @@ export default new Router({
         {
           path: 'treat',
           component: AdminTreat
+        },
+        {
+          path: 'check',
+          component: AdminCheck
         }
       ]
     },
