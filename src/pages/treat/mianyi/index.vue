@@ -163,7 +163,7 @@ export default {
       immune: ['', []],
       bear: ['', ''],
       med: {
-        visible: true,
+        visible: false,
         st: [],
         diseaseId: 0,
         docAdvice: '',

@@ -20,14 +20,8 @@
         <el-button type="primary">筛选</el-button>
       </el-form-item>
     </el-form>
-    <el-dialog :title="config.check[report.tplType].title" :visible="report.visible" >
-      <el-table :data="report.list" v-loading="report.loading">
-        <el-table-column v-for="(item,i) in config.check[report.tplType].options" :width="item.width" :key="item.i" :label="item.label" :prop="item.prop"></el-table-column>
-        <span slot="footer">
-          <el-button type="primary" @click="report.visible=false">关闭</el-button>
-        </span>
-      </el-table>
-    </el-dialog>
+    
+    <checktpl v-if="report.visible" :reportId="report.reportId"  @close="report.visible=false"></checktpl>
     <el-table :data="list" v-loading="loading">
       <el-table-column label="报告单名称" prop="checkName"></el-table-column>
       <el-table-column label="发送日期" prop="createTime"></el-table-column>
@@ -60,16 +54,15 @@
 </template>
 <script>
 import tip from '../../../components/tip'
+import checktpl from '../../checktpl'
 export default {
   name: 'result',
   data () {
     return {
       list: [],
       report: {
-        list: [],
-        visible: false,
-        loading: false,
-        tplType: 0
+        reportId: '',
+        visible: false
       },
       filter: {
         createTime: '',
@@ -95,19 +88,14 @@ export default {
     },
     async fetchReport (id) {
       this.report.visible = true
-      this.report.loading = true
-      const res = await this.api.check.getCheckInfo(id)
-      let { data: { data: { data, tplType } } } = res
-      this.report.loading = false
-      this.report.tplType = tplType
-      this.report.list = data
+      this.report.reportId = id
     },
     async saveNote () {
 
     }
   },
   components: {
-    tip
+    tip, checktpl
   },
   mounted () {
     this.fetch()

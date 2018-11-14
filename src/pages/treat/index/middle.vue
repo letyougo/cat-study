@@ -37,10 +37,10 @@
 
              <template v-if="basic.kind.exist">
                 <el-form-item label="品种" :style="{marginLeft:'20px'}">
-                    <el-select :style="{width:'140px'}" placeholder="请选择毛发长短" v-model="basic.kind.value" >
+                    <el-select  placeholder="请选择毛发长短" v-model="basic.kind.value" >
                         <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                     </el-select>
-                    <el-select :style="{width:'140px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
+                    <el-select :style="{marginLeft:'30px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
                         <el-option v-for="item in second_class" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                     </el-select>
                 </el-form-item>
@@ -111,7 +111,9 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item >
-                        <el-button type="primary" icon="el-icon-plus" @click="passHistory2.model.push(passHistory2.value)"> 新增</el-button>
+                        <el-button type="primary" icon="el-icon-plus" 
+                        @click="passHistory2.model.push(passHistory2.value)"
+                          > 新增</el-button>
                     </el-form-item>
                 </el-form>
                 <div class="behavior-list">
@@ -248,7 +250,7 @@
                             </el-form-item>
 
                             <el-form-item >
-                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.eye.model.push(checkBody2.eye.value+';'+checkBody2.eye.value)"> 新增</el-button>
+                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.eye.model.push(checkBody.eye.value+';'+checkBody2.eye.value)"> 新增</el-button>
                             </el-form-item>
                         </el-form>
                         <span v-for="(item,index) in checkBody2.eye.model" v-if="item" :key="item">
@@ -395,7 +397,7 @@ export default {
         checkBody: [], // 查体
         skinDamage: [] // 皮损部位
       },
-      second_class:[],
+      second_class: [],
       it: 0,
       mainDialog: false,
       main: {
@@ -575,19 +577,18 @@ export default {
       this.basic.sex.value = bear
       this.basic.weight.value = weight
       let v = variety.split(',')
-      if(v.length===0){
+      if (v.length === 0) {
         this.basic.kind.value = ''
         this.basic.kind2.value = ''
       }
-      if(v.leng ==1){
+      if (v.leng == 1) {
         this.basic.kind.value = v[0]
         this.kind2.value = ''
       }
-      if(v.length === 2){
+      if (v.length === 2) {
         this.basic.kind.value = v[0]
         this.basic.kind2.value = v[1]
       }
-  
 
       this.lifeHistory.value = [...(lifeHistory.split(','))].filter(item => !!item)
       this.passHistory2.model = [...(pastHistory.split(','))].filter(item => !!item)
@@ -711,7 +712,7 @@ export default {
       //   window.localStorage.setItem('options', JSON.stringify(data))
       // }
       let res = await this.api.visit.list()
-      let { data: { data, code,second_class } } = res
+      let { data: { data, code, second_class } } = res
       // window.localStorage.setItem('options', JSON.stringify(data))
       let list = {
         basic: data.filter(item => item.title === '基本情况'),

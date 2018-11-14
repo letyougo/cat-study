@@ -69,7 +69,7 @@
 				<div :class="{active:$route.path === '/check/tobe' ? true : false}" @click="$router.push('/check/tobe')">待接诊</div>
 				<div :class="{active:$route.path === '/check/reing' ? true : false}" @click="$router.push('/check/reing')">接诊中</div>
 				<div :class="{active:$route.path === '/check/ing' ? true : false}" @click="$router.push('/check/ing')">检查中</div>
-				<div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/check/ed')">已查出结果</div>
+				<div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/checkresult')">已查出结果</div>
 			</div>
 			<br/>
 			<div class="check-table">

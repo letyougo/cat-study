@@ -9,7 +9,8 @@ const noCheck = [
 ]
 const kongdongApi = [
   '/check',
-  '/prescription'
+  '/prescription',
+  '/addPrescription'
 ]
 request.interceptors.request.use(
   function (req) {
@@ -122,30 +123,35 @@ const api = {
       const res = await request.get(url, { params })
       return res
     },
-    manager:{
-      async getCheckType(){
+    async listReadyCheck (params) {
+      const url = '/check/listReadyCheck'
+      const res = await request.get(url, { params })
+      return res
+    },
+    manager: {
+      async getCheckType () {
         const url = '/manager/check/getCheckType'
         const res = await request.get(url)
         return res
       },
-      async getCheckByType(params){
+      async getCheckByType (params) {
         const url = '/manager/check/getCheckByType'
-        const res = await request.get(url,{params})
+        const res = await request.get(url, { params })
         return res
       },
-      async list(param){
+      async list (param) {
         const url = '/manager/check/listCheckHospita'
-        const res = await request.get(url,{params})
+        const res = await request.get(url, { params })
         return res
       },
-      async listCheckHospital(params){
+      async listCheckHospital (params) {
         const url = '/manager/check/listCheckHospital'
-        const res = await request.get(url,{params})
+        const res = await request.get(url, { params })
         return res
       },
-      async addCheck(params){
+      async addCheck (params) {
         const url = '/manager/check/addCheck'
-        const res = await request.get(url,{params})
+        const res = await request.get(url, { params })
       }
     }
 
@@ -356,7 +362,7 @@ const api = {
       let res = await request.get(url, { params: data })
       return res
     },
-    async update(data){
+    async update (data) {
       const url = '/visit/update'
       let res = await request.post(url, data)
       return res
@@ -415,7 +421,7 @@ export default {
       check: {
         0: {
           options: [
-            { label: '项目名称', prop: 'projectName', width: 350 },
+            { label: '项目名称', prop: 'projectName' },
             { label: '单位名称', prop: 'unit' },
             { label: '最大', prop: 'refMax' },
             { label: '最小', prop: 'refMin' },

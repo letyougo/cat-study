@@ -133,9 +133,8 @@ export default {
         prescription: this.list
       }]
 
-      console.log('data-save', data)
-      return
       let res = await this.api.operation.addPrescription({ jsonArray: data })
+      this.$emit('close')
       return res
     }
   },

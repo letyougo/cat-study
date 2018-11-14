@@ -7,6 +7,7 @@ import Checkreing from '@/pages/check/reing.vue'
 import Checktobe from '@/pages/check/tobe.vue'
 import CheckHeader from '@/pages/check/header'
 import Check from '@/pages/check'
+import CheckResult from '@/pages/check/result'
 
 import DoctorHeader from '@/pages/doctor/header'
 import DoctorIndex from '@/pages/doctor/index/index.vue'
@@ -33,6 +34,7 @@ import TreatMianyi from '@/pages/treat/mianyi/index'
 import TreatResult from '@/pages/treat/result'
 
 import Login from '@/pages/login/index'
+import { DH_CHECK_P_NOT_PRIME } from 'constants'
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +71,11 @@ export default new Router({
           component: Check
         }
       ]
+    },
+    {
+      path: '/checkresult',
+      name: '检查结果',
+      component: CheckResult
     },
     {
       path: '/check',

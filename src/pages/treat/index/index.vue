@@ -1,6 +1,6 @@
 <template>
     <div class="treat-index">
-        <div style="overflow-y: auto">
+        <div style="overflow-y: auto;min-width: 1260px;">
             <middle></middle>
         </div>
         <div style="width:280px;margin-left:15px;">
@@ -49,6 +49,6 @@ export default {
 <style scoped lang="less">
     .treat-index{
         display: flex;
-  
+     
     }
 </style>
