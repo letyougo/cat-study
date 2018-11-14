@@ -1,6 +1,6 @@
 <template>
     <div class="treat-index">
-        <div >
+        <div style="overflow-y: auto">
             <middle></middle>
         </div>
         <div style="width:280px;margin-left:15px;">

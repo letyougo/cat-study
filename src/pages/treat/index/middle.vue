@@ -1,9 +1,11 @@
 <template>
     <div class="middle">
+        <template  v-if="list.basic.length">
+          <div>
+              <p class="basic title"><tip></tip>基本情况</p>
+          </div>
 
-
-        <p class="basic title" v-if="list.basic.length">
-          <tip></tip>基本情况</p>
+        </template>
 
         <el-form :inline="true" v-if="list.basic.length">
             <template v-if="basic.age.exist">
@@ -38,11 +40,14 @@
                     <el-select :style="{width:'140px'}" placeholder="请选择毛发长短" v-model="basic.kind.value" >
                         <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                     </el-select>
+                    <el-select :style="{width:'140px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
+                        <el-option v-for="item in second_class" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                    </el-select>
                 </el-form-item>
             </template>
         </el-form>
 
-        <el-dialog title="主诉症状" :visible="mainDialog">
+        <el-dialog title="主诉症状" :visible.sync="mainDialog" >
              <div class="main-item" v-for="(l, index) in main.options" :key="index">
                 <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':item.picked}">
                     <span >{{item.names}}</span>
@@ -66,8 +71,8 @@
                     </el-form>
 
                     <div class="main-list">
-                        <span v-for="item in main.value" v-if="item" :key="item">
-                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        <span v-for="(item,index) in main.value" v-if="item" :key="item">
+                            <el-tag  @click=""  closable type="primary" @close="main.value.splice(index,1)" >{{item}}</el-tag>&nbsp;
                         </span>
                     </div>
                 </div>
@@ -110,8 +115,8 @@
                     </el-form-item>
                 </el-form>
                 <div class="behavior-list">
-                    <span v-for="item in passHistory2.model" v-if="item" :key="item">
-                        <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                    <span v-for="(item,index) in passHistory2.model" v-if="item" :key="item">
+                        <el-tag  closable type="primary" @close="passHistory2.model.splice(index,1)">{{item}}</el-tag>&nbsp;
                     </span>
                 
                 </div>
@@ -246,8 +251,8 @@
                                 <el-button type="primary" icon="el-icon-plus" @click="checkBody2.eye.model.push(checkBody2.eye.value+';'+checkBody2.eye.value)"> 新增</el-button>
                             </el-form-item>
                         </el-form>
-                        <span v-for="item in checkBody2.eye.model" v-if="item" :key="item">
-                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        <span v-for="(item,index) in checkBody2.eye.model" v-if="item" :key="item">
+                            <el-tag  closable type="primary" @close="checkBody2.eye.model.splice(index,1)">{{item}}</el-tag>&nbsp;
                         </span>
                         
                     </div>
@@ -279,8 +284,8 @@
                             </el-form-item>
                         </el-form>
                         
-                        <span v-for="item in checkBody2.skinDamage.model" v-if="item" :key="item">
-                            <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                        <span v-for="(item,index) in checkBody2.skinDamage.model" v-if="item" :key="item">
+                            <el-tag  closable type="primary"  @close="checkBody2.skinDamage.model.splice(index,1)">{{item}}</el-tag>&nbsp;
                         </span>
                     </div>
                 </div>
@@ -311,8 +316,8 @@
                   </el-form-item>
                 </el-form>
                 <div class="behavior-list" style="padding-left: 51px">
-                  <span v-for="item in checkBody2.abnomalBehavior.model" v-if="item" :key="item">
-                    <el-tag  closable type="primary" >{{item}}</el-tag>&nbsp;
+                  <span v-for="(item,index) in checkBody2.abnomalBehavior.model" v-if="item" :key="item">
+                    <el-tag  closable type="primary"  @close="checkBody2.abnomalBehavior.model.splice(index,1)">{{item}}</el-tag>&nbsp;
                   </span>
                 </div>
               </div>
@@ -390,6 +395,7 @@ export default {
         checkBody: [], // 查体
         skinDamage: [] // 皮损部位
       },
+      second_class:[],
       it: 0,
       mainDialog: false,
       main: {
@@ -415,6 +421,10 @@ export default {
           value: ''
         },
         kind: {
+          exist: false,
+          value: ''
+        },
+        kind2: {
           exist: false,
           value: ''
         }
@@ -564,23 +574,36 @@ export default {
       this.id = id
       this.basic.sex.value = bear
       this.basic.weight.value = weight
-      this.basic.kind.value = variety
+      let v = variety.split(',')
+      if(v.length===0){
+        this.basic.kind.value = ''
+        this.basic.kind2.value = ''
+      }
+      if(v.leng ==1){
+        this.basic.kind.value = v[0]
+        this.kind2.value = ''
+      }
+      if(v.length === 2){
+        this.basic.kind.value = v[0]
+        this.basic.kind2.value = v[1]
+      }
+  
 
-      this.lifeHistory.value = [...(lifeHistory.split(','))]
-      this.passHistory2.model = [...(pastHistory.split(','))]
+      this.lifeHistory.value = [...(lifeHistory.split(','))].filter(item => !!item)
+      this.passHistory2.model = [...(pastHistory.split(','))].filter(item => !!item)
 
-      this.checkBody.smell.value = [...(noseConsult.split(','))]
+      this.checkBody.smell.value = [...(noseConsult.split(','))].filter(item => !!item)
       this.checkBody.temp.value = temperature
       this.checkBody.recharge.value = fillTime
       this.checkBody.breath.value = breathRate
       this.checkBody.heart.value = heartRate
-      this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')]
+      this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')].filter(item => !!item)
       this.checkBody.touch.value = palpation
-      this.checkBody.hear.value = [...(auscultation.split(','))]
+      this.checkBody.hear.value = [...(auscultation.split(','))].filter(item => !!item)
       this.checkBody.blood.value = pressure
-      this.checkBody2.skinDamage.model = [...(skinLesion.split(','))]
-      this.checkBody2.eye.model = [...(visualConsult.split(','))]
-      this.main.value = [...(mainSymptom.split(','))]
+      this.checkBody2.skinDamage.model = [...(skinLesion.split(','))].filter(item => !!item)
+      this.checkBody2.eye.model = [...(visualConsult.split(','))].filter(item => !!item)
+      this.main.value = [...(mainSymptom.split(','))].filter(item => !!item)
       this.main.options = this.main.options.map(item => {
         item = item.map(l => {
           l.picked = false
@@ -660,7 +683,7 @@ export default {
 
       obj.caseId = this.$route.query.id
       obj.id = this.$route.query.id
-
+      obj.variety = this.basic.kind.value + ',' + this.basic.kind2.value
       // return this.$bus.emit('check-reload', obj)
 
       this.$message('更新数据中...')
@@ -674,20 +697,22 @@ export default {
       console.log('add obj', obj)
     },
     async fetch () {
-      let options = window.localStorage.getItem('options')
-      let data
-      if (options) {
-        data = JSON.parse(window.localStorage.getItem('options'))
-        this.api.visit.list().then(res => {
-          let { data: { data, code } } = res
-          window.localStorage.setItem('options', JSON.stringify(data))
-        })
-      } else {
-        let res = await this.api.visit.list()
-        let { data: { data, code } } = res
-        window.localStorage.setItem('options', JSON.stringify(data))
-      }
-
+      // let options = window.localStorage.getItem('options')
+      // let data
+      // if (options) {
+      //   data = JSON.parse(window.localStorage.getItem('options'))
+      //   this.api.visit.list().then(res => {
+      //     let { data: { data, code } } = res
+      //     window.localStorage.setItem('options', JSON.stringify(data))
+      //   })
+      // } else {
+      //   let res = await this.api.visit.list()
+      //   let { data: { data, code } } = res
+      //   window.localStorage.setItem('options', JSON.stringify(data))
+      // }
+      let res = await this.api.visit.list()
+      let { data: { data, code,second_class } } = res
+      // window.localStorage.setItem('options', JSON.stringify(data))
       let list = {
         basic: data.filter(item => item.title === '基本情况'),
         lifeHistory: data.filter(item => item.title === '生活史'),
@@ -696,6 +721,9 @@ export default {
         checkBody: data.filter(item => item.title === '查体'),
         skinDamage: data.filter(item => item.title === '皮损部位')
       }
+      this.second_class = second_class
+
+      console.log(list, 'list-option')
       if (list.basic.find(item => item.dimension === '年龄' && item.isUsed)) {
         this.basic.age = {
           exist: true,
@@ -706,12 +734,11 @@ export default {
         }
       }
       if (list.basic.find(item => item.dimension === '性别' && item.isUsed)) {
+        let item = list.basic.find(item => item.dimension === '性别')
         this.basic.sex = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.basic.find(
-            item => item.dimension === '性别' && item.isUsed
-          ).options
+          options: item.options
         }
       }
       if (list.basic.find(item => item.dimension === '体重' && item.isUsed)) {
@@ -721,10 +748,11 @@ export default {
         }
       }
       if (list.basic.find(item => item.dimension === '品种' && item.isUsed)) {
+        let item = list.basic.find(item => item.dimension === '品种')
         this.basic.kind = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.basic.find(item => item.dimension === '品种' && item.isUsed).options
+          options: item.options
         }
       }
 
@@ -758,107 +786,100 @@ export default {
           options
         }
       }
-      if (list.checkBody.find(item => item.dimension === '体温')) {
+      if (list.checkBody.find(item => item.dimension === '体温' && item.isUsed)) {
         this.checkBody.temp = {
           exist: true,
           value: ''
         }
       }
-      if (list.checkBody.find(item => item.dimension === '血压')) {
+      if (list.checkBody.find(item => item.dimension === '血压' && item.isUsed)) {
         this.checkBody.blood = {
           exist: true,
           value: ''
         }
       }
-      if (list.checkBody.find(item => item.dimension === '心率')) {
+      if (list.checkBody.find(item => item.dimension === '心率' && item.isUsed)) {
         this.checkBody.heart = {
           exist: true,
           value: ''
         }
       }
-      if (list.checkBody.find(item => item.dimension === '呼吸频率')) {
+      if (list.checkBody.find(item => item.dimension === '呼吸频率' && item.isUsed)) {
         this.checkBody.breath = {
           exist: true,
           value: ''
         }
       }
-      if (list.checkBody.find(item => item.dimension === '毛细血管再充盈时间')) {
+      if (list.checkBody.find(item => item.dimension === '毛细血管再充盈时间' && item.isUsed)) {
         this.checkBody.recharge = {
           exist: true,
           value: ''
         }
       }
-      if (list.checkBody.find(item => item.dimension === '行为异常')) {
+      if (list.checkBody.find(item => item.dimension === '行为异常' && item.isUsed)) {
+        let item = list.checkBody.find(item => item.dimension === '行为异常')
         this.checkBody.abnomalBehavior = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.checkBody.find(
-            item => item.dimension === '行为异常' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.checkBody.find(item => item.dimension === '触诊')) {
+      if (list.checkBody.find(item => item.dimension === '触诊' && item.isUsed)) {
+        let item = list.checkBody.find(item => item.dimension === '触诊')
         this.checkBody.touch = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.checkBody.find(
-            item => item.dimension === '触诊' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.checkBody.find(item => item.dimension === '视诊')) {
+      if (list.checkBody.find(item => item.dimension === '视诊' && item.isUsed)) {
+        let item = list.checkBody.find(item => item.dimension === '视诊')
         this.checkBody.eye = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.checkBody.find(
-            item => item.dimension === '视诊' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.checkBody.find(item => item.dimension === '嗅诊')) {
+      if (list.checkBody.find(item => item.dimension === '嗅诊' && item.isUsed)) {
+        let item = list.checkBody.find(item => item.dimension === '嗅诊')
         this.checkBody.smell = {
-          exist: true,
+          exist: item.isUsed,
           value: [],
-          options: list.checkBody.find(
-            item => item.dimension === '触诊' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.checkBody.find(item => item.dimension === '听诊')) {
+      if (list.checkBody.find(item => item.dimension === '听诊' && item.isUsed)) {
+        let item = list.checkBody.find(item => item.dimension === '听诊')
         this.checkBody.hear = {
-          exist: true,
+          exist: item.isUsed,
           value: [],
-          options: list.checkBody.find(
-            item => item.dimension === '听诊' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.skinDamage.find(item => item.dimension === '皮损部位')) {
+      if (list.skinDamage.find(item => item.dimension === '皮损部位' && item.isUsed)) {
+        let item = list.skinDamage.find(item => item.dimension === '皮损部位')
         this.checkBody.skinDamage = {
-          exist: true,
+          exist: item.isUsed,
           value: '',
-          options: list.skinDamage.find(
-            item => item.dimension === '皮损部位' && item.isUsed
-          ).options
+          options: item.options
         }
       }
-      if (list.main.find(item => item.dimension === '主诉症状')) {
-        let options = list.main.find(
-          item => item.dimension === '主诉症状' && item.isUsed
-        ).options
+      if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
+        let item = list.main.find(item => item.dimension === '主诉症状')
+
         let arr = []
-        while (options.length > 0) {
+        while (item.options.length > 0) {
           let l = []
           for (let i = 0; i < 3; i++) {
-            if (options.length > 0) {
-              l.push(options.shift())
+            if (item.options.length > 0) {
+              l.push(item.options.shift())
             }
           }
           arr.push(l)
         }
 
         this.main = {
-          exist: true,
+          exist: item.isUsed,
           value: [],
           options: arr
         }

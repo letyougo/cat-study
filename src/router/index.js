@@ -23,6 +23,7 @@ import AdminHosMed from '@/pages/admin/hosmed'
 import AdminHospital from '@/pages/admin/hospital'
 import AdminIll from '@/pages/admin/ill'
 import AdminChufang from '@/pages/admin/chufang'
+import AdminTreat from '@/pages/admin/treat'
 
 import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
@@ -154,6 +155,10 @@ export default new Router({
         {
           path: 'chufang',
           component: AdminChufang
+        },
+        {
+          path: 'treat',
+          component: AdminTreat
         }
       ]
     },

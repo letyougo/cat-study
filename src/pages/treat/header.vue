@@ -86,8 +86,8 @@ export default {
     async fetch () {
       let res = await this.api.case.item({ id: this.$route.query.id })
       let { data: { data, code } } = res
-      item.username = global.user.username
       this.item = data
+      this.item.username = global.user.username
     }
   },
   created () {},

@@ -32,7 +32,7 @@
                         <li>
                             <span>O</span>诊疗模块管理
                         </li>
-                        <li>
+                        <li @click="$router.push('/admin/treat')" :class="{active:$route.path === '/admin/treat' ? true : false}">
                             <span>O</span>检查管理
                         </li>
 
