@@ -130,7 +130,12 @@
           <el-table-column label="入院时间" prop="createTime"></el-table-column>
           <el-table-column label="姓名" prop="catName">
               <template scope="scope">
-                <el-button type="primary"  @click="route(scope)">接诊</el-button>
+                <template v-if="$route.path === '/check/ing'">
+                  <el-button type="primary"  @click="$router.push(`/treat/result?id=${scope.row.id}`)">查看</el-button>
+                </template>
+                <template v-else>
+                    <el-button type="primary"  @click="route(scope)">接诊</el-button>
+                </template>
                 <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
@@ -243,7 +248,11 @@ export default {
       }
     },
     route (scope) {
-      this.$router.push(`/treat?id=${scope.row.id}`)
+      if (scope.row.type === 1) {
+        this.$router.push(`/treat?id=${scope.row.id}`)
+      }else {
+        this.$router.push(`/treat/mianyi?id=${scope.row.id}`)
+      }
     }
   },
   created () {},

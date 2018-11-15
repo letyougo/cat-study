@@ -428,6 +428,30 @@ export default {
             { label: '结果值', prop: 'param' }
           ],
           title: '血常规'
+        },
+        5: {
+          options: [
+            { label: '项目名称', prop: 'projectName' },
+            { label: '单位名称', prop: 'unit' },
+            { label: '最大', prop: 'refMax' },
+            { label: '最小', prop: 'refMin' },
+            { label: '结果值', prop: 'param' }
+          ],
+          title: '眼压'
+        },
+        7: {
+          options: [
+            { label: '项目名称', prop: 'projectName' },
+            { label: '单位名称', prop: 'unit' },
+            { label: '幼年猫-最低', prop: 'refMin' },
+            { label: '幼年猫-最高', prop: 'refMax' },
+            { label: '成年猫-最低', prop: 'refMin2' },
+            { label: '成年猫-最高', prop: 'refMax2' },
+            { label: '老年猫-最低', prop: 'refMin3' },
+            { label: '老年猫-最高', prop: 'refMax3' },
+            { label: '结果值', prop: 'param' }
+          ],
+          title: '生化'
         }
       }
     }

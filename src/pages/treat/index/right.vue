@@ -1,12 +1,11 @@
 <template>
     <div class="right">
-        <div class="title">疑似 &nbsp;{{names}}</div>
         <div class="suggest dia-item">
             <div class="top">
-                <div class="title-tip">症状推荐检查</div>
-                <div>
-                    <el-checkbox label="">全选</el-checkbox>
-                </div>
+                <div class="title-tip">疑似诊断提示</div>
+                <!-- <div>
+                    <el-checkbox label=""  @>全选</el-checkbox>
+                </div> -->
             </div>
             <div >
               <el-form >
@@ -17,12 +16,15 @@
                 </el-checkbox-group>
               </el-form>       
             </div>
-            <el-button type="primary" @click="startHuayan2(kdmodel)">去化验</el-button>
-           
+            <br/>
+            <p class="action">
+                <el-button type="primary" @click="startHuayan2(kdmodel)">去化验</el-button>
+            </p>
+            
         </div>
         <br/>
         <div class="guess">
-
+            <div class="title">疑似疾病</div>
             <el-dialog :visible="dialog.visible" class="exams-dia">
               <div class="exams-dia-title" slot="title">
                 <p >检查项目</p>
