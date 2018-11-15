@@ -128,6 +128,11 @@ const api = {
       const res = await request.get(url, { params })
       return res
     },
+    async editCheck(reportId,data){
+      const url= `/check/editCheck?reportId=${reportId}`
+      const res = await request.post(url,data)
+      return res 
+    },
     manager: {
       async getCheckType () {
         const url = '/manager/check/getCheckType'

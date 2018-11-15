@@ -14,10 +14,29 @@
             <shenghua :columns="columns[tplType].options"  :list="shenghuaList"></shenghua>
           </template> -->
         <!-- {{tplType}} {{tplType === 0}} -->
-        <el-table :data="list">
-            <el-table-column v-for="item in columns" :width="item.width" :key="item.i" :label="item.label" :prop="item.prop">
-            </el-table-column>
-        </el-table>
+        <template v-if="tplType===0 || tplType === 5 || tplType === 7">
+            <div class="check-action">
+                <el-button v-if="!edit.table" @click="edit.table=true">编辑</el-button>
+                <el-button v-else type="primary" @click="updateTableCheck">保存</el-button>
+            </div>
+            <el-table :data="list">
+                <el-table-column v-for="item in columns" :width="item.width" :key="item.i" :label="item.label" :prop="item.prop"></el-table-column>
+                <el-table-column label="结果值" prop="value">
+                  <template scope="scope">
+                    <template v-if="edit.table">
+                      <el-input v-model="scope.row.value" placeholder=""></el-input>
+                    </template>
+                    <template v-else>
+                      {{scope.row.value}}
+                    </template>
+                  </template>
+                </el-table-column>
+            </el-table>
+        </template>
+        <template v-else>
+          <div>暂不支持改检查模板{{tplType}}</div>
+        </template>
+        
         <span slot="footer">
           <el-button type="primary" @click="$emit('close')">关闭</el-button>
         </span>
@@ -73,7 +92,10 @@ export default {
   data () {
     return {
       tplType: 0,
-      list: []
+      list: [],
+      edit:{
+        table:false
+      }
     }
   },
 
@@ -81,12 +103,25 @@ export default {
     async fetch () {
       let res = await this.api.check.getCheckInfo(this.reportId)
       let { data: { data } } = res
+   
+      data.data= data.data.map(item=>{
+        item.value = item.value || ''
+        return item
+      })
       this.list = data.data
       this.columns = columns[data.tplType].options
+    },
+    async updateTableCheck(){
+      await this.api.check.editCheck(this.reportId,{data:this.list,desc:'早日康复'})
+      this.reload()
+    },
+    reload(){
+      this.edit.table = false
+      this.fetch()
     }
   },
   mounted () {
-    this.fetch()
+    this.reload()
   }
 }
 </script>
