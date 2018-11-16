@@ -21,7 +21,7 @@
       </el-form-item>
     </el-form>
     
-    <checktpl v-if="report.visible" :reportId="report.reportId"  @close="report.visible=false"></checktpl>
+    <checktpl v-if="report.visible" :reportId="report.reportId" :title="report.title"  @close="report.visible=false"></checktpl>
     <el-table :data="list" v-loading="loading">
       <el-table-column label="报告单名称" prop="checkName"></el-table-column>
       <el-table-column label="发送日期" prop="createTime"></el-table-column>
@@ -30,7 +30,7 @@
       <el-table-column label="note"></el-table-column>
       <el-table-column label="操作">
         <template scope="scope">
-          <el-button type="warning" @click="fetchReport(scope.row.id)">预览</el-button>
+          <el-button type="warning" @click="fetchReport(scope.row.id,scope.row.checkName)">预览</el-button>
           <el-button type="primary">编辑</el-button>
         </template>
       </el-table-column>
@@ -62,7 +62,8 @@ export default {
       list: [],
       report: {
         reportId: '',
-        visible: false
+        visible: false,
+        title: ''
       },
       filter: {
         createTime: '',
@@ -77,7 +78,6 @@ export default {
       edit: false
     }
   },
-
   methods: {
     async fetch () {
       this.loading = true
@@ -86,9 +86,10 @@ export default {
       this.loading = false
       this.list = data
     },
-    async fetchReport (id) {
+    async fetchReport (id, title) {
       this.report.visible = true
       this.report.reportId = id
+      this.report.title = title
     },
     async saveNote () {
 

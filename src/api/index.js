@@ -2,6 +2,7 @@ import request from 'axios'
 import moment from 'moment'
 import Vue from 'vue'
 import App from '../main'
+let axios = request.create()
 request.defaults.baseURL = 'http://39.104.82.5:8080'
 
 const noCheck = [
@@ -10,7 +11,8 @@ const noCheck = [
 const kongdongApi = [
   '/check',
   '/prescription',
-  '/addPrescription'
+  '/addPrescription',
+  '/qiniu'
 ]
 request.interceptors.request.use(
   function (req) {
@@ -128,10 +130,10 @@ const api = {
       const res = await request.get(url, { params })
       return res
     },
-    async editCheck(reportId,data){
-      const url= `/check/editCheck?reportId=${reportId}`
-      const res = await request.post(url,data)
-      return res 
+    async editCheck (reportId, data) {
+      const url = `/check/editCheck?reportId=${reportId}`
+      const res = await request.post(url, data)
+      return res
     },
     manager: {
       async getCheckType () {
@@ -394,6 +396,18 @@ const api = {
       let res = await request.post(url, data)
       return res
     }
+  },
+  // 上传文件
+  async upload (file) {
+    let form = new FormData()
+    form.append('file', file,file.name)
+    form.append('key', new Date().getTime())
+    let res = await axios.post('/qiniu/uploadFile', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return res
   }
 }
 
@@ -424,28 +438,26 @@ export default {
         { name: '已出检查结果', id: 4 }
       ],
       check: {
-        0: {
-          options: [
+        options: {
+          0: [
             { label: '项目名称', prop: 'projectName' },
             { label: '单位名称', prop: 'unit' },
             { label: '最大', prop: 'refMax' },
             { label: '最小', prop: 'refMin' },
             { label: '结果值', prop: 'param' }
           ],
-          title: '血常规'
-        },
-        5: {
-          options: [
+          1: [
+            { label: '项目名称', prop: 'projectName' },
+            { label: '检查结果', prop: 'isException' }
+          ],
+          5: [
             { label: '项目名称', prop: 'projectName' },
             { label: '单位名称', prop: 'unit' },
             { label: '最大', prop: 'refMax' },
             { label: '最小', prop: 'refMin' },
             { label: '结果值', prop: 'param' }
           ],
-          title: '眼压'
-        },
-        7: {
-          options: [
+          7: [
             { label: '项目名称', prop: 'projectName' },
             { label: '单位名称', prop: 'unit' },
             { label: '幼年猫-最低', prop: 'refMin' },
@@ -455,8 +467,7 @@ export default {
             { label: '老年猫-最低', prop: 'refMin3' },
             { label: '老年猫-最高', prop: 'refMax3' },
             { label: '结果值', prop: 'param' }
-          ],
-          title: '生化'
+          ]
         }
       }
     }

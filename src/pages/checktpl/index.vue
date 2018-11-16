@@ -1,6 +1,6 @@
 <template>
-    <el-dialog  :visible="true" width="900px">
-        <h3 slot="title">检查</h3>
+    <el-dialog  :visible="true" width="900px" class="checktpl-dia">
+        <h3 slot="title" style="text-align: center">{{title}}</h3> 
         <!-- <template v-if="tplType === 0"> 
           blood
           <blood :columns="columns[tplType].options" :list="bloodList"></blood>
@@ -14,13 +14,15 @@
             <shenghua :columns="columns[tplType].options"  :list="shenghuaList"></shenghua>
           </template> -->
         <!-- {{tplType}} {{tplType === 0}} -->
-        <template v-if="tplType===0 || tplType === 5 || tplType === 7">
+       
+        <template v-if="(tplType===0 || tplType === 5 || tplType === 7)">
             <div class="check-action">
                 <el-button v-if="!edit.table" @click="edit.table=true">编辑</el-button>
                 <el-button v-else type="primary" @click="updateTableCheck">保存</el-button>
             </div>
+         
             <el-table :data="list">
-                <el-table-column v-for="item in columns" :width="item.width" :key="item.i" :label="item.label" :prop="item.prop"></el-table-column>
+                <el-table-column v-for="item in config.check.options[tplType]" :width="item.width" :key="item.i" :label="item.label" :prop="item.prop"></el-table-column>
                 <el-table-column label="结果值" prop="value">
                   <template scope="scope">
                     <template v-if="edit.table">
@@ -32,90 +34,218 @@
                   </template>
                 </el-table-column>
             </el-table>
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+             </el-form>
+        </template>
+        <template v-else-if="(tplType===1)">
+       
+          <el-table :data="list">
+            <el-table-column label="项目名称" prop="checkName"></el-table-column>
+            <el-table-column label="检查结果">
+              <template scope="scope">
+                <el-form >
+                  <el-form-item label="">
+                      <el-radio v-model="scope.row.isException" label="1">正常</el-radio>
+                      <el-radio v-model="scope.row.isException" label="0">异常</el-radio>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
+          </el-table>
+          <br/>
+          <el-form >
+            <el-form-item label="">
+               <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+            </el-input>
+          </el-form-item>
+           </el-form>
+        </template>
+        <template v-else-if="tplType===2">
+            <el-table :data="list">
+              <el-table-column label="项目名称" prop="checkName"></el-table-column>
+              <el-table-column label="检查结果">
+                <template scope="scope">
+                  <el-form >
+                    <el-form-item label="">
+                        <el-radio v-model="scope.row.isException" label="1">存在</el-radio>
+                        <el-radio v-model="scope.row.isException" label="0">不存在</el-radio>
+                    </el-form-item>
+                  </el-form>
+                </template>
+              </el-table-column>
+            </el-table>
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+             </el-form>
+          </template>
+          <template v-else-if="tplType===3">
+            <el-table :data="list">
+              <el-table-column label="项目名称" prop="checkName"></el-table-column>
+              <el-table-column label="检查结果">
+                <template scope="scope">
+                  <el-form >
+                    <el-form-item label="">
+                        <el-radio v-model="scope.row.result" label="1">阳性</el-radio>
+                        <el-radio v-model="scope.row.result" label="0">阴性</el-radio>
+                    </el-form-item>
+                  </el-form>
+                </template>
+              </el-table-column>
+            </el-table>
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+             </el-form>
+          </template>
+          <template v-else-if="tplType===6">
+              <el-table :data="list">
+                <el-table-column label="项目名称" prop="checkName"></el-table-column>
+                <el-table-column label="检查结果">
+                  <template scope="scope">
+                    <el-form >
+                      <el-form-item label="">
+                          <el-radio v-model="scope.row.result" label="1">正常</el-radio>
+                          <el-radio v-model="scope.row.result" label="0">异常</el-radio>
+                      </el-form-item>
+                    </el-form>
+                  </template>
+                </el-table-column>
+              </el-table>         
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+             </el-form>
+        </template>              
+        <template v-else-if="(tplType===4)">
+          <div class="check-img">
+            <div class="check-soure"></div>
+            <div class="check-action">
+              <div style="position: relative">上传图片
+                <input type="file" @change="upload"/>
+              </div>
+              <div>查看原图</div>
+            </div>
+            <br/>
+            <el-form >
+              <el-form-item label="备注">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+            <el-form-item label="">
+                <el-radio v-model="list[0].result" label="1">正常</el-radio>
+                <el-radio v-model="list[0].result" label="0">异常</el-radio>
+            </el-form-item>
+             </el-form>
+          </div>
         </template>
         <template v-else>
           <div>暂不支持改检查模板{{tplType}}</div>
         </template>
+
         
         <span slot="footer">
-          <el-button type="primary" @click="$emit('close')">关闭</el-button>
+          <el-button @click="$emit('close')">关闭</el-button>
+          <el-button type="primary" @click="updateTableCheck">保存</el-button>
+        
         </span>
     </el-dialog>
 </template>
 <script>
-import blood from './blood'
-import shenghua from './shenghua'
-import yanya from './yanya'
-const columns = {
-  0: {
-    options: [
-      { label: '项目名称', prop: 'projectName' },
-      { label: '单位名称', prop: 'unit' },
-      { label: '最大', prop: 'refMax' },
-      { label: '最小', prop: 'refMin' },
-      { label: '结果值', prop: 'param' }
-    ],
-    title: '血常规'
-  },
-  5: {
-    options: [
-      { label: '项目名称', prop: 'projectName' },
-      { label: '单位名称', prop: 'unit' },
-      { label: '最大', prop: 'refMax' },
-      { label: '最小', prop: 'refMin' },
-      { label: '结果值', prop: 'param' }
-    ],
-    title: '眼压'
-  },
-  7: {
-    options: [
-      { label: '项目名称', prop: 'projectName' },
-      { label: '单位名称', prop: 'unit' },
-      { label: '幼年猫-最低', prop: 'refMin' },
-      { label: '幼年猫-最高', prop: 'refMax' },
-      { label: '成年猫-最低', prop: 'refMin2' },
-      { label: '成年猫-最高', prop: 'refMax2' },
-      { label: '老年猫-最低', prop: 'refMin3' },
-      { label: '老年猫-最高', prop: 'refMax3' },
-      { label: '结果值', prop: 'param' }
-    ],
-    title: '生化'
-  }
-}
 
 export default {
   name: 'check-template',
   props: [
     'reportId',
-    'visible'
+    'visible',
+    'title'
   ],
+
   data () {
     return {
       tplType: 0,
       list: [],
-      edit:{
-        table:false
-      }
+      edit: {
+        table: false
+      },
+      desc: ''
+    }
+  },
+
+  watch: {
+    reportId () {
+      this.fetch()
     }
   },
 
   methods: {
     async fetch () {
+      this.desc = ''
       let res = await this.api.check.getCheckInfo(this.reportId)
-      let { data: { data } } = res
-   
-      data.data= data.data.map(item=>{
-        item.value = item.value || ''
-        return item
-      })
-      this.list = data.data
-      this.columns = columns[data.tplType].options
+      let { data: { data: { tplType, data } } } = res
+      this.tplType = tplType
+      if (tplType === 0 || tplType === 5 || tplType === 7) {
+        data = data.map(item => {
+          item.value = item.value || ''
+          return item
+        })
+        this.list = data
+      } else if (tplType === 1 || tplType === 2 || tplType === 3) {
+        data.result = data.result || ''
+        this.list = [data]
+        this.desc = data.note
+      } else if (tplType === 4) {
+        data.result = data.result || ''
+        this.list = [data]
+        this.desc = data.note
+      } else if (tplType === 6) {
+        data.result = data.result
+        this.list = [data]
+        this.desc = data.note
+      }
     },
-    async updateTableCheck(){
-      await this.api.check.editCheck(this.reportId,{data:this.list,desc:'早日康复'})
+    async updateTableCheck () {
+      let tplType = this.tplType
+      if (tplType === 1 || tplType === 2 || tplType === 3) {
+        let obj = {
+          value: this.list[0].result,
+          desc: this.desc
+        }
+        await this.api.check.editCheck(this.reportId, obj)
+      } else if (tplType === 6) {
+        let obj = {
+          value: this.list[0].result,
+          desc: this.desc
+        }
+        await this.api.check.editCheck(this.reportId, obj)
+      } else if (tplType === 0 || tplType === 5 || tplType === 7) {
+        await this.api.check.editCheck(this.reportId, { data: this.list, desc: this.desc })
+      } else if (tplType === 4) {
+
+      }
+
       this.reload()
     },
-    reload(){
+    async upload (e) {
+      let res = await this.api.upload(e.target.value)
+
+      console.log('res', res.data)
+    },
+    reload () {
       this.edit.table = false
       this.fetch()
     }
