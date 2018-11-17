@@ -400,7 +400,7 @@ const api = {
   // 上传文件
   async upload (file) {
     let form = new FormData()
-    form.append('file', file,file.name)
+    form.append('file', file, file.name)
     form.append('key', new Date().getTime())
     let res = await axios.post('/qiniu/uploadFile', form, {
       headers: {

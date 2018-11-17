@@ -69,7 +69,8 @@
 				<div :class="{active:$route.path === '/check/tobe' ? true : false}" @click="$router.push('/check/tobe')">待接诊</div>
 				<div :class="{active:$route.path === '/check/reing' ? true : false}" @click="$router.push('/check/reing')">接诊中</div>
 				<div :class="{active:$route.path === '/check/ing' ? true : false}" @click="$router.push('/check/ing')">检查中</div>
-				<div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/checkresult')">已查出结果</div>
+        <div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/check/ed')">已结束</div>
+        <div :class="{active:$route.path === '/checkresult' ? true : false}" @click="$router.push('/checkresult')">已查出结果</div>
 			</div>
 			<br/>
 			<div class="check-table">
@@ -136,23 +137,40 @@
                 <template v-else>
                     <el-button type="primary"  @click="route(scope)">接诊</el-button>
                 </template>
+                <el-button type="primary" @click="checkBingli(scope.row)">查看病例</el-button>
                 <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
       </el-table>
+
+      <el-dialog  :visible.sync="bingli.visible">
+    
+        <bingli :id="bingli.id"></bingli>
+        <span slot="footer">
+          <el-button @click="bingli.visible=false">关闭</el-button>
+        </span>
+      </el-dialog>
 			</div>
 		</div>
 	</div>
 </template>
 	<script>
 import moment from 'moment'
+
+import bingli from '@/components/bingli'
 global.moment = moment
 export default {
   name: 'check',
   props: {},
-  components: {},
+  components: {
+    bingli
+  },
   data () {
     return {
+      bingli: {
+        visible: false,
+        id: 0
+      },
       filter: {
         ownerName: '',
         catName: '',
@@ -189,6 +207,11 @@ export default {
   },
   computed: {},
   methods: {
+    checkBingli (item) {
+      console.log(item, 'bingli item')
+      this.bingli.visible = true
+      this.bingli.id = item.id
+    },
     async fetch () {
       let status
       switch (this.$route.path) {
@@ -250,7 +273,7 @@ export default {
     route (scope) {
       if (scope.row.type === 1) {
         this.$router.push(`/treat?id=${scope.row.id}`)
-      }else {
+      } else {
         this.$router.push(`/treat/mianyi?id=${scope.row.id}`)
       }
     }

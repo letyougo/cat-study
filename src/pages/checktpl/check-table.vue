@@ -8,7 +8,6 @@
        <el-form >
           <el-form-item label="">
             <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
-
             </el-input>
           </el-form-item>
         </el-form>

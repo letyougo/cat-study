@@ -147,8 +147,8 @@
               </el-input>
             </el-form-item>
             <el-form-item label="">
-                <el-radio v-model="list[0].result" label="1">正常</el-radio>
-                <el-radio v-model="list[0].result" label="0">异常</el-radio>
+                <el-radio v-model="list[0].isException" label="1">正常</el-radio>
+                <el-radio v-model="list[0].isException" label="0">异常</el-radio>
             </el-form-item>
              </el-form>
           </div>
@@ -212,6 +212,7 @@ export default {
         data.result = data.result || ''
         this.list = [data]
         this.desc = data.note
+        this.isException = data.isException
       } else if (tplType === 6) {
         data.result = data.result
         this.list = [data]
@@ -241,8 +242,16 @@ export default {
       this.reload()
     },
     async upload (e) {
-      let res = await this.api.upload(e.target.value)
-
+      let f = e.target.files[0]
+      let res = await this.api.upload(f)
+      let { data: { data: { path } } } = res
+      let obj = {
+        value: path,
+        desc: this.desc,
+        isException: this.list[0].isException
+      }
+      await this.api.check.editCheck(this.reportId, obj)
+      this.reload()
       console.log('res', res.data)
     },
     reload () {

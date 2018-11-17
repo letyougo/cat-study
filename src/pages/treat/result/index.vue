@@ -26,7 +26,13 @@
       <el-table-column label="报告单名称" prop="checkName"></el-table-column>
       <el-table-column label="发送日期" prop="createTime"></el-table-column>
       <el-table-column label="出结果日期" prop="updateTime"></el-table-column>
-      <el-table-column label="报告单状态" prop="status"></el-table-column>
+      <el-table-column label="报告单状态" prop="status">
+          <template scope="scope">
+              <p v-if="scope.row.status==='yes_read'">已读</p>
+              <p v-if="scope.row.status==='yes_unRead'">未读 <span style="color: red">!</span></p>
+              <p v-if="scope.row.status==='no'">报告未出</p>
+            </template>
+      </el-table-column>
       <el-table-column label="note"></el-table-column>
       <el-table-column label="操作">
         <template scope="scope">
