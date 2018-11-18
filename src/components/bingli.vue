@@ -19,7 +19,7 @@
     </div>
     <div class="basic">
       <div class="title">
-          一般信息
+          诊室检查
       </div>
       <div class="basic-content">
         <div>
@@ -40,39 +40,56 @@
     </div>
     <div class="treat">
         <div class="title">
-            诊室检查
+            检查结果
         </div>
         <report :id="id"></report>
     </div>
-    <div class="check">
-        <div class="title">
-            检查结果
-        </div>
-    </div>
+
     <div class="ill">
         <div class="title">
             确诊疾病
         </div>
+        <template v-for="(item,index) in ill">
+            <div class="title" v-if="!hide">
+                {{item.diseaseName}}
+            </div>
+            <div class="treatments">
+                <div class="title">
+                    治疗方案
+                </div>
+            </div>
+            <el-table :data="item.prescription">
+                <el-table-column label="药品名称" prop="medicineName">
+                   
+                  </el-table-column>
+                <el-table-column label="剂量" prop="dosage">
+                   
+                </el-table-column>
+                <el-table-column label="规格" prop="quantity"></el-table-column>
+                <el-table-column label="次/天" prop="days"></el-table-column>
+            </el-table>
+               
+          <div class="after">
+              <div class="title">
+                  预后护理
+              </div>
+              <div>
+                {{item.prognosis}}
+              </div>
+          </div>
+
+    
+        </template>
+
     </div>
-    <div class="ill">
-        <div class="title">
-            猫瘟
-        </div>
-    </div>
-    <div class="treatments">
-        <div class="title">
-            治疗方案
-        </div>
-    </div>
-    <div class="after">
-        <div class="title">
-            预后护理
-        </div>
-    </div>
+    <div class="title hideill">
+        <el-checkbox label="隐藏疾病名称" v-model="hide"></el-checkbox>
+      </div>
   </div>
 </template>
 <script>
 import report from './report'
+import axios from 'axios'
 export default{
   name: 'bingli',
   props: ['id'],
@@ -81,7 +98,11 @@ export default{
       owner: {},
       basic: {},
       treat: {},
-      check: {}
+      check: {},
+      ill: [
+        { prescription: [] }
+      ],
+      hide: false
     }
   },
   components: {
@@ -93,14 +114,22 @@ export default{
       let { data: { data } } = res
       this.owner = data
     },
-    async fetchCase (id) {
-      let res = await this.api.visit.item({ caseId: id })
+    async fetchCase (caseId) {
+      let res = await this.api.visit.item({ caseId })
       let { data: { data } } = res
       this.basic = data
     },
+    async getCaseDiseaseWithPrescription (caseId) {
+      let response = await axios.get('/case/getCaseDiseaseWithPrescription?caseId=' + caseId)
+
+      let { data: { data } } = response
+
+      this.ill = data
+    },
     reload (val) {
-      this.fetchOwner(val)
-      this.fetchCase(val)
+      this.getCaseDiseaseWithPrescription(val)
+      // this.fetchOwner(val)
+      // this.fetchCase(val)
     }
   },
   watch: {
@@ -126,6 +155,10 @@ export default{
     color: #4D4D4D;
     font-weight: bold;
     padding: 11px 0;
+  }
+  .hideill{
+    display: flex;
+    justify-content: flex-end;
   }
   .owner{
     display: flex;

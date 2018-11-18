@@ -76,25 +76,34 @@
       </div>
     </div>
 
-    <div class="print">
-      <el-dialog :visible="print">
-        <p class="print-title">猫咪诊断病例</p>
-      </el-dialog>
-    </div>
+    
+    <el-dialog  :visible.sync="print">
+      <bingli :id="$route.query.id"></bingli>
+      <span slot="footer">
+          <el-button @click="print=false">放弃打印</el-button>
+        <el-button @click="print=false" type="primary">打印并结束诊疗</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 <script>
 import chufang from '../../../components/chufang'
+import bingli from '../../../components/bingli'
 export default {
   props: {},
   components: {
-    chufang
+    chufang,
+    bingli
   },
   data () {
     return {
       print: false,
       list: [],
       uncertain: {
+        visible: false
+      },
+      bingli: {
         visible: false
       }
     }

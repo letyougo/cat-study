@@ -253,6 +253,11 @@ const api = {
       const url = '/disease/listDiseaseBySymptom'
       let res = await request.get(url, { params })
       return res
+    },
+    async getCaseDiseaseWithPrescription (caseId) {
+      const url = `/case/getCaseDiseaseWithPrescription`
+      let res = await request.get(url, { caseId })
+      return res
     }
   },
 
@@ -325,6 +330,7 @@ const api = {
       let res = await request.get(url, { params: data })
       return res
     }
+
   },
 
   hosmed: {
@@ -374,6 +380,7 @@ const api = {
       let res = await request.post(url, data)
       return res
     }
+
   },
   // 检查
   disease: {

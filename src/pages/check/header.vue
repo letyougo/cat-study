@@ -147,7 +147,8 @@
     
         <bingli :id="bingli.id"></bingli>
         <span slot="footer">
-          <el-button @click="bingli.visible=false">关闭</el-button>
+            <el-button @click="bingli.visible=false">放弃打印</el-button>
+          <el-button @click="bingli.visible=false" type="primary">打印并结束诊疗</el-button>
         </span>
       </el-dialog>
 			</div>
