@@ -431,6 +431,9 @@ export default {
     }
     Vue.prototype.moment = moment
     Vue.prototype.config = {
+      page: {
+        limit: 20
+      },
       ghxm: [
         { name: '问诊', id: 1 },
         { name: '免疫', id: 2 },

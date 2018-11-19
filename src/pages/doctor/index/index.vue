@@ -2,17 +2,17 @@
     <div class="doctor">
         <div class="doctor-modal">
             <div class="doctor-modal-top">
-                <div>x</div>
+                <tip></tip>
                 <div>知识库查询</div>
-                <div>x</div>
+                <tip></tip>
             </div>
             <div class="doctor-modal-action">
-                <el-input  placeholder="猫瘟" icon="search" style="width:100%;">
+                <el-input v-model="search"  placeholder="猫瘟" icon="search" style="width:100%;">
                     <template slot="prefix">
                     <i class="el-icon-search icon-search"></i>
                     </template>
                     <template slot="suffix">
-                        <el-button  style="margin-top:5px" type="primary" size="mini">搜索</el-button>
+                        <el-button @click="route" style="margin-top:5px" type="primary" size="mini">搜索</el-button>
                     </template>
                 </el-input>
             </div>
@@ -24,32 +24,34 @@
 </template>
 <script>
 import header from '../header'
-const a =1; 
+import tip from '../../../components/tip'
 export default {
-    name:'doctor',
-    props:{
+  name: 'doctor',
+  props: {
 
-    },
-    components:{
-
-    },
-    data(){
-        return {
-
-        }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
-
+  },
+  components: {
+    tip
+  },
+  data () {
+    return {
+      search: ''
     }
+  },
+  computed: {
+
+  },
+  methods: {
+    route () {
+      this.search && this.$router.push(`/doctor/chaxun?likeStr=${this.search}`)
+    }
+  },
+  created () {
+
+  },
+  mounted () {
+
+  }
 }
 </script>
 <style scoped lang="less">

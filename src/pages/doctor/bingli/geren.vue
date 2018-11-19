@@ -4,7 +4,7 @@
 				<div>
 					<el-form inline>
 						<el-form-item label="入院时间">
-							<el-date-picker></el-date-picker> 
+							<el-date-picker v-model="filter.startTime"></el-date-picker> 
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -15,7 +15,7 @@
 						</el-form-item>
 
 						<el-form-item >
-							<el-date-picker></el-date-picker> 
+							<el-date-picker v-model="filter.endTime"></el-date-picker> 
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -26,7 +26,7 @@
 						</el-form-item>
 
 						<el-form-item >
-							<el-button type="primary">查询</el-button>
+							<el-button type="primary" @click="fetch">查询</el-button>
 						</el-form-item>
 					</el-form>
 					
@@ -34,19 +34,32 @@
 			</div>
 			 
 				<el-table :data="list">
-            <el-table-column label="疾病名称" prop="name">
-                <template scope="scope">
-                    <router-link to="/treat">接诊</router-link>
-                </template>
-            </el-table-column>
-						<el-table-column label="症状" prop="status"></el-table-column>
-						<el-table-column label="简介" prop="desc"></el-table-column>
-						<el-table-column label="操作">
-							<template scope='scope'>
-								<el-button type="primary" @click="show=true">详情</el-button>
-							</template>
-						</el-table-column>
-        </el-table>
+          <el-table-column label="病例id" prop="id"></el-table-column>
+          <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
+          <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
+          <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
+          <el-table-column label="挂号项目" prop="type">
+            <template scope="scope">
+              <div v-for="item in config.ghxm" :key="item.id" v-if="item.id == scope.row.type">{{item.name}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="入院时间" prop="createTime"></el-table-column>
+					<el-table-column label="姓名" prop="catName"></el-table-column>
+					<el-table-column label="操作">
+						<template scope="scope">
+							<el-button @click="study(scope.row)">学习</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<div style="display: flex;justify-content:flex-end;padding-top: 10px">
+						<el-pagination
+						:page-size="config.page.limit"
+						:pager-count="pageinfo.pageNum"
+						layout="prev, pager, next"
+						
+						:total="pageinfo.totalCount">
+					</el-pagination>
+				</div>
 				<el-dialog title="猫咪诊断病例" class="chaxun-dialog" :visible="show">
 					<div>
 						<p style="margin-bottom:18px;">主人：王凌薇 猫咪姓名：咪咪 性别：公 年龄：1岁6个月 日期：2018/08/09</p>
@@ -140,34 +153,63 @@
 <script>
 import corner from '../../../components/corner.vue'
 export default {
-	props:{
+  props: {
 
-	},
-	components:{
-		corner
-	},
-	data(){
-		return {
- 			list:[
-					{name:'surui',status:25,desc:'man'},
-					{name:'liuhua',status:25,desc:'girl'},
-					{name:'aaa',status:25,desc:'ccc'},
-			],
-			show:false
-		}
-	},
-	computed:{
+  },
+  components: {
+    corner
+  },
+  data () {
+    return {
+ 			list: [
 
-	},
-	methods:{
+      ],
+      show: false,
+      filter: {
+        startTime: '',
+        endTime: ''
+      },
+      pageinfo: {
+        totalCount: 0,
+        pageNum: 1
+      }
+    }
+  },
+  computed: {
 
-	},
-	created(){
+  },
+  methods: {
+    reload () {
+      this.fetch()
+    },
+    study (item) {
+      this.$router.push(`/doctor/moni?id=${item.id}`)
+    },
+    async fetch () {
+      let filter = {}
+      if (this.filter.startTime) {
+        filter.startTime = new Date(this.filter.startTime).getTime()
+      }
+      if (this.filter.endTime) {
+        filter.endTime = new Date(this.filter.endTime).getTime()
+      }
+      let limit = this.config.page.limit
+      let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+      let res = await this.api.case.list({ ...filter, limit, start })
+      let { data: { data, code, pageinfo } } = res
+      if (code === 200) {
+        this.loading = false
+        this.list = data
+        this.pageinfo = pageinfo
+      }
+    }
+  },
+  created () {
 
-	},
-	mounted(){
-
-	}
+  },
+  mounted () {
+    this.reload()
+  }
 }
 </script>
 <style scoped lang="less">

@@ -2,9 +2,8 @@
   <div class="report">
     <template v-if="!loading">
       <div  v-for="obj in list"  class="report-item">
-        {{obj.checkName}}  -- {{obj.tplType}} 
           <p class="report-title">
-                {{obj.checkName}}--{{obj.tplType}}
+                {{obj.checkName}}
           </p>
         <template v-if="(obj.tplType==0 || obj.tplType == 5 || obj.tplType == 7)">
           

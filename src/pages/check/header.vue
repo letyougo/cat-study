@@ -143,12 +143,24 @@
           </el-table-column>
       </el-table>
 
+      <div style="display: flex;justify-content:flex-end;padding-top: 10px">
+          <el-pagination
+          :page-size="config.page.limit"
+          :pager-count="pageinfo.pageNum"
+          layout="prev, pager, next"
+          
+          :total="pageinfo.totalCount">
+        </el-pagination>
+      </div>
+
+
+
       <el-dialog  :visible.sync="bingli.visible">
     
         <bingli :id="bingli.id"></bingli>
         <span slot="footer">
             <el-button @click="bingli.visible=false">放弃打印</el-button>
-          <el-button @click="bingli.visible=false" type="primary">打印并结束诊疗</el-button>
+            <el-button @click="bingli.visible=false" type="primary">打印并结束诊疗</el-button>
         </span>
       </el-dialog>
 			</div>
@@ -172,11 +184,16 @@ export default {
         visible: false,
         id: 0
       },
+      pageinfo: {
+        totalCount: 0,
+        pageNum: 1
+      },
       filter: {
         ownerName: '',
         catName: '',
         startTime: '',
         endTime: ''
+
       },
       list: [],
       loading: false,
@@ -238,11 +255,14 @@ export default {
       if (this.filter.endTime) {
         filter.endTime = new Date(this.filter.endTime).getTime()
       }
-      let res = await this.api.case.list({ status, ...filter })
-      let { data: { data, code } } = res
+      let limit = this.config.page.limit
+      let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+      let res = await this.api.case.list({ status, ...filter, start, limit })
+      let { data: { data, code, pageinfo } } = res
       if (code === 200) {
         this.loading = false
         this.list = data
+        this.pageinfo = pageinfo
       }
     },
     async add () {
