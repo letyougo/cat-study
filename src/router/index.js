@@ -15,6 +15,7 @@ import DoctorBingliGeren from '@/pages/doctor/bingli/geren.vue'
 import DoctorBingliMoni from '@/pages/doctor/bingli/moni.vue'
 import DoctorWenxian from '@/pages/doctor/wenxian/index.vue'
 import DoctorChaxun from '@/pages/doctor/chaxun/index.vue'
+import DoctorXuexi from '@/pages/doctor/bingli/xuexi.vue'
 
 import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
@@ -127,6 +128,10 @@ export default new Router({
         {
           path: 'chaxun',
           component: DoctorChaxun
+        },
+        {
+          path: 'xuexi',
+          component: DoctorXuexi
         }
       ]
     },

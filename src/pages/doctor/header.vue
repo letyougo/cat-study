@@ -45,6 +45,9 @@
                         <li @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
                             <span>O</span>个人历史病例
                         </li>
+                        <li @click="$router.push('/doctor/xuexi')" :class="{active:$route.path === '/doctor/xuexi' ? true : false}">
+                            <span>O</span>学习历史病例
+                        </li>
                     </ul>
                 </div>
                 <div  @click="$router.push('/doctor/wenxian')" class="title2" :class="{active:$route.path === '/doctor/wenxian' ? true : false}">文献查询</div>
@@ -60,38 +63,38 @@
 <script>
 
 export default {
-    name:'treat',
-    props:{
+  name: 'treat',
+  props: {
 
-    },
-    data(){
-        return {
-            middle:{
-                basic:{
-                    age:5,
-                    month:12
-                }
-            },
-            print:false
+  },
+  data () {
+    return {
+      middle: {
+        basic: {
+          age: 5,
+          month: 12
         }
-    },
-    computed:{
-
-    },
-    methods:{
-
-    },
-    created(){
-
-    },
-    mounted(){
-        // document.querySelector('#app >.tab').style.minWidth="1631px"
-    },
-    watch:{
-        $route(){
-            console.log(this.$router, 'router')
-        }
+      },
+      print: false
     }
+  },
+  computed: {
+
+  },
+  methods: {
+
+  },
+  created () {
+
+  },
+  mounted () {
+    // document.querySelector('#app >.tab').style.minWidth="1631px"
+  },
+  watch: {
+    $route () {
+      console.log(this.$router, 'router')
+    }
+  }
 }
 </script>
 <style scoped lang="less">

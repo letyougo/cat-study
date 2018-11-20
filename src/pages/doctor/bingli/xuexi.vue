@@ -51,7 +51,7 @@
 						</template>
 					</el-table-column>
 				</el-table>
-				<div style="display: flex;justify-content:flex-end;padding-top: 10px">
+				<!-- <div style="display: flex;justify-content:flex-end;padding-top: 10px">
 						<el-pagination
 						:page-size="config.page.limit"
 						:pager-count="pageinfo.pageNum"
@@ -59,7 +59,7 @@
 						
 						:total="pageinfo.totalCount">
 					</el-pagination>
-				</div>
+				</div> -->
 				<el-dialog title="猫咪诊断病例" class="chaxun-dialog" :visible="show">
 					<div>
 						<p style="margin-bottom:18px;">主人：王凌薇 猫咪姓名：咪咪 性别：公 年龄：1岁6个月 日期：2018/08/09</p>
@@ -151,13 +151,14 @@
 	</div>
 </template>
 <script>
-import tip from '../../../components/tip.vue'
+import corner from '../../../components/corner.vue'
+import api from '../api'
 export default {
   props: {
 
   },
   components: {
-    tip
+    corner
   },
   data () {
     return {
@@ -186,16 +187,16 @@ export default {
       this.$router.push(`/doctor/moni?id=${item.id}`)
     },
     async fetch () {
-      let filter = {}
-      if (this.filter.startTime) {
-        filter.startTime = new Date(this.filter.startTime).getTime()
-      }
-      if (this.filter.endTime) {
-        filter.endTime = new Date(this.filter.endTime).getTime()
-      }
-      let limit = this.config.page.limit
-      let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
-      let res = await this.api.case.list({ ...filter, limit, start })
+      // let filter = {}
+      // if (this.filter.startTime) {
+      //   filter.startTime = new Date(this.filter.startTime).getTime()
+      // }
+      // if (this.filter.endTime) {
+      //   filter.endTime = new Date(this.filter.endTime).getTime()
+      // }
+      // let limit = this.config.page.limit
+      // let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+      let res = await api.listHistoryLearnCase({ userId: global.user.id })
       let { data: { data, code, pageinfo } } = res
       if (code === 200) {
         this.loading = false
