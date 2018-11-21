@@ -33,7 +33,7 @@
         </div>
 			</div>
 			 
-				<el-table :data="list">
+				<el-table :data="list" v-loading="loading">
           <el-table-column label="病例id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
@@ -47,7 +47,9 @@
 					<el-table-column label="姓名" prop="catName"></el-table-column>
 					<el-table-column label="操作">
 						<template scope="scope">
-							<el-button @click="study(scope.row)">学习</el-button>
+							<el-button 
+							@click="detail(scope.row)"
+							>详情</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -56,108 +58,27 @@
 						:page-size="config.page.limit"
 						:pager-count="pageinfo.pageNum"
 						layout="prev, pager, next"
-						
+						@current-change="pageChange"
 						:total="pageinfo.totalCount">
 					</el-pagination>
 				</div>
-				<el-dialog title="猫咪诊断病例" class="chaxun-dialog" :visible="show">
-					<div>
-						<p style="margin-bottom:18px;">主人：王凌薇 猫咪姓名：咪咪 性别：公 年龄：1岁6个月 日期：2018/08/09</p>
-						<p class="chaxun-dialog-title">疾病症状</p>
-						<div class="chaxun-dialog-content">幼年猫，多猫环境，室外生活，未按时免疫，精神沉郁，厌食，脱水，发热，呕吐，腹泻</div>
-						
-						<p class="chaxun-dialog-title">一般信息</p>
-						<div class="chaxun-dialog-content">
-							<div class="chaxun-dialog-basic">
-								<div>体重：3.6 kg</div>
-								<div>体重：3.6 kg</div>
-								<div>体重：3.6 kg</div>
-							</div>
-							
-							<div  class="chaxun-dialog-basic">	
-								<div>体重：3.6 kg</div>
-								<div>体重：3.6 kg</div>
-								<div>体重：3.6 kg</div>
-							</div>
-						</div>
-
-						<p class="chaxun-dialog-title">诊室检查</p>
-						<div class="chaxun-dialog-content">
-							<div class="chaxun-dialog-check">
-								<div>主诉症状：呕吐、厌食</div>
-								<div>主诉症状：呕吐、厌食</div>
-							</div>
-							
-							<div  class="chaxun-dialog-check">	
-								<div>体重：3.6 kg</div>
-							</div>
-						</div>
-
-						<p class="chaxun-dialog-title">确诊疾病</p>
-						<div class="chaxun-dialog-content">
-							猫瘟
-						</div>
-						<p class="chaxun-dialog-title">检查结果</p>
-						<div class="chaxun-dialog-content">
-							<p class="chaxun-dialog-title" style="text-align:center">血常规</p>
-							<el-table :data="list">
-								<el-table-column label="疾病名称" prop="name">
-										<template scope="scope">
-												<router-link to="/treat">接诊</router-link>
-										</template>
-								</el-table-column>
-								<el-table-column label="症状" prop="status"></el-table-column>
-								<el-table-column label="简介" prop="desc"></el-table-column>
-								
-        			</el-table>
-							<p class="chaxun-dialog-title" style="text-align:center;margin-top:10px">FE/LV</p>
-							<el-table :data="list">
-								<el-table-column label="疾病名称" prop="name">
-										<template scope="scope">
-												<router-link to="/treat">接诊</router-link>
-										</template>
-								</el-table-column>
-								<el-table-column label="症状" prop="status"></el-table-column>
-								<el-table-column label="简介" prop="desc"></el-table-column>
-        			</el-table>
-						</div>
-					
-						<p class="chaxun-dialog-title">治疗方案</p>
-						<div class="chaxun-dialog-content">
-							<el-table :data="list">
-								<el-table-column label="疾病名称" prop="name">
-										<template scope="scope">
-												<router-link to="/treat">接诊</router-link>
-										</template>
-								</el-table-column>
-								<el-table-column label="症状" prop="status"></el-table-column>
-								<el-table-column label="简介" prop="desc"></el-table-column>
-							
-        			</el-table>
-						</div>
-						
-
-						<p class="chaxun-dialog-title">预后护理</p>
-						<div class="chaxun-dialog-content">
-							猫瘟疫苗为核心疫苗，建议定期进行免疫接种，以保证体内的抗体水平一直在相对高的情况下，预防猫瘟发病，尽量少外出活动，外出活动之后要进行消毒
-						</div>
-
-						
-					</div>
-					  <span slot="footer" class="dialog-footer">
-    					<el-button @click="show = false">关 闭</el-button>
-  					</span>
+				<el-dialog class="chaxun-dialog" :visible.sync="show">
+					<bingli v-if="show" :id="id"></bingli>
+					<span slot="footer">
+						<el-button type="">关闭</el-button>
+					</span>
 				</el-dialog>
 	</div>
 </template>
 <script>
 import tip from '../../../components/tip.vue'
+import bingli from '../../../components/bingli.vue'
 export default {
   props: {
 
   },
   components: {
-    tip
+    tip, bingli
   },
   data () {
     return {
@@ -165,6 +86,8 @@ export default {
 
       ],
       show: false,
+      id: '',
+      loading: false,
       filter: {
         startTime: '',
         endTime: ''
@@ -179,11 +102,22 @@ export default {
 
   },
   methods: {
+    pageChange (p) {
+      this.pageinfo.pageNum = p
+      this.fetch()
+    },
     reload () {
       this.fetch()
     },
     study (item) {
-      this.$router.push(`/doctor/moni?id=${item.id}`)
+      // this.$router.push(`/doctor/moni?id=${item.id}`)
+    },
+    detail (item) {
+      console.log(item, 'item')
+      this.id = item.id
+      setTimeout(() => {
+        this.show = true
+      }, 200)
     },
     async fetch () {
       let filter = {}
@@ -195,8 +129,10 @@ export default {
       }
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+      this.loading = true
       let res = await this.api.case.list({ ...filter, limit, start })
       let { data: { data, code, pageinfo } } = res
+      this.loading = false
       if (code === 200) {
         this.loading = false
         this.list = data

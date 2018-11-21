@@ -27,13 +27,13 @@
                     知识库查询
                 </div>
                 <!-- <div class="title2">检查结果</div> -->
-                <div>
+                <!-- <div>
                     <ul>
                         <li  @click="$router.push('/doctor/chaxun')" :class="{active:$route.path === '/doctor/chaxun' ? true : false}">
                             <span>O</span>查询
                         </li>
                     </ul>
-                </div>                            
+                </div>                             -->
                 <div @click="$router.push('/doctor/moni')"  class="title2">                   
                     病例评测
                 </div>

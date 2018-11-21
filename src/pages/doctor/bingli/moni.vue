@@ -99,7 +99,7 @@ export default {
 		justify-content: space-between;
 	
 		.moni-content{
-			width: 658px !important;
+      width: 800px;
 			border: 1px solid @borderColor;
 		}
 	}

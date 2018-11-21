@@ -18,6 +18,7 @@
     "less-loader": "^4.1.0",
     "moment": "^2.22.2",
     "perfect-scrollbar": "^1.4.0",
+    "print-js": "^1.0.53",
     "qs": "^6.5.2",
     "underscore": "^1.9.1",
     "v-charts": "^1.18.0",

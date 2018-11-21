@@ -84,7 +84,7 @@
     </div>
     <div class="title hideill">
         <el-checkbox label="隐藏疾病名称" v-model="hide"></el-checkbox>
-      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -128,8 +128,8 @@ export default{
     },
     reload (val) {
       this.getCaseDiseaseWithPrescription(val)
-      // this.fetchOwner(val)
-      // this.fetchCase(val)
+      this.fetchOwner(val)
+      this.fetchCase(val)
     }
   },
   watch: {
