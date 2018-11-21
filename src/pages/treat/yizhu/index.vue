@@ -81,7 +81,7 @@
       <bingli :id="$route.query.id"></bingli>
       <span slot="footer">
           <el-button @click="print=false">放弃打印</el-button>
-        <el-button @click="print=false" type="primary">打印并结束诊疗</el-button>
+        <el-button @click="startPrint" type="primary">打印并结束诊疗</el-button>
       </span>
     </el-dialog>
 
@@ -125,6 +125,17 @@ export default {
       this.$set(this.list, index, Object.assign({}, this.list[index]))
       // this.list[index].med.visible = true
       // console.log(item, index, 'item-index')
+    },
+
+    async startPrint () {
+      let id = this.$route.query.id
+      let res = await this.api.case.update({
+        status: 4,
+        id
+      })
+      this.$message.success('已结束该病例')
+      this.$router.push('/check/ed')
+      this.print = false
     },
 
     async fetch () {

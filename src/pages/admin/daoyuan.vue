@@ -43,9 +43,22 @@
           <el-table-column label="操作">
             <template scope="scope">
                 <el-button @click="startEdit(scope.row)">编辑</el-button>
+                <el-button @click="delAction(scope.row)" type="danger">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
+        <div style="display: flex;justify-content:flex-end;padding-top: 10px">
+            <el-pagination
+            :page-size="config.page.limit"
+            :pager-count="pageinfo.pageNum"
+            @current-change="pageChange"
+
+
+            layout="prev, pager, next"
+            
+            :total="pageinfo.totalCount">
+          </el-pagination>
+        </div>
       <el-dialog title="增加检查" :visible.sync="add.visible">
         <el-form >
           <el-form-item label="症状">
@@ -85,7 +98,7 @@
         </el-form>
         <span slot="footer">
           <el-button @click="add.visible=false" >取消</el-button>
-          <el-button >确定</el-button>
+          <el-button type="primary" @click="addAction">确定</el-button>
         </span>
       </el-dialog>
       <el-dialog title="编辑检查" :visible.sync="edit.visible">
@@ -95,31 +108,32 @@
               </el-form-item>
               <el-form-item label="主要检查">
                   <el-input v-model="edit.checkListMajorTemp" @input="checkListMajorSearch2"  placeholder=""></el-input>
-                  <br/><br/>
-                  
+                  <br/>                 
                   <el-button
-                  @click="(e)=>{
-                    if(edit.checkListMajor.includes(item)){
-                      edit.checkListMajor = edit.checkListMajor.filter((name)=>name!==item)
-                    }else{
-                      edit.checkListMajor.push(item)
-                    }
-                  }"  
+                    v-if="item"
+                    @click="(e)=>{
+                      if(edit.checkListMajor.includes(item)){
+                        edit.checkListMajor = edit.checkListMajor.filter((name)=>name!==item)
+                      }else{
+                        edit.checkListMajor.push(item)
+                      }
+                    }"  
                   style="margin: 4px" size="mini"  :type=" edit.checkListMajor.includes(item) ? 'primary' :'' " v-for="item in edit.checkListMajorOptions" :key="item.id">
                     {{item}}
                   </el-button>
               </el-form-item>
               <el-form-item label="辅助检查">
                   <el-input v-model="edit.checkListMinorTemp" @input="checkListMinorSearch2"  placeholder=""></el-input>
-                  <br/><br/>
+                  <br/>                
                   <el-button 
-                  @click="(e)=>{
-                    if(edit.checkListMinor.includes(item)){
-                      edit.checkListMinor = edit.checkListMinor.filter((name)=>name!==item)
-                    }else{
-                      edit.checkListMinor.push(item)
-                    }
-                  }"  
+                    v-if="item"
+                    @click="(e)=>{
+                      if(edit.checkListMinor.includes(item)){
+                        edit.checkListMinor = edit.checkListMinor.filter((name)=>name!==item)
+                      }else{
+                        edit.checkListMinor.push(item)
+                      }
+                    }"  
                   style="margin: 4px" size="mini"  :type=" edit.checkListMinor.includes(item) ? 'primary' :'' " v-for="(item,index) in edit.checkListMinorOptions" :key="item.id">
                       {{item}}
                     </el-button>
@@ -127,7 +141,7 @@
             </el-form>
           <span slot="footer">
               <el-button @click="edit.visible=false">取消</el-button>
-              <el-button >确定</el-button>
+              <el-button type="primary" @click="updateAction">确定</el-button>
           </span>
       </el-dialog>
     </div>
@@ -135,6 +149,7 @@
 <script>
   import api from './api'
   import _ from 'underscore'
+  import corner from '../../components/corner'
   let checkListMajorSearching = false
   let checkListMajorSearchTimer = null
 
@@ -177,26 +192,41 @@
         filter: {
           names: ''
         },
-        list: []
+        list: [],
+        pageinfo: {
+          totalCount: 0,
+          pageNum: 1
+        }
       }
     },
+    components: {
+      corner
+    },
     methods: {
+      pageChange (p) {
+        this.pageinfo.pageNum = p
+        this.fetch()
+      },
       async fetch () {
-        let res = await api.symptom.listSymptomCheck()
-        let { data: { data } } = res
+        let limit = this.config.page.limit
+        let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+        let res = await api.symptom.listSymptomCheck({ start, limit })
+        let { data: { data, pageinfo } } = res
         this.list = data
+        this.pageinfo.pageNum = pageinfo.pageNum
+        this.pageinfo.totalCount = pageinfo.totalCount
       },
       startEdit (item) {
         this.edit = {
           symptom: item.symptom,
           id: item.id,
-          checkListMajorTemp: [],
+          checkListMajorTemp: '',
           checkListMajorOptions: item.checkListMinor.split('，'),
           checkListMajor: item.checkListMinor.split('，'),
 
-          checkListMinorTemp: [],
+          checkListMinorTemp: '',
           checkListMinorOptions: item.checkListMinor.split('，'),
-          checkListMinorr: item.checkListMinor.split('，'),
+          checkListMinor: item.checkListMinor.split('，'),
           visible: true
         }
       },
@@ -253,6 +283,28 @@
             this.edit.checkListMinorOptions = data
           }
         }, 200)
+      },
+      async addAction () {
+        let res = await api.symptom.add({
+          symptom: this.add.symptom,
+          checkListMajor: this.add.checkListMajor.join('，'),
+          checkListMinor: this.add.checkListMinor.join('，')
+        })
+        this.add.visible = false
+        this.fetch()
+      },
+      async delAction (item) {
+        let res = await api.symptom.del(item.id)
+        this.fetch()
+      },
+      async updateAction () {
+        let res = await api.symptom.update(this.edit.id, {
+          symptom: this.edit.symptom,
+          checkListMajor: this.edit.checkListMajor.join('，'),
+          checkListMinor: this.edit.checkListMinor.join('，')
+        })
+        this.edit.visible = false
+        this.fetch()
       }
   
     },

@@ -84,6 +84,15 @@ export default {
     },
     reload () {
       this.fetch()
+    },
+    async addAction () {
+
+    },
+    async delAction () {
+
+    },
+    async updateAction () {
+
     }
   },
   created () {

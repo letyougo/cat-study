@@ -137,7 +137,7 @@
                 <template v-else>
                     <el-button type="primary"  @click="route(scope)">接诊</el-button>
                 </template>
-                <el-button type="primary" @click="checkBingli(scope.row)">查看病例</el-button>
+                <!-- <el-button type="primary" @click="checkBingli(scope.row)">查看病例</el-button> -->
                 <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
