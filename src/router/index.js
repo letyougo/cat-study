@@ -27,6 +27,7 @@ import AdminIll from '@/pages/admin/ill'
 import AdminChufang from '@/pages/admin/chufang'
 import AdminTreat from '@/pages/admin/treat'
 import AdminCheck from '@/pages/admin/check'
+import AdminDaoyuan from '@/pages/admin/daoyuan'
 
 import TreatHeader from '@/pages/treat/header'
 import TreatIndex from '@/pages/treat/index/index'
@@ -175,6 +176,10 @@ export default new Router({
         {
           path: 'check',
           component: AdminCheck
+        },
+        {
+          path: 'daoyuan',
+          component: AdminDaoyuan
         }
       ]
     },

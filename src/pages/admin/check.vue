@@ -25,36 +25,35 @@
 <script>
 import corner from '../../components/corner'
 export default {
-  name:"admin-check",
-  data(){
+  name: 'admin-check',
+  data () {
     return {
-      list:[],
-      value:'',
-      subList:[],
-      loading:false
+      list: [],
+      value: '',
+      subList: [],
+      loading: false
     }
   },
-  components:{
+  components: {
     corner
   },
-  methods:{
-    async fetch(){
+  methods: {
+    async fetch () {
       let res = await this.api.check.manager.getCheckType()
-      let {data:{data}} = res 
-      this.list = data 
+      let { data: { data } } = res
+      this.list = data
       this.value = data[0]
     },
-    async change(value){
+    async change (value) {
       this.value = value
       this.loading = true
-      let res = await this.api.check.manager.getCheckByType({typeName:value})
+      let res = await this.api.check.manager.getCheckByType({ typeName: value })
       this.loading = false
-      let {data:{data}} = res
+      let { data: { data } } = res
       this.subList = data
-      
     }
   },
-  mounted(){
+  mounted () {
     this.fetch()
   }
 }
