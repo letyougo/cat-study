@@ -25,6 +25,7 @@
 <script>
 import header from '../header'
 import tip from '../../../components/tip'
+
 export default {
   name: 'doctor',
   props: {
@@ -50,7 +51,7 @@ export default {
 
   },
   mounted () {
-
+    console.log($)
   }
 }
 </script>
