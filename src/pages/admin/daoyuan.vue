@@ -23,7 +23,7 @@
           </div> 
       </div>
       <br/>
-      <el-table :data="list">        
+      <el-table :data="list" v-loading="loading">        
           <el-table-column width="100px" label="id" prop="id"></el-table-column>
           <el-table-column width="150px" label="症状" prop="symptom"></el-table-column>
           <el-table-column label="主要检查" prop="checkListMajor">
@@ -165,6 +165,7 @@
     name: 'admin-daoyuan',
     data () {
       return {
+        loading: false,
         add: {
           visible: false,
           symptom: '',
@@ -208,10 +209,12 @@
         this.fetch()
       },
       async fetch () {
+        this.loading = true
         let limit = this.config.page.limit
         let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
         let res = await api.symptom.listSymptomCheck({ start, limit })
         let { data: { data, pageinfo } } = res
+        this.loading = false
         this.list = data
         this.pageinfo.pageNum = pageinfo.pageNum
         this.pageinfo.totalCount = pageinfo.totalCount
@@ -290,7 +293,18 @@
           checkListMajor: this.add.checkListMajor.join('，'),
           checkListMinor: this.add.checkListMinor.join('，')
         })
-        this.add.visible = false
+  
+        this.add = {
+          visible: false,
+          symptom: '',
+          checkListMajorTemp: '',
+          checkListMajorOptions: [],
+          checkListMajor: [],
+
+          checkListMinorTemp: '',
+          checkListMinorOptions: [],
+          checkListMinor: []
+        }
         this.fetch()
       },
       async delAction (item) {
@@ -303,7 +317,19 @@
           checkListMajor: this.edit.checkListMajor.join('，'),
           checkListMinor: this.edit.checkListMinor.join('，')
         })
-        this.edit.visible = false
+        this.edit = {
+          visible: false,
+          symptom: '',
+          id: '',
+
+          checkListMajorTemp: '',
+          checkListMajorOptions: [],
+          checkListMajor: [],
+
+          checkListMinorTemp: '',
+          checkListMinorOptions: [],
+          checkListMinor: []
+        }
         this.fetch()
       }
   

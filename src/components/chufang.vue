@@ -21,45 +21,50 @@
           </div>
         </div>
         <div >
-          <el-table :data="list">
-            <!-- <el-table-column label="详情" type="expand">
-              detail
-            </el-table-column> -->
-            <el-table-column label="剂量" prop="dosage">
+          <div class="chufang-table">
+
+      
+            <el-table :data="list">
+              <!-- <el-table-column label="详情" type="expand">
+                detail
+              </el-table-column> -->
+              <el-table-column label="剂量" prop="dosage">
+                  <template scope="scope">
+                      <el-input v-model="scope.row.dosage" placeholder=""></el-input>
+                    </template>
+              </el-table-column>
+              <el-table-column label="成分" prop="ingredient"></el-table-column>
+              <el-table-column label="量" prop="quantity">
+                  <template scope="scope">
+                      <el-input v-model="scope.row.quantity" placeholder=""></el-input>
+                    </template>
+              </el-table-column>
+              <!-- <el-table-column label="规范" prop="specification"></el-table-column> -->
+              <!-- <el-table-column label="分类" prop="classification"></el-table-column> -->
+              <!-- <el-table-column label="时日">
                 <template scope="scope">
-                    <el-input v-model="scope.row.dosage" placeholder=""></el-input>
-                  </template>
-            </el-table-column>
-            <el-table-column label="成分" prop="ingredient"></el-table-column>
-            <el-table-column label="量" prop="quantity">
+                  <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
+                </template>
+              </el-table-column> -->
+              <el-table-column label="名字" prop="names"></el-table-column>
+              <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
+              <!-- <el-table-column label="天"></el-table-column> -->
+              <el-table-column label="操作" >
                 <template scope="scope">
-                    <el-input v-model="scope.row.quantity" placeholder=""></el-input>
-                  </template>
-            </el-table-column>
-            <!-- <el-table-column label="规范" prop="specification"></el-table-column> -->
-            <!-- <el-table-column label="分类" prop="classification"></el-table-column> -->
-            <!-- <el-table-column label="时日">
-              <template scope="scope">
-                <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
-              </template>
-            </el-table-column> -->
-            <el-table-column label="名字" prop="names"></el-table-column>
-            <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
-            <!-- <el-table-column label="天"></el-table-column> -->
-            <el-table-column label="操作" >
-              <template scope="scope">
-                <el-button 
-                @click="list.splice(scope.$index,1)"
-                type="danger" icon="el-icon-delete" size="mini"></el-button>
-              </template>
-                <!-- <el-button type="danger" @click=""></el-button> -->
-            </el-table-column>
-          </el-table>
+                  <el-button 
+                  @click="list.splice(scope.$index,1)"
+                  type="danger" icon="el-icon-delete" size="mini"></el-button>
+                </template>
+                  <!-- <el-button type="danger" @click=""></el-button> -->
+              </el-table-column>
+            </el-table>
+          </div>
         </div>
 
         <br/>
 
         <div class="open-med-action">
+            <el-button type="primary" @click="print">打印</el-button>
           <el-button type="primary" @click="save">开具处方并打印</el-button>
           <el-button  @click="$emit('close')">关闭</el-button>
         </div>
@@ -88,6 +93,9 @@ export default {
     }
   },
   methods: {
+    print () {
+      global.print('.chufang-table')
+    },
     async fetch () {
       let arr = []
       for (var i = 0; i < this.st.length; i++) {
