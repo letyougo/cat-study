@@ -86,12 +86,12 @@ export default {
   data () {
     return {
       list: [],
-      loading:false
+      loading: false
     }
   },
   methods: {
     async fetch () {
-      this.loading =true
+      this.loading = true
       let res = await this.api.visit.list()
       let { data: { data, code, second_class } } = res
       this.loading = false
@@ -99,23 +99,23 @@ export default {
       this.list = data
       console.log('hello')
     },
-    async addTag(row){
-      try{
-        let {value} = await this.$prompt('请输入内容')
+    async addTag (row) {
+      try {
+        let { value } = await this.$prompt('请输入内容')
         row.options.push({
-            "names": value,
-            "dimensionId": 0,
-            "level": "f",
-            "id": 1,
-            "parentId": 0,
-            "child": []
+          'names': value,
+          'dimensionId': 0,
+          'level': 'f',
+          'id': 1,
+          'parentId': 0,
+          'child': []
         })
-      }catch(e){
+      }catch (e) {
         console.log('e', e)
       }
     },
-    async update(row){
-      await this.api.visit.update({id:row.id,isUsed:row.isUsed})
+    async update (row) {
+      await this.api.visit.update({ id: row.id, isUsed: row.isUsed })
       this.fetch()
     }
   },

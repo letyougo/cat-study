@@ -148,7 +148,7 @@
           :page-size="config.page.limit"
           :pager-count="pageinfo.pageNum"
           layout="prev, pager, next"
-          
+          @current-change="currentChange"
           :total="pageinfo.totalCount">
         </el-pagination>
       </div>
@@ -229,6 +229,10 @@ export default {
       console.log(item, 'bingli item')
       this.bingli.visible = true
       this.bingli.id = item.id
+    },
+    currentChange (pageNum) {
+      this.page.pageNum = pageNum
+      this.fetch()
     },
     async fetch () {
       let status

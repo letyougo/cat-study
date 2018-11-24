@@ -10,11 +10,11 @@
           
           <div>
               <el-form inline>
-                  <el-form-item>
-                    <el-input v-model="filter.names" placeholder="处方名字"></el-input>
-                  </el-form-item>
+                  <!-- <el-form-item>
+                    <el-input v-model="filter.medicineName" placeholder="处方名字"></el-input>
+                  </el-form-item> -->
                   <el-form-item label="">
-                      <el-button type="primary" @click="add.visible=true">查询</el-button>
+                      <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
                   <el-form-item label="">
                     <el-button type="primary" @click="add.visible=true">增加处方</el-button>
@@ -42,7 +42,9 @@
       </div>
       <br/>
       <div style="float: right">
-          <el-pagination background layout="prev, pager, next" @current-change="i=>page.pageNum=i" :page-size="20" :page-count="page.pageNum" :total="page.totalCount">
+          <el-pagination background layout="prev, pager, next"
+           @current-change="currentChange" 
+           :page-size="config.page.limit" :page-count="pageinfo.pageNum" :total="pageinfo.totalCount">
           </el-pagination>
       </div>
   </div>
@@ -62,10 +64,10 @@ export default {
       add: {
       },
       filter: {
-        names: ''
+        medicineName: ''
       },
       loading: false,
-      page: {
+      pageinfo: {
         pageNum: 1,
         totalCount: 1
       }
@@ -75,12 +77,19 @@ export default {
 
   },
   methods: {
+    currentChange (pageNum) {
+      this.pageinfo.pageNum = pageNum
+      this.fetch()
+    },
     async fetch () {
       this.loading = true
-      let res = await this.api.chufang.list()
-      let { data: { data, code } } = res
+      let limit = this.config.page.limit
+      let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
+      let res = await this.api.chufang.list({ start, limit, names: this.filter.medicineName })
+      let { data: { data, code, pageinfo } } = res
       this.loading = false
       this.list = data
+      this.pageinfo = pageinfo
     },
     reload () {
       this.fetch()

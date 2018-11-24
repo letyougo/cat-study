@@ -210,7 +210,7 @@ const api = {
       let res = await request.post(url, data)
       return res
     },
-    async del () {
+    async del (data) {
       const url = '/prescription/delete'
       let res = await request.post(url, data)
       return res
@@ -239,9 +239,9 @@ const api = {
       let res = await request.post(url, data)
       return res
     },
-    async del (data) {
-      const url = '/disease/delete'
-      let res = await request.post(url, data)
+    async del (id) {
+      const url = `/disease/delete?id=${id}`
+      let res = await request.get(url)
       return res
     },
     async listUncertainTreatments (params) {

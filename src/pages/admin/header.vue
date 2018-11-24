@@ -26,9 +26,11 @@
                         <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
                             <span>O</span>处方管理
                         </li>
-                        <li>
-                            <span>O</span>医生病例管理
+
+                        <li @click="$router.push('/admin/ysbl')" :class="{active:$route.path === '/admin/ysbl' ? true : false}">
+                            <span>O</span>医生病例
                         </li>
+                      
                         <li @click="$router.push('/admin/treat')" :class="{active:$route.path === '/admin/treat' ? true : false}">
                             <span>O</span>诊疗模块管理
                         </li>
@@ -38,7 +40,9 @@
                         <li @click="$router.push('/admin/check')" :class="{active:$route.path === '/admin/check' ? true : false}">
                             <span>O</span>检查管理
                         </li>
-
+                        <li @click="$router.push('/admin/operation')" :class="{active:$route.path === '/admin/operation' ? true : false}">
+                            <span>O</span>操作管理
+                        </li>
                     </ul>
                 </div>
             </div>

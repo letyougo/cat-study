@@ -27,5 +27,29 @@ export default {
       const res = await request.get(url, data)
       return res
     }
+  },
+  operation: {
+    async list (params) {
+      const url = '/operation/listByParam'
+      const res = await request.get(url, { params })
+      return res
+    },
+    async update (data) {
+      const url = '/operation/update'
+      delete data.createTime
+      delete data.updateTime
+      const res = await request.post(url, data)
+      return res
+    },
+    async del (id) {
+      const url = `/operation/delete?id=${id}`
+      const res = await request.get(url)
+      return res
+    },
+    async add (data) {
+      const url = '/operation/add'
+      const res = await request.post(url, data)
+      return res
+    }
   }
 }
