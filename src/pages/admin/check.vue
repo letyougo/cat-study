@@ -7,47 +7,77 @@
           </div>
       </div>
       <br/>
-      <el-collapse accordion v-model="value" @change="change">
-        <el-collapse-item   v-for="item in list" :name="item" :key="item" :title="item">
-          <template>
-            <el-table :data="subList" v-loading="loading">
-              <el-table-column label="id" prop="id"></el-table-column>
-              <el-table-column label="类型" prop="typeName"></el-table-column>
-              <el-table-column label="检查名称" prop="checkName"></el-table-column>
-              <el-table-column label="模板" prop="templateType"></el-table-column>
-            </el-table>
-          </template>
-        </el-collapse-item>
-      </el-collapse>
+      <div>
+        <span style="padding: 4px;display: inline-block" v-for="name in list" :key="name">
+            <el-button @click="value=name"  :type=" value===name ? 'primary':'default'  "  size="mini">{{name}}</el-button>
+        </span>
+      </div>
+
+      <br/>
+      <el-table :data="subList" v-loading="loading">
+          <el-table-column label="id" prop="id"></el-table-column>
+          <el-table-column label="类型" prop="typeName"></el-table-column>
+          <el-table-column label="检查名称" prop="checkName"></el-table-column>
+          <el-table-column label="参考标准">
+            <template scope="scope">
+              <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column label="模板" prop="templateType"></el-table-column>
+      </el-table>
+
+      <el-dialog :title="dialog.typeName" :visible="dialog.visible=false">
+        <check :tplType="dialog.templateType"></check>
+        <span slot="footer">
+          <el-button type="" @click="dialog.visible=false">关闭</el-button>
+          <el-button type="primary">确定</el-button>
+        </span>
+      </el-dialog>
+     
       <div></div>
   </div>
 </template>
 <script>
 import corner from '../../components/corner'
+import check from '../checktpl/check-admin'
 export default {
   name: 'admin-check',
   data () {
     return {
       list: [],
-      value: '',
       subList: [],
-      loading: false
+      loading: false,
+      value: '',
+      dialog: {
+        visible: false,
+        tplType: 0
+      }
     }
   },
   components: {
-    corner
+    corner, check
+  },
+  watch: {
+    value (typeName) {
+      this.change(typeName)
+    }
   },
   methods: {
+    showMore (item) {
+      this.dialog = {
+        ...item,
+        visible: true
+      }
+    },
     async fetch () {
       let res = await this.api.check.manager.getCheckType()
       let { data: { data } } = res
-      this.list = data
       this.value = data[0]
+      this.list = data
     },
-    async change (value) {
-      this.value = value
+    async change (typeName) {
       this.loading = true
-      let res = await this.api.check.manager.getCheckByType({ typeName: value })
+      let res = await this.api.check.manager.getCheckByType({ typeName })
       this.loading = false
       let { data: { data } } = res
       this.subList = data

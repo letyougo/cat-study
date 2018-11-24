@@ -31,7 +31,7 @@
 <script>
  export default {
    name: 'check-11',
-   props: ['list', 'edit']
+   props: ['list', 'edit', 'admin']
  }
 </script>
 <style>

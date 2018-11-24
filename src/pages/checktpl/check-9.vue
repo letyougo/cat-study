@@ -39,7 +39,7 @@
                   </template>
                 </template>
               </el-table-column>
-          <el-table-column label="提示" prop="hitn"></el-table-column>
+          <el-table-column label="提示" prop="hint"></el-table-column>
           </el-table>
   </div>
 </template>

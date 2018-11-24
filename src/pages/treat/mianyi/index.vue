@@ -146,7 +146,7 @@
             <el-button type="primary" @click="med.visible=true">开具处方</el-button>
         </div>
 
-        <chufang v-if="med.visible" v-bind="med" @close="med.visible=false"></chufang>
+        <chufang v-if="med.visible" v-bind="med" @close="update"></chufang>
     </div>
 </template>
 <script>
@@ -165,7 +165,7 @@ export default {
       med: {
         visible: false,
         st: [],
-        diseaseId: 0,
+        diseaseId: 99999,
         docAdvice: '',
         otherTreatment: ''
       },
@@ -209,6 +209,26 @@ export default {
       let res = await this.api.opration.list({ names })
       let { data: { data } } = res
       this.operation.data = data[0]
+    },
+    async update () {
+      let ex = this.expel
+      let expel = [ex[0], ex[1], ex[2]].join(';')
+      let im = this.immune
+      let immune = [im[0], im[1]].join(';')
+      let bear = this.bear.join(';')
+      let tooth = this.tooth.join(';')
+      let obj = {
+        caseId: this.$route.query.id,
+        immune,
+        expel,
+        bear,
+        tooth
+      }
+      await this.api.mianyi.update(obj)
+      this.operation.visible = false
+      this.med.visible = false
+      this.$message.success('开具处方成功')
+      this.fetch()
     }
   },
   created () {

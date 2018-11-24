@@ -34,6 +34,11 @@
                     <el-table :data="scope.row.checks">
                       <el-table-column label="类型" prop="typeName"></el-table-column>
                       <el-table-column label="名称" prop="checkName"></el-table-column>
+                      <el-table-column label="操作">
+                        <template scope="scope">
+                          <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
+                        </template>
+                      </el-table-column>
                       <el-table-column label="模板" prop="templateType"></el-table-column>
                     </el-table>
                 </template>
@@ -46,6 +51,10 @@
             </el-table>
         </div>
 
+        <el-dialog title="">
+
+        </el-dialog>
+
         <el-dialog title="增加医院" :visible.sync="add.visible">
           <el-form label-width="100px">
             <el-form-item label="医院名称">
@@ -56,6 +65,14 @@
           <span slot="footer">
             <el-button type="" @click="add.visible=false">关闭</el-button>
             <el-button type="primary" @click="addAction">确定</el-button>
+          </span>
+        </el-dialog>
+
+        <el-dialog title="" :visible.sync="showMoreDialog.visible">
+          <check :itemId="showMoreDialog.itemId" :tplType="showMoreDialog.tplType"></check>
+          <span slot="footer">
+            <el-button type="" @click="showMoreDialog.visible=false">关闭</el-button>
+            <el-button type="primary" @click="showMoreDialog.visible=false">确定</el-button>
           </span>
         </el-dialog>
 
@@ -86,13 +103,14 @@
 </template>
 <script>
 import corner from '../../components/corner'
+import check from '../checktpl/check-admin'
 export default {
   name: 'admin-hospital',
   props: {
 
   },
   components: {
-    corner
+    corner, check
   },
   data () {
     return {
@@ -109,6 +127,11 @@ export default {
         hospital: '',
         typeName: '',
         checkName: ''
+      },
+      showMoreDialog: {
+        visible: false,
+        itemId: 0,
+        tplType: 0
       }
     }
   },
@@ -116,6 +139,14 @@ export default {
 
   },
   methods: {
+    showMore (item) {
+      this.showMoreDialog = {
+        visible: true,
+        itemId: item.id,
+        checkName: item.checkName,
+        tplType: item.templateType
+      }
+    },
     async addCheck () {
       console.log('tag', this.dialog)
       let hospitalId = this.dialog.hospital

@@ -9,14 +9,23 @@
             <el-table-column label="左眼" prop="refMin"></el-table-column>
             <el-table-column label="右眼" prop="refMax"></el-table-column>
           </el-table-column>
-        <el-table-column label="结果值" prop="value"></el-table-column>
-        <el-table-column label="提示" prop="hitn"></el-table-column>
+          <el-table-column label="结果值" prop="value">
+              <template scope="scope">
+                <template v-if="!edit">
+                    {{scope.row.value}}
+                </template>
+                <template v-else>
+                    <el-input v-model="scope.row.value" placeholder=""></el-input>
+                </template>
+              </template>
+            </el-table-column>
+        <el-table-column label="提示" prop="hint"></el-table-column>
     </el-table>
 </template>
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list']
+   props: ['list', 'edit']
  }
 </script>
 <style>

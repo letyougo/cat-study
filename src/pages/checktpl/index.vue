@@ -105,6 +105,16 @@
             </el-form>
         </template>
           
+        <template v-else-if="tplType===6">
+            <check-6 :list="list"></check-6>       
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+             </el-form>
+        </template>   
         <template v-if="tplType===7">
             <check-7 :list="list"></check-7>
             <br/>
@@ -166,17 +176,7 @@
           </el-form>
         </template>
       
-
-          <template v-else-if="tplType===6">
-            <check-6 :list="list"></check-6>       
-            <br/>
-            <el-form >
-              <el-form-item label="">
-                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
-              </el-input>
-            </el-form-item>
-             </el-form>
-        </template>              
+           
       
         <!-- <template v-else>
           <div>暂不支持改检查模板{{tplType}}</div>
@@ -273,25 +273,6 @@ export default {
       }
     },
     async updateTableCheck () {
-      let tplType = this.tplType
-      if (tplType === 1 || tplType === 2 || tplType === 3) {
-        let obj = {
-          value: this.list[0].result,
-          desc: this.desc
-        }
-        await this.api.check.editCheck(this.reportId, obj)
-      } else if (tplType === 6) {
-        let obj = {
-          value: this.list[0].result,
-          desc: this.desc
-        }
-        await this.api.check.editCheck(this.reportId, obj)
-      } else if (tplType === 0 || tplType === 5 || tplType === 7) {
-        await this.api.check.editCheck(this.reportId, { data: this.list, desc: this.desc })
-      } else if (tplType === 4) {
-
-      }
-
       this.reload()
     },
     async upload (e) {

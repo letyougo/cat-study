@@ -100,6 +100,11 @@ const api = {
       const url = '/caseImmune/getByCaseId'
       const res = await request.get(url, { params: { caseId } })
       return res
+    },
+    async update (data) {
+      const url = '/caseImmune/add'
+      const res = await request.post(url, data)
+      return res
     }
   },
 

@@ -22,7 +22,7 @@
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list']
+   props: ['list', 'edit']
  }
 </script>
 <style>
