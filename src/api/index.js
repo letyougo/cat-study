@@ -351,6 +351,21 @@ const api = {
       const url = '/medicine/listByParam'
       let res = await request.get(url, { params: data })
       return res
+    },
+    async update (data) {
+      const url = '/medicine/update'
+      let res = await request.post(url, data)
+      return res
+    },
+    async add (data) {
+      const url = '/medicine/add'
+      let res = await request.post(url, data)
+      return res
+    },
+    async del (id) {
+      const url = '/medicine/del'
+      let res = await request.get(url)
+      return res
     }
   },
   // 医院
@@ -358,6 +373,21 @@ const api = {
     async list (data) {
       const url = '/hospital/listByParam'
       let res = await request.get(url, { params: data })
+      return res
+    },
+    async update (data) {
+      const url = '/hospital/update'
+      let res = await request.post(url, data)
+      return res
+    },
+    async del (id) {
+      const url = `/hospital/listByParam?id=${id}`
+      let res = await request.get(url)
+      return res
+    },
+    async add (data) {
+      const url = '/hospital/add'
+      let res = await request.post(url, data)
       return res
     }
   },

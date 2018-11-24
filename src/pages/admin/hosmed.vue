@@ -17,9 +17,9 @@
                     <el-form-item>
                         <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
-                    <el-form-item>
+                    <!-- <el-form-item>
                         <el-button @click="add.visible=true">增加药品</el-button>
-                    </el-form-item>
+                    </el-form-item> -->
                 </el-form>
             </div>
         </div>
@@ -129,8 +129,8 @@ export default {
         this.fetch({ hospitalId: list[0].id })
       }
     },
-    async del(){
-        
+    async del () {
+
     },
     async fetch () {
       // let {startDate,endDate} = this.search

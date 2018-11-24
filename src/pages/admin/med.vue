@@ -16,17 +16,39 @@
                         <el-button type="primary">查询</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button @click="add.visible=true">增加药品</el-button>
+                        <el-button @click="addForm.visible=true">增加药品</el-button>
                     </el-form-item>
                 </el-form>
             </div>
         </div>
         <br>
         <div>
-            <el-table :data="list">
+            <el-table :data="list" v-loading="loading">
                 <el-table-column type="expand">
                     <template scope="scope">
-                        expand
+                        <el-form label-width="100px">
+                          <el-form-item label="名字">
+                              <el-input v-model="scope.row.names" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="成分">
+                                <el-input v-model="scope.row.ingredient" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="量">
+                                <el-input v-model="scope.row.quantity" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="规范">
+                                <el-input v-model="scope.row.specification" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="药用用法">
+                                <el-input v-model="scope.row.medicineUsage" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="天">
+                              <el-input v-model="scope.row.days" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item>
+                              <el-button type="primary" @click="update(scope.row)">修改</el-button>
+                          </el-form-item>
+                        </el-form>
                     </template>
                 </el-table-column>
                 <el-table-column label="id" prop="id"></el-table-column>
@@ -40,7 +62,7 @@
                     <template scope="scope">
                         <el-button-group>
                             <el-button type="primary" @click="addToHospital(scope.row)">添加到医院</el-button>
-                            <el-button type="danger">删除</el-button>
+                            <el-button type="danger" @click="del(scopr.row)">删除</el-button>
                         </el-button-group>
                     
                     </template>
@@ -69,25 +91,28 @@
         </el-dialog>
 
         <el-dialog title="增加药品" :visible="addForm.visible">
-            <el-form>
-                <el-form-item label="用户名">
-                    <el-input v-model="addForm.username" placeholder=""></el-input>
+            <el-form label-width="100px">
+                <el-form-item label="名字">
+                        <el-input v-model="addForm.names" placeholder=""></el-input>
                 </el-form-item>
-
-                <el-form-item label="手机号">
-                    <el-input v-model="addForm.phoneNum" placeholder=""></el-input>
+                <el-form-item label="成分">
+                      <el-input v-model="addForm.ingredient" placeholder=""></el-input>
+                 </el-form-item>
+                <el-form-item label="量">
+                        <el-input v-model="addForm.quantity" placeholder=""></el-input>
                 </el-form-item>
-
-                <el-form-item label="密码">
-                    <el-input type="password" v-model="addForm.password" placeholder=""></el-input>
+                <el-form-item label="规范">
+                        <el-input v-model="addForm.specification" placeholder=""></el-input>
+                 </el-form-item>
+                <el-form-item label="药用用法">
+                        <el-input v-model="addForm.medicineUsage" placeholder=""></el-input>
                 </el-form-item>
-
-                <el-form-item label="邮箱">
-                    <el-input v-model="addForm.email" placeholder=""></el-input>
+                <el-form-item label="天">
+                    <el-input v-model="addForm.days" placeholder=""></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer">
-                <el-button>取消</el-button>
+                <el-button @click="addForm.visible=false">取消</el-button>
                 <el-button type="primary" @click="add">确认</el-button>
             </div>
         </el-dialog>
@@ -106,10 +131,12 @@ export default {
       likeStr: '片',
       loading: false,
       addForm: {
-        username: 'siri',
-        phoneNum: '13683360717',
-        password: 'surui123',
-        email: '313755017@qq.com',
+        names: '',
+        ingredient: '',
+        quantity: '',
+        specification: '',
+        medicineUsage: '',
+        days: '',
         visible: false
       },
       hospital: {
@@ -148,7 +175,7 @@ export default {
         hospitalId: row.id,
         medicineId
       }
-     
+
       this.$message('添加药品中...')
 
       let res = await this.api.hosmed.add({
@@ -186,9 +213,27 @@ export default {
       this.totalCount = totalCount
       this.loading = false
     },
-    async add () {},
-    async update () {},
-    async del () {}
+    async add () {
+      await this.api.med.add(this.addForm)
+      this.addForm.visible = false
+      this.reload()
+    },
+    async update (data) {
+      delete data.updateTime
+      delete data.createTime
+      await this.api.med.update(data)
+      this.reload()
+    },
+    async del (item) {
+      try {
+        await this.$confirm('确定删除数据吗')
+        await this.api.med.del(item.id)
+
+        this.reload()
+      } catch (e) {
+
+      }
+    }
   },
   created () {},
   mounted () {

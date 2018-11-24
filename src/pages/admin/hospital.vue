@@ -17,8 +17,20 @@
         
         <div>
             <el-table :data="list" @expand-change="expandChange" v-loading="loading">
-              <el-table-column label="检查管理" type="expand" width="150">
+              <el-table-column label="详情" type="expand" width="150">
                 <template scope="scope">
+
+                    <el-form label-width="100px">
+                        <el-form-item label="医院名称">
+                          <el-input v-model="scope.row.names" placeholder=""></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                          <el-button type="primary" @click="update(scope.row)">修改</el-button>
+                        </el-form-item>
+                      </el-form>
+                      
+                    <br/>
+
                     <el-table :data="scope.row.checks">
                       <el-table-column label="类型" prop="typeName"></el-table-column>
                       <el-table-column label="名称" prop="checkName"></el-table-column>
@@ -33,6 +45,19 @@
               
             </el-table>
         </div>
+
+        <el-dialog title="增加医院" :visible.sync="add.visible">
+          <el-form label-width="100px">
+            <el-form-item label="医院名称">
+              <el-input v-model="add.names" placeholder=""></el-input>
+            </el-form-item>
+          </el-form>
+
+          <span slot="footer">
+            <el-button type="" @click="add.visible=false">关闭</el-button>
+            <el-button type="primary" @click="addAction">确定</el-button>
+          </span>
+        </el-dialog>
 
         <el-dialog title="检查项" :visible.sync="dialog.visible">
             <el-form label-width="150px">
@@ -62,7 +87,7 @@
 <script>
 import corner from '../../components/corner'
 export default {
-  name:'admin-hospital',
+  name: 'admin-hospital',
   props: {
 
   },
@@ -73,16 +98,17 @@ export default {
     return {
       list: [],
       add: {
-
+        names: '',
+        visible: false
       },
-      loading:false,
-      typeName:[],
-      checkName:[],
-      dialog:{
-        visible:false,
-        hospital:'',
-        typeName:'',
-        checkName:''
+      loading: false,
+      typeName: [],
+      checkName: [],
+      dialog: {
+        visible: false,
+        hospital: '',
+        typeName: '',
+        checkName: ''
       }
     }
   },
@@ -90,11 +116,11 @@ export default {
 
   },
   methods: {
-    async addCheck(){
+    async addCheck () {
       console.log('tag', this.dialog)
       let hospitalId = this.dialog.hospital
       console.log('host', hospitalId)
-      let hospitalName = this.list.find(item=>item.id === hospitalId).names
+      let hospitalName = this.list.find(item => item.id === hospitalId).names
       console.log('name', hospitalName)
       let checkId = this.dialog.checkName
       console.log('id', checkId)
@@ -110,21 +136,30 @@ export default {
       })
       this.reload()
     },
-    async fetchCheckType(){
-      let res = await this.api.check.manager.getCheckType()
-      let {data:{data}} = res 
-      this.typeName = data 
+    async addAction () {
+      await this.api.hospital.add({ names: this.add.names })
+      this.add.visible = false
+      this.reload()
     },
-    async fetchCheckName(){
-      let res = await this.api.check.manager.getCheckByType({typeName:this.dialog.typeName})
-      let {data:{data}} = res 
-      this.checkName = data 
+    async update (item) {
+      await this.api.hospital.update({ names: item.names, id: item.id })
+      this.reload()
+    },
+    async fetchCheckType () {
+      let res = await this.api.check.manager.getCheckType()
+      let { data: { data } } = res
+      this.typeName = data
+    },
+    async fetchCheckName () {
+      let res = await this.api.check.manager.getCheckByType({ typeName: this.dialog.typeName })
+      let { data: { data } } = res
+      this.checkName = data
     },
     async fetch () {
       this.loading = true
       let res = await this.api.hospital.list()
       let { data: { data, code } } = res
-      data = data.map(item=>{
+      data = data.map(item => {
         item.checks = []
         return item
       })
@@ -135,9 +170,9 @@ export default {
       this.dialog.visible = false
       this.fetch()
     },
-    async expandChange(item,list){
-      let res = await this.api.check.manager.listCheckHospital({param:item.names})
-      let {data:{data}} = res 
+    async expandChange (item, list) {
+      let res = await this.api.check.manager.listCheckHospital({ param: item.names })
+      let { data: { data } } = res
       item.checks = data
     }
   },
