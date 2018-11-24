@@ -477,6 +477,18 @@ export default {
             { label: '老年猫-最低', prop: 'refMin3' },
             { label: '老年猫-最高', prop: 'refMax3' },
             { label: '结果值', prop: 'param' }
+          ],
+          8: [
+            { label: '项目名称', prop: 'projectName' },
+            { label: '幼年猫-最低', prop: 'refMin' },
+            { label: '幼年猫-最高', prop: 'refMax' },
+            { label: '结果值', prop: 'param' }
+          ],
+          11: [
+            { label: '项目名称', prop: 'projectName' },
+            { label: '幼年猫-最低', prop: 'refMin' },
+            { label: '幼年猫-最高', prop: 'refMax' },
+            { label: '结果值', prop: 'param' }
           ]
         }
       }

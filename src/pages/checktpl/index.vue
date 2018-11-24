@@ -15,7 +15,9 @@
           </template> -->
         <!-- {{tplType}} {{tplType === 0}} -->
        
-        <template v-if="(tplType===0 || tplType === 5 || tplType === 7)">
+        
+
+        <!-- <template v-else-if="tplType === 5  ">
             <div class="check-action">
                 <el-button v-if="!edit.table" @click="edit.table=true">编辑</el-button>
                 <el-button v-else type="primary" @click="updateTableCheck">保存</el-button>
@@ -41,44 +43,20 @@
               </el-input>
             </el-form-item>
              </el-form>
+        </template> -->
+        <template v-if="tplType===0">
+            <check-0 :list="list"></check-0>
+            <br/>
+            <el-form >
+                <el-form-item label="">
+                   <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+                </el-input>
+              </el-form-item>
+            </el-form>
         </template>
-        <template v-else-if="(tplType===1)">
-       
-          <el-table :data="list">
-            <el-table-column label="项目名称" prop="checkName"></el-table-column>
-            <el-table-column label="检查结果">
-              <template scope="scope">
-                <el-form >
-                  <el-form-item label="">
-                      <el-radio v-model="scope.row.isException" label="1">正常</el-radio>
-                      <el-radio v-model="scope.row.isException" label="0">异常</el-radio>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column>
-          </el-table>
-          <br/>
-          <el-form >
-            <el-form-item label="">
-               <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
-            </el-input>
-          </el-form-item>
-           </el-form>
-        </template>
-        <template v-else-if="tplType===2">
-            <el-table :data="list">
-              <el-table-column label="项目名称" prop="checkName"></el-table-column>
-              <el-table-column label="检查结果">
-                <template scope="scope">
-                  <el-form >
-                    <el-form-item label="">
-                        <el-radio v-model="scope.row.isException" label="1">存在</el-radio>
-                        <el-radio v-model="scope.row.isException" label="0">不存在</el-radio>
-                    </el-form-item>
-                  </el-form>
-                </template>
-              </el-table-column>
-            </el-table>
+
+        <template v-if="(tplType===1)">  
+            <check-1 :list="list"></check-1>
             <br/>
             <el-form >
               <el-form-item label="">
@@ -86,43 +64,111 @@
               </el-input>
             </el-form-item>
              </el-form>
+          </template>
+        <template v-else-if="tplType===2">
+            <check-2 :list="list"></check-2>
+            <br/>
+            <el-form >
+              <el-form-item label="">
+                  <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+              </el-form>
           </template>
           <template v-else-if="tplType===3">
-            <el-table :data="list">
-              <el-table-column label="项目名称" prop="checkName"></el-table-column>
-              <el-table-column label="检查结果">
-                <template scope="scope">
-                  <el-form >
-                    <el-form-item label="">
-                        <el-radio v-model="scope.row.result" label="1">阳性</el-radio>
-                        <el-radio v-model="scope.row.result" label="0">阴性</el-radio>
-                    </el-form-item>
-                  </el-form>
-                </template>
-              </el-table-column>
-            </el-table>
+            <check-3 :list="list"></check-3>
             <br/>
             <el-form >
+              <el-form-item label="">
+                  <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+              </el-form>
+          </template>
+        <template v-else-if="(tplType===4)">
+            <check-4 :list="list"></check-4>
+            <br/>
+            <el-form-item label="备注">
+                <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+        </template>
+
+        <template v-if="tplType===5">
+            <check-5 :list="list"></check-5>
+            <br/>
+            <el-form >
+                <el-form-item label="">
+                   <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+                </el-input>
+              </el-form-item>
+            </el-form>
+        </template>
+          
+        <template v-if="tplType===7">
+            <check-7 :list="list"></check-7>
+            <br/>
+            <el-form >
+                <el-form-item label="">
+                   <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+                </el-input>
+              </el-form-item>
+            </el-form>
+        </template>
+        <template v-else-if="tplType === 8">
+          <check-8 :list="list"></check-8> 
+          <br/>
+          <el-form >
               <el-form-item label="">
                  <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
               </el-input>
             </el-form-item>
-             </el-form>
-          </template>
+          </el-form>
+        </template>
+        <template v-else-if="tplType === 9">
+          <check-9 :list="list"></check-9> 
+          <br/>
+          <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else-if="tplType === 10">
+          <check-10 :list="list"></check-10>
+          <br/>
+          <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else-if="tplType === 11">
+          <check-11 :list="list"></check-11>
+          <br/>
+          <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else-if="tplType === 12">
+          <check-12 :list="list"></check-12>
+          <br/>
+          <el-form >
+              <el-form-item label="">
+                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
+              </el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+      
+
           <template v-else-if="tplType===6">
-              <el-table :data="list">
-                <el-table-column label="项目名称" prop="checkName"></el-table-column>
-                <el-table-column label="检查结果">
-                  <template scope="scope">
-                    <el-form >
-                      <el-form-item label="">
-                          <el-radio v-model="scope.row.result" label="1">正常</el-radio>
-                          <el-radio v-model="scope.row.result" label="0">异常</el-radio>
-                      </el-form-item>
-                    </el-form>
-                  </template>
-                </el-table-column>
-              </el-table>         
+            <check-6 :list="list"></check-6>       
             <br/>
             <el-form >
               <el-form-item label="">
@@ -131,42 +177,33 @@
             </el-form-item>
              </el-form>
         </template>              
-        <template v-else-if="(tplType===4)">
-          <div class="check-img">
-            <div class="check-soure"></div>
-            <div class="check-action">
-              <div style="position: relative">上传图片
-                <input type="file" @change="upload"/>
-              </div>
-              <div>查看原图</div>
-            </div>
-            <br/>
-            <el-form >
-              <el-form-item label="备注">
-                 <el-input type="textarea" v-model="desc" placeholder="备注" rows="6">
-              </el-input>
-            </el-form-item>
-            <el-form-item label="">
-                <el-radio v-model="list[0].isException" label="1">正常</el-radio>
-                <el-radio v-model="list[0].isException" label="0">异常</el-radio>
-            </el-form-item>
-             </el-form>
-          </div>
-        </template>
-        <template v-else>
+      
+        <!-- <template v-else>
           <div>暂不支持改检查模板{{tplType}}</div>
-        </template>
+        </template> -->
 
         
         <span slot="footer">
           <el-button @click="$emit('close')">关闭</el-button>
-          <el-button type="primary" @click="updateTableCheck">保存</el-button>
-        
+          <el-button @click="$emit('close')">打印</el-button>
+          <el-button type="primary" @click="updateTableCheck">保存</el-button> 
         </span>
     </el-dialog>
 </template>
 <script>
-
+import check0 from './check-0'
+import check1 from './check-1'
+import check2 from './check-2'
+import check3 from './check-3'
+import check4 from './check-4'
+import check5 from './check-5'
+import check6 from './check-6'
+import check7 from './check-7'
+import check8 from './check-8'
+import check9 from './check-9'
+import check10 from './check-10'
+import check11 from './check-11'
+import check12 from './check-12'
 export default {
   name: 'check-template',
   props: [
@@ -174,6 +211,22 @@ export default {
     'visible',
     'title'
   ],
+
+  components: {
+    check0,
+    check1,
+    check2,
+    check3,
+    check4,
+    check5,
+    check6,
+    check7,
+    check8,
+    check9,
+    check10,
+    check11,
+    check12
+  },
 
   data () {
     return {
@@ -198,7 +251,7 @@ export default {
       let res = await this.api.check.getCheckInfo(this.reportId)
       let { data: { data: { tplType, data } } } = res
       this.tplType = tplType
-      if (tplType === 0 || tplType === 5 || tplType === 7) {
+      if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
         data = data.map(item => {
           item.value = item.value || ''
           return item

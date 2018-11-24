@@ -21,7 +21,25 @@
       </el-form-item>
     </el-form>
     
-    <checktpl v-if="report.visible" :reportId="report.reportId" :title="report.title"  @close="report.visible=false"></checktpl>
+    <el-dialog :title="report.title" :visible.sync="report.visible" class="checktpl-dia">
+      <div class="check-tpl">
+          <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
+      </div>
+      <br/>
+      <el-form >
+          <el-form-item>
+            <el-input type="textarea" v-model="report.desc" placeholder="备注"></el-input>
+          </el-form-item>
+      </el-form>
+      
+      <span slot="footer">
+        <el-button type="" @click="report.visible=false">关闭</el-button>
+        <el-button 
+        @click="print" type="primary"  v-if="!report.edit">打印</el-button>
+        <el-button type="primary" @click="update" v-else>确定</el-button>
+      </span>
+    </el-dialog>
+    <!-- <checktpl v-if="report.visible" :reportId="report.reportId" :title="report.title"  @close="report.visible=false"></checktpl> -->
     <el-table :data="list" v-loading="loading">
       <el-table-column label="报告单名称" prop="checkName"></el-table-column>
       <el-table-column label="发送日期" prop="createTime"></el-table-column>
@@ -36,8 +54,8 @@
       <el-table-column label="note"></el-table-column>
       <el-table-column label="操作">
         <template scope="scope">
-          <el-button type="warning" @click="fetchReport(scope.row.id,scope.row.checkName)">预览</el-button>
-          <el-button type="primary">编辑</el-button>
+          <el-button type="warning" @click="fetchReport(scope.row)">预览</el-button>
+          <el-button type="primary" @click="startEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -47,8 +65,8 @@
     <div class="result-ana">
       <div class="result-ana-title">根据检查结果显示:</div>
       <div class="result-ana-content">
-        <p v-for="(item,index) in list" ::key="item.id">
-          <span class="index">{{index}}</span><label>{{list.note}}</label>
+        <p v-for="(item,index) in descList" ::key="item.id">
+          <span class="index">{{index}}</span><label>{{item.note}}</label>
         </p>
       </div>
     </div>
@@ -60,16 +78,22 @@
 </template>
 <script>
 import tip from '../../../components/tip'
-import checktpl from '../../checktpl'
+import checktpl from '../../checktpl/check'
 export default {
   name: 'result',
+  computed: {
+    descList () {
+      return this.list.filter(item => !!item.note)
+    }
+  },
   data () {
     return {
       list: [],
       report: {
         reportId: '',
         visible: false,
-        title: ''
+        title: '',
+        desc: ''
       },
       filter: {
         createTime: '',
@@ -85,6 +109,9 @@ export default {
     }
   },
   methods: {
+    print () {
+      global.print('.check-tpl')
+    },
     async fetch () {
       this.loading = true
       const res = await this.api.check.list(this.$route.query.id)
@@ -92,13 +119,24 @@ export default {
       this.loading = false
       this.list = data
     },
-    async fetchReport (id, title) {
+    async fetchReport (item) {
       this.report.visible = true
-      this.report.reportId = id
-      this.report.title = title
+      this.report.reportId = item.id
+      this.report.title = item.checkName
+      this.report.desc = item.note
+      this.report.edit = false
     },
-    async saveNote () {
-
+    startEdit (item) {
+      console.log(item, 'item')
+      this.report.visible = true
+      this.report.reportId = item.id
+      this.report.title = item.checkName
+      this.report.desc = item.note
+      this.report.edit = true
+    },
+    async update () {
+      await this.$refs.checktpl.update(this.report.desc)
+      this.report.visible = false
     }
   },
   components: {
