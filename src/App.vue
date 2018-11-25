@@ -35,7 +35,7 @@
 
     <div class="bottom">
       <div>台操作员：{{user.username}}（医生）</div>
-      <div>北京猫研所医院</div>
+      <div>{{user.hospital}}</div>
     </div>
   
   </div>

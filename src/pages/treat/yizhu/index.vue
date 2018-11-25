@@ -42,6 +42,14 @@
         </span>
       </el-dialog>
 
+      <el-dialog  :visible.sync="chuzhi.visible">
+        <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
+        <div>{{chuzhi.desc}}</div>
+        <span slot="footer">
+          <el-button type="" @click="chuzhi.visible=false">关闭</el-button>
+        </span>
+      </el-dialog>
+
       <div>
         <el-form inline>
             <el-button type="primary" @click="print=true">打印并结束</el-button>
@@ -61,7 +69,15 @@
         <div class="check">
           <p v-for="(op,index) in item.treatments" >
             <el-checkbox-group v-model="item.med.st">
-                <el-checkbox :label="op" :key="index"></el-checkbox>
+                <template v-if="item.highlightTreatments.includes(op)">
+                    <el-checkbox :label="op" :key="index" style="color: red"></el-checkbox>
+                </template>
+                <template v-else>
+                    <el-checkbox :label="op" :key="index" ></el-checkbox>
+                </template>
+                <template v-if="item.operations.includes(op)">
+                 <a href="javascript:void(0)" @click="openChuzhi(op)"> &nbsp;&nbsp;处置详情</a>
+                </template>
             </el-checkbox-group>
           </p>
         </div>
@@ -108,6 +124,11 @@ export default {
       },
       bingli: {
         visible: false
+      },
+      chuzhi: {
+        visible: false,
+        names: '',
+        desc: ''
       }
     }
   },
@@ -117,6 +138,14 @@ export default {
     }
   },
   methods: {
+
+    async openChuzhi (names) {
+      this.chuzhi.visible = true
+      this.chuzhi.names = names
+      let res = await this.api.operation.list({ names })
+      let { data: { data, code } } = res
+      this.chuzhi.desc = data[0].process
+    },
     printPage () {
       global.print('.yizhu-bingli')
     },

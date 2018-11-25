@@ -14,7 +14,7 @@
                     <el-input v-model="filter.names" placeholder="疾病名字"></el-input>
                   </el-form-item>
                   <el-form-item label="">
-                      <el-button type="primary" @click="add.visible=true">查询</el-button>
+                      <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
                   <el-form-item label="">
                     <el-button type="primary" @click="add.visible=true">增加疾病</el-button>

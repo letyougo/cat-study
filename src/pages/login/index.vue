@@ -9,15 +9,21 @@
 						欢迎登录猫研所
 					</div>
 					<div class="login-form">
-						<el-form >
-							<el-form-item label="">
-								<el-input  placeholder="用户名" type="text" v-model="phoneNum"></el-input>
+						<el-form ref="form" :model="form">
+              <el-form-item
+              :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]"
+              prop="phoneNum"
+              label="">
+								<el-input  placeholder="用户名" type="text" v-model="form.phoneNum"></el-input>
+							</el-form-item>
+              <el-form-item
+              prop="password"
+              :rules="[{ required: true, message: '密码不能为空', trigger: 'blur' }]"
+              label="">
+								<el-input  placeholder="密码" type="password" v-model="form.password"></el-input>
 							</el-form-item>
 							<el-form-item label="">
-								<el-input  placeholder="密码" type="password" v-model="password"></el-input>
-							</el-form-item>
-							<el-form-item label="">
-								<el-button type="primary" style="width:100%" @click="login">登陆</el-button>
+								<el-button type="primary" style="width:100%" @click="login">登录</el-button>
 							</el-form-item>
 							<el-form-item label="">
 								<router-link to="/account/forget" style="float:right">忘记密码</router-link>
@@ -35,20 +41,28 @@ export default {
   components: {},
   data () {
     return {
-      phoneNum: '18030086905',
-      password: '123456'
+      form: {
+        phoneNum: '18030086905',
+        password: '123456'
+      }
     }
   },
   computed: {},
   methods: {
     async login () {
-      let res = await this.api.account.login({ phoneNum: this.phoneNum, password: this.password })
-      let { data: { data, code } } = res
-      if (code === 200) {
-        global.user = data
-        window.localStorage.setItem('cat-study-user', JSON.stringify(data))
-        this.$router.push('/check/tobe')
-      }
+      this.$refs.form.validate(async (valid) => {
+        if (valid) {
+          let res = await this.api.account.login({ phoneNum: this.form.phoneNum, password: this.form.password })
+          let { data: { data, code } } = res
+          if (code === 200) {
+            global.user = data
+            window.localStorage.setItem('cat-study-user', JSON.stringify(data))
+            this.$router.push('/check/tobe')
+          }
+        } else {
+          return false
+        }
+      })
     }
   },
   created () {},
@@ -71,7 +85,7 @@ export default {
     right: 20px;
 		top: 85px;
 		width: 494px;
-    
+   
     border-radius: 4px;
 
     .login-title {
@@ -90,7 +104,7 @@ export default {
 		
 		.login-form{
 			box-shadow: 0 0 30px @primaryColor;
-
+      background:#ffffff;
     	padding: 39px 77px;
 		}
   }
