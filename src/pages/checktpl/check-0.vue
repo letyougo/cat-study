@@ -15,7 +15,16 @@
               </template>
               
             </el-table-column>
-            <el-table-column label="最高" prop="refMax"></el-table-column>
+            <el-table-column label="最高" prop="refMax">
+                <template scope="scope">
+                  <template v-if="!admin">
+                    {{scope.row.refMax}}
+                  </template>
+                  <template v-else>
+                    <el-input v-model="scope.row.refMax" placeholder=""></el-input>
+                  </template>
+                </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="结果值" prop="value">
             <template scope="scope">
@@ -27,7 +36,20 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column label="提示" prop="hint"></el-table-column>
+          <el-table-column label="提示" prop="hint">
+            <template scope="scope">
+                <template v-if="scope.row.hint === 'up'">
+                    <i class="icon iconfont icon-up"></i>
+                </template>
+                <template v-else-if="scope.row.hint === 'down'">
+                    <i class="icon iconfont icon-up"></i>
+                </template>
+                <template v-else>
+                  空
+                </template>
+            </template>
+
+          </el-table-column>
       </el-table>
   </div>
 </template>

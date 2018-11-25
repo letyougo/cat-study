@@ -33,7 +33,10 @@
       </el-form>
       
       <span slot="footer">
-        <el-button type="" @click="report.visible=false">关闭</el-button>
+        <el-button type="" @click="(e)=>{
+            this.report.visible=false
+            this.fetch()  
+        }">关闭</el-button>
         <el-button 
         @click="print" type="primary"  v-if="!report.edit">打印</el-button>
         <el-button type="primary" @click="update" v-else>确定</el-button>
@@ -51,9 +54,9 @@
               <p v-if="scope.row.status==='no'">报告未出</p>
             </template>
       </el-table-column>
-      <el-table-column label="note"></el-table-column>
-      <el-table-column label="操作">
-        <template scope="scope">
+      <el-table-column label="描述" prop="note"></el-table-column>
+      <el-table-column label="操作" width="200px">
+        <template scope="scope" >
           <el-button type="warning" @click="fetchReport(scope.row)">预览</el-button>
           <el-button type="primary" @click="startEdit(scope.row)">编辑</el-button>
         </template>
@@ -125,6 +128,7 @@ export default {
       this.report.title = item.checkName
       this.report.desc = item.note
       this.report.edit = false
+      this.fetch()
     },
     startEdit (item) {
       console.log(item, 'item')
@@ -133,6 +137,7 @@ export default {
       this.report.title = item.checkName
       this.report.desc = item.note
       this.report.edit = true
+      this.fetch()
     },
     async update () {
       await this.$refs.checktpl.update(this.report.desc)

@@ -2,30 +2,59 @@
     <el-table :data="list">
         <el-table-column label="项目名称" prop="projectName"></el-table-column>
         <el-table-column label="参考值">
-          <el-table-column label="最低" prop="refMin"></el-table-column>
-          <el-table-column label="最高" prop="refMax"></el-table-column>
-        </el-table-column>
-        <el-table-column label="结果值">
-            <el-table-column label="左眼" prop="refMin"></el-table-column>
-            <el-table-column label="右眼" prop="refMax"></el-table-column>
-          </el-table-column>
-          <el-table-column label="结果值" prop="value">
-              <template scope="scope">
-                <template v-if="!edit">
-                    {{scope.row.value}}
+        <el-table-column label="最低" prop="refMin">
+        <template scope="scope">
+            <template v-if="!admin">
+                {{scope.row.refMin}}
                 </template>
                 <template v-else>
-                    <el-input v-model="scope.row.value" placeholder=""></el-input>
+                <el-input v-model="scope.row.refMin" placeholder=""></el-input>
                 </template>
-              </template>
+        </template>
+        
+        </el-table-column>
+        <el-table-column label="最高" prop="refMax">
+            <template scope="scope">
+                <template v-if="!admin">
+                    {{scope.row.refMax}}
+                </template>
+                <template v-else>
+                    <el-input v-model="scope.row.refMax" placeholder=""></el-input>
+                </template>
+            </template>
+        </el-table-column>
+        </el-table-column>
+        <el-table-column label="结果值">
+            <el-table-column label="左眼" prop="refMin">
+                <template scope="scope">
+                    {{scope.row.value[0]}}
+                </template>
             </el-table-column>
-        <el-table-column label="提示" prop="hint"></el-table-column>
+            <el-table-column label="右眼" prop="refMax">
+                <template scope="scope">
+                    {{scope.row.value[1]}}
+                </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="提示" prop="hint">
+                <template scope="scope">
+                    <template v-if="scope.row.hint === 'up'">
+                        <i class="icon iconfont icon-up"></i>
+                    </template>
+                    <template v-else-if="scope.row.hint === 'down'">
+                        <i class="icon iconfont icon-up"></i>
+                    </template>
+                    <template v-else>
+                      空
+                    </template>
+                </template>
+              </el-table-column>
     </el-table>
 </template>
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list', 'edit']
+   props: ['list', 'edit', 'admin']
  }
 </script>
 <style>

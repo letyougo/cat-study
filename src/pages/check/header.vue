@@ -129,7 +129,7 @@
             </template>
           </el-table-column>
           <el-table-column label="入院时间" prop="createTime"></el-table-column>
-          <el-table-column label="姓名" prop="catName">
+          <el-table-column label="姓名" prop="catName" width="280px">
               <template scope="scope">
                 <template v-if="$route.path === '/check/ing'">
                   <el-button type="primary"  @click="$router.push(`/treat/result?id=${scope.row.id}`)">查看</el-button>

@@ -102,10 +102,19 @@ export default {
       let { data: { data: { tplType, data } } } = res
       this.tplType = tplType
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
-        data = data.map(item => {
-          item.value = item.value || ''
-          return item
-        })
+        if (tplType === 5) {
+          data = data.map(item => {
+            item.value = item.value || '0,0'
+            item.value = item.value.split(',')
+            return item
+          })
+        } else {
+          data = data.map(item => {
+            item.value = item.value || ''
+            return item
+          })
+        }
+
         this.list = data
       } else {
         data.result = data.result || ''

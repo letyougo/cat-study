@@ -39,14 +39,26 @@
                   </template>
                 </template>
               </el-table-column>
-          <el-table-column label="提示" prop="hint"></el-table-column>
+              <el-table-column label="提示" prop="hint">
+                  <template scope="scope">
+                      <template v-if="scope.row.hint === 'up'">
+                          <i class="icon iconfont icon-up"></i>
+                      </template>
+                      <template v-else-if="scope.row.hint === 'down'">
+                          <i class="icon iconfont icon-up"></i>
+                      </template>
+                      <template v-else>
+                        空
+                      </template>
+                  </template>
+                </el-table-column>
           </el-table>
   </div>
 </template>
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list', 'edit']
+   props: ['list', 'edit', 'admin']
  }
 </script>
 <style>
