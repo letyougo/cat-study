@@ -10,37 +10,49 @@
         <el-form :inline="true" v-if="list.basic.length">
             <template v-if="basic.age.exist">
                 <el-form-item label="年龄">
-                    <el-input type="number" min="0" v-model="basic.age.value.year" :style="{width:'180px'}" class="inline-input" placeholder="ss">
+                    <el-input @change="(e)=>{
+                      this.add()
+                    }" type="number" min="0" v-model="basic.age.value.year" :style="{width:'120px'}" class="inline-input" placeholder="ss">
                         <template slot="append">岁</template>
                     </el-input>
-                    <el-input type="number" min="0" max="12" v-model="basic.age.value.month"  :style="{width:'175px'}" class="inline-input" placeholder="ss">
+                    <el-input @change="(e)=>{
+                        this.add()
+                      }"  type="number" min="0" max="12" v-model="basic.age.value.month"  :style="{width:'120px'}" class="inline-input" placeholder="ss">
                         <template slot="append">月</template>
                     </el-input>
                 </el-form-item>
             </template>
 
             <template v-if="basic.sex.exist">
-                <el-form-item label="性别" :style="{marginLeft:'20px'}" v-model="basic.sex.value" >
+                <el-form-item label="性别" :style="{width:'350px'}" v-model="basic.sex.value" >
                     <!-- <el-radio label="公"></el-radio>
                     <el-radio label="去势"></el-radio> -->
-                    <el-radio  v-model="basic.sex.value"  v-for="item in basic.sex.options" :value="item.names" :label="item.names" :key="item.names"></el-radio>
+                    <el-radio  @change="(e)=>{
+                        this.add()
+                      }" v-model="basic.sex.value"  v-for="item in basic.sex.options" :value="item.names" :label="item.names" :key="item.names"></el-radio>
                 </el-form-item>   
             </template>
 
             <template v-if="basic.weight.exist"  v-model="basic.weight.value" >
               <el-form :inline="true">
                   <el-form-item label="体重">
-                      <el-input v-model="basic.weight.value"  :style="{width:'362px'}" class="inline-input" placeholder="ss">
+                      <el-input @change="(e)=>{
+                          this.add()
+                        }" v-model="basic.weight.value"  :style="{width:'250px'}" class="inline-input" placeholder="ss">
                           <template slot="append">kg</template>
                       </el-input>
                   </el-form-item>
 
                   <template v-if="basic.kind.exist">
-                      <el-form-item label="品种" :style="{marginLeft:'20px'}">
-                          <el-select  placeholder="请选择毛发长短" style="{'width':'150px'}" v-model="basic.kind.value" >
+                      <el-form-item label="品种" >
+                          <el-select  @change="(e)=>{
+                              this.add()
+                            }" placeholder="请选择毛发长短" :style="{width:'150px'}" v-model="basic.kind.value" >
                               <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                           </el-select>
-                          <el-select :style="{marginLeft:'30px',width:'150px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
+                          <el-select @change="(e)=>{
+                              this.add()
+                            }" :style="{width:'150px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
                               <el-option v-for="item in second_class" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                           </el-select>
                       </el-form-item>
@@ -59,8 +71,14 @@
                 </div>
              </div>
              <span slot="footer">
-                <el-button @click="mainDialog=false">取消</el-button>
-                <el-button @click="mainDialog=true" type="primary">确定</el-button>
+                <el-button @click="(e)=>{
+                    mainDialog=false
+                    this.add()
+                  }">取消</el-button>
+                <el-button  @change="(e)=>{
+                    mainDialog=true
+                    this.add()
+                  }"  type="primary">确定</el-button>
              </span>
         </el-dialog>
 
@@ -90,7 +108,9 @@
                 <h2><tip></tip>生活史</h2>
                 <el-form>
                     <el-form-item>
-                        <el-select style="width:100%" v-model="lifeHistory.value" multiple placeholder="请选择">
+                        <el-select  @change="(e)=>{
+                            this.add()
+                          }" style="width:100%" v-model="lifeHistory.value" multiple placeholder="请选择">
                             <el-option v-for="(item, index) in lifeHistory.options" :key="index" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
@@ -105,13 +125,17 @@
                 <h2>既往史</h2>
                 <el-form inline class="flex-form">
                     <el-form-item>
-                        <el-select placeholder="请选择" v-model="passHistory.value">
+                        <el-select  @change="(e)=>{
+                            this.add()
+                          }" placeholder="请选择" v-model="passHistory.value">
                             <el-option v-for="item in passHistory.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item >
-                        <el-select placeholder="请选择" v-model="passHistory2.value">
+                        <el-select  @change="(e)=>{
+                            this.add()
+                          }" placeholder="请选择" v-model="passHistory2.value">
                             <el-option v-for="item in passHistory2.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
@@ -139,7 +163,9 @@
                     <el-form inline>
                         <template v-if="checkBody.temp.exist">
                             <el-form-item label="体温">
-                                <el-input style="width:317px" placeholder="" v-model="checkBody.temp.value">
+                                <el-input  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:317px" placeholder="" v-model="checkBody.temp.value">
                                     <template slot="append">
                                         C
                                     </template>
@@ -149,7 +175,9 @@
 
                         <template v-if="checkBody.blood.exist">
                             <el-form-item label="血压">
-                                <el-input style="width:317px" placeholder=""  v-model="checkBody.blood.value">
+                                <el-input  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:317px" placeholder=""  v-model="checkBody.blood.value">
                                     <template slot="append">
                                         mmHG
                                     </template>
@@ -159,7 +187,9 @@
 
                         <template v-if="checkBody.heart.exist">
                             <el-form-item label="心率">
-                                <el-input style="width:317px" placeholder="" v-model="checkBody.heart.value">
+                                <el-input  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:317px" placeholder="" v-model="checkBody.heart.value">
                                     <template slot="append">
                                         次/分
                                     </template>
@@ -169,7 +199,9 @@
 
                         <template v-if="checkBody.breath.exist">
                             <el-form-item label="呼吸">
-                                <el-input style="width:317px" placeholder="" v-model="checkBody.breath.value" >
+                                <el-input  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:317px" placeholder="" v-model="checkBody.breath.value" >
                                     <template slot="append">
                                         C
                                     </template>
@@ -181,7 +213,9 @@
                         
                         <template v-if="checkBody.recharge.exist">
                             <el-form-item label="毛细血管壁再充盈时间">
-                                <el-input style="width:210px" placeholder="" v-model="checkBody.recharge.value">
+                                <el-input @change="(e)=>{
+                                    this.add()
+                                  }" style="width:210px" placeholder="" v-model="checkBody.recharge.value">
                                     <template slot="append">
                                         C
                                     </template>
@@ -198,7 +232,9 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:400px" placeholder="未见异常" v-model="checkBody.touch.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:400px" placeholder="未见异常" v-model="checkBody.touch.value">
                                     <el-option v-for="item in checkBody.touch.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -213,7 +249,9 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:400px" multiple placeholder="未见异常" v-model="checkBody.hear.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:400px" multiple placeholder="未见异常" v-model="checkBody.hear.value">
                                     <el-option v-for="item in checkBody.hear.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -228,7 +266,9 @@
                     <div class="con">
                         <el-form>
                             <el-form-item>
-                                <el-select style="width:400px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" style="width:400px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
                                     <el-option v-for="item in checkBody.smell.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -243,13 +283,17 @@
                     <div class="con">
                         <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select  placeholder="未见异常"  v-model="checkBody.eye.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" placeholder="未见异常"  v-model="checkBody.eye.value">
                                     <el-option v-for="item in checkBody.eye.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select placeholder="未见异常"  v-model="checkBody2.eye.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" placeholder="未见异常"  v-model="checkBody2.eye.value">
                                     <el-option v-for="item in checkBody2.eye.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -275,13 +319,17 @@
                     <div class="con">
                         <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select  placeholder="未见异常" v-model="checkBody.skinDamage.value">
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" placeholder="未见异常" v-model="checkBody.skinDamage.value">
                                     <el-option v-for="item in checkBody.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-select placeholder="未见异常" v-model="checkBody2.skinDamage.value" >  
+                                <el-select  @change="(e)=>{
+                                    this.add()
+                                  }" placeholder="未见异常" v-model="checkBody2.skinDamage.value" >  
                                     <el-option v-for="item in checkBody2.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
@@ -307,13 +355,17 @@
                   <el-form inline class="flex-form">
                   
                     <el-form-item >
-                        <el-select v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
+                        <el-select @change="(e)=>{
+                          this.add()
+                        }"  v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
                             <el-option v-for="item in checkBody.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item>
-                      <el-select  placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
+                      <el-select  @change="(e)=>{
+                          this.add()
+                        }" placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
                           <el-option v-for="item in checkBody2.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                       </el-select>
                     </el-form-item>
@@ -322,8 +374,8 @@
                     <el-button type="primary" icon="el-icon-plus" @click="checkBody2.abnomalBehavior.model.push(checkBody.abnomalBehavior.value+';'+checkBody2.abnomalBehavior.value)"> 新增</el-button>
                   </el-form-item>
                 </el-form>
-                <div class="behavior-list" style="padding-left: 51px">
-                  <span v-for="(item,index) in checkBody2.abnomalBehavior.model" v-if="item" :key="item">
+                <div class="behavior-list" >
+                  <span  v-for="(item,index) in checkBody2.abnomalBehavior.model" v-if="item" :key="item">
                     <el-tag  closable type="primary"  @close="checkBody2.abnomalBehavior.model.splice(index,1)">{{item}}</el-tag>&nbsp;
                   </span>
                 </div>
@@ -545,6 +597,7 @@ export default {
         v.push(options[index][j].names)
       }
       this.main.value = v
+      this.add()
       this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
       this.mainDialog = false
     },
@@ -668,8 +721,8 @@ export default {
       if (this.checkBody.recharge.value) {
         obj.recharge = this.checkBody.recharge.value
       }
-      if (this.checkBody.abnomalBehavior.value) {
-        obj.behaviorAbnormal = this.checkBody.abnomalBehavior.value
+      if (this.checkBody2.abnomalBehavior.value) {
+        obj.behaviorAbnormal = this.checkBody2.abnomalBehavior.model
       }
       if (this.checkBody.touch.value) {
         obj.palpation = this.checkBody.touch.value
@@ -692,11 +745,11 @@ export default {
       obj.variety = this.basic.kind.value + ',' + this.basic.kind2.value
       // return this.$bus.emit('check-reload', obj)
 
-      this.$message('更新数据中...')
+   
 
       let { data: { code } } = await this.api.caseVisit.update(obj)
       if (code === 200) {
-        this.$message.success('更新数据成功')
+        // this.$message.success('更新成功')
         this.$bus.emit('check-reload', obj)
       }
 

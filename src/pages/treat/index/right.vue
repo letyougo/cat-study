@@ -61,13 +61,13 @@
 
             <el-collapse accordion>
                   <el-collapse-item v-for="(item,index) in list" :title="item.names" :key="item.id">
-                    <p>症状&行为</p>
+                    <p>病症&既往史</p>
                     <p>
                         <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px">
                             <el-tag size="mini" :type=" item.matchSymptoms.includes(op) ? 'primary' : 'warning' ">{{op}}</el-tag>
                           </span>
                     </p>
-                    <p>查体</p>
+                    <p>行为&查体</p>
                     <p>
                       <span v-for="op in item.checks"  :key="op" :label="op" size="mini'" style="padding: 4px 6px">
                         <el-tag  size="mini"  :type="item.matchSymptoms.includes(op) ? 'primary' : 'warning'">

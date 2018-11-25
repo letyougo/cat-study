@@ -1,9 +1,9 @@
 <template>
     <div class="treat-index">
-        <div style="width: 80%;">
+        <div style="width: 85%;">
             <middle></middle>
         </div>
-        <div style="width: 20%;">
+        <div style="width: 15%;">
             <right></right>
         </div>
         
