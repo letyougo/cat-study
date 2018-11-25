@@ -28,23 +28,28 @@
             </template>
 
             <template v-if="basic.weight.exist"  v-model="basic.weight.value" >
-                <el-form-item label="体重">
-                    <el-input v-model="basic.weight.value"  :style="{width:'362px'}" class="inline-input" placeholder="ss">
-                        <template slot="append">kg</template>
-                    </el-input>
-                </el-form-item>
+              <el-form :inline="true">
+                  <el-form-item label="体重">
+                      <el-input v-model="basic.weight.value"  :style="{width:'362px'}" class="inline-input" placeholder="ss">
+                          <template slot="append">kg</template>
+                      </el-input>
+                  </el-form-item>
+
+                  <template v-if="basic.kind.exist">
+                      <el-form-item label="品种" :style="{marginLeft:'20px'}">
+                          <el-select  placeholder="请选择毛发长短" style="{'width':'150px'}" v-model="basic.kind.value" >
+                              <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                          </el-select>
+                          <el-select :style="{marginLeft:'30px',width:'150px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
+                              <el-option v-for="item in second_class" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                          </el-select>
+                      </el-form-item>
+                  </template>
+              </el-form>
+
             </template>
 
-             <template v-if="basic.kind.exist">
-                <el-form-item label="品种" :style="{marginLeft:'20px'}">
-                    <el-select  placeholder="请选择毛发长短" v-model="basic.kind.value" >
-                        <el-option v-for="item in basic.kind.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
-                    </el-select>
-                    <el-select :style="{marginLeft:'30px'}" placeholder="请选择具体品种" v-model="basic.kind2.value" >
-                        <el-option v-for="item in second_class" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
-                    </el-select>
-                </el-form-item>
-            </template>
+
         </el-form>
 
         <el-dialog title="主诉症状" :visible.sync="mainDialog" >

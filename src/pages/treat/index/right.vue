@@ -360,7 +360,7 @@ export default {
 @import url('../../..//global.less');
 @left:27px;
  .right{
-    width: 280px;
+   
 }
 .title{
     font-size: 18px;
