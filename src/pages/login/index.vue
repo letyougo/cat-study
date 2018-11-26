@@ -56,8 +56,21 @@ export default {
           let { data: { data, code } } = res
           if (code === 200) {
             global.user = data
+            let roleName = data.role.roleName
+            if(roleName === '医生'){
+              this.$router.push('/check')
+            }
+            if(roleName === '超级管理员'){
+              this.$router.push('/admin')
+            }
+            if(roleName === '化验室'){
+              this.$router.push('/doctor')
+            }
+            if(roleName === '运营管理员'){
+              this.$router.push('/admin')
+            }
             window.localStorage.setItem('cat-study-user', JSON.stringify(data))
-            this.$router.push('/check/tobe')
+            
           }
         } else {
           return false

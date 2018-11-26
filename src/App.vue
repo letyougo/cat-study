@@ -6,14 +6,14 @@
         <div>猫研所</div>
       </div>
       <div class="tab-list">
-        <div @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check/tobe'}">
+        <div v-if="hasCheckRight" @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check/tobe'}">
           智能诊疗
         </div>
-        <div @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor'}">
+        <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor'}">
           
           医生知识库
         </div>
-        <div @click="$router.push('/admin')" :class="{active:$route.path === '/admin'}" >
+        <div v-if="hasAdminRight" @click="$router.push('/admin')" :class="{active:$route.path === '/admin'}" >
           运营后台
         </div>
       </div>
@@ -52,11 +52,16 @@ export default {
 
   },
   data () {
+    let roleName = global.user.role.roleName
+  
     return {
       // user: global.user
       user: {
         username: 'ss'
-      }
+      },
+      hasAdminRight: ['超级管理员','运营管理员'].includes(roleName),
+      hasDoctorRight: ['超级管理员','化验室','医生'].includes(roleName),
+      hasCheckRight:['超级管理员','医生'].includes(roleName)
     }
   },
   computed: {
@@ -78,6 +83,10 @@ export default {
       } else {
         this.user = global.user
       }
+      let roleName = global.user.role.roleName
+      this.hasAdminRight =  ['超级管理员','运营管理员'].includes(roleName)
+      this.hasDoctorRight = ['超级管理员','化验室','医生'].includes(roleName)
+      this.hasCheckRight = ['超级管理员','医生'].includes(roleName)
     }
   }
 }

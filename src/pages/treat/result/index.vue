@@ -22,9 +22,7 @@
     </el-form>
     
     <el-dialog :title="report.title" :visible.sync="report.visible" class="checktpl-dia">
-      <div class="check-tpl">
-          <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
-      </div>
+      <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
       <br/>
       <el-form >
           <el-form-item>
@@ -117,7 +115,7 @@ export default {
     },
     async fetch () {
       this.loading = true
-      const res = await this.api.check.list({ caseId: this.$route.query.id , status: this.filter.status })
+      const res = await this.api.check.list({ caseId: this.$route.query.id, status: this.filter.status })
       let { data: { data } } = res
       this.loading = false
       this.list = data

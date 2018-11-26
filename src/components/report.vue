@@ -37,7 +37,7 @@ export default {
     async fetch (id) {
       this.options = []
       this.loading = true
-      const res = await this.api.check.list(id)
+      const res = await this.api.check.list({caseId:id})
       let { data: { data } } = res
       this.loading = false
       this.list = data

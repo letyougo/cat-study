@@ -42,6 +42,7 @@
         <div class="title">
             检查结果
         </div>
+        <!-- <check :reportId="id"></check> -->
         <report :id="id"></report>
     </div>
 
@@ -90,6 +91,7 @@
 <script>
 import report from './report'
 import axios from 'axios'
+import check from '../pages/checktpl/check'
 export default{
   name: 'bingli',
   props: ['id'],
@@ -106,7 +108,7 @@ export default{
     }
   },
   components: {
-    report
+    report,check
   },
   methods: {
     async fetchOwner (id) {

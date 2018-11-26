@@ -1,6 +1,6 @@
 <template>
 	<div>
-		文献查询 - 缺少ui
+		文献查询 - 开发中.2018-11-27完成
 	</div>
 </template>
 <script>
