@@ -1,24 +1,33 @@
 <template>
   <div class="check-6">
-      <el-table :data="list">
-          <el-table-column label="项目名称" prop="checkName"></el-table-column>
-          <el-table-column label="检查结果">
-            <template scope="scope">
-              <el-form >
-                <el-form-item label="">
-                    <el-radio v-model="scope.row.isException" label="no">正常</el-radio>
-                    <el-radio v-model="scope.row.isException" label="yes">异常</el-radio>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-        </el-table>  
+      <div class="check-img">
+          <div class="check-soure">
+            <img src="list[0].result"/>
+          </div>
+          <div class="check-action">
+            <div style="position: relative">上传图片
+              <input type="file"
+                @change="(e)=>this.$emit('upload',e)"
+               />
+            </div>
+            <div>查看原图</div>
+          </div>   
+      </div>
+      <el-form >       
+          <el-form-item label="">
+            <el-radio v-model="list[0].isException" label="no">正常</el-radio>
+            <el-radio v-model="list[0].isException" label="yes">异常</el-radio>
+          </el-form-item>
+      </el-form>
   </div>
 </template>
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list', 'edit']
+   props: ['list', 'edit', 'admin'],
+   methods: {
+ 
+   }
  }
 </script>
 <style>

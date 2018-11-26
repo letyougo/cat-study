@@ -12,12 +12,12 @@
       </el-form-item>
       <el-form-item label="报告单状态">
         <el-radio-group v-model="filter.status">
-          <el-radio label="已出结果"></el-radio>
-          <el-radio label="未出结果"></el-radio>
+          <el-radio label="">已出结果</el-radio>
+          <el-radio label="no">未出结果</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item >
-        <el-button type="primary">筛选</el-button>
+        <el-button type="primary" @click="fetch">筛选</el-button>
       </el-form-item>
     </el-form>
     
@@ -57,7 +57,7 @@
       <el-table-column label="描述" prop="note"></el-table-column>
       <el-table-column label="操作" width="200px">
         <template scope="scope" >
-          <el-button type="warning" @click="fetchReport(scope.row)">预览</el-button>
+          <el-button type="scope.row.status ==='no' ? 'default' : 'warning'  " :disabled="scope.row.status === 'no'"  @click="fetchReport(scope.row)">预览</el-button>
           <el-button type="primary" @click="startEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
@@ -117,7 +117,7 @@ export default {
     },
     async fetch () {
       this.loading = true
-      const res = await this.api.check.list(this.$route.query.id)
+      const res = await this.api.check.list({ caseId: this.$route.query.id , status: this.filter.status })
       let { data: { data } } = res
       this.loading = false
       this.list = data

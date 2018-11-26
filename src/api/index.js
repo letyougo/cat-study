@@ -115,9 +115,9 @@ const api = {
       const res = await request.post(url, data)
       return res
     },
-    async list (caseId) {
-      const url = `/check/listReportByCaseId?caseId=${caseId}`
-      const res = await request.get(url)
+    async list (params) {
+      const url = `/check/listReportByCaseId`
+      const res = await request.get(url, { params })
       return res
     },
     async getCheckInfo (reportId) {

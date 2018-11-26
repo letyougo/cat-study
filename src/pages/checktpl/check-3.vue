@@ -6,8 +6,8 @@
             <template scope="scope">
               <el-form >
                 <el-form-item label="">
-                    <el-radio v-model="scope.row.result" label="1">阳性</el-radio>
-                    <el-radio v-model="scope.row.result" label="0">阴性</el-radio>
+                    <el-radio v-model="scope.row.result" label="1">正常</el-radio>
+                    <el-radio v-model="scope.row.result" label="0">异常</el-radio>
                 </el-form-item>
               </el-form>
             </template>
@@ -18,7 +18,7 @@
 <script>
 export default {
   name: 'check-tpl0',
-  props: ['list', 'edit']
+  props: ['list', 'edit', 'admin']
 }
 </script>
 <style>

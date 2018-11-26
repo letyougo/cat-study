@@ -19,7 +19,7 @@
           <check-5 :list="list" :edit="edit"></check-5>    
       </template>
       <template v-if="tplType===6">
-          <check-6 :list="list" :edit="edit"></check-6>    
+          <check-6 :list="list" :edit="edit" @upload="upload"></check-6>    
       </template>
       <template v-if="tplType===7">
           <check-7 :list="list" :edit="edit"></check-7>    
@@ -70,7 +70,8 @@ export default {
     return {
       tplType: '',
       list: [],
-      desc: ''
+      desc: '',
+      path: ''
     }
   },
   watch: {
@@ -106,6 +107,8 @@ export default {
           data = data.map(item => {
             item.value = item.value || '0,0'
             item.value = item.value.split(',')
+            item.hint = item.hint || 'empty,empty'
+            item.hint = item.hint.split(',')
             return item
           })
         } else {
@@ -114,7 +117,6 @@ export default {
             return item
           })
         }
-
         this.list = data
       } else {
         data.result = data.result || ''
@@ -125,9 +127,25 @@ export default {
     async update (desc) {
       let tplType = this.tplType
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
+        let list = JSON.parse(JSON.stringify(this.list))
+        if (tplType === 5) {
+          list = list.map(item => {
+            if (item.value) {
+              item.value = item.value.join(',')
+            }
+            return item
+          })
+        }
         await this.api.check.editCheck(this.reportId, {
-          data: this.list, desc
+          data: list, desc
         })
+      } else if (tplType === 6) {
+        let obj = {
+          value: this.list[0].result,
+          desc: this.desc,
+          isException: this.list[0].isException
+        }
+        await this.api.check.editCheck(this.reportId, obj)
       } else {
         await this.api.check.editCheck(this.reportId, {
           value: this.list[0].result,
@@ -135,6 +153,12 @@ export default {
         })
       }
       this.$message.success('修改成功')
+    },
+    async upload (e) {
+      let f = e.target.files[0]
+      let res = await this.api.upload(f)
+      let { data: { data: { path } } } = res
+      this.list[0].result = path
     }
   },
   mounted () {

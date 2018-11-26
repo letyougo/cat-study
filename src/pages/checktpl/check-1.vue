@@ -6,8 +6,8 @@
             <template scope="scope">
               <el-form >
                 <el-form-item label="">
-                    <el-radio v-model="scope.row.isException" label="no">正常</el-radio>
-                    <el-radio v-model="scope.row.isException" label="yes">异常</el-radio>
+                    <el-radio v-model="scope.row.isException" label="no">阳性</el-radio>
+                    <el-radio v-model="scope.row.isException" label="yes">阴性</el-radio>
                 </el-form-item>
               </el-form>
             </template>

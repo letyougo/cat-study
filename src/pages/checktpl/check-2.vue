@@ -18,7 +18,7 @@
 <script>
  export default {
    name: 'check-tpl0',
-   props: ['list', 'edit']
+   props: ['list', 'edit', 'admin']
  }
 </script>
 <style>

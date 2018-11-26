@@ -24,7 +24,19 @@
             </template>
         </el-table-column>
         </el-table-column>
-        <el-table-column label="结果值">
+        <el-table-column label="结果值" v-if="edit">
+            <el-table-column label="左眼">
+                <template scope="scope">
+                    <el-input v-model="scope.row.value[0]" placeholder=""></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column label="右眼">
+                <template scope="scope">
+                    <el-input v-model="scope.row.value[1]" placeholder=""></el-input>
+                </template>
+            </el-table-column>
+        </el-table-column>
+        <el-table-column label="结果值" v-else>
             <el-table-column label="左眼" prop="refMin">
                 <template scope="scope">
                     {{scope.row.value[0]}}
@@ -37,18 +49,34 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="提示" prop="hint">
-                <template scope="scope">
-                    <template v-if="scope.row.hint === 'up'">
-                        <i class="icon iconfont icon-up"></i>
+              <el-table-column label="左眼">
+                 <template scope="scope">
+                     <template v-if="scope.row.hint[0] === 'up'">
+                         <i class="icon iconfont icon-up"></i>
                     </template>
-                    <template v-else-if="scope.row.hint === 'down'">
+                    <template v-else-if="scope.row.hint[0] === 'down'">
                         <i class="icon iconfont icon-up"></i>
                     </template>
                     <template v-else>
-                      空
+                          空
                     </template>
                 </template>
               </el-table-column>
+              <el-table-column label="右眼">
+                    <template scope="scope">
+                        <template v-if="scope.row.hint[1] === 'up'">
+                            <i class="icon iconfont icon-up"></i>
+                        </template>
+                        <template v-else-if="scope.row.hint[1] === 'down'">
+                           <i class="icon iconfont icon-up"></i>
+                       </template>
+                       <template v-else>
+                             空
+                       </template>
+                    </template>
+              </el-table-column>
+               
+        </el-table-column>
     </el-table>
 </template>
 <script>
