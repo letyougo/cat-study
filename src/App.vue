@@ -84,9 +84,16 @@ export default {
         this.user = global.user
       }
       let roleName = global.user.role.roleName
+      global.isAdmin = roleName === '超级管理员'
+      global.isDoctor = roleName === '医生'
+      global.isHuayan = roleName === '化验室'
+      global.isYunyin = roleName === '运营管理员'
+    
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
       this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
+
+      
     }
   }
 }

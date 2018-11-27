@@ -65,11 +65,7 @@ Object.assign(global, {
   isHuayan: false,
   isYunyin: false
 })
-let roleName = global.user.role.roleName
-global.isAdmin = roleName === '超级管理员'
-global.isDoctor = roleName === '医生'
-global.isHuayan = roleName === '化验室'
-global.isYunyin = roleName === '运营管理员'
+
 
 Vue.use(api)
 
