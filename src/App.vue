@@ -59,9 +59,9 @@ export default {
       user: {
         username: 'ss'
       },
-      hasAdminRight: ['超级管理员', '运营管理员'].includes(roleName),
+      hasAdminRight: ['超级管理员', '运营管理员', '化验室'].includes(roleName),
       hasDoctorRight: ['超级管理员', '化验室', '医生'].includes(roleName),
-      hasCheckRight: ['超级管理员', '医生'].includes(roleName)
+      hasCheckRight: ['超级管理员', '医生', '化验室'].includes(roleName)
     }
   },
   computed: {
@@ -84,9 +84,9 @@ export default {
         this.user = global.user
       }
       let roleName = global.user.role.roleName
-      this.hasAdminRight = ['超级管理员', '运营管理员'].includes(roleName)
+      this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
-      this.hasCheckRight = ['超级管理员', '医生'].includes(roleName)
+      this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
     }
   }
 }

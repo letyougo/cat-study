@@ -142,7 +142,7 @@
                     <el-button type="primary"  @click="route(scope)">接诊</el-button>
                 </template>
                 <!-- <el-button type="primary" @click="checkBingli(scope.row)">查看病例</el-button> -->
-                <el-button type="danger" @click="del(scope.row)">删除</el-button>
+                <el-button v-if="right.isAdmin || right.isDoctor" type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
       </el-table>
@@ -219,12 +219,24 @@ export default {
         type: 1,
         doctorId: global.user.id,
         status: 1
+      },
+      right: {
+        isAdmin: global.isAdmin,
+        isDoctor: global.isDoctor,
+        isHuayan: global.isHuayan,
+        isYunyin: global.isYunyin
       }
     }
   },
   watch: {
     $route () {
       this.fetch()
+      this.right = {
+        isAdmin: global.isAdmin,
+        isDoctor: global.isDoctor,
+        isHuayan: global.isHuayan,
+        isYunyin: global.isYunyin
+      }
     }
   },
   computed: {},

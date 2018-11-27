@@ -1,23 +1,29 @@
 <template>
     <div class="header">
         <div class="header-content">
-            <div class="left">
+            
+            
+            <div class="left" >
                 <div>
                     <span>O</span>后台管理
                 </div>
-                <div @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
-                    医院管理
-                </div>
-                <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
-                    权限管理
-                </div>
-                <div @click="$router.push('/admin/med')" :class="{active:$route.path === '/admin/med' ? true : false}" class="title2">
-                    系统药品管理
-                </div>
-                <div @click="$router.push('/admin/hosmed')" :class="{active:$route.path === '/admin/hosmed' ? true : false}" class="title2">
-                    医院药品管理
-                </div>
-                <div>
+                <template v-if="right.isAdmin || right.isHuayan">
+                        <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
+                            权限管理
+                        </div>
+                        <div  @click="$router.push('/admin/med')" :class="{active:$route.path === '/admin/med' ? true : false}" class="title2">
+                            系统药品管理
+                        </div>
+                        <div  @click="$router.push('/admin/hosmed')" :class="{active:$route.path === '/admin/hosmed' ? true : false}" class="title2">
+                            医院药品管理
+                        </div>
+                    </template>
+            
+            
+                <div v-if="right.isAdmin">
+                    <div @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
+                        医院管理
+                    </div>
                     <p>诊室检查</p>
                     <ul>
                         <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
@@ -45,6 +51,7 @@
                         </li>
                     </ul>
                 </div>
+               
             </div>
 
             <div class="right">
@@ -65,7 +72,13 @@ export default {
           month: 12
         }
       },
-      print: false
+      print: false,
+      right: {
+        isAdmin: global.isAdmin,
+        isDoctor: global.isDoctor,
+        isHuayan: global.isHuayan,
+        isYunyin: global.isYunyin
+      }
     }
   },
   computed: {},
@@ -77,6 +90,13 @@ export default {
   watch: {
     $route () {
       console.log(this.$router, 'router')
+      this.right = {
+        isAdmin: global.isAdmin,
+        isDoctor: global.isDoctor,
+        isHuayan: global.isHuayan,
+        isYunyin: global.isYunyin
+
+      }
     }
   }
 }

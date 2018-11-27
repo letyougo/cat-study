@@ -228,39 +228,39 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
-  let roleName = global.user.role.roleName
+  // let roleName = global.user.role.roleName
   
-  let isAdmin = to.path.startsWith('/admin')
-  let hasAdminRight = ['超级管理员','运营管理员'].includes(roleName)
+  // let isAdmin = to.path.startsWith('/admin')
+  // let hasAdminRight = ['超级管理员','运营管理员'].includes(roleName)
 
-  let isDoctor = to.path.startsWith('/doctor')
-  let hasDoctorRight = ['超级管理员','化验室','医生'].includes(roleName)
+  // let isDoctor = to.path.startsWith('/doctor')
+  // let hasDoctorRight = ['超级管理员','化验室','医生'].includes(roleName)
 
-  let isCheck = to.path.startsWith('/treat') || to.path.startsWith('/check')
-  let hasCheckRight = ['超级管理员','医生'].includes(roleName)
-  if(isAdmin){
-    if(hasAdminRight){
-      return next()
-    }else{
-      return router.push('/account')
-    }
-  }
+  // let isCheck = to.path.startsWith('/treat') || to.path.startsWith('/check')
+  // let hasCheckRight = ['超级管理员','医生'].includes(roleName)
+  // if(isAdmin){
+  //   if(hasAdminRight){
+  //     return next()
+  //   }else{
+  //     return router.push('/account')
+  //   }
+  // }
 
-  if(isDoctor){
-    if(hasDoctorRight){
-      return next()
-    }else{
-      return router.push('/account')
-    }
-  }
+  // if(isDoctor){
+  //   if(hasDoctorRight){
+  //     return next()
+  //   }else{
+  //     return router.push('/account')
+  //   }
+  // }
 
-  if(isCheck){
-    if(hasCheckRight){
-      return next()
-    }else{
-      return router.push('/account')
-    }
-  }
+  // if(isCheck){
+  //   if(hasCheckRight){
+  //     return next()
+  //   }else{
+  //     return router.push('/account')
+  //   }
+  // }
   console.log('route to', to)
   next()
 })
