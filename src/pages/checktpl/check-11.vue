@@ -32,9 +32,9 @@
                     <template v-else-if="scope.row.hint === 'down'">
                         <i class="icon iconfont icon-up"></i>
                     </template>
-                    <template v-else>
+                    <!-- <template v-else>
                       空
-                    </template>
+                    </template> -->
                 </template>
               </el-table-column>
         </el-table>

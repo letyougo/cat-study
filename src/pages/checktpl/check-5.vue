@@ -57,9 +57,9 @@
                     <template v-else-if="scope.row.hint[0] === 'down'">
                         <i class="icon iconfont icon-up"></i>
                     </template>
-                    <template v-else>
+                    <!-- <template v-else>
                           空
-                    </template>
+                    </template> -->
                 </template>
               </el-table-column>
               <el-table-column label="右眼">
@@ -70,9 +70,9 @@
                         <template v-else-if="scope.row.hint[1] === 'down'">
                            <i class="icon iconfont icon-up"></i>
                        </template>
-                       <template v-else>
+                       <!-- <template v-else>
                              空
-                       </template>
+                       </template> -->
                     </template>
               </el-table-column>
                

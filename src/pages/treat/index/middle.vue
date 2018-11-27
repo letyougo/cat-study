@@ -38,7 +38,7 @@
                   <el-form-item label="体重">
                       <el-input @change="(e)=>{
                           this.add()
-                        }" v-model="basic.weight.value"  :style="{width:'250px'}" class="inline-input" placeholder="ss">
+                        }" v-model="basic.weight.value"  :style="{width:'250px'}" class="inline-input" placeholder="">
                           <template slot="append">kg</template>
                       </el-input>
                   </el-form-item>
@@ -745,8 +745,6 @@ export default {
       obj.variety = this.basic.kind.value + ',' + this.basic.kind2.value
       // return this.$bus.emit('check-reload', obj)
 
-   
-
       let { data: { code } } = await this.api.caseVisit.update(obj)
       if (code === 200) {
         // this.$message.success('更新成功')
@@ -994,8 +992,8 @@ export default {
 
       .tip {
         line-height: 42px;
-        margin-right: 30px;
-        width: 60px;
+        margin-right: 20px;
+        width: 100px;
       }
 
       .con {

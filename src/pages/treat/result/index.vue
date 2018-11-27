@@ -5,10 +5,10 @@
     </p>
     <el-form inline>
       <el-form-item label="出结果日期">
-        <el-date-picker v-model="filter.updateTime.start"  placeholder=""></el-date-picker>
+        <el-date-picker v-model="filter.startTime"  placeholder=""></el-date-picker>
       </el-form-item>
       <el-form-item label="-">
-        <el-date-picker  v-model="filter.updateTime.end"  placeholder=""></el-date-picker>
+        <el-date-picker  v-model="filter.endTime"  placeholder=""></el-date-picker>
       </el-form-item>
       <el-form-item label="报告单状态">
         <el-radio-group v-model="filter.status">
@@ -24,11 +24,12 @@
     <el-dialog :title="report.title" :visible.sync="report.visible" class="checktpl-dia">
       <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
       <br/>
-      <el-form >
+      <el-form v-if="report.edit">
           <el-form-item>
             <el-input type="textarea" v-model="report.desc" placeholder="备注"></el-input>
           </el-form-item>
       </el-form>
+      <div v-else>{{report.desc}}</div>
       
       <span slot="footer">
         <el-button type="" @click="(e)=>{
@@ -56,7 +57,7 @@
       <el-table-column label="操作" width="200px">
         <template scope="scope" >
           <el-button type="scope.row.status ==='no' ? 'default' : 'warning'  " :disabled="scope.row.status === 'no'"  @click="fetchReport(scope.row)">预览</el-button>
-          <el-button type="primary" @click="startEdit(scope.row)">编辑</el-button>
+          <el-button v-if="canEdit" type="primary" @click="startEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,16 +98,14 @@ export default {
         desc: ''
       },
       filter: {
-        createTime: '',
-        updateTime: {
-          start: '',
-          end: ''
-        },
+        startTime: '',
+        endTime: '',
         result: '',
         status: ''
       },
       loading: false,
-      edit: false
+      edit: false,
+      canEdit: global.isAdmin || global.isHuayan
     }
   },
   methods: {
@@ -115,7 +114,16 @@ export default {
     },
     async fetch () {
       this.loading = true
-      const res = await this.api.check.list({ caseId: this.$route.query.id, status: this.filter.status })
+      let filter = {}
+
+      if (this.filter.startTime) {
+        filter.startTime = new Date(this.filter.startTime).getTime()
+      }
+      if (this.filter.endTime) {
+        filter.endTime = new Date(this.filter.endTime).getTime()
+      }
+      console.log('filter', filter)
+      const res = await this.api.check.list({ caseId: this.$route.query.id, status: this.filter.status, ...filter })
       let { data: { data } } = res
       this.loading = false
       this.list = data
@@ -140,6 +148,7 @@ export default {
     async update () {
       await this.$refs.checktpl.update(this.report.desc)
       this.report.visible = false
+      this.fetch()
     }
   },
   components: {

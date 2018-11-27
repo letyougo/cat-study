@@ -7,7 +7,12 @@
                 <tip></tip>
             </div>
             <div class="doctor-modal-action">
-                <el-input v-model="search"  placeholder="猫瘟" icon="search" style="width:100%;">
+            <el-input v-model="search"  
+                placeholder="猫瘟" 
+                icon="search" 
+                style="width:100%;"
+                maxlength="15"
+            >
                     <template slot="prefix">
                     <i class="el-icon-search icon-search"></i>
                     </template>
@@ -45,13 +50,17 @@ export default {
   methods: {
     route () {
       this.search && this.$router.push(`/doctor/chaxun?likeStr=${this.search}`)
+    },
+    input (e) {
+      console.log(e)
+    //   this.search = e.slice(0, 15)
     }
   },
   created () {
 
   },
   mounted () {
-    console.log($)
+
   }
 }
 </script>

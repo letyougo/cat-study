@@ -43,10 +43,14 @@
         </el-form-item>
         <el-form-item label="猫咪年龄" prop="ownerName">
           <div style="display:flex;">
-            <el-input  v-model="addForm.catYears" placeholder="">
+            <el-input 
+              type="number" min="0" max="30"
+              v-model="addForm.catYears" placeholder="">
               <template slot="append">年</template>
             </el-input>
-            <el-input v-model="addForm.catMonths" placeholder="">
+            <el-input 
+              type="number" min="0" max="12"
+               v-model="addForm.catMonths" placeholder="">
               <template slot="append">月</template>
             </el-input>
           </div>
@@ -97,10 +101,10 @@
                       </el-form-item>
                       <el-form-item label="猫咪年龄" prop="ownerName">
                         <div style="display:flex;">
-                          <el-input  v-model="scope.row.catYears" placeholder="">
+                          <el-input type="number" min="0" max="30" style="width: 50%;" v-model="scope.row.catYears" placeholder="">
                             <template slot="append">年</template>
                           </el-input>
-                          <el-input v-model="scope.row.catMonths" placeholder="">
+                          <el-input type="number" min="0" max="12"   style="width: 50%" v-model="scope.row.catMonths" placeholder="">
                             <template slot="append">月</template>
                           </el-input>
                         </div>
@@ -252,7 +256,7 @@ export default {
       }
       this.loading = true
 
-      let filter = {}
+      let filter = { ...this.filter }
       if (this.filter.startTime) {
         filter.startTime = new Date(this.filter.startTime).getTime()
       }

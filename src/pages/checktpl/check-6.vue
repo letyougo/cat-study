@@ -13,12 +13,15 @@
             <div>查看原图</div>
           </div>   
       </div>
-      <el-form >       
+      <el-form v-if="edit">       
           <el-form-item label="">
             <el-radio v-model="list[0].isException" label="no">正常</el-radio>
             <el-radio v-model="list[0].isException" label="yes">异常</el-radio>
           </el-form-item>
       </el-form>
+      <template v-else>
+        {{list[0].isException === 'no' ? '正常' : '异常'}}
+      </template>
   </div>
 </template>
 <script>

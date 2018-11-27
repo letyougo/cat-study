@@ -38,7 +38,7 @@
                     <i class="el-icon-search icon-search"></i>
                   </template>
                   <template slot="suffix">
-                    <el-button type="primary" size="mini" >搜索</el-button>
+                    <el-button type="primary" size="mini" @click="search">搜索</el-button>
                   </template>
                 </el-input>
               </div>
@@ -343,6 +343,9 @@ export default {
     async huayan () {
       let res = await this.api.check.addReport(this.$route.query.id, { data: this.dialog.list })
       this.dialog.visible = false
+    },
+    async fetchCheck () {
+
     }
   },
   created () {

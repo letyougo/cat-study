@@ -2,6 +2,7 @@
   <div class="check-9">
       <el-table :data="list">
           <el-table-column label="项目名称" prop="projectName"></el-table-column>
+          <el-table-column label="单位" prop="unit"></el-table-column>
           <el-table-column label="参考值">
               <el-table-column label="最低" >
                 <template scope="scope">
@@ -23,9 +24,14 @@
                  {{scope.row.refMin.r4}}
                 </template>
               </el-table-column>
+              <el-table-column  >
+                <template scope="scope">
+                 {{scope.row.refMin.r5}}
+                </template>
+              </el-table-column>
               <el-table-column label="最高" scope="scope">
                 <template scope="scope">
-                  {{scope.row.refMin.r5}}
+                  {{scope.row.refMin.r6}}
                 </template>
               </el-table-column>
             </el-table-column>
@@ -47,9 +53,9 @@
                       <template v-else-if="scope.row.hint === 'down'">
                           <i class="icon iconfont icon-up"></i>
                       </template>
-                      <template v-else>
+                      <!-- <template v-else>
                         空
-                      </template>
+                      </template> -->
                   </template>
                 </el-table-column>
           </el-table>
