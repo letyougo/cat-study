@@ -52,32 +52,20 @@ export default {
 
   },
   data () {
-    let roleName = global.user.role.roleName
+    
 
     return {
       // user: global.user
       user: {
         username: 'ss'
       },
-      hasAdminRight: ['超级管理员', '运营管理员', '化验室'].includes(roleName),
-      hasDoctorRight: ['超级管理员', '化验室', '医生'].includes(roleName),
-      hasCheckRight: ['超级管理员', '医生', '化验室'].includes(roleName)
+      hasAdminRight: false,
+      hasDoctorRight: false,
+      hasCheckRight: false
     }
   },
   computed: {
-
-  },
-  methods: {
-
-  },
-  created () {
-
-  },
-  mounted () {
-    console.log(global.user, 'global.user')
-  },
-  watch: {
-    $route () {
+    set(){
       if (!global.user) {
         this.$router.push('/account')
       } else {
@@ -92,7 +80,21 @@ export default {
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
       this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
+    }
+  },
+  methods: {
 
+  },
+  created () {
+
+  },
+  mounted () {
+    this.set()
+  },
+  watch: {
+    $route () {
+      
+      this.set()
       
     }
   }
