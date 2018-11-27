@@ -12,7 +12,8 @@ const kongdongApi = [
   '/check',
   '/prescription',
   '/addPrescription',
-  '/qiniu'
+  '/qiniu',
+  '/manager/check'
 ]
 request.interceptors.request.use(
   function (req) {
@@ -164,6 +165,12 @@ const api = {
       async addCheck (params) {
         const url = '/manager/check/addCheck'
         const res = await request.get(url, { params })
+        return res
+      },
+      async updateCheckTemplate (id, data) {
+        const url = `/manager/check/updateCheckTemplate?itemId=${id}`
+        const res = await request.post(url, data)
+        return res
       }
     }
 

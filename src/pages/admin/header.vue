@@ -85,6 +85,14 @@ export default {
   methods: {},
   created () {},
   mounted () {
+    setTimeout(() => {
+      this.right = {
+        isAdmin: global.isAdmin,
+        isDoctor: global.isDoctor,
+        isHuayan: global.isHuayan,
+        isYunyin: global.isYunyin
+      }
+    }, 200)
     // document.querySelector('#app >.tab').style.minWidth="1631px"
   },
   watch: {

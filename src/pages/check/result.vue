@@ -110,14 +110,14 @@ global.moment = moment
         }
         this.loading = true
   
-        let filter = {}
+        let filter = this.filter
         if (this.filter.startTime) {
           filter.startTime = new Date(this.filter.startTime).getTime()
         }
         if (this.filter.endTime) {
           filter.endTime = new Date(this.filter.endTime).getTime()
         }
-        let res = await this.api.check.listReadyCheck({ doctorId: global.user.id })
+        let res = await this.api.check.listReadyCheck({ doctorId: global.user.id , ...filter })
         let { data: { data, code } } = res
         if (code === 200) {
           this.loading = false

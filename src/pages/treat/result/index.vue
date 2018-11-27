@@ -23,13 +23,14 @@
     
     <el-dialog :title="report.title" :visible.sync="report.visible" class="checktpl-dia">
       <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
-      <br/>
-      <el-form v-if="report.edit">
-          <el-form-item>
-            <el-input type="textarea" v-model="report.desc" placeholder="备注"></el-input>
-          </el-form-item>
+      
+      <el-form >
+          <el-form-item label="备注">
+            <el-input  v-if="report.edit" type="textarea" v-model="report.desc"></el-input>    
+            <div v-else>{{report.desc}}</div>
+         </el-form-item>
+        
       </el-form>
-      <div v-else>{{report.desc}}</div>
       
       <span slot="footer">
         <el-button type="" @click="(e)=>{

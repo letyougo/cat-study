@@ -68,7 +68,7 @@
                             <i class="icon iconfont icon-up"></i>
                         </template>
                         <template v-else-if="scope.row.hint[1] === 'down'">
-                           <i class="icon iconfont icon-up"></i>
+                            <i class="icon iconfont icon-down"></i>
                        </template>
                        <!-- <template v-else>
                              空

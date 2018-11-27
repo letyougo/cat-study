@@ -18,25 +18,41 @@
         <div>
             <el-table :data="list" @expand-change="expandChange" v-loading="loading">
               <el-table-column label="详情" type="expand" width="150">
-                <template scope="scope">
-
-                    <el-form label-width="100px">
-                        <el-form-item label="医院名称">
-                          <el-input v-model="scope.row.names" placeholder=""></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                          <el-button type="primary" @click="update(scope.row)">修改</el-button>
-                        </el-form-item>
-                      </el-form>
-                      
+                <template scope="scope" >
+                    <h3>医院编辑</h3>
+                    <el-form label-width="100px" inline>
+                      <el-form-item label="医院名称">
+                        <el-input v-model="scope.row.names" placeholder=""></el-input>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-button type="primary" @click="update(scope.row)">修改</el-button>
+                      </el-form-item>
+                    </el-form>
                     <br/>
-
+                    <h3>医院模板编辑</h3>
                     <el-table :data="scope.row.checks">
                       <el-table-column label="类型" prop="typeName"></el-table-column>
                       <el-table-column label="名称" prop="checkName"></el-table-column>
                       <el-table-column label="操作">
                         <template scope="scope">
-                          <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
+                          <template v-if="scope.row.templateType === 1 ">
+                            <a>阳性/阴性</a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 2 ">
+                              <a>存在/不存在</a>
+                            </template>
+                          <template v-else-if="scope.row.templateType === 3 ">
+                              <a>正常/异常</a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 4 ">
+                              <a>正常/异常</a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 6 ">
+                              <a>正常/异常</a>
+                          </template>
+                          <template v-else>
+                              <el-button type="text" @click="showMore(scope.row)">点击查看</el-button>
+                          </template>
                         </template>
                       </el-table-column>
                       <el-table-column label="模板" prop="templateType"></el-table-column>
@@ -69,10 +85,10 @@
         </el-dialog>
 
         <el-dialog title="" :visible.sync="showMoreDialog.visible">
-          <check :itemId="showMoreDialog.itemId" :tplType="showMoreDialog.tplType"></check>
+          <check ref="check" :itemId="showMoreDialog.itemId" :tplType="showMoreDialog.tplType"></check>
           <span slot="footer">
             <el-button type="" @click="showMoreDialog.visible=false">关闭</el-button>
-            <el-button type="primary" @click="showMoreDialog.visible=false">确定</el-button>
+            <el-button type="primary" @click="updateReport">修改</el-button>
           </span>
         </el-dialog>
 
@@ -205,6 +221,11 @@ export default {
       let res = await this.api.check.manager.listCheckHospital({ param: item.names })
       let { data: { data } } = res
       item.checks = data
+    },
+    async updateReport () {
+      this.showMoreDialog.visible = false
+      await this.$refs.check.update()
+      this.fetch()
     }
   },
   created () {

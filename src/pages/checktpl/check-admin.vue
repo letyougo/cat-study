@@ -102,8 +102,27 @@ export default {
         itemId: this.itemId
       }
       let res = await request.get('/manager/check/getCheckInfo', { params })
+      let tplType = this.tplType
       let { data: { data } } = res
-      this.list = data
+      if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
+        if (tplType === 5) {
+          data = data.map(item => {
+            item.value = item.value || '0,0'
+            item.hint = item.hint || 'empty,empty'
+            if (item.value) {
+              item.value = item.value.split(',')
+              item.hint = item.hint.split(',')
+            }
+            return item
+          })
+        }
+        this.list = data
+      } else {
+        this.list = [data]
+      }
+    },
+    async update () {
+      await this.api.check.manager.updateCheckTemplate(this.itemId, { data: this.list })
     }
   },
   mounted () {
