@@ -198,6 +198,9 @@ const api = {
       const url = '/sysUser/deleteUser '
       let res = await request.post(url, data)
       return res
+    },
+    async update () {
+      const url = '/sysUser/updateUser'
     }
   },
 

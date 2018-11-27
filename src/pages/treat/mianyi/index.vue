@@ -98,7 +98,13 @@
                         <el-radio label="拔牙"  v-model="tooth"></el-radio> 
                     </div>
                 </div>
-                 <div class="item-detail" @click="fetchOperation(tooth)">
+                 <div class="item-detail" @click="(e)=>{
+                     if(this.tooth ==='洗牙'){
+                        this.fetchOperation('洗牙')   
+                     }else{
+                        this.fetchOperation('拔牙')   
+                     }
+                }">
                     处置详情
                 </div>
             </div>
@@ -129,7 +135,7 @@ export default {
   data () {
     return {
       expel: ['', [], []],
-      tooth: ['', ''],
+      tooth: '',
       immune: ['', []],
       bear: ['', ''],
       med: {
@@ -191,7 +197,7 @@ export default {
       let im = this.immune
       let immune = [im[0], im[1]].join(';')
       let bear = this.bear.join(';')
-      let tooth = this.tooth.join(';')
+      let tooth = this.tooth
       let obj = {
         caseId: this.$route.query.id,
         immune,

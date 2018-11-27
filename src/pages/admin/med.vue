@@ -13,7 +13,7 @@
                         <el-input v-model="likeStr" placeholder="关键字"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary">查询</el-button>
+                        <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="addForm.visible=true">增加药品</el-button>

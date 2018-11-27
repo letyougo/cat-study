@@ -19,7 +19,7 @@
       </div>
       <div class="sign">
           <div class="logo">x</div>
-          <div class="name">{{user.username}}</div>
+          <div class="name"  @click="dialog.visible=true">{{user.username}}</div>
           <div class="action" @click="$router.push('/account')">
             退出
           </div>
@@ -37,6 +37,38 @@
       <div>台操作员：{{user.username}}（医生）</div>
       <div>{{user.hospital}}</div>
     </div>
+
+    <el-dialog :visible.sync="dialog.visible"  width="500px">
+        <h3 style="text-align: center">修改密码</h3>
+        <el-form :model="dialog" ref="change">
+          <!-- <el-form-item label=""
+          prop="phoneNum"
+          :rules="[{ required: true, message: '手机号不能为空', trigger: 'blur' }]"
+          >
+            <el-input v-model="dialog.phoneNum" placeholder="手机号"></el-input>
+          </el-form-item> -->
+          <el-form-item label=""
+          prop="password"
+          :rules="[{ required: true, message: '密码不能为空', trigger: 'blur' }]"
+          >
+            <el-input type="password" v-model="dialog.password" placeholder="新密码"></el-input>
+          </el-form-item>
+          <el-form-item label=""
+          prop="newPassword"
+          :rules="rules.checkPass"
+          >
+              <el-input  type="password"  v-model="dialog.newPassword" placeholder="确认新密码"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer">
+          <el-button type="" @click="dialog.visible=false">
+            关闭
+          </el-button>
+          <el-button type="primary" @click="handleUpdate">
+              确定
+            </el-button>
+        </span>
+      </el-dialog>
   
   </div>
 </template>
@@ -52,8 +84,6 @@ export default {
 
   },
   data () {
-    
-
     return {
       // user: global.user
       user: {
@@ -61,11 +91,32 @@ export default {
       },
       hasAdminRight: false,
       hasDoctorRight: false,
-      hasCheckRight: false
+      hasCheckRight: false,
+      dialog: {
+        visible: false,
+        phoneNum: global.user.phoneNum,
+        password: '',
+        newPassword: ''
+      },
+      rules: {
+        checkPass: [
+          { validator: (rule, value, callback) => {
+            console.log(value, this.dialog.newPassword, '-----')
+            if (value === '') {
+              callback(new Error('请再次输入密码'))
+            } else if (value !== this.dialog.password) {
+              callback(new Error('两次输入密码不一致!'))
+            } else {
+              callback()
+            }
+          },
+          trigger: 'blur' }
+        ]
+      }
     }
   },
   computed: {
-    set(){
+    set () {
       if (!global.user) {
         this.$router.push('/account')
       } else {
@@ -76,14 +127,34 @@ export default {
       global.isDoctor = roleName === '医生'
       global.isHuayan = roleName === '化验室'
       global.isYunyin = roleName === '运营管理员'
-    
+
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
       this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
     }
   },
   methods: {
+    handleUpdate () {
+      this.$refs.change.validate(async (valid) => {
+        if (valid) {
+          let data = {
+            password: this.dialog.password,
+            id: global.user.id,
+            email: global.user.email,
+            phoneNum: global.user.phoneNum,
+            username: global.user.username
+          }
+          let res = await this.api.role.update(data)
+          let { data: { code } } = res
+          if (code === 200) {
+            this.$message.success('更新密码成功')
+            this.$router.push('/account')
+          }
+        } else {
 
+        }
+      })
+    }
   },
   created () {
 
@@ -93,9 +164,7 @@ export default {
   },
   watch: {
     $route () {
-      
       this.set()
-      
     }
   }
 }

@@ -21,7 +21,7 @@ export default {
   data () {
 	    return {
 	      list: [
-	        { name: 'dvm360', tip: 'www.dvm360.com' },
+	        { name: 'dvm360', tip: 'http://www.dvm360.com' },
 	        { name: 'cat care', tip: 'https:icatcare.org/isfm' },
 	        { name: 'AAHA', tip: 'https://www.aaha.org/default.aspx' },
 
