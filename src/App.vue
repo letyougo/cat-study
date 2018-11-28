@@ -19,7 +19,7 @@
       </div>
       <div class="sign">
           <div class="logo">x</div>
-          <div class="name"  @click="dialog.visible=true">{{user.username}}</div>
+          <div class="name" style="cursor: pointer;"  @click="dialog.visible=true">{{user.username}}</div>
           <div class="action" @click="$router.push('/account')">
             退出
           </div>
@@ -146,6 +146,7 @@ export default {
           }
           let res = await this.api.role.update(data)
           let { data: { code } } = res
+          this.dialog.visible = false
           if (code === 200) {
             this.$message.success('更新密码成功')
             this.$router.push('/account')

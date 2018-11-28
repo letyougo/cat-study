@@ -55,7 +55,7 @@
             prop="newPassword"
             :rules="rules.checkPass"
             >
-                <el-input v-model="dialog.newPassword" placeholder="确认新密码"></el-input>
+                <el-input type="password" v-model="dialog.newPassword" placeholder="确认新密码"></el-input>
             </el-form-item>
           </el-form>
           <span slot="footer">
@@ -161,10 +161,10 @@ export default {
            let { data: { code } } = res
            if (code === 200) {
              this.$message.success('更新密码成功')
+             this.dialog.visible = false
              this.$router.push('/account')
            }
-         }
-         else {
+         } else {
  
          }
        })
