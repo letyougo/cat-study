@@ -400,6 +400,9 @@ export default {
     tip
   },
   watch: {
+    $route () {
+      this.fetch()
+    },
     passHistory: {
       handler (obj) {
         let item = this.passHistory.options.find(item => item.names === obj.value)

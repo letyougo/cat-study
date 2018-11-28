@@ -225,6 +225,7 @@ export default {
     async updateReport () {
       this.showMoreDialog.visible = false
       await this.$refs.check.update()
+      this.$message.success('修改模板成功')
       this.fetch()
     }
   },

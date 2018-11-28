@@ -34,6 +34,15 @@
     </div>
 
     <div class="bottom">
+      <div style="flex: 1">
+        <span v-for="item in tabs" :key="item.id"  @click="go(item)" >
+            <el-tag :type=" item.id === $route.query.id ? 'primary' : 'default' " closable 
+            style="cursor: pointer;padding: 0 5px;"
+            
+            @close="closeTab(item)"> {{ownerName}} ( {{item.catName}} )</el-tag>
+        </span>
+      
+      </div>
       <div>台操作员：{{user.username}}（医生）</div>
       <div>{{user.hospital}}</div>
     </div>
@@ -98,6 +107,9 @@ export default {
         password: '',
         newPassword: ''
       },
+      tabs: [
+
+      ],
       rules: {
         checkPass: [
           { validator: (rule, value, callback) => {
@@ -134,6 +146,19 @@ export default {
     }
   },
   methods: {
+    go (item) {
+      if (this.$route.path === '/treat/index') {
+        this.$router.push(`/treat?id=${item.id}`)
+      } else if (this.$route.path === '/treat') {
+        this.$router.push(`/treat/index?id=${item.id}`)
+      } else {
+        this.$router.push(`/treat/index?id=${item.id}`)
+      }
+    },
+    closeTab (obj) {
+      this.tabs = this.tabs.filter(item => item.id !== obj.id)
+      localStorage.setItem('tabs', JSON.stringify(this.tabs))
+    },
     handleUpdate () {
       this.$refs.change.validate(async (valid) => {
         if (valid) {
@@ -161,11 +186,32 @@ export default {
 
   },
   mounted () {
+    if (localStorage.getItem('tabs')) {
+      this.tabs = JSON.parse(localStorage.getItem('tabs'))
+    } else {
+      this.tabs = []
+    }
     this.set()
   },
   watch: {
-    $route () {
-      this.set()
+    async $route () {
+      let path = this.$route.path
+      console.log(path, 'path-path', path === '/treat/index')
+      if (path === '/treat/index' || path === '/treat') {
+        if (this.tabs.find(item => item.id === this.$route.query.id)) {
+          return
+        }
+        let id = this.$route.query.id
+        let res = await this.api.case.item({ id })
+        let { data: { data: { catName, ownerName } } } = res
+        this.tabs.push({
+          id,
+          catName,
+          ownerName
+        })
+        localStorage.setItem('tabs', JSON.stringify(this.tabs))
+      }
+      console.log(this.$route)
     }
   }
 }
@@ -269,12 +315,14 @@ export default {
   .bottom{
     margin: 0 30px;
     height: 64px;
+    
     line-height: 64px;
     justify-content: flex-end;
     display: flex;
     background: #ffffff;
     margin-top: 10px;
     padding-right: 41px;
+    padding-left: 20px;
     font-size: 12px;
     color: #cccccc;
     font-weight: bold;
