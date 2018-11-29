@@ -35,11 +35,9 @@
 
     <div class="bottom">
       <div style="flex: 1">
-        <span v-for="item in tabs" :key="item.id"  @click="go(item)" >
-            <el-tag :type=" item.id === $route.query.id ? 'primary' : 'default' " closable 
-            style="cursor: pointer;padding: 0 5px;"
-            
-            @close="closeTab(item)"> {{ownerName}} ( {{item.catName}} )</el-tag>
+        <span v-for="item in tabs" :key="item.id"  @click="go(item)"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
+            <el-tag :type=" item.id == $route.query.id ? 'primary' : 'info' " closable 
+            @close="closeTab(item)"> {{item.ownerName}} ( {{item.catName}} )</el-tag>
         </span>
       
       </div>

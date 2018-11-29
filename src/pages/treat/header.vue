@@ -26,7 +26,7 @@
                     <span>X</span>
                     <span class="title2">诊室</span>
                 </div>
-                <div @click="$router.push('/treat/result?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}">
+                <div @click="$router.push('/treat/result?id='+$route.query.id)" :class="{active:$route.path === '/treat/result' ? true : false}">
                     <!-- <span>X</span> -->
                     <span class="title2">检查结果</span>
                 </div>
@@ -97,6 +97,7 @@ export default {
   },
   watch: {
     $route () {
+      this.fetch()
     }
   }
 }

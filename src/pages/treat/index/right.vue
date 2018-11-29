@@ -43,18 +43,22 @@
                 </el-input>
               </div>
 
-              <el-table :data="dialog.list">
-                <el-table-column label="报告单名称" prop="checkName"></el-table-column>
-                <el-table-column label="开具时间" prop="creataTime"></el-table-column>
-                <el-table-column label="处方医生" prop="doctorName"></el-table-column>
-              </el-table>
-              <br/>
-              <p>注意事项</p>
-              <br/>
-              <el-input type="textarea" v-model="dialog.content" placeholder=""></el-input>
+              <div class="check-table">
+                  <el-table :data="dialog.list" >
+                      <el-table-column label="报告单名称" prop="checkName"></el-table-column>
+                      <el-table-column label="开具时间" prop="creataTime"></el-table-column>
+                      <el-table-column label="处方医生" prop="doctorName"></el-table-column>
+                    </el-table>
+                    <br/>
+                    <p>注意事项</p>
+                    <br/>
+                    <el-input type="textarea" v-model="dialog.content" placeholder=""></el-input>
+              </div>
+             
 
               <div slot="footer" class="footer">
-                <el-button type="primary" @click="huayan">开具处方并打印</el-button>
+                <el-button type="primary" @click="print">打印</el-button>
+                <el-button type="primary" @click="huayan">开具处方</el-button>
                 <el-button @click="dialog.visible=false">取消</el-button>
               </div>
             </el-dialog>
@@ -318,8 +322,8 @@ export default {
       list = item.examsModel.map(item => {
         return {
           checkName: item,
-          creataTime: new Date().getTime(),
-          updateTime: new Date().getTime(),
+          creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+          updateTime: moment().format('YYYY-MM-DD hh:mm:ss'),
           doctorName: global.user.username,
           checkDoctorName: ''
         }
@@ -332,8 +336,8 @@ export default {
       list = l.map(item => {
         return {
           checkName: item,
-          creataTime: new Date().getTime(),
-          updateTime: new Date().getTime(),
+          creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+          updateTime: moment().format('YYYY-MM-DD hh:mm:ss'),
           doctorName: global.user.username,
           checkDoctorName: ''
         }
@@ -346,6 +350,32 @@ export default {
     },
     async fetchCheck () {
 
+    },
+    print () {
+      global.print('.check-table')
+    },
+    async search () {
+      let res = await this.api.check.findCheckByHospitalId(this.dialog.value)
+      let { data: { data } } = res
+      let list = this.dialog.list
+      data = data.filter(item => {
+        let arr = list.map(item => item.checkName)
+        if (!arr.includes(item)) {
+          return true
+        }
+        return false
+      }).map(item => {
+        return {
+          checkName: item,
+          creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+          updateTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+          doctorName: global.user.username,
+          checkDoctorName: ''
+        }
+      })
+      list = [...list, ...data]
+
+      this.dialog.list = list
     }
   },
   created () {

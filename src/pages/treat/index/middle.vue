@@ -27,9 +27,9 @@
                 <el-form-item label="性别" :style="{width:'350px'}" v-model="basic.sex.value" >
                     <!-- <el-radio label="公"></el-radio>
                     <el-radio label="去势"></el-radio> -->
-                    <el-radio  @change="(e)=>{
+                    <el-checkbox  @change="(e)=>{
                         this.add()
-                      }" v-model="basic.sex.value"  v-for="item in basic.sex.options" :value="item.names" :label="item.names" :key="item.names"></el-radio>
+                    }" v-model="basic.sex.value"  v-for="item in basic.sex.options" :value="item.names" :label="item.names" :key="item.names"></el-checkbox>
                 </el-form-item>   
             </template>
 
@@ -75,8 +75,8 @@
                     mainDialog=false
                     this.add()
                   }">取消</el-button>
-                <el-button  @change="(e)=>{
-                    mainDialog=true
+                <el-button  @click="(e)=>{
+                    mainDialog=false
                     this.add()
                   }"  type="primary">确定</el-button>
              </span>
@@ -89,7 +89,17 @@
                     <h2><tip></tip>主述症状</h2>
                     <el-form>
                         <el-form-item>
-                            <el-input @focus="mainDialog=true"></el-input>
+                            <el-select style="width: 90%;"  multiple filterable v-model="main.value">
+                              <el-option 
+                                v-for="item in main2" 
+                                :label="item.names"
+                                :value="item.names"
+                                :key="item.names">
+                                {{item.names}}
+                              </el-option>
+                              
+                            </el-select>
+                            <el-button @click="mainDialog=true" type="text">全部症状</el-button>
                         </el-form-item>
                     </el-form>
 
@@ -386,7 +396,10 @@
 
         <el-form>
             <el-form-item>
-                <el-button type="primary" style="float:right" @click="add">保存</el-button>
+                <el-button type="primary" style="float:right" @click="()=>{
+                  this.$message.success('保存病例信息')
+                  this.add()  
+                }">保存</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -475,7 +488,7 @@ export default {
         },
         sex: {
           exist: false,
-          value: '',
+          value: [],
           options: []
         },
         weight: {
@@ -584,7 +597,17 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    main2 () {
+      let arr = []
+      this.main.options.forEach(element => {
+        element.forEach(item => {
+          arr.push(item)
+        })
+      })
+      return arr
+    }
+  },
   methods: {
 
     setMain (index, j) {
@@ -635,7 +658,18 @@ export default {
         skinLesion, id
       } } } = res2
       this.id = id
-      this.basic.sex.value = bear
+      if (bear === '去势') {
+        this.basic.sex.value = ['公猫', '去势']
+      }
+      if (bear === '绝育') {
+        this.basic.sex.value = ['母猫', '绝育']
+      }
+      if (bear === '公猫') {
+        this.basic.sex.value = ['公猫']
+      }
+      if (bear === '母猫') {
+        this.basic.sex.value = ['母猫']
+      }
       this.basic.weight.value = weight
       let v = variety.split(',')
       if (v.length === 0) {
@@ -692,7 +726,13 @@ export default {
       }
 
       if (this.basic.sex.value) {
-        obj.bear = this.basic.sex.value
+        if (this.basic.sex.value.includes('去势')) {
+          obj.bear = '去势'
+        } else if (this.basic.sex.value.includes('绝育')) {
+          obj.bear = '去势'
+        } else {
+          obj.bear = this.basic.sex.value[0]
+        }
       }
       if (this.basic.weight.value) {
         obj.weight = this.basic.weight.value

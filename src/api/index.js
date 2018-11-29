@@ -141,6 +141,16 @@ const api = {
       const res = await request.post(url, data)
       return res
     },
+    async isAllReady (id) {
+      const url = `/check/isAllReady?caseId=${id}`
+      const res = await request.get(url)
+      return res
+    },
+    async findCheckByHospitalId (name) {
+      const url = `/check/findCheckByHospitalId?hospitalId=${global.user.id}&checkName=${name}`
+      const res = await request.get(url)
+      return res 
+    },
     manager: {
       async getCheckType () {
         const url = '/manager/check/getCheckType'
@@ -431,6 +441,11 @@ const api = {
   disease: {
     async list (params) {
       const url = '/disease/listDiseaseBySymptom'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async list2 (params) {
+      const url = '/disease/listByParam'
       let res = await request.get(url, { params })
       return res
     }

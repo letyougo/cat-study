@@ -3,10 +3,10 @@
 		<div class="check-filter">
 			<el-form :model="filter" :inline="true">
         
-				<el-form-item label="主人信息">
+				<el-form-item label="主人姓名">
 					<el-input v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
-				<el-form-item label="猫咪信息">
+				<el-form-item label="猫咪姓名">
 					<el-input v-model="filter.catName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="入院时间">

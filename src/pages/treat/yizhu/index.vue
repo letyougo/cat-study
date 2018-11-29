@@ -3,12 +3,13 @@
     <div class="top">
       <div class="title">根据检查结果判断为疾病</div>
       <div>
-        <el-input placeholder="搜索疾病" icon="search" style="width:430px;">
+        <el-input placeholder="搜索疾病" v-model="search" icon="search" style="width:430px;">
           <template slot="prefix">
             <i class="el-icon-search icon-search"></i>
           </template>
           <template slot="suffix">
             <el-button style="margin-top:5px" type="primary" size="mini"
+              @click="fetchIll"
               >搜索</el-button
             >
           </template>
@@ -18,7 +19,7 @@
     <div class="action">
       <div>
         <el-form inline>
-          <el-form-item v-for="(item,i) in list" :key="item.id">
+          <el-form-item v-for="(item,i) in list.filter(item=>!!item)" :key="item.id">
             <el-button
               @click="pickItem(item,i)"
               :type=" item.pick? 'primary' : 'default' "
@@ -118,6 +119,7 @@ export default {
   data () {
     return {
       print: false,
+      search: '',
       list: [],
       uncertain: {
         visible: false
@@ -138,7 +140,11 @@ export default {
     }
   },
   methods: {
-
+    async fetchIll () {
+      let res = await this.api.disease.list2({ names: this.search })
+      let { data: { data } } = res
+      this.list = data
+    },
     async openChuzhi (names) {
       this.chuzhi.visible = true
       this.chuzhi.names = names
@@ -208,7 +214,19 @@ export default {
     }
   },
   created () {},
-  mounted () {
+  async mounted () {
+    const res = await this.api.check.isAllReady(this.$route.query.id)
+    let { data: { status } } = res
+    console.log(status, 'this is status')
+    // if (status === 'no') {
+    //   this.$message.success('未完成全部检查结果')
+    //   this.$router.push('/treat/result?id=' + this.$route.query.id)
+    //   return
+    // }
+    // alert(status)
+    // if (status === 'no') {
+    //   return this.$router.back()
+    // }
     this.fetch()
   }
 }
