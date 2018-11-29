@@ -62,8 +62,18 @@
             <el-table-column label="id" prop="id" width="80px"></el-table-column>
             <el-table-column label="疾病名字" prop="names" width="150px"></el-table-column>
             <el-table-column label="症状" prop="symptom"></el-table-column>
-            <el-table-column label="操作" width="100px">
+            <el-table-column label="示例症状">
+              <template scope="scope">
+                <span 
+                style="padding: 4px"
+                v-for="item in scope.row.highSym" :key="item.id">               
+                <el-tag type="primay" size="mini" >{{item}}</el-tag>
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="250px">
               <template scope="scope" >
+                  <el-button type="primary" @click="openShili(scope.row,scope.$index)">示例症状</el-button>
                   <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
             </el-table-column>
@@ -93,7 +103,7 @@
                   <el-form-item label="症状">
                       <el-input type="textarea" v-model="add.symptom" placeholder=""></el-input>
                   </el-form-item>
-                  <el-form-item label="识别">
+                  <el-form-item label="诊断鉴别">
                     <el-input type="textarea" v-model="add.identification" placeholder=""></el-input>
                   </el-form-item>
                   <el-form-item label="治疗原则">
@@ -113,6 +123,33 @@
                       <el-button type="primary" @click="addAction">确定</el-button>
                     </el-form-item>
               </el-form>
+          </el-dialog>
+
+          <el-dialog title="示例症状" :visible.sync="shili.visible">
+            <span v-for="(item,index) in shili.list" :key="item.id" style="padding: 4px 6px">
+                <el-tag type="primary" closable @close="shili.list.splice(index,1)">
+                  {{item}}
+                </el-tag>
+                
+              </span>
+              <span>
+                <el-button @click="shili.add=false" icon="el-icon-plus" size="mini" v-if="shili.add">增加</el-button>
+                <el-input
+                v-else
+                ref='shiliinput'
+                @keyup.enter.native="shili.list.push(shili.value);shili.add=true;"
+                style="width: 100px" type="" size="mini" v-model="shili.value"></el-input>
+              </span>
+            <el-form>
+              <el-form-item >
+              </el-form-item>
+            </el-form>
+       
+            </el-form>
+            <span slot="footer">
+              <el-button type="" @click="shili.visible=false">关闭</el-button>
+              <el-button type="primary" @click="addSymp">确定</el-button>
+            </span>
           </el-dialog>
       </div>
 
@@ -140,7 +177,14 @@ export default {
         totalCount: 0,
         pageNum: 1
       },
-      loading: false
+      loading: false,
+      shili: {
+        visible: false,
+        id: '',
+        list: [],
+        add: true,
+        value: ''
+      }
 
     }
   },
@@ -152,6 +196,25 @@ export default {
       this.pageinfo.pageNum = pageNum
       this.fetch()
     },
+    async openShili (item, index) {
+      this.shili.visible = true
+      let res = await this.api.disease.listDiseaseHightSymp(item.id)
+      let { data: { data } } = res
+      let list = this.list
+      data = data.filter(item => !!item)
+      list[index].highSym = data
+      this.$set(this.list, list)
+      this.shili.id = item.id
+      this.shili.list = data
+    },
+    async addSymp () {
+      await this.api.disease.updateDiseaseHightSymp({
+        diseaseId: this.shili.id,
+        symptom: this.shili.list.filter(item => !!item).join(',')
+      })
+      this.$message.success('更新示例症状成功')
+      this.shili.visible = false
+    },
     async fetch () {
       this.loading = true
       let limit = this.config.page.limit
@@ -160,6 +223,10 @@ export default {
       let res = await this.api.ill.list({ ...this.filter, start, limit })
       let { data: { data, code, pageinfo } } = res
       this.loading = false
+      data = data.map(item => {
+        item.highSym = []
+        return item
+      })
       this.list = data
       this.pageinfo = pageinfo
     },
@@ -182,6 +249,16 @@ export default {
       } catch (e) {
 
       }
+    },
+    async fetchSym (item, scope) {
+      console.log(item, 'item--item')
+      let res = await this.api.disease.listDiseaseHightSymp(item.id)
+      let { data: { data } } = res
+      let list = this.list
+
+      list[scope.$index].highSym = data
+      console.log(list, 'new-list')
+      this.$set(this.list, list)
     },
     reload () {
       this.fetch()

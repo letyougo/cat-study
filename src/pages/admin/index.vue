@@ -1,8 +1,8 @@
 <template>
     <div class="admin-index">
-        <div class="admin-title">
+        <!-- <div class="admin-title">
             <corner></corner>基本情况
-        </div>
+        </div> -->
         <div class="admin-action">
             <!-- <div class="admin-open">
                 <dir> </dir>

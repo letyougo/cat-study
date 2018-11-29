@@ -63,9 +63,15 @@
               </div>
             </el-dialog>
 
-            <el-collapse accordion>
+            <el-collapse accordion class="collapse-right">
                   <el-collapse-item v-for="(item,index) in list" :title="item.names" :key="item.id">
-                    <p>病症&既往史</p>
+                   
+                    <div
+                      style="position: relative;"
+                    >病症&既往史
+                    <div class="high-tip">该病出现示病症状</div>
+                  </div>
+
                     <p>
                         <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px">
                             <el-tag size="mini" :type=" item.matchSymptoms.includes(op) ? 'primary' : 'warning' ">{{op}}</el-tag>

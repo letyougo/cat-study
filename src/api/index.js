@@ -149,7 +149,7 @@ const api = {
     async findCheckByHospitalId (name) {
       const url = `/check/findCheckByHospitalId?hospitalId=${global.user.id}&checkName=${name}`
       const res = await request.get(url)
-      return res 
+      return res
     },
     manager: {
       async getCheckType () {
@@ -448,8 +448,17 @@ const api = {
       const url = '/disease/listByParam'
       let res = await request.get(url, { params })
       return res
+    },
+    async listDiseaseHightSymp (id) {
+      const url = `/disease/listDiseaseHightSymp?diseaseId=${id}`
+      const res = await request.get(url)
+      return res
+    },
+    async updateDiseaseHightSymp (data) {
+      const url = '/disease/updateDiseaseHightSymp'
+      const res = request.post(url, data)
+      return res 
     }
-
   },
   // operation
   operation: {

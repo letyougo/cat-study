@@ -4,7 +4,7 @@
             
             
             <div class="left" >
-                <div>
+                <div @click="$router.push('/admin')" :class="{active:$route.path === '/admin' ? true : false}">
                     <span>O</span>后台管理
                 </div>
                 <template v-if="right.isAdmin || right.isHuayan">

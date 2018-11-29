@@ -126,6 +126,9 @@ export default {
     }
   },
   computed: {
+
+  },
+  methods: {
     set () {
       if (!global.user) {
         this.$router.push('/account')
@@ -141,9 +144,7 @@ export default {
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
       this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
-    }
-  },
-  methods: {
+    },
     go (item) {
       if (this.$route.path === '/treat/index') {
         this.$router.push(`/treat?id=${item.id}`)
@@ -209,6 +210,7 @@ export default {
         })
         localStorage.setItem('tabs', JSON.stringify(this.tabs))
       }
+      this.set()
       console.log(this.$route)
     }
   }
@@ -312,9 +314,9 @@ export default {
 
   .bottom{
     margin: 0 30px;
-    height: 64px;
+    height: 50px;
     
-    line-height: 64px;
+    line-height: 50px;
     justify-content: flex-end;
     display: flex;
     background: #ffffff;
