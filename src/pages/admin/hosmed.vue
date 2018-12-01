@@ -26,11 +26,6 @@
         <br>
         <div>
             <el-table :data="list" v-loading="loading">
-                <el-table-column type="expand">
-                    <template scope="scope">
-                        expand
-                    </template>
-                </el-table-column>
                 <el-table-column label="id" prop="id"></el-table-column>
                 <el-table-column label="名字" prop="names"></el-table-column>
                 <el-table-column label="成分" prop="ingredient"></el-table-column>

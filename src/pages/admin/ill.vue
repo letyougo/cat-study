@@ -37,7 +37,7 @@
                       <el-form-item label="症状">
                           <el-input type="textarea" v-model="scope.row.symptom" placeholder=""></el-input>
                       </el-form-item>
-                      <el-form-item label="识别">
+                      <el-form-item label="鉴别">
                         <el-input type="textarea" v-model="scope.row.identification" placeholder=""></el-input>
                       </el-form-item>
                       <el-form-item label="治疗原则">
@@ -47,10 +47,10 @@
                         <el-input type="textarea" v-model="scope.row.suggestTreatment" placeholder=""></el-input>
                       </el-form-item>
                       <el-form-item label="病因">
-                        <el-input type="textarea" v-model="scope.row.causes" placeholder=""></el-input>
+                        <el-input type="textarea" v-model="scope.row.causes" placeholder="" :rows="10"></el-input>
                       </el-form-item>
                       <el-form-item label="预后">
-                          <el-input type="textarea" v-model="scope.row.prognosis" placeholder=""></el-input>
+                          <el-input type="textarea" v-model="scope.row.prognosis" placeholder="" :rows="10"></el-input>
                         </el-form-item>
                         <el-form-item label="">
                           <el-button type="primary" @click="update(scope.row)">确定</el-button>

@@ -29,9 +29,9 @@
                         <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
                             <span>O</span>疾病管理
                         </li>
-                        <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
+                        <!-- <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
                             <span>O</span>处方管理
-                        </li>
+                        </li> -->
 
                         <li @click="$router.push('/admin/ysbl')" :class="{active:$route.path === '/admin/ysbl' ? true : false}">
                             <span>O</span>医生病历

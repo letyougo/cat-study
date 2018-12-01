@@ -406,7 +406,7 @@ const api = {
       return res
     },
     async del (id) {
-      const url = `/hospital/listByParam?id=${id}`
+      const url = `/hospital/delete?id=${id}`
       let res = await request.get(url)
       return res
     },

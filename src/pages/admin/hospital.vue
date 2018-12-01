@@ -62,7 +62,11 @@
               <el-table-column label="id" prop="id"></el-table-column>
               <el-table-column label="医院名字" prop="names"></el-table-column>
               <el-table-column label="创建时间" prop="createTime"></el-table-column>
-              <el-table-column label="更新时间" prop="updateTime"></el-table-column>
+              <el-table-column label="操作">
+                <template scope="scope">
+                  <el-button type="danger" @click="deleteItem(scope.row.id)">删除</el-button>
+                </template>
+              </el-table-column>
               
             </el-table>
         </div>
@@ -190,6 +194,12 @@ export default {
       this.reload()
     },
     async update (item) {
+      if (item.names.trim() === '') {
+        return this.$message({
+          message: '名称不能为空或全为空格',
+          type: 'error'
+        })
+      }
       await this.api.hospital.update({ names: item.names, id: item.id })
       this.reload()
     },
@@ -228,6 +238,9 @@ export default {
       await this.$refs.check.update()
       this.$message.success('修改模板成功')
       this.fetch()
+    },
+    deleteItem (id) {
+      this.api.hospital.del(id).then(res => this.reload())
     }
   },
   created () {

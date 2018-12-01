@@ -11,10 +11,10 @@
           <div>
               <el-form inline>
                   <el-form-item>
-                    <el-input v-model="filter.names" placeholder="症状名称"></el-input>
+                    <el-input v-model="filter.symptom" placeholder="症状名称"></el-input>
                   </el-form-item>
                   <el-form-item label="">
-                      <el-button type="primary" @click="add.visible=true">查询</el-button>
+                      <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
                   <el-form-item label="">
                     <el-button type="primary" @click="add.visible=true">新增症状</el-button>
@@ -128,7 +128,6 @@
               <el-form-item label="辅助检查">
                   <el-button @click="checkListMinorSearch2" >编辑</el-button>
                   <el-button type="primary" @click="(e) => {edit.checkListMinorOptions = edit.checkListMinor}">确定</el-button>
-                  <el-input v-model="edit.checkListMinorTemp" @input="checkListMinorSearch2"  placeholder=""></el-input>
                   <br/>                
                   <el-button 
                     v-if="item"
@@ -196,7 +195,7 @@
           checkListMinor: []
         },
         filter: {
-          names: ''
+          symptom: ''
         },
         list: [],
         pageinfo: {
@@ -217,7 +216,8 @@
         this.loading = true
         let limit = this.config.page.limit
         let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
-        let res = await api.symptom.listSymptomCheck({ start, limit })
+        let symptom = this.filter.symptom
+        let res = await api.symptom.listSymptomCheck({ start, limit, symptom })
         let { data: { data, pageinfo } } = res
         this.loading = false
         this.list = data
