@@ -47,9 +47,6 @@
     </div>
 
     <div class="ill">
-        <div class="title">
-            确诊疾病
-        </div>
         <template v-for="(item,index) in ill">
             <div class="title" v-if="!hide">
                 {{item.diseaseName}}
@@ -82,9 +79,6 @@
     
         </template>
 
-    </div>
-    <div class="title hideill">
-        <el-checkbox label="隐藏疾病名称" v-model="hide"></el-checkbox>
     </div>
   </div>
 </template>

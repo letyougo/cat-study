@@ -20,7 +20,24 @@
           <el-table-column label="检查名称" prop="checkName"></el-table-column>
           <el-table-column label="参考标准">
             <template scope="scope">
-              <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
+                          <template v-if="scope.row.templateType === 1 ">
+                            <a>阳性/阴性</a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 2 ">
+                              <a>存在/不存在</a>
+                            </template>
+                          <template v-else-if="scope.row.templateType === 3 ">
+                              <a>正常/异常</a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 4 ">
+                              <a></a>
+                          </template>
+                          <template v-else-if="scope.row.templateType === 6 ">
+                              <a></a>
+                          </template>
+                          <template v-else>
+                              <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
+                          </template>
             </template>
           </el-table-column>
       </el-table>

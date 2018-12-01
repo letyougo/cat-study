@@ -27,7 +27,7 @@
 							</template>
 						</el-table-column>
         </el-table>
-				<el-dialog title="猫瘟" class="chaxun-dialog" :visible.sync="detail.visible">
+				<el-dialog :title="detail.names" class="chaxun-dialog" :visible.sync="detail.visible">
 					<div>
 						<p class="chaxun-dialog-title">疾病症状</p>
 						<div class="chaxun-dialog-content">{{detail.symptom}}</div>
@@ -36,11 +36,22 @@
 						<div class="chaxun-dialog-content">
 							{{detail.exam}}
 						</div>
+            <p class="chaxun-dialog-title">鉴别</p>
+						<div class="chaxun-dialog-content">{{detail.identification}}</div>
 
 						<p class="chaxun-dialog-title">治疗原则</p>
 						<div class="chaxun-dialog-content">
 								{{detail.principle}}
 						</div>
+
+            <p class="chaxun-dialog-title">治疗建议</p>
+						<div class="chaxun-dialog-content">{{detail.suggestTreatment}}</div>
+
+            <p class="chaxun-dialog-title">病因</p>
+						<div class="chaxun-dialog-content">{{detail.causes}}</div>
+
+            <p class="chaxun-dialog-title">预后</p>
+						<div class="chaxun-dialog-content">{{detail.prognosis}}</div>
 
 						<template v-if="detail.treatments.length>0">
 								<p class="chaxun-dialog-title">疾病症状</p>
