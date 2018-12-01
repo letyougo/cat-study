@@ -50,7 +50,7 @@
         <div style="display: flex;justify-content:flex-end;padding-top: 10px">
             <el-pagination
             :page-size="config.page.limit"
-            :pager-count="pageinfo.pageNum"
+            :page-count="pageinfo.pageNum"
             @current-change="pageChange"
 
 

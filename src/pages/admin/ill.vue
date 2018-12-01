@@ -88,7 +88,7 @@
           <div style="display: flex;justify-content:flex-end;padding-top: 10px">
               <el-pagination
               :page-size="config.page.limit"
-              :pager-count="pageinfo.pageNum"
+              :page-count="pageinfo.pageNum"
               layout="prev, pager, next"
               @current-change="currentChange"
               :total="pageinfo.totalCount">
@@ -174,7 +174,7 @@ export default {
         names: ''
       },
       pageinfo: {
-        totalCount: 0,
+        totalCount: 10,
         pageNum: 1
       },
       loading: false,
@@ -221,14 +221,19 @@ export default {
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       console.log(this.pageinfo.pageNum, 'page-num')
       let res = await this.api.ill.list({ ...this.filter, start, limit })
-      let { data: { data, code, pageinfo } } = res
+      let { data: { data, code, pageinfo: {
+        pageNum, totalCount
+      } } } = res
       this.loading = false
       data = data.map(item => {
         item.highSym = []
         return item
       })
       this.list = data
-      this.pageinfo = pageinfo
+      this.pageinfo = {
+        pageNum,
+        totalCount
+      }
     },
     async update (data) {
       await this.api.ill.update(data)

@@ -11,6 +11,7 @@
 					<div class="login-form">
 						<el-form ref="form" :model="form">
               <el-form-item
+              
               :rules="[{ required: true, message: '手机号不能为空', trigger: 'blur' }]"
               prop="phoneNum"
               label="">

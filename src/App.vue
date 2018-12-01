@@ -101,7 +101,7 @@ export default {
       hasCheckRight: false,
       dialog: {
         visible: false,
-        phoneNum: global.user.phoneNum,
+        phoneNum: '',
         password: '',
         newPassword: ''
       },
@@ -130,12 +130,15 @@ export default {
   },
   methods: {
     set () {
+      let roleName
       if (!global.user) {
         this.$router.push('/account')
+        roleName = ''
       } else {
         this.user = global.user
+        roleName = global.user.role.roleName
       }
-      let roleName = global.user.role.roleName
+
       global.isAdmin = roleName === '超级管理员'
       global.isDoctor = roleName === '医生'
       global.isHuayan = roleName === '化验室'

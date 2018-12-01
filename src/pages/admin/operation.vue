@@ -71,7 +71,7 @@
             <div style="display: flex;justify-content:flex-end;padding-top: 10px">
                 <el-pagination
                 :page-size="config.page.limit"
-                :pager-count="pageinfo.pageNum"
+                :page-count="pageinfo.pageNum"
                 layout="prev, pager, next"
                 @current-change="currentChange"
                 :total="pageinfo.totalCount">
@@ -88,9 +88,7 @@
                       </el-form-item>
                     <el-form-item label="操作">
                         <el-input type="textarea" v-model="add.process" placeholder=""></el-input>
-                    </el-form-item>
-
-                  
+                    </el-form-item>       
                       <el-form-item label="">
                           <el-button  @click="add.visible=false">关闭</el-button>
                         <el-button type="primary" @click="addAction">确定</el-button>
