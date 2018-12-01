@@ -47,7 +47,7 @@
 					<el-table-column label="姓名" prop="catName"></el-table-column>
 					<el-table-column label="操作">
 						<template scope="scope">
-							<el-button @click="study(scope.row)">学习</el-button>
+							<el-button @click="study(scope.row)">详情</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -184,7 +184,7 @@ export default {
       this.fetch()
     },
     study (item) {
-      this.$router.push(`/doctor/moni?id=${item.id}`)
+      this.$router.push(`/doctor/moni?id=${item.id}&nomoni=1`)
     },
     async fetch () {
       // let filter = {}

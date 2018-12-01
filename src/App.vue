@@ -13,7 +13,7 @@
           
           医生知识库
         </div>
-        <div v-if="hasAdminRight" @click="$router.push('/admin')" :class="{active:$route.path === '/admin'}" >
+        <div v-if="hasAdminRight" @click="$router.push('/admin')" :class="{active:$route.path.includes('/admin')}" >
           运营后台
         </div>
       </div>
@@ -317,9 +317,9 @@ export default {
 
   .bottom{
     margin: 0 30px;
-    height: 50px;
+    height: 40px;
     
-    line-height: 50px;
+    line-height: 40px;
     justify-content: flex-end;
     display: flex;
     background: #ffffff;

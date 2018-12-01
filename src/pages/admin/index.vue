@@ -13,9 +13,9 @@
                 <div class="admin-open">
                     <div> </div>
                     <div>简历完成度</div>
-                    <div class="open-btn">展开</div>
+                    <div class="open-btn" @click="showDetail = !showDetail">{{showDetail ? '关闭' : '展开'}}</div>
                 </div>
-                <div class="admin-panel-list">
+                <div class="admin-panel-list" v-if="showDetail">
                     <el-table>
                       <el-table-column label="药品名称"></el-table-column>
                       <el-table-column label="昨日新增"></el-table-column>
@@ -94,7 +94,8 @@ export default {
           { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
           { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 }
         ]
-      }
+      },
+      showDetail: false
     }
   },
   computed: {

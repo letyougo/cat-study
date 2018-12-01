@@ -304,7 +304,7 @@ export default {
     },
     async del (item) {
       try {
-        await this.$confirm('确定删除该病历吗？')
+        await this.$confirm('确定删除该条挂号信息吗？')
         this.api.case.del({ id: item.id })
         this.fetch()
       } catch (e) {

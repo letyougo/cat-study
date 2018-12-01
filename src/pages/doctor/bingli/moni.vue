@@ -32,7 +32,7 @@
 					</div>
 			</div>
 			<div>
-				<el-button type="primary" @click="generate">重新生成模拟病历</el-button>
+				<el-button type="primary" @click="generate" v-if="showBtn">重新生成模拟病历</el-button>
 			</div>
 	</div>
 </template>
@@ -51,6 +51,7 @@ export default {
   watch: {
     $route () {
       console.log(this.$route.query.id)
+      if (this.$route.query.nomoni === '1') this.showBtn = false
     }
   },
   data () {
@@ -58,7 +59,8 @@ export default {
       caseId: false,
       diagDisease: '',
       treatment: '',
-      prognosis: ''
+      prognosis: '',
+      showBtn: true
     }
   },
   computed: {
@@ -89,6 +91,7 @@ export default {
   },
   mounted () {
     this.generate()
+    if (this.$route.query.nomoni === '1') this.showBtn = false
   }
 }
 </script>
