@@ -2,7 +2,7 @@
     <div class="right">
         <div class="suggest dia-item">
             <div class="top">
-                <div class="title-tip">疑似诊断提示</div>
+                <div class="title-tip" style="padding: 0;">疑似诊断提示</div>
                 <!-- <div>
                     <el-checkbox label=""  @>全选</el-checkbox>
                 </div> -->
@@ -24,7 +24,7 @@
         </div>
         <br/>
         <div class="guess">
-            <div class="title">疑似疾病</div>
+            <div class="title-tip" style="padding: 0;padding-bottom: 10px">疑似疾病</div>
             <el-dialog :visible="dialog.visible" class="exams-dia">
               <div class="exams-dia-title" slot="title">
                 <p >检查项目</p>
@@ -64,7 +64,7 @@
             </el-dialog>
 
             <el-collapse accordion class="collapse-right">
-                  <el-collapse-item v-for="(item,index) in list" :title="item.names" :key="item.id">
+                  <el-collapse-item v-for="(item,index) in list" :title="item.names + ' '  + item.rate    " :key="item.id">
                    
                     <div
                       style="position: relative;"
@@ -73,22 +73,22 @@
                   </div>
 
                     <p>
-                        <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px">
-                            <el-tag size="mini" :type=" item.matchSymptoms.includes(op) ? 'primary' : 'warning' ">{{op}}</el-tag>
-                          </span>
+                        <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
+                            <el-tag type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
+                            <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
+                        </span>
                     </p>
                     <p>行为&查体</p>
                     <p>
-                      <span v-for="op in item.checks"  :key="op" :label="op" size="mini'" style="padding: 4px 6px">
-                        <el-tag  size="mini"  :type="item.matchSymptoms.includes(op) ? 'primary' : 'warning'">
-                          {{op}}
-                        </el-tag>
+                      <span v-for="op in item.checks"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
+                        <el-tag type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
+                        <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
                       </span>
                     </p> 
                     <p>推荐检查</p>
                     <p v-for="op in item.exams">
                       <el-checkbox-group v-model="item.examsModel">
-                        <el-checkbox   :key="op" :label="op"></el-checkbox>
+                        <el-checkbox style="height: 30px;"  :key="op" :label="op"></el-checkbox>
                       </el-checkbox-group>
                     </p>   
                     <p class="action">
@@ -314,11 +314,13 @@ export default {
     async fetchDiagDisease (name) {
       let res = await this.api.ill.listDiagDisease({ symptoms: name, caseId: this.$route.query.id })
       let { data: { data } } = res
+      
+      let total = data.map(item=>item.similarity).reduce((x1,x2)=>x1+x2)
       data = data.map(item => {
         item.examsModel = []
+        item.rate = ( item.similarity *100 / total ).toFixed(1) + '%'
         return item
       })
-      let total = data.reduce((x1, x2) => x1.similarity + x2.similarity)
       this.list = data
       console.log('this.list.data', data)
     },

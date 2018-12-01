@@ -82,7 +82,9 @@
                     <h2><tip></tip>主诉症状</h2>
                     <el-form>
                         <el-form-item>
-                            <el-select style="width: 90%;"  multiple filterable v-model="main.value">
+                            <el-select
+                              @change="add"
+                            style="width: 90%;"  multiple filterable v-model="main.value">
                               <el-option 
                                 v-for="item in main2" 
                                 :label="item.names"
@@ -1023,8 +1025,8 @@ export default {
 <style scoped lang="less">
   
 .middle {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 0;
+  padding-right: 20px;
 
   > .title {
     line-height: 56px;
