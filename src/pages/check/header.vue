@@ -44,7 +44,7 @@
         <el-form-item label="猫咪年龄" prop="ownerName">
           <div style="display:flex;">
             <el-input 
-              type="number" min="0" max="30"
+              type="number" min="0" max="40"
               v-model="addForm.catYears" placeholder="">
               <template slot="append">年</template>
             </el-input>
@@ -101,7 +101,7 @@
                       </el-form-item>
                       <el-form-item label="猫咪年龄" prop="ownerName">
                         <div style="display:flex;">
-                          <el-input type="number" min="0" max="30" style="width: 50%;" v-model="scope.row.catYears" placeholder="">
+                          <el-input type="number" min="0" max="40" style="width: 50%;" v-model="scope.row.catYears" placeholder="">
                             <template slot="append">年</template>
                           </el-input>
                           <el-input type="number" min="0" max="12"   style="width: 50%" v-model="scope.row.catMonths" placeholder="">

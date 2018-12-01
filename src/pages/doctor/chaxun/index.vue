@@ -2,7 +2,7 @@
 	<div>
 			<div class="chaxun-top">
 				<div class="chaxun-title">
-          	<corner></corner>基本情况
+          	<!-- <corner></corner>基本情况 -->
         </div>
 				<div>
             <el-input v-model="search"  placeholder="搜索疾病" icon="search" style="width:430px;">

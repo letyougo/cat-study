@@ -45,17 +45,17 @@
                               <a>正常/异常</a>
                           </template>
                           <template v-else-if="scope.row.templateType === 4 ">
-                              <a>正常/异常</a>
+                              <a></a>
                           </template>
                           <template v-else-if="scope.row.templateType === 6 ">
-                              <a>正常/异常</a>
+                              <a></a>
                           </template>
                           <template v-else>
                               <el-button type="text" @click="showMore(scope.row)">点击查看</el-button>
                           </template>
                         </template>
                       </el-table-column>
-                      <!-- <el-table-column label="模板" prop="templateType"></el-table-column> -->
+                      <el-table-column label="模板" prop="templateType"></el-table-column>
                     </el-table>
                 </template>
               </el-table-column>

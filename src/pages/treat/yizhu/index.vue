@@ -45,7 +45,28 @@
 
       <el-dialog  :visible.sync="chuzhi.visible">
         <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
-        <div>{{chuzhi.desc}}</div>
+        <div v-for="(item, index) in chuzhi.desc" :key="index">
+                <template v-if="typeof item === 'object'">
+                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''">
+                        <template v-if="step.includes('】')">
+                            <b>{{step.substring(0, step.indexOf('】') + 1)}}</b>
+                            {{step.substring(step.indexOf('】') + 1)}}
+                        </template>
+                        <template v-else>
+                            {{step}}
+                        </template>
+                    </div>
+                </template>
+                <template v-else>
+                    <template v-if="item.includes('】')">
+                        <b>{{item.substring(0, item.indexOf('】') + 1)}}</b>
+                        {{item.substring(item.indexOf('】') + 1)}}
+                    </template>
+                    <template v-else>
+                        {{item}}
+                    </template>
+                </template>
+            </div>
         <span slot="footer">
           <el-button type="" @click="chuzhi.visible=false">关闭</el-button>
         </span>
@@ -150,7 +171,7 @@ export default {
       this.chuzhi.names = names
       let res = await this.api.operation.list({ names })
       let { data: { data, code } } = res
-      this.chuzhi.desc = data[0].process
+      this.chuzhi.desc = this.formatProcess(data[0].process)
     },
     printPage () {
       global.print('.yizhu-bingli')
@@ -205,6 +226,25 @@ export default {
       })
       console.log('yizhu.list', data)
       this.list = data
+    },
+    formatProcess(process) {
+        let arr = process.split('【')
+        arr.shift()
+        let result = arr.map(item => {
+            if (item.includes('术式')) {
+                let splitArr = item.replace('术式】', '').split('。')
+                let forMatArr = splitArr.map((item, index) => {
+                    return `${item}。`
+                })
+                forMatArr.unshift('【术式】')
+                forMatArr.pop()
+                return [... forMatArr]
+            } else {
+                return item = `【${item}`
+            }
+            
+        })
+        return result
     },
     pickItem (item, i) {
       let data = this.list
@@ -300,6 +340,9 @@ export default {
           cursor: pointer;
         }
       }
+    }
+    .padding-box {
+        padding-left: 20px;
     }
   }
 </style>

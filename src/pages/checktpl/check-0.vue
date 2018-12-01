@@ -2,6 +2,7 @@
   <div class="check-0">
       <el-table :data="list">
           <el-table-column label="项目名称" prop="projectName"></el-table-column>
+          <el-table-column label="单位" prop="unit"></el-table-column>
           <el-table-column label="参考值">
        
             <el-table-column label="最低" prop="refMin">
