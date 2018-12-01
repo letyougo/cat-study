@@ -29,8 +29,10 @@
                                 <el-input type="password" v-model="scope.row.password" placeholder=""></el-input>
                             </el-form-item>
 
-                            <el-form-item label="邮箱">
-                                <el-input v-model="scope.row.email" placeholder=""></el-input>
+                            <el-form-item label="医院">
+                                <el-select v-model="scope.row.hospitalId">
+                                    <el-option v-for="item in hospitalOptions" :key="item.label" :label="item.label" :value="item.value"></el-option>
+                                </el-select>
                             </el-form-item>
 
                             <el-form-item>
@@ -74,8 +76,15 @@
                     <el-input type="password" v-model="add.password" placeholder=""></el-input>
                 </el-form-item>
 
-                <el-form-item label="邮箱">
-                    <el-input v-model="add.email" placeholder=""></el-input>
+                <el-form-item label="角色">
+                    <el-select v-model="add.roleId">
+                        <el-option v-for="item in roleOptions" :key="item.label" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="医院">
+                    <el-select v-model="add.hospitalId">
+                        <el-option v-for="item in hospitalOptions" :key="item.label" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer">
@@ -128,10 +137,13 @@ export default {
         username: 'siri',
         phoneNum: '13683360717',
         password: 'surui123',
-        email: '313755017@qq.com',
+        roleId: '',
+        hospitalId: '',
         visible: false
       },
-      roles: []
+      roles: [],
+      roleOptions: [],
+      hospitalOptions: []
     }
   },
   computed: {},
@@ -175,7 +187,7 @@ export default {
     },
     async update (item) {
       let data = {
-        email: item.email,
+        hospitalId: item.hospitalId,
         phoneNum: item.phoneNum,
         username: item.username,
         password: item.password,
@@ -203,6 +215,13 @@ export default {
       let res = await this.api.role.list()
 
       let { data: { data, code } } = res
+      this.roleOptions = data.map(item => {
+          return {
+              value: item.roleId,
+              label: item.roleName
+          }
+      })
+      console.log(this.roleOptions)
       data = data.map(r => {
         r.key = r.roleId
         r.label = r.roleName
@@ -212,9 +231,20 @@ export default {
       console.log(data, 'roles-sss')
       this.roles = data
     },
+    async fetchHospital () { 
+        let res = await this.api.hospital.list()
+        let {data: {data, code}} = res
+        this.hospitalOptions = data.map(item => {
+            return {
+                value: item.id,
+                label: item.names
+            }
+        })
+    },
     reload () {
       this.fetchUser()
       this.fetchRole()
+      this.fetchHospital()
     }
   },
   created () {},

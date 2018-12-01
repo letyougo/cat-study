@@ -108,7 +108,7 @@
                         <el-input v-model="addForm.medicineUsage" placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item label="天">
-                    <el-input v-model="addForm.days" placeholder=""></el-input>
+                    <el-input v-model="addForm.days" placeholder="" type="number"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer">

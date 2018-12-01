@@ -114,12 +114,24 @@
             <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
             <div v-for="(item, index) in chuzhi.process" :key="index">
                 <template v-if="typeof item === 'object'">
-                    <div v-for="(step, index) in item" :key="`_${index}`">
-                        {{index > 0 ? `&nbsp;&nbsp;${step}` : step}}
+                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''">
+                        <template v-if="step.includes('】')">
+                            <b>{{step.substring(0, step.indexOf('】') + 1)}}</b>
+                            {{step.substring(step.indexOf('】') + 1)}}
+                        </template>
+                        <template v-else>
+                            {{step}}
+                        </template>
                     </div>
                 </template>
                 <template v-else>
-                    {{item}}
+                    <template v-if="item.includes('】')">
+                        <b>{{item.substring(0, item.indexOf('】') + 1)}}</b>
+                        {{item.substring(item.indexOf('】') + 1)}}
+                    </template>
+                    <template v-else>
+                        {{item}}
+                    </template>
                 </template>
             </div>
             <span slot="footer">
@@ -177,15 +189,15 @@ export default {
       let res = await this.api.mianyi.item(this.$route.query.id)
       let { data: { data: { expel, immune, bear, tooth } } } = res
       console.log(expel, immune, bear, tooth, 'fetch-item')
-      let ex = expel.split(';')
+      let ex = expel ? expel.split(';') : []
       ex[1] = ex[1].split(',')
       ex[2] = ex[2].split(',')
       this.expel = ex
       this.tooth = tooth
-      let im = immune.split(';')
+      let im = immune ? immune.split(';') : ''
       im[1] = im[1].split(',')
       this.immune = im
-      this.bear = bear.split(';')
+      this.bear = bear ? bear.split(';') : ''
       console.log('expel', this.expel)
       console.log('tooth', this.tooth)
       console.log('immune', this.immune)
@@ -237,7 +249,6 @@ export default {
             }
             
         })
-        console.log(result)
         return result
     }
   },
@@ -298,6 +309,9 @@ export default {
         justify-content: flex-end;
         margin-top: 34px;
         
+    }
+    .padding-box {
+        padding-left: 20px;
     }
 }
 
