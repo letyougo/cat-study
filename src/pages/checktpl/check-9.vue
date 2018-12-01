@@ -1,6 +1,6 @@
 <template>
   <div class="check-9">
-      <el-table :data="list">
+      <el-table :data="list" v-if="list">
           <el-table-column label="项目名称" prop="projectName"></el-table-column>
           <el-table-column label="单位" prop="unit"></el-table-column>
           <el-table-column label="参考值">

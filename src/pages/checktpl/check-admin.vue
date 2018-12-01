@@ -68,6 +68,13 @@ export default {
     edit: {
       type: Boolean,
       default: false
+    },
+    byCheckName: {
+      type: Boolean,
+      default: false
+    },
+    checkName: {
+      type: String
     }
   },
   data () {
@@ -93,15 +100,32 @@ export default {
   },
   watch: {
     itemId (a) {
+      if (this.byCheckName) {
+        return
+      }
       this.fetch()
+    },
+    checkName (a) {
+      if (this.byCheckName) {
+        this.fetch()
+      }
     }
   },
   methods: {
     async fetch () {
-      let params = {
-        itemId: this.itemId
+      let res = ''
+      if (this.byCheckName) {
+        let params = {
+          checkName: this.checkName
+        }
+        res = await request.get('/manager/check/getCheckTemplateInfo', { params })
+      } else {
+        let params = {
+          itemId: this.itemId
+        }
+        res = await request.get('/manager/check/getCheckInfo', { params })
       }
-      let res = await request.get('/manager/check/getCheckInfo', { params })
+      
       let tplType = this.tplType
       let { data: { data } } = res
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {

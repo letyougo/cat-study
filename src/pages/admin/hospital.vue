@@ -55,7 +55,7 @@
                           </template>
                         </template>
                       </el-table-column>
-                      <el-table-column label="模板" prop="templateType"></el-table-column>
+                      <!-- <el-table-column label="模板" prop="templateType"></el-table-column> -->
                     </el-table>
                 </template>
               </el-table-column>

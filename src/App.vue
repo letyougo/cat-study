@@ -6,7 +6,7 @@
         <div>猫研所</div>
       </div>
       <div class="tab-list">
-        <div v-if="hasCheckRight" @click="$router.push('/check/tobe')" :class="{active:$route.path.includes('/check') || $route.path.includes('/treat') }">
+        <div v-if="hasCheckRight" @click="$router.push('/check/tobe')" :class="{active:$route.path.includes('/check/') || $route.path.includes('/treat') }">
           智能诊疗
         </div>
         <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path.includes('/doctor')}">

@@ -25,13 +25,13 @@
           </el-table-column>
       </el-table>
 
-      <el-dialog :title="dialog.typeName" :visible="dialog.visible=false">
-        <check :tplType="dialog.templateType"></check>
-        <span slot="footer">
-          <el-button type="" @click="dialog.visible=false">关闭</el-button>
-          <el-button type="primary">确定</el-button>
-        </span>
-      </el-dialog>
+      <el-dialog title="" :visible.sync="showMoreDialog.visible">
+          <check ref="check" :itemId="showMoreDialog.itemId" :tplType="showMoreDialog.tplType" :checkName="showMoreDialog.checkName" :byCheckName="true"></check>
+          <span slot="footer">
+            <el-button type="" @click="showMoreDialog.visible=false">关闭</el-button>
+            <el-button type="primary" @click="updateReport">修改</el-button>
+          </span>
+        </el-dialog>
      
       <div></div>
   </div>
@@ -47,7 +47,7 @@ export default {
       subList: [],
       loading: false,
       value: '',
-      dialog: {
+      showMoreDialog: {
         visible: false,
         tplType: 0
       }
@@ -63,9 +63,12 @@ export default {
   },
   methods: {
     showMore (item) {
-      this.dialog = {
-        ...item,
-        visible: true
+      console.log(item)
+      this.showMoreDialog = {
+        visible: true,
+        itemId: item.id,
+        checkName: item.checkName,
+        tplType: item.templateType
       }
     },
     async fetch () {
@@ -80,6 +83,12 @@ export default {
       this.loading = false
       let { data: { data } } = res
       this.subList = data
+    },
+    async updateReport () {
+      this.showMoreDialog.visible = false
+      await this.$refs.check.update()
+      this.$message.success('修改模板成功')
+      this.fetch()
     }
   },
   mounted () {
