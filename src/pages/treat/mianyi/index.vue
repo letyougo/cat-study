@@ -112,7 +112,16 @@
         
       <el-dialog  :visible.sync="chuzhi.visible">
             <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
-            <div>{{chuzhi.process}}</div>
+            <div v-for="(item, index) in chuzhi.process" :key="index">
+                <template v-if="typeof item === 'object'">
+                    <div v-for="(step, index) in item" :key="`_${index}`">
+                        {{index > 0 ? `&nbsp;&nbsp;${step}` : step}}
+                    </div>
+                </template>
+                <template v-else>
+                    {{item}}
+                </template>
+            </div>
             <span slot="footer">
               <el-button type="" @click="chuzhi.visible=false">关闭</el-button>
             </span>
@@ -189,7 +198,7 @@ export default {
       let { data: { data } } = res
       data = data[0]
       this.chuzhi.names = names
-      this.chuzhi.process = data.process
+      this.chuzhi.process = this.formatProcess(data.process)
     },
     async update () {
       let ex = this.expel
@@ -210,6 +219,26 @@ export default {
       this.med.visible = false
       this.$message.success('开具处方成功')
       this.fetch()
+    },
+    formatProcess(process) {
+        let arr = process.split('【')
+        arr.shift()
+        let result = arr.map(item => {
+            if (item.includes('术式')) {
+                let splitArr = item.replace('术式】', '').split('。')
+                let forMatArr = splitArr.map((item, index) => {
+                    return `${item}。`
+                })
+                forMatArr.unshift('【术式】')
+                forMatArr.pop()
+                return [... forMatArr]
+            } else {
+                return item = `【${item}`
+            }
+            
+        })
+        console.log(result)
+        return result
     }
   },
   created () {

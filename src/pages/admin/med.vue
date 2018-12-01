@@ -43,7 +43,7 @@
                                 <el-input v-model="scope.row.medicineUsage" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="天">
-                              <el-input v-model="scope.row.days" placeholder=""></el-input>
+                              <el-input v-model="scope.row.days" placeholder="" type="number"></el-input>
                           </el-form-item>
                           <el-form-item>
                               <el-button type="primary" @click="update(scope.row)">修改</el-button>
@@ -128,7 +128,7 @@ export default {
   data () {
     return {
       list: [],
-      likeStr: '片',
+      likeStr: '',
       loading: false,
       addForm: {
         names: '',

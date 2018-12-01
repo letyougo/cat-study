@@ -9,7 +9,7 @@
         <div v-if="hasCheckRight" @click="$router.push('/check/tobe')" :class="{active:$route.path === '/check/tobe'}">
           智能诊疗
         </div>
-        <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor'}">
+        <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path.includes('/doctor')}">
           
           医生知识库
         </div>
