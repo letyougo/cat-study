@@ -19,12 +19,12 @@
 					<el-button type="primary" @click="fetch">查询</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button @click="addForm.visible=true">新增病例</el-button>
+					<el-button @click="addForm.visible=true">新增病历</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
 
-    <el-dialog class="add-case-dialog" width="507px" title="新增病例" :visible="addForm.visible">
+    <el-dialog class="add-case-dialog" width="507px" title="新增病历" :visible="addForm.visible">
       <el-form label-width="100px" >
         <el-form-item label="主人姓名" prop="ownerName">
           <el-input v-model="addForm.ownerName" placeholder=""></el-input>
@@ -122,7 +122,7 @@
                 </div>
              </template>
           </el-table-column> 
-          <el-table-column label="病例id" prop="id"></el-table-column>
+          <el-table-column label="病历id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
           <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
@@ -141,7 +141,7 @@
                 <template v-else>
                     <el-button type="primary"  @click="route(scope)">接诊</el-button>
                 </template>
-                <!-- <el-button type="primary" @click="checkBingli(scope.row)">查看病例</el-button> -->
+                <!-- <el-button type="primary" @click="checkBingli(scope.row)">查看病历</el-button> -->
                 <el-button v-if="right.isAdmin || right.isDoctor" type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
@@ -288,7 +288,7 @@ export default {
     async add () {
       let res = await this.api.case.add(this.addForm)
       let { data: { data, code } } = res
-      this.tip(code, '增加病例成功', '增加病例失败', () => {
+      this.tip(code, '增加病历成功', '增加病历失败', () => {
         this.addForm.visible = false
         this.fetch()
       })
@@ -298,13 +298,13 @@ export default {
       delete item.createTime
       let res = await this.api.case.update(item)
       let { data: { data, code } } = res
-      this.tip(code, '更新病例成功', '更新病例失败', () => {
+      this.tip(code, '更新病历成功', '更新病历失败', () => {
         this.fetch()
       })
     },
     async del (item) {
       try {
-        await this.$confirm('确定删除该病例吗？')
+        await this.$confirm('确定删除该病历吗？')
         this.api.case.del({ id: item.id })
         this.fetch()
       } catch (e) {

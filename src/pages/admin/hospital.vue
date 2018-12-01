@@ -55,7 +55,7 @@
                           </template>
                         </template>
                       </el-table-column>
-                      <el-table-column label="模板" prop="templateType"></el-table-column>
+                      <!-- <el-table-column label="模板" prop="templateType"></el-table-column> -->
                     </el-table>
                 </template>
               </el-table-column>
@@ -110,6 +110,7 @@
                       </el-select>
                 </el-form-item>
                 <el-form-item label="">
+                  <el-button type="" @click="dialog.visible=false">关闭</el-button>
                   <el-button type="primary" @click="addCheck">增加</el-button>
                 </el-form-item>
               </el-form>

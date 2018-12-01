@@ -327,7 +327,7 @@ const api = {
       return res
     }
   },
-  // 病例
+  // 病历
   case: {
     async list (data) {
       const url = '/case/listByParam'

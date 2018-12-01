@@ -14,7 +14,7 @@
       </div>
     </template>
     <template v-else>
-      加载病例数据中...
+      加载病历数据中...
     </template>
   </div>
 </template>

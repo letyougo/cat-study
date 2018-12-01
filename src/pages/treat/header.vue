@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-title">
             <div>
-                病例号：{{item.id}}
+                病历号：{{item.id}}
             </div>
             <div>
                 主人：{{item.ownerName}}

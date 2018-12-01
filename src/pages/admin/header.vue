@@ -34,7 +34,7 @@
                         </li>
 
                         <li @click="$router.push('/admin/ysbl')" :class="{active:$route.path === '/admin/ysbl' ? true : false}">
-                            <span>O</span>医生病例
+                            <span>O</span>医生病历
                         </li>
                       
                         <li @click="$router.push('/admin/treat')" :class="{active:$route.path === '/admin/treat' ? true : false}">

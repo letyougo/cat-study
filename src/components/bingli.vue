@@ -1,7 +1,7 @@
 <template>
   <div class="bingli">
     <div class="bingli-title">
-        猫咪诊断病例
+        猫咪诊断病历
     </div>
     <div class="owner">
       <div>

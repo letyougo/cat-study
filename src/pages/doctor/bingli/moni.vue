@@ -1,7 +1,7 @@
 <template>
 	<div class="moni">
 			<div>
-				<tip></tip>模拟病例
+				<tip></tip>模拟病历
 			</div>
 			<div class="moni-content">
 					<div class="chaxun-dialog" style="margin:24px auto;padding:0 55px 0 46px">
@@ -32,7 +32,7 @@
 					</div>
 			</div>
 			<div>
-				<el-button type="primary" @click="generate">重新生成模拟病例</el-button>
+				<el-button type="primary" @click="generate">重新生成模拟病历</el-button>
 			</div>
 	</div>
 </template>
@@ -66,10 +66,10 @@ export default {
   },
   methods: {
     async generate () {
-      this.$message.success('加载病例中...')
+      this.$message.success('加载病历中...')
       let res = await api.generateMockCase({ userId: global.user.id })
       let { data: { data: { id } } } = res
-      this.$message.success('加载病例完成...')
+      this.$message.success('加载病历完成...')
       this.caseId = id
     },
     async submit () {
@@ -81,7 +81,7 @@ export default {
         caseId: this.caseId
       }
       let res = await api.addLearnCaseId(obj)
-      this.$message.success('学习病例成功')
+      this.$message.success('学习病历成功')
     }
   },
   created () {

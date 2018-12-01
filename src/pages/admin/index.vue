@@ -28,19 +28,19 @@
         <div class="admin-data">
             <div class="data-item">
                 <div class="data-value">4000</div>
-                <div class="data-tip">总病例数（份）</div>
+                <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
                 <div class="data-value">4000</div>
-                <div class="data-tip">总病例数（份）</div>
+                <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
                 <div class="data-value">4000</div>
-                <div class="data-tip">总病例数（份）</div>
+                <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
                 <div class="data-value">4000</div>
-                <div class="data-tip">总病例数（份）</div>
+                <div class="data-tip">总病历数（份）</div>
             </div>
         </div>
         <div class="admin-title search-action">

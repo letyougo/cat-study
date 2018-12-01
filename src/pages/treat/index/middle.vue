@@ -376,7 +376,7 @@
         <el-form>
             <el-form-item>
                 <el-button type="primary" style="float:right" @click="()=>{
-                  this.$message.success('保存病例信息')
+                  this.$message.success('保存病历信息')
                   this.add()  
                 }">保存</el-button>
             </el-form-item>

@@ -2,7 +2,7 @@
     <div class="header">
           <div class="header-title">
             <div>
-                病例号：132456
+                病历号：132456
             </div>
             <div>
                 主持人：王灵微
@@ -35,18 +35,18 @@
                     </ul>
                 </div>                             -->
                 <div @click="$router.push('/doctor/moni')"  class="title2">                   
-                    病例评测
+                    病历评测
                 </div>
                  <div>
                     <ul>
                         <li @click="$router.push('/doctor/moni')" :class="{active:$route.path === '/doctor/moni' ? true : false}">
-                            <span>O</span>模拟病例学习
+                            <span>O</span>模拟病历学习
                         </li>
                         <li @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
-                            <span>O</span>个人历史病例
+                            <span>O</span>个人历史病历
                         </li>
                         <li @click="$router.push('/doctor/xuexi')" :class="{active:$route.path === '/doctor/xuexi' ? true : false}">
-                            <span>O</span>学习历史病例
+                            <span>O</span>学习历史病历
                         </li>
                     </ul>
                 </div>

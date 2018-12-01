@@ -23,7 +23,6 @@
               <el-button type="primary" @click="showMore(scope.row)">点击查看</el-button>
             </template>
           </el-table-column>
-          <el-table-column label="模板" prop="templateType"></el-table-column>
       </el-table>
 
       <el-dialog :title="dialog.typeName" :visible="dialog.visible=false">

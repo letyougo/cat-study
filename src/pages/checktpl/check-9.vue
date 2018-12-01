@@ -6,32 +6,62 @@
           <el-table-column label="参考值">
               <el-table-column label="最低" >
                 <template scope="scope">
-                  {{scope.row.refMin.r1}}
+                  <template v-if="!admin">
+                      {{scope.row.refMin.r1}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r1" placeholder=""></el-input>
+                    </template>
                 </template>
               </el-table-column>
               <el-table-column  >
-                  <template scope="scope">
-                    {{scope.row.refMin.r2}}
-                  </template>
+                <template scope="scope">
+                  <template v-if="!admin">
+                      {{scope.row.refMin.r2}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r2" placeholder=""></el-input>
+                    </template>
+                </template>
                 </el-table-column>
               <el-table-column  >
                 <template scope="scope">
-                    {{scope.row.refMin.r3}}
+                    <template v-if="!admin">
+                      {{scope.row.refMin.r3}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r3" placeholder=""></el-input>
+                    </template>
                 </template>
               </el-table-column>
               <el-table-column  >
                 <template scope="scope">
-                 {{scope.row.refMin.r4}}
+                 <template v-if="!admin">
+                      {{scope.row.refMin.r4}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r4" placeholder=""></el-input>
+                    </template>
                 </template>
               </el-table-column>
               <el-table-column  >
                 <template scope="scope">
-                 {{scope.row.refMin.r5}}
+                 <template v-if="!admin">
+                      {{scope.row.refMin.r5}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r5" placeholder=""></el-input>
+                    </template>
                 </template>
               </el-table-column>
               <el-table-column label="最高" scope="scope">
                 <template scope="scope">
-                  {{scope.row.refMin.r6}}
+                <template v-if="!admin">
+                      {{scope.row.refMin.r6}}
+                    </template>
+                    <template v-else>
+                      <el-input v-model="scope.row.refMin.r6" placeholder=""></el-input>
+                    </template>
                 </template>
               </el-table-column>
             </el-table-column>

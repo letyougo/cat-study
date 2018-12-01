@@ -174,7 +174,7 @@ export default {
         status: 4,
         id
       })
-      this.$message.success('已结束该病例')
+      this.$message.success('已结束该病历')
       this.$router.push('/check/ed')
       this.print = false
     },

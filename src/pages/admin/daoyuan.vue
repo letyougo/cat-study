@@ -11,13 +11,13 @@
           <div>
               <el-form inline>
                   <el-form-item>
-                    <el-input v-model="filter.names" placeholder="疾病名字"></el-input>
+                    <el-input v-model="filter.names" placeholder="症状名称"></el-input>
                   </el-form-item>
                   <el-form-item label="">
                       <el-button type="primary" @click="add.visible=true">查询</el-button>
                     </el-form-item>
                   <el-form-item label="">
-                    <el-button type="primary" @click="add.visible=true">增加检查</el-button>
+                    <el-button type="primary" @click="add.visible=true">新增症状</el-button>
                   </el-form-item>
                 </el-form>
           </div> 
@@ -65,7 +65,8 @@
             <el-input v-model="add.symptom"  placeholder=""></el-input>
           </el-form-item>
           <el-form-item label="主要检查">
-              <el-input v-model="add.checkListMajorTemp" @input="checkListMajorSearch"  placeholder=""></el-input>
+            <el-button @click="checkListMajorSearch" >编辑</el-button>
+                  <el-button type="primary" @click="(e) => {add.checkListMajorOptions = add.checkListMajor}">确定</el-button>
               <br/><br/>
               
               <el-button
@@ -81,7 +82,8 @@
               </el-button>
           </el-form-item>
           <el-form-item label="辅助检查">
-              <el-input v-model="add.checkListMinorTemp" @input="checkListMinorSearch"  placeholder=""></el-input>
+              <el-button @click="checkListMinorSearch" >编辑</el-button>
+                  <el-button type="primary" @click="(e) => {add.checkListMinorOptions = add.checkListMinor}">确定</el-button>
               <br/><br/>
               <el-button 
               @click="(e)=>{
@@ -107,7 +109,8 @@
                 <el-input v-model="edit.symptom"  placeholder=""></el-input>
               </el-form-item>
               <el-form-item label="主要检查">
-                  <el-input v-model="edit.checkListMajorTemp" @input="checkListMajorSearch2"  placeholder=""></el-input>
+                  <el-button @click="checkListMajorSearch2" >编辑</el-button>
+                  <el-button type="primary" @click="(e) => {edit.checkListMajorOptions = edit.checkListMajor}">确定</el-button>
                   <br/>                 
                   <el-button
                     v-if="item"
@@ -123,6 +126,8 @@
                   </el-button>
               </el-form-item>
               <el-form-item label="辅助检查">
+                  <el-button @click="checkListMinorSearch2" >编辑</el-button>
+                  <el-button type="primary" @click="(e) => {edit.checkListMinorOptions = edit.checkListMinor}">确定</el-button>
                   <el-input v-model="edit.checkListMinorTemp" @input="checkListMinorSearch2"  placeholder=""></el-input>
                   <br/>                
                   <el-button 
@@ -216,16 +221,16 @@
         let { data: { data, pageinfo } } = res
         this.loading = false
         this.list = data
-        this.pageinfo.pageNum = pageinfo.pageNum
         this.pageinfo.totalCount = pageinfo.totalCount
+        console.log(this.pageinfo)
       },
       startEdit (item) {
         this.edit = {
           symptom: item.symptom,
           id: item.id,
           checkListMajorTemp: '',
-          checkListMajorOptions: item.checkListMinor.split('，'),
-          checkListMajor: item.checkListMinor.split('，'),
+          checkListMajorOptions: item.checkListMajor.split('，'),
+          checkListMajor: item.checkListMajor.split('，'),
 
           checkListMinorTemp: '',
           checkListMinorOptions: item.checkListMinor.split('，'),
@@ -330,6 +335,7 @@
           checkListMinorOptions: [],
           checkListMinor: []
         }
+        console.log(this.pageinfo)
         this.fetch()
       }
   

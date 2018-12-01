@@ -34,7 +34,7 @@
 			</div>
 			 
 				<el-table :data="list">
-          <el-table-column label="病例id" prop="id"></el-table-column>
+          <el-table-column label="病历id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
           <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
@@ -60,7 +60,7 @@
 						:total="pageinfo.totalCount">
 					</el-pagination>
 				</div> -->
-				<el-dialog title="猫咪诊断病例" class="chaxun-dialog" :visible="show">
+				<el-dialog title="猫咪诊断病历" class="chaxun-dialog" :visible="show">
 					<div>
 						<p style="margin-bottom:18px;">主人：王凌薇 猫咪姓名：咪咪 性别：公 年龄：1岁6个月 日期：2018/08/09</p>
 						<p class="chaxun-dialog-title">疾病症状</p>
