@@ -21,7 +21,7 @@
             </el-table-column>
 						<el-table-column label="症状" prop="symptom"></el-table-column>
 						<el-table-column label="简介" prop="causes"></el-table-column>
-						<el-table-column label="操作">
+						<el-table-column label="操作" width="100">
 							<template scope='scope'>
 								<el-button type="primary" @click="showDetail(scope.row)">详情</el-button>
 							</template>

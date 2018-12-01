@@ -52,6 +52,7 @@
                           </template>
                           <template v-else>
                               <el-button type="text" @click="showMore(scope.row)">点击查看</el-button>
+                              <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                           </template>
                         </template>
                       </el-table-column>
@@ -229,7 +230,7 @@ export default {
       this.fetch()
     },
     async expandChange (item, list) {
-      let res = await this.api.check.manager.listCheckHospital({ param: item.names })
+      let res = await this.api.hospital.listById({ hospitalId: item.id})
       let { data: { data } } = res
       item.checks = data
     },
@@ -241,6 +242,10 @@ export default {
     },
     deleteItem (id) {
       this.api.hospital.del(id).then(res => this.reload())
+    },
+    deleteTemplate(id) {
+      console.log(this.api)
+      this.api.check.manager.deleteCheckHospital({itemId: id}).then(res => this.reload())
     }
   },
   created () {
@@ -258,5 +263,8 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    .delete-btn {
+      color: red;
     }
 </style>

@@ -181,6 +181,11 @@ const api = {
         const url = `/manager/check/updateCheckTemplate?itemId=${id}`
         const res = await request.post(url, data)
         return res
+      },
+      async deleteCheckHospital (params) {
+        const url = '/manager/check/deleteCheckHospital'
+        const res = await request.get(url, { params })
+        return res
       }
     }
 
@@ -413,6 +418,11 @@ const api = {
     async add (data) {
       const url = '/hospital/add'
       let res = await request.post(url, data)
+      return res
+    },
+    async listById (data) {
+      const url = '/manager/check/listCheckHospitalId/'
+      let res = await request.get(url, { params: data })
       return res
     }
   },
