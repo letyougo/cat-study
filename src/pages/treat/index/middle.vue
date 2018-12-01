@@ -127,19 +127,28 @@
                 <h2>既往史</h2>
                 <el-form inline class="flex-form">
                     <el-form-item>
-                        <el-select  @change="add" placeholder="请选择" v-model="passHistory.value">
+                        <el-select  @change="()=>{
+                          this.add()
+                          this.passHistory2.value = ''
+                        }" placeholder="请选择" v-model="passHistory.value">
                             <el-option v-for="item in passHistory.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item >
+                    <el-form-item v-if="passHistory2.options.length>0">
                         <el-select  @change="add" placeholder="请选择" v-model="passHistory2.value">
                             <el-option v-for="item in passHistory2.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item >
                         <el-button type="primary" icon="el-icon-plus" 
-                        @click="passHistory2.model.push(passHistory2.value)"
+                       
+                        @click="(e)=>{
+                          if(this.passHistory2.options.length>0 && this.passHistory2.value){
+                           this.passHistory2.model.push(this.passHistory.value+';'+this.passHistory2.value)  
+                          }else
+                           this.passHistory2.model.push(this.passHistory.value)  
+                        }"
                           > 新增</el-button>
                     </el-form-item>
                 </el-form>
@@ -160,19 +169,31 @@
                   <el-form inline class="flex-form">
                   
                     <el-form-item >
-                        <el-select @change="add"  v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
+                        <el-select @change="()=>{
+                          this.checkBody2.abnomalBehavior.value = ''
+                          this.add()  
+                        }"  v-model="checkBody.abnomalBehavior.value"  placeholder="请选择">
                             <el-option v-for="item in checkBody.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item>
-                      <el-select  @change="add" placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
+                      <el-select  v-if="checkBody2.abnomalBehavior.options.length>0" @change="add" placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
                           <el-option v-for="item in checkBody2.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                       </el-select>
                     </el-form-item>
 
                   <el-form-item >
-                    <el-button type="primary" icon="el-icon-plus" @click="checkBody2.abnomalBehavior.model.push(checkBody.abnomalBehavior.value+';'+checkBody2.abnomalBehavior.value)"> 新增</el-button>
+                    <el-button type="primary" 
+                    @click="(e)=>{
+                      if(this.checkBody2.abnomalBehavior.options.length>0 && this.checkBody2.abnomalBehavior.value){
+                       this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value+';'+this.checkBody2.abnomalBehavior.value)  
+                      }else
+                       this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value)  
+                    }"
+                    
+                    icon="el-icon-plus"
+                     > 新增</el-button>
                   </el-form-item>
                 </el-form>
                 <div class="behavior-list" >
@@ -316,20 +337,32 @@
                     <div class="con">
                         <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select  @change="add" placeholder="未见异常"  v-model="checkBody.eye.value">
+                                <el-select  @change="()=>{
+                                  this.checkBody2.eye.value = ''
+                                  this.add()  
+                                }" placeholder="未见异常"  v-model="checkBody.eye.value">
                                     <el-option v-for="item in checkBody.eye.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
-                            <el-form-item>
+                            <el-form-item v-if="checkBody2.eye.options.length>0">
                                 <el-select  @change="add" placeholder="未见异常"  v-model="checkBody2.eye.value">
                                     <el-option v-for="item in checkBody2.eye.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item >
-                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.eye.model.push(checkBody.eye.value+';'+checkBody2.eye.value)"> 新增</el-button>
-                            </el-form-item>
+                                <el-button 
+                                @click="(e)=>{
+                                  if(this.checkBody2.eye.options.length>0 && this.checkBody2.eye.value){
+                                   this.checkBody2.eye.model.push(this.checkBody.eye.value+';'+this.checkBody2.eye.value)  
+                                  }else
+                                   this.checkBody2.eye.model.push(this.checkBody.eye.value)  
+                                }"
+                                type="primary" icon="el-icon-plus"> 新增</el-button>
+                           
+                           
+                              </el-form-item>
                         </el-form>
                         <span v-for="(item,index) in checkBody2.eye.model" v-if="item" :key="item">
                             <el-tag  closable type="primary" @close="checkBody2.eye.model.splice(index,1)">{{item}}</el-tag>&nbsp;
@@ -348,19 +381,29 @@
                     <div class="con">
                         <el-form inline class="flex-form">
                             <el-form-item>
-                                <el-select  @change="add" placeholder="未见异常" v-model="checkBody.skinDamage.value">
+                                <el-select  @change="()=>{
+                                  this.add()
+                                  this.checkBody2.skinDamage.value = ''
+                                }" placeholder="未见异常" v-model="checkBody.skinDamage.value">
                                     <el-option v-for="item in checkBody.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
-                            <el-form-item>
+                            <el-form-item v-if="checkBody2.skinDamage.options.length>0">
                                 <el-select  @change="add" placeholder="未见异常" v-model="checkBody2.skinDamage.value" >  
                                     <el-option v-for="item in checkBody2.skinDamage.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item >
-                                <el-button type="primary" icon="el-icon-plus" @click="checkBody2.skinDamage.model.push(checkBody.skinDamage.value+';'+checkBody2.skinDamage.value)"> 新增</el-button>
+                                <el-button type="primary" icon="el-icon-plus" 
+                                @click="(e)=>{
+                                     if(this.checkBody.skinDamage.options.length>0 && this.checkBody2.skinDamage.value){
+                                      this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value+';'+this.checkBody2.skinDamage.value)  
+                                     }else
+                                      this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value)  
+                                }"
+                                > 新增</el-button>
                             </el-form-item>
                         </el-form>
                         
@@ -648,6 +691,9 @@ export default {
       }
       if (bear === '母猫') {
         this.basic.sex.value = ['母猫']
+      }
+      if (bear === '') {
+        this.basic.sex.value = []
       }
       this.basic.weight.value = weight
       let v = variety.split(',')
