@@ -11,7 +11,7 @@
                       {{scope.row.refMin}}
                     </template>
                     <template v-else>
-                      <el-input v-model="scope.row.refMin" placeholder=""></el-input>
+                      <el-input v-model="scope.row.refMin" placeholder=""  type="number" step="0.01"></el-input>
                     </template>
               </template>
               
