@@ -25,8 +25,11 @@
                 <el-form-item label="性别" :style="{width:'350px'}" v-model="basic.sex.value" >
                     <!-- <el-radio label="公"></el-radio>
                     <el-radio label="去势"></el-radio> -->
-                    <el-checkbox  @change="add" v-model="basic.sex.value"  v-for="item in basic.sex.options" :value="item.names" :label="item.names" :key="item.names"></el-checkbox>
-                </el-form-item>   
+                    <el-checkbox  @change="add" v-model="basic.sex.value" value="公猫" label="公猫" ></el-checkbox>
+                    <el-checkbox  @change="add" v-if="basic.sex.value.includes('公猫')" v-model="basic.sex.value" value="去势" label="去势" ></el-checkbox>
+                    <el-checkbox  @change="add" v-model="basic.sex.value" value="母猫" label="母猫" ></el-checkbox>
+                    <el-checkbox  @change="add" v-if="basic.sex.value.includes('母猫')" v-model="basic.sex.value" value="绝育" label="绝育" ></el-checkbox>
+                  </el-form-item>   
             </template>
 
             <template v-if="basic.weight.exist"  v-model="basic.weight.value" >
@@ -684,17 +687,15 @@ export default {
       this.id = id
       if (bear === '去势') {
         this.basic.sex.value = ['公猫', '去势']
-      }
-      if (bear === '绝育') {
+      } else if (bear === '绝育') {
         this.basic.sex.value = ['母猫', '绝育']
-      }
-      if (bear === '公猫') {
+      } else if (bear === '公猫') {
         this.basic.sex.value = ['公猫']
-      }
-      if (bear === '母猫') {
+      } else if (bear === '母猫') {
         this.basic.sex.value = ['母猫']
-      }
-      if (bear === '') {
+      } else if (bear === '') {
+        this.basic.sex.value = []
+      } else {
         this.basic.sex.value = []
       }
       this.basic.weight.value = weight
@@ -721,7 +722,7 @@ export default {
       this.checkBody.breath.value = breathRate
       this.checkBody.heart.value = heartRate
       this.checkBody2.abnomalBehavior.model = [...(behaviorAbnormal).split(',')].filter(item => !!item)
-      this.checkBody.touch.value = [palpation]
+      this.checkBody.touch.value = [palpation].filter(item => !!item)
       this.checkBody.hear.value = [...(auscultation.split(','))].filter(item => !!item)
       this.checkBody.blood.value = pressure
       this.checkBody2.skinDamage.model = [...(skinLesion.split(','))].filter(item => !!item)
@@ -751,6 +752,8 @@ export default {
       if (this.basic.age.value.month) {
         obj.catMonths = this.basic.age.value.year
       }
+
+      console.log(this.basic.sex.value, 'basic.sex.value.includes')
 
       if (this.basic.sex.value) {
         if (this.basic.sex.value.includes('去势')) {
