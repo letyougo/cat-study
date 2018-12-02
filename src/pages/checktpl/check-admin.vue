@@ -125,7 +125,7 @@ export default {
         }
         res = await request.get('/manager/check/getCheckInfo', { params })
       }
-      
+
       let tplType = this.tplType
       let { data: { data } } = res
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {

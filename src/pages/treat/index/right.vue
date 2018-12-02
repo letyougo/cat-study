@@ -1,13 +1,31 @@
 <template>
     <div class="right" v-show="list.length>0">
         <div class="suggest dia-item">
-            <div class="top" style="padding-left: 0">
-                <div class="title-tip" style="padding: 0;">疑似诊断提示</div>
-                <!-- <div>
-                    <el-checkbox label=""  @>全选</el-checkbox>
-                </div> -->
+            <div class="top" style="padding-left: 0;padding-right: 0;display: flex;justify-content: space-between;align-items: center">
+                <div class="title-tip" style="padding: 0;">
+                  <div style="font-size: 16px">
+                      疑似诊断提示
+                  </div>
+                 
+                </div>
+                <div>
+
+                    <el-checkbox label="全选" @change="kdmodel=kdexams" v-if="kdmodel.length !== kdexams.length"></el-checkbox>
+                      <el-checkbox label="全选" @change="kdmodel=[]" v-else></el-checkbox>
+                </div>
             </div>
-            <div >
+
+            <div style="padding: 10px 0;display: flex;justify-content: space-between;align-items: center">
+              <div>症状推荐检查</div>
+              <span  @click="open=true"  v-if="!open">
+                  <el-tag size="mini" style="background: #ffffff">收起</el-tag>
+              </span>
+              <span v-else @click="open=false">
+                  <el-tag size="mini" style="background: #ffffff" >展开</el-tag>
+              </span>
+            </div>
+
+            <div v-show="!open">
               <el-form >
                   <el-checkbox-group v-model="kdmodel">
                     <div style="margin: 6px 0" v-for="(item,index) in kdexams" :key="item.item"  >
@@ -82,20 +100,22 @@
 
                     <p>
                         <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
-                            <el-tag type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
+                            <el-tag style="background: #ffffff" type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
                             <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
                         </span>
                     </p>
                     <p style="margin: 10px 0">行为&查体</p>
                     <p>
                       <span v-for="op in item.checks"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
-                        <el-tag type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
+                        <el-tag  style="background: #ffffff" type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
                         <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
                       </span>
                     </p> 
                     <p style="display: flex;justify-content: space-between;align-items: center;margin: 10px 0">
                       <span>推荐检查</span>
-                      <!-- <el-checkbox label="全选" @change="(val)=>sugCheck(val,index)"></el-checkbox> -->
+                      <el-checkbox label="全选" @change="item.examsModel=item.exams" v-if="item.examsModel.length !== item.exams.length"></el-checkbox>
+                      <el-checkbox label="反选" @change="item.examsModel=[]" v-else></el-checkbox>
+
                     </p>
                     <p v-for="op in item.exams">
                       <el-checkbox-group v-model="item.examsModel">
@@ -197,6 +217,7 @@ export default {
   },
   data () {
     return {
+      open: false,
       kdexams: [],
       kdmodel: [],
       names: '',
@@ -305,7 +326,7 @@ export default {
         console.log('query', query)
 
         this.fetchDiagDisease(query)
-        let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query })
+        let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query, hospitalId: global.user.id })
         let { data: { data } } = res
         console.log(data, 'kdexams')
         this.kdexams = data
@@ -347,7 +368,7 @@ export default {
         item.rate = (item.similarity * 100 / total).toFixed(1) + '%'
         return item
       }).sort((next, pre) => {
-        return pre.similarity - next.similarity
+        return pre.similarity - next.similarity ? 1 : -1
       })
 
       this.list = data
