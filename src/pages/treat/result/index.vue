@@ -51,14 +51,14 @@
           <template scope="scope">
               <p v-if="scope.row.status==='yes_read'">已读</p>
               <p v-if="scope.row.status==='yes_unRead'">未读 <span style="color: red">!</span></p>
-              <p v-if="scope.row.status==='no'">报告未出</p>
+              <p v-if="scope.row.status==='no'">未出结果</p>
             </template>
       </el-table-column>
       <el-table-column label="描述" prop="note"></el-table-column>
       <el-table-column label="操作" width="200px">
         <template scope="scope" >
           <el-button type="scope.row.status ==='no' ? 'default' : 'warning'  " :disabled="scope.row.status === 'no'"  @click="fetchReport(scope.row)">预览</el-button>
-          <el-button v-if="canEdit" type="primary" @click="startEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" @click="startEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -147,6 +147,7 @@ export default {
       this.fetch()
     },
     async update () {
+      console.log(this.report.desc)
       await this.$refs.checktpl.update(this.report.desc)
       this.report.visible = false
       this.fetch()

@@ -6,12 +6,12 @@
             <template scope="scope">
               <el-form v-if="edit">
                 <el-form-item label="">
-                    <el-radio v-model="scope.row.isException" label="1">存在</el-radio>
-                    <el-radio v-model="scope.row.isException" label="0">不存在</el-radio>
+                    <el-radio v-model="scope.row.result" label="1">存在</el-radio>
+                    <el-radio v-model="scope.row.result" label="0">不存在</el-radio>
                 </el-form-item>
               </el-form>
               <template v-else>
-                {{scope.row.isException === '1' ? '存在' : '不存在'}}
+                {{scope.row.result === '1' ? '存在' : '不存在'}}
               </template>
             </template>
           </el-table-column>

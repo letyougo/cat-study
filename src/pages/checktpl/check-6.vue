@@ -2,7 +2,7 @@
   <div class="check-6">
       <div class="check-img">
           <div class="check-soure">
-            <img src="list[0].result"/>
+            <img :src="list[0].result"/>
           </div>
           <div class="check-action">
             <div style="position: relative">上传图片

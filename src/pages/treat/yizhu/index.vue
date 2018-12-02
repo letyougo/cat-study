@@ -3,17 +3,17 @@
     <div class="top">
       <div class="title">根据检查结果判断为疾病</div>
       <div>
-        <el-input placeholder="搜索疾病" v-model="search" icon="search" style="width:430px;">
-          <template slot="prefix">
-            <i class="el-icon-search icon-search"></i>
-          </template>
-          <template slot="suffix">
-            <el-button style="margin-top:5px" type="primary" size="mini"
-              @click="fetchIll"
-              >搜索</el-button
-            >
-          </template>
-        </el-input>
+        <el-select 
+                  v-model="selectItem"
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="搜索疾病"
+                  :remote-method="searchIll"
+                  @change="addItem"
+                >
+                  <el-option v-for="(item, index) in searchResult" :value="index" :key="index" :label="item.names"></el-option>
+                </el-select>
       </div>
     </div>
     <div class="action">
@@ -176,7 +176,9 @@ export default {
         names: '',
         desc: ''
       },
-      uncertainTreatments: []
+      uncertainTreatments: [],
+      searchResult: [],
+      selectItem: ''
     }
   },
   computed: {
@@ -189,6 +191,29 @@ export default {
       let res = await this.api.disease.list2({ names: this.search })
       let { data: { data } } = res
       this.list = data
+    },
+    async searchIll (query) {
+      let res = await this.api.disease.list3({ caseId: this.$route.query.id, diseaseName: query })
+      let {data: {data}} = res
+      
+      data = data.map(item => {
+        item.pick = false
+        item.options = item.treatments.map(item => {
+          return {
+            pick: false,
+            label: item
+          }
+        })
+        item.med = {
+          visible: false,
+          st: [],
+          docAdvice: '',
+          otherTreatment: '',
+          diseaseId: item.id
+        }
+        return item
+      })
+      this.searchResult = data
     },
     async openChuzhi (names) {
       this.chuzhi.visible = true
@@ -276,6 +301,17 @@ export default {
       console.log('yizhu.list', data)
       this.list = data
     },
+    addItem() {
+      let flag = false
+      this.list.forEach(item => {
+        if (item.names === this.searchResult[this.selectItem].names) {
+          flag = true
+        }
+      })
+      if (!flag) {
+        this.list.push(this.searchResult[this.selectItem])
+      }
+    },
     formatProcess(process) {
       if (process.includes('【')) {
         let arr = process.split('【')
@@ -301,7 +337,6 @@ export default {
     },
     pickItem (item, i) {
       let data = this.list
-
       data[i].pick = !data[i].pick
       this.list = data
     }
@@ -356,14 +391,14 @@ export default {
 
     .record {
       display: flex;
-
+      overflow-x: auto;
       .record-item {
         width: 416px;
         min-height: 300px;
-        justify-content: space-between;
         border: 1px solid @borderColor;
         padding: 25px 27px;
         color: #666666;
+        flex-shrink: 0;
         &:first-child {
           margin-right: 23px;
         }

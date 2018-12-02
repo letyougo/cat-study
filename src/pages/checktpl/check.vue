@@ -143,10 +143,16 @@ export default {
         let obj = {
           value: this.list[0].result,
           desc: this.desc,
-          isException: this.list[0].isException
+          isException: this.list[0].isException === 'no' ? 0 : 1
         }
         await this.api.check.editCheck(this.reportId, obj)
-      } else {
+      } else if (tplType === 4) {
+        let obj = {
+          desc: this.desc,
+          isException: this.list[0].isException === 'no' ? 0 : 1
+        }
+        await this.api.check.editCheck(this.reportId, obj)
+      }else {
         await this.api.check.editCheck(this.reportId, {
           value: this.list[0].result,
           desc

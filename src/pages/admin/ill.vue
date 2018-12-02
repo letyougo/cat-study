@@ -66,14 +66,14 @@
               <template scope="scope">
                 <span 
                 style="padding: 4px"
-                v-for="item in scope.row.highSym" :key="item.id">               
+                v-for="item in scope.row.distinctSymptom" :key="item">               
                 <el-tag type="primay" size="mini" >{{item}}</el-tag>
                 </span>
               </template>
             </el-table-column>
             <el-table-column label="操作" width="250px">
               <template scope="scope" >
-                  <el-button type="primary" @click="openShili(scope.row,scope.$index)">示例症状</el-button>
+                  <el-button type="primary" @click="openShili(scope.row.symptom,scope.$index)">示例症状</el-button>
                   <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
             </el-table-column>
@@ -126,19 +126,8 @@
           </el-dialog>
 
           <el-dialog title="示例症状" :visible.sync="shili.visible">
-            <span v-for="(item,index) in shili.list" :key="item.id" style="padding: 4px 6px">
-                <el-tag type="primary" closable @close="shili.list.splice(index,1)">
-                  {{item}}
-                </el-tag>
-                
-              </span>
-              <span>
-                <el-button @click="shili.add=false" icon="el-icon-plus" size="mini" v-if="shili.add">增加</el-button>
-                <el-input
-                v-else
-                ref='shiliinput'
-                @keyup.enter.native="shili.list.push(shili.value);shili.add=true;"
-                style="width: 100px" type="" size="mini" v-model="shili.value"></el-input>
+            <span v-for="(item, index) in shili.list" :key="item" style="padding: 4px 6px" @click="addSelectIndex(index)">
+                <el-button size="mini" :type="selectIndex.indexOf(index) > -1 ? 'primary' : 'default' ">{{item}}</el-button>
               </span>
             <el-form>
               <el-form-item >
@@ -184,7 +173,8 @@ export default {
         list: [],
         add: true,
         value: ''
-      }
+      },
+      selectIndex: []
 
     }
   },
@@ -197,7 +187,7 @@ export default {
       this.fetch()
     },
     async openShili (item, index) {
-      this.shili.visible = true
+      /*this.shili.visible = true
       let res = await this.api.disease.listDiseaseHightSymp(item.id)
       let { data: { data } } = res
       let list = this.list
@@ -205,15 +195,26 @@ export default {
       list[index].highSym = data
       this.$set(this.list, list)
       this.shili.id = item.id
-      this.shili.list = data
+      this.shili.list = data*/
+      this.selectIndex = []
+      this.shili.visible = true
+      let symptomArr = item.split('，')
+      this.shili.id = this.list[index].id
+      this.shili.list = symptomArr
+      this.shili.list.forEach((item, index2) => {
+        this.list[index].distinctSymptom.forEach(sym => {
+          if (item === sym) this.selectIndex.push(index2)
+        })
+      })
     },
     async addSymp () {
       await this.api.disease.updateDiseaseHightSymp({
         diseaseId: this.shili.id,
-        symptom: this.shili.list.filter(item => !!item).join(',')
+        symptom: this.shili.list.filter((item, index) => {return this.selectIndex.indexOf(index) > -1}).join(',')
       })
       this.$message.success('更新示例症状成功')
       this.shili.visible = false
+      this.fetch()
     },
     async fetch () {
       this.loading = true
@@ -253,6 +254,13 @@ export default {
         this.reload()
       } catch (e) {
 
+      }
+    },
+    async addSelectIndex (index) {
+      if (this.selectIndex.indexOf(index) > -1) {
+        this.selectIndex.splice(this.selectIndex.indexOf(index), 1)
+      } else {
+        this.selectIndex.push(index)
       }
     },
     async fetchSym (item, scope) {
