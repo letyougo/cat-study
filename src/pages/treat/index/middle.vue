@@ -771,7 +771,7 @@ export default {
         if (this.basic.sex.value.includes('去势')) {
           obj.bear = '去势'
         } else if (this.basic.sex.value.includes('绝育')) {
-          obj.bear = '去势'
+          obj.bear = '绝育'
         } else {
           obj.bear = this.basic.sex.value[0]
         }
