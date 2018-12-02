@@ -467,7 +467,7 @@ const api = {
     async updateDiseaseHightSymp (data) {
       const url = '/disease/updateDiseaseHightSymp'
       const res = request.post(url, data)
-      return res 
+      return res
     }
   },
   // operation
@@ -499,6 +499,7 @@ const api = {
 
 export default {
   install: function (vue) {
+    Vue.prototype.console = window.console
     Vue.prototype.api = api
     Vue.prototype.tip = function (code, succ, err, cb) {
       if (code === 200) {
