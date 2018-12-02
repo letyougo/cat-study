@@ -9,7 +9,7 @@
                 {{scope.row.refMin}}
                 </template>
                 <template v-else>
-                <el-input v-model="scope.row.refMin" placeholder=""></el-input>
+                <el-input v-model="scope.row.refMin" placeholder="" type="number" step="0.01"></el-input>
                 </template>
         </template>
         
@@ -20,7 +20,7 @@
                     {{scope.row.refMax}}
                 </template>
                 <template v-else>
-                    <el-input v-model="scope.row.refMax" placeholder=""></el-input>
+                    <el-input v-model="scope.row.refMax" placeholder="" type="number" step="0.01"></el-input>
                 </template>
             </template>
         </el-table-column>
@@ -28,12 +28,12 @@
         <el-table-column label="结果值" v-if="edit">
             <el-table-column label="左眼">
                 <template scope="scope">
-                    <el-input v-model="scope.row.value[0]" placeholder=""></el-input>
+                    <el-input v-model="scope.row.value[0]" placeholder="" type="number" step="0.01"></el-input>
                 </template>
             </el-table-column>
             <el-table-column label="右眼">
                 <template scope="scope">
-                    <el-input v-model="scope.row.value[1]" placeholder=""></el-input>
+                    <el-input v-model="scope.row.value[1]" placeholder="" type="number" step="0.01"></el-input>
                 </template>
             </el-table-column>
         </el-table-column>

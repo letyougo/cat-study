@@ -10,7 +10,7 @@
                       {{scope.row.refMin.r1}}
                     </template>
                     <template v-else>
-                      <el-input v-model="scope.row.refMin.r1" placeholder=""></el-input>
+                      <el-input v-model="scope.row.refMin.r1" placeholder="" type="number" step="0.01"></el-input>
                     </template>
                   </template>                  
                 </el-table-column>
@@ -20,7 +20,7 @@
                       {{scope.row.refMin.r2}}
                     </template>
                     <template v-else>
-                      <el-input v-model="scope.row.refMin.r2" placeholder=""></el-input>
+                      <el-input v-model="scope.row.refMin.r2" placeholder="" type="number" step="0.01"></el-input>
                     </template>
                   </template>
                 </el-table-column>
@@ -31,7 +31,7 @@
                       {{scope.row.refMin.r3}}
                     </template>
                     <template v-else>
-                      <el-input v-model="scope.row.refMin.r3" placeholder=""></el-input>
+                      <el-input v-model="scope.row.refMin.r3" placeholder="" type="number" step="0.01"></el-input>
                     </template>
               </template>
             </el-table-column>
@@ -42,7 +42,7 @@
                     {{scope.row.value}}
                 </template>
                 <template v-else>
-                    <el-input v-model="scope.row.value" placeholder=""></el-input>
+                    <el-input v-model="scope.row.value" placeholder="" type="number" step="0.01"></el-input>
                 </template>
               </template>
             </el-table-column>
