@@ -29,26 +29,35 @@
                       </el-form-item>
                     </el-form>
                     <br/>
-                    <h3>医院模板编辑</h3>
-                    <el-table :data="scope.row.checks">
-                      <el-table-column label="类型" prop="typeName"></el-table-column>
+                    <div>
+                      <span style="padding: 4px;display: inline-block" v-for="name in typeName" :key="name">
+                        <el-button @click="value=name"  :type=" value===name ? 'primary':'default'  "  size="mini">{{name}}</el-button>
+                      </span>
+                    </div>
+                    <el-table :data="scope.row.filterChecks" v-if="scope.row.filterChecks">
+                      <el-table-column label="类型" prop="typeName" ></el-table-column>
                       <el-table-column label="名称" prop="checkName"></el-table-column>
                       <el-table-column label="操作">
                         <template scope="scope">
                           <template v-if="scope.row.templateType === 1 ">
                             <a>阳性/阴性</a>
+                            <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                           </template>
                           <template v-else-if="scope.row.templateType === 2 ">
                               <a>存在/不存在</a>
+                              <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                             </template>
                           <template v-else-if="scope.row.templateType === 3 ">
                               <a>正常/异常</a>
+                              <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                           </template>
                           <template v-else-if="scope.row.templateType === 4 ">
                               <a></a>
+                              <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                           </template>
                           <template v-else-if="scope.row.templateType === 6 ">
                               <a></a>
+                              <el-button type="text" @click="deleteTemplate(scope.row.id)" class="delete-btn">删除</el-button>
                           </template>
                           <template v-else>
                               <el-button type="text" @click="showMore(scope.row)">点击查看</el-button>
@@ -56,6 +65,7 @@
                           </template>
                         </template>
                       </el-table-column>
+
                       <!-- <el-table-column label="模板" prop="templateType"></el-table-column> -->
                     </el-table>
                 </template>
@@ -154,7 +164,8 @@ export default {
         visible: false,
         itemId: 0,
         tplType: 0
-      }
+      },
+      value: ''
     }
   },
   computed: {
@@ -233,6 +244,11 @@ export default {
       let res = await this.api.hospital.listById({ hospitalId: item.id})
       let { data: { data } } = res
       item.checks = data
+      this.value = this.typeName[0]
+      this.$nextTick(() => {
+        item.filterChecks = item.checks.filter(check => check.typeName === this.value)
+      })
+      
     },
     async updateReport () {
       this.showMoreDialog.visible = false
@@ -254,6 +270,13 @@ export default {
   async mounted () {
     await this.fetchCheckType()
     this.reload()
+  },
+  watch: {
+    value () {
+      for (let item of this.list) {
+        item.filterChecks = item.checks.filter(check => check.typeName === this.value)
+      }
+    }
   }
 }
 </script>
