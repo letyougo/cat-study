@@ -1,11 +1,13 @@
 <template>
     <div class="right" v-show="list.length>0">
         <div class="suggest dia-item">
-            <div class="top" style="padding-left: 0">
+            <div class="top" style="padding-left: 0;padding-right: 0;display: flex;justify-content: space-between;align-items: center">
                 <div class="title-tip" style="padding: 0;">疑似诊断提示</div>
-                <!-- <div>
-                    <el-checkbox label=""  @>全选</el-checkbox>
-                </div> -->
+                <div>
+
+                    <el-checkbox label="全选" @change="kdmodel=kdexams" v-if="kdmodel.length !== kdexams.length"></el-checkbox>
+                      <el-checkbox label="全选" @change="kdmodel=[]" v-else></el-checkbox>
+                </div>
             </div>
             <div >
               <el-form >
@@ -97,7 +99,9 @@
                     </p> 
                     <p style="display: flex;justify-content: space-between;align-items: center;margin: 10px 0">
                       <span>推荐检查</span>
-                      <!-- <el-checkbox label="全选" @change="(val)=>sugCheck(val,index)"></el-checkbox> -->
+                      <el-checkbox label="全选" @change="item.examsModel=item.exams" v-if="item.examsModel.length !== item.exams.length"></el-checkbox>
+                      <el-checkbox label="反选" @change="item.examsModel=[]" v-else></el-checkbox>
+
                     </p>
                     <p v-for="op in item.exams">
                       <el-checkbox-group v-model="item.examsModel">
@@ -305,7 +309,7 @@ export default {
         console.log('query', query)
 
         this.fetchDiagDisease(query)
-        let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query })
+        let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query, hospitalId: global.user.id })
         let { data: { data } } = res
         console.log(data, 'kdexams')
         this.kdexams = data
