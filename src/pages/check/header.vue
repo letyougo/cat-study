@@ -247,7 +247,7 @@ export default {
       this.bingli.id = item.id
     },
     currentChange (pageNum) {
-      this.page.pageNum = pageNum
+      this.pageinfo.pageNum = pageNum
       this.fetch()
     },
     async fetch () {

@@ -75,7 +75,7 @@
     </div>
     <br/>
     <div class="result-action">
-      <el-button type="primary" @click="$router.push('/treat/yizhu?id='+$route.query.id)">保存</el-button>
+      <el-button type="primary" @click="isAllReady">保存</el-button>
     </div>
   </div>
 </template>
@@ -150,6 +150,15 @@ export default {
       await this.$refs.checktpl.update(this.report.desc)
       this.report.visible = false
       this.fetch()
+    },
+    async isAllReady () {
+      const res = await this.api.check.isAllReady(this.$route.query.id)
+      let { data: { status } } = res
+      if (status === 'no') {
+        this.$message.warning('请耐心等待检查结果')
+      } else {
+        this.$route.push(`/treat/yizhu?id=${this.$route.query.id}`)
+      }
     }
   },
   components: {
