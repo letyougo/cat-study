@@ -74,7 +74,7 @@
 
         <el-dialog title="主诉症状" :visible.sync="mainDialog" >
              <div class="main-item" v-for="(l, index) in main.options" :key="index">
-                <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':item.picked}">
+                <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':main.value.includes(item.names)}">
                     <span >{{item.names}}</span>
                 </div>
              </div>

@@ -88,6 +88,10 @@ export default {
       let { data: { data, code } } = res
       this.item = data
       this.item.username = global.user.username
+
+      if (data.status === 1) {
+        await this.api.case.update({ status: 2, id: this.$route.query.id })
+      }
     }
   },
   created () {},

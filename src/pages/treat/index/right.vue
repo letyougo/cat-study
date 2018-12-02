@@ -119,7 +119,8 @@
                     </p>
                     <p v-for="op in item.exams">
                       <el-checkbox-group v-model="item.examsModel">
-                        <el-checkbox style="height: 30px;"  :key="op" :label="op"></el-checkbox>
+                          <el-checkbox class="red-checkbox" v-if="item.highlightExams.includes(op)" style="height: 30px;color: red"  :key="op" :label="op"></el-checkbox>
+                        <el-checkbox v-else style="height: 30px;"  :key="op" :label="op"></el-checkbox>
                       </el-checkbox-group>
                     </p>   
                     <p class="action">

@@ -49,6 +49,17 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <div style="display: flex;justify-content:flex-end;padding-top: 10px">
+          <el-pagination
+          :page-size="config.page.limit"
+          :page-count="pageinfo.pageNum"
+          layout="prev, pager, next"
+          @current-change="currentChange"
+          :total="pageinfo.totalCount">
+        </el-pagination>
+      </div>
+
         </div>
         <checktpl v-if="dialog.visible" :reportId="dialog.reportId" @close="dialog.visible=false"></checktpl>
       </div>
@@ -77,6 +88,10 @@ global.moment = moment
         dialog: {
           visible: false,
           reportId: -1
+        },
+        pageinfo: {
+          pageNum: 1,
+          totalCount: 10
         }
       }
     },
@@ -87,6 +102,11 @@ global.moment = moment
     },
     computed: {},
     methods: {
+      currentChange (pageNum) {
+        this.pageinfo.pageNum = pageNum
+        this.fetch()
+      },
+  
       async detail (item) {
         console.log(this.dialog, 'dialog', item)
         this.dialog.visible = true
@@ -110,6 +130,8 @@ global.moment = moment
         }
         this.loading = true
   
+        let limit = this.config.page.limit
+        let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
         let filter = this.filter
         if (this.filter.startTime) {
           filter.startTime = new Date(this.filter.startTime).getTime()
@@ -117,11 +139,12 @@ global.moment = moment
         if (this.filter.endTime) {
           filter.endTime = new Date(this.filter.endTime).getTime()
         }
-        let res = await this.api.check.listReadyCheck({ doctorId: global.user.id , ...filter })
-        let { data: { data, code } } = res
+        let res = await this.api.check.listReadyCheck({ doctorId: global.user.id, ...filter, start, limit })
+        let { data: { data, code, pageinfo } } = res
         if (code === 200) {
           this.loading = false
           this.list = data
+          this.pageinfo = pageinfo
         }
       },
       route (scope) {
