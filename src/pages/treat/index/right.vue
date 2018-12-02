@@ -368,7 +368,7 @@ export default {
         item.rate = (item.similarity * 100 / total).toFixed(1) + '%'
         return item
       }).sort((next, pre) => {
-        return pre.similarity - next.similarity
+        return pre.similarity - next.similarity ? 1 : -1
       })
 
       this.list = data

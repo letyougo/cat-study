@@ -22,13 +22,25 @@
             </template>
 
             <template v-if="basic.sex.exist">
-                <el-form-item label="性别" :style="{width:'350px'}" v-model="basic.sex.value" >
+                <el-form-item label="性别" :style="{width:'370px'}" v-model="basic.sex.value" >
                     <!-- <el-radio label="公"></el-radio>
                     <el-radio label="去势"></el-radio> -->
-                    <el-checkbox  @change="add" v-model="basic.sex.value" value="公猫" label="公猫" ></el-checkbox>
-                    <el-checkbox  @change="add" v-if="basic.sex.value.includes('公猫')" v-model="basic.sex.value" value="去势" label="去势" ></el-checkbox>
-                    <el-checkbox  @change="add" v-model="basic.sex.value" value="母猫" label="母猫" ></el-checkbox>
-                    <el-checkbox  @change="add" v-if="basic.sex.value.includes('母猫')" v-model="basic.sex.value" value="绝育" label="绝育" ></el-checkbox>
+                    <el-checkbox @change="(val)=>{
+                        if(!val){
+                          this.basic.sex.value = this.basic.sex.value.filter(item=>item!=='去势')
+                        }  
+                        this.add()
+                      }"  
+                    :disabled="basic.sex.value.includes('母猫')" v-model="basic.sex.value" value="公猫" label="公猫" ></el-checkbox>
+                    <el-checkbox  @change="add" :disabled="!basic.sex.value.includes('公猫')" 
+                    v-model="basic.sex.value" value="去势" label="去势" ></el-checkbox>
+                    <el-checkbox  @change="(val)=>{
+                      if(!val){
+                        this.basic.sex.value = this.basic.sex.value.filter(item=>item!=='绝育')
+                      }  
+                      this.add()
+                    }" :disabled="basic.sex.value.includes('公猫')" v-model="basic.sex.value" value="母猫" label="母猫" ></el-checkbox>
+                    <el-checkbox  @change="add" :disabled="!basic.sex.value.includes('母猫')" v-model="basic.sex.value" value="绝育" label="绝育" ></el-checkbox>
                   </el-form-item>   
             </template>
 
