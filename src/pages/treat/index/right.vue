@@ -28,19 +28,17 @@
             <el-dialog :visible="dialog.visible" class="exams-dia">
               <div class="exams-dia-title" slot="title">
                 <p >检查项目</p>
-                <el-input
-                  v-model="dialog.value"
+                <el-select 
+                  v-model="selectItem"
+                  filterable
+                  remote
+                  reserve-keyword
                   placeholder="搜索检查项"
-                  icon="search"
-                  style="width:430px;"
+                  :remote-method="search"
+                  @change="addItem"
                 >
-                  <template slot="prefix">
-                    <i class="el-icon-search icon-search"></i>
-                  </template>
-                  <template slot="suffix">
-                    <el-button type="primary" size="mini" @click="search">搜索</el-button>
-                  </template>
-                </el-input>
+                  <el-option v-for="(item, index) in searchResult" :key="item.checkName" :label="item.checkName" :value="index"></el-option>
+                </el-select>
               </div>
 
               <div class="check-table">
@@ -58,7 +56,7 @@
 
               <div slot="footer" class="footer">
                 <el-button type="primary" @click="print">打印</el-button>
-                <el-button type="primary" @click="huayan">开具处方</el-button>
+                <el-button type="primary" @click="huayan">开具化验</el-button>
                 <el-button @click="dialog.visible=false">取消</el-button>
               </div>
             </el-dialog>
@@ -208,7 +206,9 @@ export default {
         list: [],
         value: '',
         content: ''
-      }
+      },
+      searchResult: [],
+      selectItem: ''
     }
   },
   computed: {
@@ -391,17 +391,11 @@ export default {
     print () {
       global.print('.check-table')
     },
-    async search () {
-      let res = await this.api.check.findCheckByHospitalId(this.dialog.value)
+    async search (query) {
+      let res = await this.api.check.findCheckByHospitalId(query)
       let { data: { data } } = res
-      let list = this.dialog.list
-      data = data.filter(item => {
-        let arr = list.map(item => item.checkName)
-        if (!arr.includes(item)) {
-          return true
-        }
-        return false
-      }).map(item => {
+      //let list = this.dialog.list
+      this.searchResult = data.map(item => {
         return {
           checkName: item,
           creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
@@ -410,9 +404,13 @@ export default {
           checkDoctorName: ''
         }
       })
-      list = [...list, ...data]
+      /*list = [...list, ...data]
 
-      this.dialog.list = list
+      this.dialog.list = list*/
+    },
+    async addItem () {
+      console.log(this.searchResult[this.selectItem])
+      this.dialog.list = [... this.dialog.list, ... [this.searchResult[this.selectItem]]]
     }
   },
   created () {

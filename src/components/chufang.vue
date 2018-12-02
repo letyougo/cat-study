@@ -28,6 +28,7 @@
               <!-- <el-table-column label="详情" type="expand">
                 detail
               </el-table-column> -->
+              <el-table-column label="名字" prop="names"></el-table-column>
               <el-table-column label="剂量" prop="dosage">
                   <template scope="scope">
                       <el-input v-model="scope.row.dosage" placeholder=""></el-input>
@@ -46,7 +47,7 @@
                   <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
                 </template>
               </el-table-column> -->
-              <el-table-column label="名字" prop="names"></el-table-column>
+              
               <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
               <!-- <el-table-column label="天"></el-table-column> -->
               <el-table-column label="操作" >
@@ -84,7 +85,8 @@ export default {
     'st',
     'docAdvice',
     'otherTreatment',
-    'diseaseId'
+    'diseaseId',
+    'needDefault'
   ],
   data () {
     return {
@@ -135,12 +137,12 @@ export default {
     async save () {
       let data = [{
         caseId: this.$route.query.id,
-        diseaseId: this.diseaseId,
+        diseaseId: this.needDefault ? 0 : this.diseaseId,
         docAdvice: this.docAdvice,
         otherTreatment: this.otherTreatment,
         prescription: this.list
       }]
-
+      console.log(data)
       let res = await this.api.operation.addPrescription({ jsonArray: data })
       this.$emit('close')
       return res

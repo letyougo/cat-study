@@ -35,10 +35,10 @@
                           <el-input v-model="scope.row.names" placeholder=""></el-input>
                         </el-form-item>
                         <el-form-item label="处方">
-                            <el-input type="textarea" v-model="scope.row.prescription" placeholder=""></el-input>
+                            <el-input type="textarea" v-model="scope.row.prescription" placeholder="" :rows="10"></el-input>
                         </el-form-item>
                         <el-form-item label="操作">
-                          <el-input type="textarea" v-model="scope.row.process" placeholder=""></el-input>
+                          <el-input type="textarea" v-model="scope.row.process" placeholder="" :rows="10"></el-input>
                         </el-form-item>
                         <el-form-item label="">
                           <el-button type="primary" @click="update(scope.row)">确定</el-button>
@@ -48,13 +48,15 @@
               
               </el-table-column>
               <el-table-column label="id" prop="id" width="80px"></el-table-column>
-              <el-table-column label="名字" prop="names" width="150px"></el-table-column>
-              <el-table-column label="处方" prop="prescription" width="150px"></el-table-column>
-              <el-table-column label="操作" prop="process" width="150px" >
+              <el-table-column label="名字" prop="names" width="350px"></el-table-column>
+              <el-table-column label="操作" prop="process" width="450px" >
                 <template scope="scope">
-                  <div style="max-height: 200px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis">{{scope.row.process}} </div>
+                  <div style="-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;">{{scope.row.process}} </div>
                 </template>
               </el-table-column>
+              
+              <el-table-column label="处方" prop="prescription" width="350px"></el-table-column>
+              
               <el-table-column width="100px">
                 <template scope="scope" >
                     <el-button type="danger" @click="del(scope.row)">删除</el-button>

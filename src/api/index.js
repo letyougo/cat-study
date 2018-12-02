@@ -46,9 +46,9 @@ request.interceptors.request.use(
 
     return req
   },
-  function (error) {
+  /*function (error) {
     App.$message.error(error)
-  }
+  }*/
 )
 request.interceptors.response.use(function (res) {
   if (res.headers.token && res.headers.token === 'timeout') {
@@ -56,7 +56,7 @@ request.interceptors.response.use(function (res) {
   }
   let { code, desc } = res.data
   if (code !== 200) {
-    return App.$message.error(desc)
+    //return App.$message.error(desc)
   }
   return res
 })
