@@ -10,10 +10,10 @@
       <div>
           猫咪姓名：{{owner.catName}}
       </div>
-      <div>性别{{owner.gender === 1 ? '男' : '女'}}</div>
-      <div>年龄{{owner.catYears}}岁{{owner.catMonths}}个月</div>  
+      <div>性别：{{owner.gender === 1 ? '男' : '女'}}</div>
+      <div>年龄：{{owner.catYears}}岁{{owner.catMonths}}个月</div>  
       <div>
-          日期:{{owner.createTime}}
+          日期：{{owner.createTime}}
       </div>
      
     </div>
@@ -24,17 +24,17 @@
       <div class="basic-content">
         <div>
           <p>
-            <span>体重: {{basic.weight}}</span>
-            <span>心率:{{basic.breathRate}}</span>
+            <span v-if="basic.weight">体重： {{basic.weight}}</span>
+            <span v-if="basic.breathRate" style="margin-left: 55px">心率：{{basic.breathRate}}</span>
           </p>
-          <p>生活史:{{basic.lifeHistory}}</p>
+          <p v-if="basic.lifeHistory">生活史：{{basic.lifeHistory}}</p>
         </div>
         <div>
-          <p>体温:{{basic.temperature}}</p>
-          <p>既往史:{{basic.pastHistory}}</p>
+          <p v-if="basic.temperature">体温：{{basic.temperature}}</p>
+          <p v-if="basic.pastHistory">既往史：{{basic.pastHistory}}</p>
         </div>
         <div>
-          <p>血压:{{basic.pressure}}</p>
+          <p v-if="basic.pressure">血压：{{basic.pressure}}</p>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@ export default{
     }
   },
   components: {
-    report,check
+    report, check
   },
   methods: {
     async fetchOwner (id) {

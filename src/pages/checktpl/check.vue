@@ -124,7 +124,7 @@ export default {
         this.desc = data.note
       }
     },
-    async update (desc) {
+    async update () {
       let tplType = this.tplType
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
         let list = JSON.parse(JSON.stringify(this.list))
@@ -137,13 +137,20 @@ export default {
           })
         }
         await this.api.check.editCheck(this.reportId, {
-          data: list, desc
+          data: list, desc: this.desc
         })
       } else if (tplType === 6) {
         let obj = {
           value: this.list[0].result,
           desc: this.desc,
           isException: this.list[0].isException
+        }
+        await this.api.check.editCheck(this.reportId, obj)
+
+      } else if (tplType === 4) {
+        let obj = {
+          desc: this.desc,
+          isException: this.list[0].isException === 'no' ? 0 : 1
         }
         await this.api.check.editCheck(this.reportId, obj)
       } else {
@@ -159,6 +166,7 @@ export default {
       let res = await this.api.upload(f)
       let { data: { data: { path } } } = res
       this.list[0].result = path
+      this.update()
     }
   },
   mounted () {

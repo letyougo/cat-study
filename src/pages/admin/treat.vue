@@ -15,46 +15,13 @@
               <el-form-item label="使用情况">
                 <el-switch v-model="scope.row.isUsed" active-text="使用" inactive-text="不使用"></el-switch>
               </el-form-item>
-              <!-- <el-form-item label="添加子选项">
-                <el-tag size="mini" type="primary" closeable  v-for="(item,index) in scope.row.options " @close="scope.row.options.splice(index,1)" :key="item.id">{{item.names}}</el-tag> 
-                </el-input>
-                <el-button  class="button-new-tag" size="small" @click="addTag(scope.row.options)">+ New Tag</el-button>
-              </el-form-item> -->
+              <el-form-item label="接诊项" v-if="scope.row.options && scope.row.options.length>0">
+                  <textarea style="font-size: 12px;width: 500px;height: 500px;" v-model="scope.row.json"></textarea>
+              </el-form-item>
               <el-form-item label="">
                 <el-button type="primary" size="mini" @click="update(scope.row)">确定</el-button>
               </el-form-item>
             </el-form>
-            <el-table :data="scope.row.options" v-if="scope.row.options.length>0">
-                <el-form inline>
-                  <el-form-item >
-                    <el-input v-model="scope.row.names" placeholder=""></el-input>
-                  </el-form-item>
-                  <el-form-item >
-                      <el-button type="primary" size="mini">确定</el-button>
-                  </el-form-item>
-                </el-form>
-
-                <el-table-column label="操作" type="expand" width="150">
-                    <template scope="scope" >
-                      <el-form inline>
-                        <el-form-item v-model="scope.row.names"></el-form-item>
-                        <el-form-item ><el-button type="primary" size="mini">确定</el-button></el-form-item>
-                      </el-form>
-                      <el-table :data="scope.row.child">
-                        <el-table-column label="名字" prop="names"></el-table-column>
-                      </el-table>
-                    </template>
-                  </el-table-column>
-
-
-              <el-table-column label="名字" prop="names"></el-table-column>
-              <el-table-column label="子选项">
-                  <template scope="scope">
-                      <div v-if="scope.row.child.length>0">有</div>
-                      <div v-else>无</div>
-                  </template>
-              </el-table-column>
-            </el-table>
           </template>
         </el-table-column>
         <el-table-column label="标题" prop="title"></el-table-column>
@@ -78,10 +45,14 @@
 </template>
 <script>
 import corner from '../../components/corner'
+import editor from 'vue2-ace'
+import 'brace/mode/javascript'
+import 'brace/theme/chrome'
+const stringify = require('json-stringify')
 export default {
   name: 'treat',
   components: {
-    corner
+    corner, editor
   },
   data () {
     return {
@@ -90,10 +61,27 @@ export default {
     }
   },
   methods: {
+    editorInit: function () {
+      require('brace/ext/language_tools') // language extension prerequsite...
+      require('brace/mode/html')
+      require('brace/mode/javascript') // language
+      require('brace/mode/less')
+      require('brace/mode/json')
+      require('brace/theme/github')
+      require('brace/snippets/javascript') // snippet
+    },
+
     async fetch () {
       this.loading = true
       let res = await this.api.visit.list()
       let { data: { data, code, second_class } } = res
+      data = data.map(item => {
+        item.edit = false
+        item.json = stringify(item.options, null, 2, {
+          offset: 2
+        })
+        return item
+      })
       this.loading = false
       console.log(data, 'data-data-list')
       this.list = data
@@ -115,9 +103,17 @@ export default {
       }
     },
     async update (row) {
-      await this.api.visit.update({ id: row.id, isUsed: row.isUsed })
-      this.fetch()
+      let { json, ...props } = row
+      try {
+        props.options = JSON.parse(json)
+        console.log('props', props)
+        await this.api.visit.update(props)
+        this.fetch()
+      } catch (e) {
+        this.$message.error('接诊数据错误')
+      }
     }
+
   },
   mounted () {
     this.fetch()
