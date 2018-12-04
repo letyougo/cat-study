@@ -20,7 +20,11 @@
             <el-table-column label="疾病名称" prop="names">
             </el-table-column>
 						<el-table-column label="症状" prop="symptom"></el-table-column>
-						<el-table-column label="简介" prop="causes"></el-table-column>
+						<el-table-column width="350px" label="简介" prop="causes">
+              <template scope="scope">
+                <div style="-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;">{{scope.row.causes}}</div>
+              </template>
+            </el-table-column>
 						<el-table-column label="操作" width="100">
 							<template scope='scope'>
 								<el-button type="primary" @click="showDetail(scope.row)">详情</el-button>

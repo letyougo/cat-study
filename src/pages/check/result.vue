@@ -40,7 +40,7 @@
               <template scope="scope">
                 <p v-if="scope.row.status==='yes_read'">已读</p>
                 <p v-if="scope.row.status==='yes_unRead'">未读 <span style="color: red">!</span></p>
-                <p v-if="scope.row.status==='no'">报告未出</p>
+                <p v-if="scope.row.status==='no'">未出结果</p>
               </template>
             </el-table-column>
             <el-table-column label="操作" prop="catName">

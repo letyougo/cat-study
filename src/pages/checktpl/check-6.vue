@@ -3,6 +3,7 @@
       <div class="check-img">
           <div class="check-soure">
             <img :src="list[0].result" style="max-width: 100%;max-height: 100%"/>
+
           </div>
           <div class="check-action" v-if="edit">
             <div style="position: relative">上传图片

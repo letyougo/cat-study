@@ -250,7 +250,7 @@ const api = {
   // 疾病
   ill: {
     async list (params) {
-      const url = '/disease/listByParam'
+      const url = '/disease/listDiseaseByParam'
       let res = await request.get(url, { params })
       return res
     },
@@ -456,6 +456,11 @@ const api = {
     },
     async list2 (params) {
       const url = '/disease/listByParam'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async list3 (params) {
+      const url = '/disease/searchDisease'
       let res = await request.get(url, { params })
       return res
     },
