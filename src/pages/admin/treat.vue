@@ -50,7 +50,7 @@ const stringify = require('json-stringify')
 export default {
   name: 'treat',
   components: {
-    corner, editor
+    corner
   },
   data () {
     return {

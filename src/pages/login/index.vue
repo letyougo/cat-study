@@ -130,10 +130,10 @@ export default {
                this.$router.push('/check')
              }
              if (roleName === '超级管理员') {
-               this.$router.push('/admin')
+               this.$router.push('/check')
              }
              if (roleName === '化验室') {
-               this.$router.push('/doctor')
+               this.$router.push('/check')
              }
              if (roleName === '运营管理员') {
                this.$router.push('/admin')
