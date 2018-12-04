@@ -45,9 +45,7 @@
 </template>
 <script>
 import corner from '../../components/corner'
-import editor from 'vue2-ace'
-import 'brace/mode/javascript'
-import 'brace/theme/chrome'
+
 const stringify = require('json-stringify')
 export default {
   name: 'treat',
@@ -61,16 +59,6 @@ export default {
     }
   },
   methods: {
-    editorInit: function () {
-      require('brace/ext/language_tools') // language extension prerequsite...
-      require('brace/mode/html')
-      require('brace/mode/javascript') // language
-      require('brace/mode/less')
-      require('brace/mode/json')
-      require('brace/theme/github')
-      require('brace/snippets/javascript') // snippet
-    },
-
     async fetch () {
       this.loading = true
       let res = await this.api.visit.list()
