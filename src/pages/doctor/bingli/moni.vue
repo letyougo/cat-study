@@ -1,39 +1,58 @@
 <template>
-	<div class="moni">
+	<div >
+    <div class="moni">
 			<div>
 				<tip></tip>模拟病历
 			</div>
-			<div class="moni-content">
-					<div class="chaxun-dialog" style="margin:24px auto;padding:0 55px 0 46px">
-						
-
-						<bingli v-if="caseId" :id="caseId"></bingli>
-					
-			
-						<div class="chaxun-dialog-content">
-							<el-form >
-									<el-form-item label="确诊疾病">
-											<el-input placeholder="" v-model="diagDisease"></el-input>
-										</el-form-item>
-								<el-form-item label="治疗方案">
-									<el-input placeholder="" v-model="treatment"></el-input>
-								</el-form-item>
-								<el-form-item label="预后护理">
-										<el-input placeholder="" v-model="prognosis"></el-input>
-									</el-form-item>
-							</el-form>
-						</div>
-						
-						<!-- <p class="chaxun-dialog-title"></p> -->
 		
-						<p style="text-align:center">
-							<el-button type="primary" @click="submit">提交</el-button>
-						</p>
-					</div>
-			</div>
 			<div>
 				<el-button type="primary" @click="generate" v-if="showBtn">重新生成模拟病历</el-button>
-			</div>
+      </div>
+    </div>
+  
+    <el-dialog title="" visible.sync="dialog.visible">
+        <div class="chaxun-dialog" > 
+            <bingli v-if="caseId" :id="caseId" :hideResult="true"></bingli>
+            <div class="chaxun-dialog-content">
+              <el-form >
+                  <el-form-item label="确诊疾病">
+                      <el-input placeholder="" v-model="diagDisease"></el-input>
+                    </el-form-item>
+                <el-form-item label="治疗方案">
+                  <el-input placeholder="" v-model="treatment"></el-input>
+                </el-form-item>
+                <el-form-item label="预后护理">
+                    <el-input placeholder="" v-model="prognosis"></el-input>
+                  </el-form-item>
+              </el-form>
+            </div>
+        </div>
+    </el-dialog>
+ 
+    <div class="moni-content">
+        <div class="chaxun-dialog" > 
+          <bingli v-if="caseId" :id="caseId" :hideResult="true"></bingli>
+          <div class="chaxun-dialog-content">
+            <el-form >
+                <el-form-item label="确诊疾病">
+                    <el-input placeholder="" v-model="diagDisease"></el-input>
+                  </el-form-item>
+              <el-form-item label="治疗方案">
+                <el-input placeholder="" v-model="treatment"></el-input>
+              </el-form-item>
+              <el-form-item label="预后护理">
+                  <el-input placeholder="" v-model="prognosis"></el-input>
+                </el-form-item>
+            </el-form>
+          </div>
+        </div>
+
+        
+    </div>
+    
+    <p style="text-align:center">
+        <el-button type="primary" @click="submit">提交</el-button>
+      </p>
 	</div>
 </template>
 <script>
@@ -60,7 +79,10 @@ export default {
       diagDisease: '',
       treatment: '',
       prognosis: '',
-      showBtn: true
+      showBtn: true,
+      dialog: {
+        visible: false
+      }
     }
   },
   computed: {
@@ -100,10 +122,19 @@ export default {
 	.moni{
 		display: flex;
 		justify-content: space-between;
-	
-		.moni-content{
-      width: 800px;
-			border: 1px solid @borderColor;
-		}
+
 	}
+  	
+  .moni-content{
+      margin-top: 24px;
+      display: flex;
+      overflow: auto;
+      .chaxun-dialog{
+        width: 700px;
+        margin-left: 20px;
+        padding:20px;
+        border:1px solid @borderColor;
+      }
+			
+		}
 </style>

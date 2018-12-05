@@ -24,7 +24,7 @@
           <div class="chufang-table">
 
       
-            <el-table :data="list">
+            <el-table :data="list" v-loading="loading">
               <!-- <el-table-column label="详情" type="expand">
                 detail
               </el-table-column> -->
@@ -91,7 +91,8 @@ export default {
   data () {
     return {
       list: [],
-      value: ''
+      value: '',
+      loading: false
     }
   },
   methods: {
@@ -117,9 +118,10 @@ export default {
     },
 
     async searchMed () {
+      this.loading = true
       let res = await this.api.med.list({ likeStr: this.value })
       let { data: { data } } = res
-
+      this.loading = false
       this.list.push(...data)
       // this.list = this.getUnique(this.list)
       console.log(this.list, 'beforelist')

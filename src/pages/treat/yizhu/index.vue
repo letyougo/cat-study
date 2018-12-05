@@ -99,7 +99,7 @@
 
       <div>
         <el-form inline>
-            <el-button type="primary" @click="print=true">打印并结束</el-button>
+            <el-button type="warning" @click="print=true">打印并结束</el-button>
         </el-form>
       </div>
     </div>
@@ -194,8 +194,8 @@ export default {
     },
     async searchIll (query) {
       let res = await this.api.disease.list3({ caseId: this.$route.query.id, diseaseName: query })
-      let {data: {data}} = res
-      
+      let { data: { data } } = res
+
       data = data.map(item => {
         item.pick = false
         item.options = item.treatments.map(item => {
@@ -232,19 +232,19 @@ export default {
       let {
         data: { data }
       } = res
-        data.pick = false
-        data.options = data.treatments.map(item => {
-          return {
-            pick: false,
-            label: item
-          }
-        })
-        data.med = {
-          visible: false,
-          st: [],
-          docAdvice: '',
-          otherTreatment: ''
+      data.pick = false
+      data.options = data.treatments.map(item => {
+        return {
+          pick: false,
+          label: item
         }
+      })
+      data.med = {
+        visible: false,
+        st: [],
+        docAdvice: '',
+        otherTreatment: ''
+      }
       this.uncertainTreatments = [data]
     },
     async saveTreatment (item, index) {
@@ -301,7 +301,7 @@ export default {
       console.log('yizhu.list', data)
       this.list = data
     },
-    addItem() {
+    addItem () {
       let flag = false
       this.list.forEach(item => {
         if (item.names === this.searchResult[this.selectItem].names) {
@@ -312,23 +312,22 @@ export default {
         this.list.push(this.searchResult[this.selectItem])
       }
     },
-    formatProcess(process) {
+    formatProcess (process) {
       if (process.includes('【')) {
         let arr = process.split('【')
         arr.shift()
         let result = arr.map(item => {
-            if (item.includes('术式')) {
-                let splitArr = item.replace('术式】', '').split('。')
-                let forMatArr = splitArr.map((item, index) => {
-                    return `${item}。`
-                })
-                forMatArr.unshift('【术式】')
-                forMatArr.pop()
-                return [... forMatArr]
-            } else {
-                return item = `【${item}`
-            }
-            
+          if (item.includes('术式')) {
+            let splitArr = item.replace('术式】', '').split('。')
+            let forMatArr = splitArr.map((item, index) => {
+              return `${item}。`
+            })
+            forMatArr.unshift('【术式】')
+            forMatArr.pop()
+            return [...forMatArr]
+          } else {
+            return item = `【${item}`
+          }
         })
         return result
       } else {
@@ -393,17 +392,16 @@ export default {
       display: flex;
       overflow-x: auto;
       .record-item {
+        margin-right: 20px;
         width: 416px;
         min-height: 300px;
         border: 1px solid @borderColor;
         padding: 25px 27px;
         color: #666666;
         flex-shrink: 0;
-        &:first-child {
-          margin-right: 23px;
-        }
+        
         &:last-child {
-          margin-left: 23px;
+          margin-right: 0;
         }
         > .record-title {
           font-weight: bold;

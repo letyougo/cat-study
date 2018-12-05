@@ -56,7 +56,7 @@
                     治疗方案
                 </div>
             </div>
-            <el-table :data="item.prescription">
+            <el-table :data="item.prescription" v-if="!hideResult">
                 <el-table-column label="药品名称" prop="medicineName">
                    
                   </el-table-column>
@@ -67,7 +67,7 @@
                 <el-table-column label="次/天" prop="days"></el-table-column>
             </el-table>
                
-          <div class="after">
+          <div class="after" v-if="!hideResult">
               <div class="title">
                   预后护理
               </div>
@@ -88,7 +88,15 @@ import axios from 'axios'
 import check from '../pages/checktpl/check'
 export default{
   name: 'bingli',
-  props: ['id'],
+  props: {
+    id: {
+      type: Number
+    },
+    hideResult: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       owner: {},
@@ -99,6 +107,7 @@ export default{
         { prescription: [] }
       ],
       hide: false
+
     }
   },
   components: {

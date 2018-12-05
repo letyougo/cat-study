@@ -87,8 +87,8 @@
         </el-dialog>
 
         <el-dialog title="增加医院" :visible.sync="add.visible">
-          <el-form label-width="100px">
-            <el-form-item label="医院名称">
+          <el-form :model="add" label-width="100px" ref="addForm">
+            <el-form-item label="医院名称" prop="names" :rules="[{ required: true, message: '医院名称不能为空', trigger: 'blur' }]">
               <el-input v-model="add.names" placeholder=""></el-input>
             </el-form-item>
           </el-form>
@@ -201,9 +201,13 @@ export default {
       this.reload()
     },
     async addAction () {
-      await this.api.hospital.add({ names: this.add.names })
-      this.add.visible = false
-      this.reload()
+      this.$refs.addForm.validate(async (valid) => {
+        if (valid) {
+          await this.api.hospital.add({ names: this.add.names })
+          this.add.visible = false
+          this.reload()
+        }
+      })
     },
     async update (item) {
       if (item.names.trim() === '') {
@@ -241,14 +245,13 @@ export default {
       this.fetch()
     },
     async expandChange (item, list) {
-      let res = await this.api.hospital.listById({ hospitalId: item.id})
+      let res = await this.api.hospital.listById({ hospitalId: item.id })
       let { data: { data } } = res
       item.checks = data
       this.value = this.typeName[0]
       this.$nextTick(() => {
         item.filterChecks = item.checks.filter(check => check.typeName === this.value)
       })
-      
     },
     async updateReport () {
       this.showMoreDialog.visible = false
@@ -256,12 +259,17 @@ export default {
       this.$message.success('修改模板成功')
       this.fetch()
     },
-    deleteItem (id) {
-      this.api.hospital.del(id).then(res => this.reload())
+    async deleteItem (id) {
+      try {
+        await this.$confirm('确定删除吗?')
+        this.api.hospital.del(id).then(res => this.reload())
+      } catch (e) {
+
+      }
     },
-    deleteTemplate(id) {
+    deleteTemplate (id) {
       console.log(this.api)
-      this.api.check.manager.deleteCheckHospital({itemId: id}).then(res => this.reload())
+      this.api.check.manager.deleteCheckHospital({ itemId: id }).then(res => this.reload())
     }
   },
   created () {

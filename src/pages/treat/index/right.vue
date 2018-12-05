@@ -416,7 +416,7 @@ export default {
     async search (query) {
       let res = await this.api.check.findCheckByHospitalId(query)
       let { data: { data } } = res
-      //let list = this.dialog.list
+      // let list = this.dialog.list
       this.searchResult = data.map(item => {
         return {
           checkName: item,
@@ -428,11 +428,11 @@ export default {
       })
       /*list = [...list, ...data]
 
-      this.dialog.list = list*/
+      this.dialog.list = list */
     },
     async addItem () {
       console.log(this.searchResult[this.selectItem])
-      this.dialog.list = [... this.dialog.list, ... [this.searchResult[this.selectItem]]]
+      this.dialog.list = [...this.dialog.list, ...[this.searchResult[this.selectItem]]]
     }
   },
   created () {
