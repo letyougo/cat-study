@@ -143,9 +143,9 @@
           <bingli v-if="print" :id="$route.query.id"></bingli>
       </div>
       <span slot="footer">
-        <el-button @click="print=false">放弃打印</el-button>
-        <el-button @click="printPage">打印</el-button>
-        <el-button @click="startPrint" type="primary">结束诊疗</el-button>
+      
+        <el-button @click="startPrint" type="primary">打印并且结束诊疗</el-button>
+         <el-button type="primary" @click="$router.push('/check')">去导诊页</el-button>
       </span>
     </el-dialog>
 
@@ -264,14 +264,15 @@ export default {
       // console.log(item, index, 'item-index')
     },
     async startPrint () {
+      this.printPage()
       let id = this.$route.query.id
       let res = await this.api.case.update({
         status: 4,
         id
       })
-      this.$message.success('已结束该病历')
-      this.$router.push('/check/ed')
-      this.print = false
+      // this.$message.success('已结束该病历')
+      // this.$router.push('/check/ed')
+      // this.print = false
     },
 
     async fetch () {

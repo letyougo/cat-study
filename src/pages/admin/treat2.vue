@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column label="子项">
           <template scope="scope">
-            <div v-if="scope.row.child.length>0">有</div>
+            <div v-if="scope.row.child && scope.row.child.length>0">有</div>
             <div v-else>无</div>
           </template>
         </el-table-column>
@@ -45,14 +45,7 @@
       </el-table>
       <br/>
       <el-button v-if="edit" type="primary" icon="el-icon-plus"
-        @click="(e)=>{
-          this.list.push({
-            dimensionId:this.$route.query.id,
-            parentId:0,
-            names:'',
-            level:'f'
-          })
-        }"
+        @click="push"
       
       >增加</el-button>
     </div>
@@ -69,6 +62,14 @@
         }
       },
       methods: {
+        push(){
+          this.list.push({
+            dimensionId:this.$route.query.id,
+            parentId:0,
+            names:'',
+            level:'f'
+          })
+        },
         async fetch () {
           this.loading = true
           let res = await api.visit.listOptionsByDimensionId({ dimensionId: this.$route.query.id })
@@ -83,11 +84,11 @@
           this.list = data
         },
         async save () {
-          let res = await api.visit.update({
-            dimensionId: this.$route.query.id,
-            options: this.list
-          })
-          this.fetch()
+          // let res = await api.visit.update({
+          //   dimensionId: this.$route.query.id,
+          //   names: this.list.map(item=>item.names)
+          // })
+          // this.fetch()
         }
       },
       mounted () {
