@@ -67,6 +67,14 @@ export default {
       const url = '/visitOption/update'
       const res = await request.post(url, data)
       return res
+    },
+    async addVisitOpt (data) {
+      let res = await request.post(`/visitOption/add`, data)
+      return res
+    },
+    async delVisitOpt (params) {
+      let res = await request.get(`/visitOption/delete`, { params })
+      return res
     }
   }
 }

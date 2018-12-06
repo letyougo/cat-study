@@ -24,5 +24,13 @@ export default {
   async search (params) {
     let res = await request.get(`/search`, { params })
     return res
+  },
+  async addVisitOpt (data) {
+    let res = await request.post(`/visitOption/add`, data)
+    return res
+  },
+  async delVisitOpt (data) {
+    let res = await request.post(`/visitOption/delete`, data)
+    return res
   }
 }

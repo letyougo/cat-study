@@ -3,12 +3,13 @@
      
       <el-form inline>
         <el-form-item label="">
-            <el-button type="" icon="el-icon-edit" @click="edit=true">编辑</el-button>
-            <el-button type="primary" @click="save">保存</el-button>
+            <!-- <el-button type="" icon="el-icon-edit" @click="edit=true">编辑</el-button> -->
+            <!-- <el-button type="primary" @click="save">保存</el-button> -->
+            <el-button type="primary" @click="add">增加</el-button>
         </el-form-item>
       </el-form>
       <el-table :data="list" v-loading="loading">
-        <el-table-column label="详情" width="100px" type="expand">
+        <!-- <el-table-column label="详情" width="100px" type="expand">
           <template scope="scope">
               
           <el-form inline>
@@ -23,7 +24,7 @@
               </el-table-column>
             </el-table>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="id" prop="id"></el-table-column>
         <el-table-column label="名称" prop="names">
           <template scope="scope">
@@ -37,9 +38,9 @@
             <div v-else>无</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" v-if="edit">
+        <el-table-column label="操作" >
           <template scope="scope">
-            <el-button type="danger" @click="list.splice(scope.$index,1)">删除</el-button>
+            <el-button type="danger" @click="del(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -62,12 +63,33 @@
         }
       },
       methods: {
-        push(){
+        async add () {
+          let { value } = await this.$prompt('请输入名称')
+          let res = await api.visit.addVisitOpt({
+            dimensionId: this.$route.query.id,
+            names: value,
+            level: 'f',
+            parentId: 0
+          })
+          this.fetch()
+        },
+        async del (item) {
+          try {
+            await this.$confirm('确定删除吗?')
+            let res = await api.visit.delVisitOpt({
+              id: item.id
+            })
+            this.fetch()
+          } catch (e) {
+    
+          }
+        },
+        push () {
           this.list.push({
-            dimensionId:this.$route.query.id,
-            parentId:0,
-            names:'',
-            level:'f'
+            dimensionId: this.$route.query.id,
+            parentId: 0,
+            names: '',
+            level: 'f'
           })
         },
         async fetch () {
@@ -84,11 +106,13 @@
           this.list = data
         },
         async save () {
-          // let res = await api.visit.update({
-          //   dimensionId: this.$route.query.id,
-          //   names: this.list.map(item=>item.names)
-          // })
-          // this.fetch()
+          let res = await api.visit.update({
+            dimensionId: this.$route.query.id,
+            names: this.list.map(item => item.names).join(','),
+            level: 'f',
+            parentId: '0'
+          })
+          this.fetch()
         }
       },
       mounted () {
