@@ -16,5 +16,13 @@ export default {
   async addLearnCaseId (params) {
     let res = await request.post(`/knowledge/addLearnCaseId`, params)
     return res
+  },
+  async searchOpt (params) {
+    let res = await request.get(`/searchOpt`, { params })
+    return res
+  },
+  async search (params) {
+    let res = await request.get(`/search`, { params })
+    return res
   }
 }

@@ -47,9 +47,41 @@
           </div>
         </div>
 
-        
     </div>
-    
+
+    <el-dialog title="模拟病例学习" :visible.sync="visible" width="1300px" show-close>
+      <div class="moni-content">
+        
+          <div class="chaxun-dialog" style="margin-left: 10px"> 
+              <bingli v-if="caseId" :id="caseId" :hideResult="true"></bingli>
+              <div class="chaxun-dialog-content">
+                <el-form >
+                    <el-form-item label="确诊疾病">
+                      {{diagDisease}}
+                     
+                      </el-form-item>
+                  <el-form-item label="治疗方案">
+                    {{treatment}}
+                  
+                  </el-form-item>
+                  <el-form-item label="预后护理">
+                    {{prognosis}}
+                    
+                    </el-form-item>
+                </el-form>
+              </div>
+          </div>
+
+          <div class="chaxun-dialog" style="margin-left: 10px"> 
+              <bingli v-if="caseId" :id="caseId"></bingli>   
+            </div>
+      </div>
+
+      <span slot="footer">
+        <el-button type="" @click="visible=false">关闭</el-button>
+      </span>
+    </el-dialog>
+    <br/>
     <p style="text-align:center">
         <el-button type="primary" @click="submit">提交</el-button>
       </p>
@@ -80,9 +112,7 @@ export default {
       treatment: '',
       prognosis: '',
       showBtn: true,
-      dialog: {
-        visible: false
-      }
+      visible: false
     }
   },
   computed: {
@@ -104,6 +134,7 @@ export default {
         userId: global.user.id,
         caseId: this.caseId
       }
+      this.visible = true
       let res = await api.addLearnCaseId(obj)
       this.$message.success('学习病历成功')
     }
@@ -130,7 +161,7 @@ export default {
       display: flex;
       overflow: auto;
       .chaxun-dialog{
-        width: 700px;
+        width: 650px;
         margin-left: 20px;
         padding:20px;
         border:1px solid @borderColor;

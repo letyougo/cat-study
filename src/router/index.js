@@ -26,6 +26,8 @@ import AdminHospital from '@/pages/admin/hospital'
 import AdminIll from '@/pages/admin/ill'
 import AdminChufang from '@/pages/admin/chufang'
 import AdminTreat from '@/pages/admin/treat'
+import AdminTreat1 from '@/pages/admin/treat1'
+import AdminTreat2 from '@/pages/admin/treat2'
 import AdminCheck from '@/pages/admin/check'
 import AdminDaoyuan from '@/pages/admin/daoyuan'
 import AdminOperation from '@/pages/admin/operation'
@@ -179,6 +181,14 @@ const router = new Router({
           component: AdminTreat
         },
         {
+          path: 'treat1',
+          component: AdminTreat1
+        },
+        {
+          path: 'treat2',
+          component: AdminTreat2
+        },
+        {
           path: 'check',
           component: AdminCheck
         },
@@ -227,9 +237,9 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
   // let roleName = global.user.role.roleName
-  
+
   // let isAdmin = to.path.startsWith('/admin')
   // let hasAdminRight = ['超级管理员','运营管理员'].includes(roleName)
 

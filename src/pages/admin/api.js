@@ -51,5 +51,22 @@ export default {
       const res = await request.post(url, data)
       return res
     }
+  },
+  visit: {
+    async listAllItems () {
+      const url = '/visit/listAllItems'
+      const res = await request.get(url)
+      return res
+    },
+    async listOptionsByDimensionId (params) {
+      const url = '/visitOption/listOptionsByDimensionId'
+      const res = await request.get(url, { params })
+      return res
+    },
+    async update (data) {
+      const url = '/visitOption/update'
+      const res = await request.post(url, data)
+      return res
+    }
   }
 }

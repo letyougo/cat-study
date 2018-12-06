@@ -13,7 +13,7 @@
       <div>性别：{{owner.gender === 1 ? '男' : '女'}}</div>
       <div>年龄：{{owner.catYears}}岁{{owner.catMonths}}个月</div>  
       <div>
-          日期：{{owner.createTime}}
+          日期：{{owner.createTime | date}}
       </div>
      
     </div>

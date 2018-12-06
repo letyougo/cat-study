@@ -34,7 +34,9 @@
         </el-table-column>
         <el-table-column label="子选项" prop="options">
           <template scope="scope">
-            <div v-if="scope.row.options.length>0">有</div>
+            <div v-if="scope.row.options.length>0">
+              <el-button type="text" @click="$router.push('/admin/treat2?id='+scope.row.id)">查看</el-button>
+            </div>
             <div v-else>无</div>
           </template>
         </el-table-column>
@@ -86,7 +88,7 @@ export default {
           'parentId': 0,
           'child': []
         })
-      }catch (e) {
+      } catch (e) {
         console.log('e', e)
       }
     },

@@ -13,6 +13,7 @@ import './element-reset.less'
 import api from './api'
 import $ from 'jquery'
 import './printThis'
+import moment from 'moment'
 Vue.config.productionTip = false
 const jQuery = $
 Vue.use(ElementUI)
@@ -66,7 +67,9 @@ Object.assign(global, {
   isYunyin: false
 })
 
-
+Vue.filter('date', (val) => {
+  return moment(val).format('YYYY-MM-DD')
+})
 Vue.use(api)
 
 /* eslint-disable no-new */

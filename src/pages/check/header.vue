@@ -34,8 +34,8 @@
         </el-form-item>
         <el-form-item label="猫咪性别" prop="gender">
           <el-radio-group v-model="addForm.gender">
-            <el-radio :label="1">公</el-radio>
-            <el-radio :label="2">母</el-radio>
+            <el-radio :label="1">公猫</el-radio>
+            <el-radio :label="2">母猫</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="主人手机" prop="ownerPhone">
