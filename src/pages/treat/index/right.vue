@@ -73,9 +73,9 @@
              
 
               <div slot="footer" class="footer">
-                <el-button type="primary" @click="print">打印</el-button>
-                <el-button type="primary" @click="huayan">开具化验</el-button>
-                <el-button @click="dialog.visible=false">取消</el-button>
+                <el-button type="primary" @click="$router.push('/check')">返回导诊</el-button>
+                <el-button type="primary" @click="huayan">开具化验并打印</el-button>
+                <el-button @click="dialog.visible=false">关闭</el-button>
               </div>
             </el-dialog>
 
@@ -369,7 +369,7 @@ export default {
         item.rate = (item.similarity * 100 / total).toFixed(1) + '%'
         return item
       }).sort((next, pre) => {
-        return pre.similarity - next.similarity ? 1 : -1
+        return pre.similarity - next.similarity ? -1 : 1
       })
 
       this.list = data
@@ -404,8 +404,10 @@ export default {
       this.dialog.list = list
     },
     async huayan () {
-      let res = await this.api.check.addReport(this.$route.query.id, { data: this.dialog.list })
-      this.dialog.visible = false
+      this.print()
+      await this.api.check.addReport(this.$route.query.id, { data: this.dialog.list })
+      this.$message.success('开具化验成功')
+      // this.dialog.visible = false
     },
     async fetchCheck () {
 
@@ -426,7 +428,7 @@ export default {
           checkDoctorName: ''
         }
       })
-      /*list = [...list, ...data]
+      /* list = [...list, ...data]
 
       this.dialog.list = list */
     },
@@ -485,7 +487,7 @@ export default {
 }
 .action{
     display: flex;
-    justify-content: space-around;
+    
 }
 .behavior{
     padding: 0 @left;

@@ -40,13 +40,16 @@
                  <div>
                     <ul>
                         <li @click="$router.push('/doctor/moni')" :class="{active:$route.path === '/doctor/moni' ? true : false}">
-                            <span>O</span>模拟病历学习
+                            <!-- <span>O</span> -->
+                            模拟病历学习
                         </li>
                         <li @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
-                            <span>O</span>个人历史病历
+                            <!-- <span>O</span> -->
+                            个人历史病历
                         </li>
                         <li @click="$router.push('/doctor/xuexi')" :class="{active:$route.path === '/doctor/xuexi' ? true : false}">
-                            <span>O</span>学习历史病历
+                            <!-- <span>O</span> -->
+                            学习历史病历
                         </li>
                     </ul>
                 </div>

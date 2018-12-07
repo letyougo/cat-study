@@ -143,9 +143,10 @@
           <bingli v-if="print" :id="$route.query.id"></bingli>
       </div>
       <span slot="footer">
-      
+        
         <el-button @click="startPrint" type="primary">打印并且结束诊疗</el-button>
          <el-button type="primary" @click="$router.push('/check')">去导诊页</el-button>
+        <el-button type="" @click="print=false">关闭</el-button>
       </span>
     </el-dialog>
 

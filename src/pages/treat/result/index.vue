@@ -1,7 +1,7 @@
 <template>
   <div class="result">
     <p class="result-title" >
-        <tip></tip>基本情况
+        <tip></tip>检查结果
     </p>
     <el-form inline>
       <el-form-item label="出结果日期">

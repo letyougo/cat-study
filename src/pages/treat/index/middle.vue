@@ -1029,6 +1029,7 @@ export default {
       this.list = list
       console.log('fetch-item', 'fetch-item')
       this.fetchItem()
+      this.add()
     }
   },
   created () {},
