@@ -3,6 +3,9 @@
      
       <el-form inline>
         <el-form-item label="">
+          <el-button type="" @click="$router.back()">返回</el-button>
+        </el-form-item>
+        <el-form-item label="">
             <!-- <el-button type="" icon="el-icon-edit" @click="edit=true">编辑</el-button> -->
             <!-- <el-button type="primary" @click="save">保存</el-button> -->
             <el-button type="primary" @click="add">增加</el-button>

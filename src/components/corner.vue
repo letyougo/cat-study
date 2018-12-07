@@ -1,6 +1,5 @@
 <template>
   <span class="corner">
-    O
   </span>
 </template>
 

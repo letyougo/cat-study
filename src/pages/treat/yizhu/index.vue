@@ -341,7 +341,9 @@ export default {
       this.list = data
     }
   },
-  created () {},
+  created () {
+    this.api.log('zhiliao')
+  },
   async mounted () {
     const res = await this.api.check.isAllReady(this.$route.query.id)
     let { data: { status } } = res

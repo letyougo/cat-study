@@ -140,7 +140,7 @@ export default {
     }
   },
   created () {
-
+    this.api.log('moni')
   },
   mounted () {
     this.generate()

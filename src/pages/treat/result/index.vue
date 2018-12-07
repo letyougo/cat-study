@@ -165,6 +165,9 @@ export default {
   components: {
     tip, checktpl
   },
+  created () {
+    this.api.log('jiancha')
+  },
   mounted () {
     this.fetch()
   }

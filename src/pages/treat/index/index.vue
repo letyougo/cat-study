@@ -39,7 +39,7 @@ export default {
 
   },
   created () {
-
+    this.api.log('zhenshi')
   },
   mounted () {
 

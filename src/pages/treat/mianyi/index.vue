@@ -232,28 +232,27 @@ export default {
       this.$message.success('开具处方成功')
       this.fetch()
     },
-    formatProcess(process) {
-        let arr = process.split('【')
-        arr.shift()
-        let result = arr.map(item => {
-            if (item.includes('术式')) {
-                let splitArr = item.replace('术式】', '').split('。')
-                let forMatArr = splitArr.map((item, index) => {
-                    return `${item}。`
-                })
-                forMatArr.unshift('【术式】')
-                forMatArr.pop()
-                return [... forMatArr]
-            } else {
-                return item = `【${item}`
-            }
-            
-        })
-        return result
+    formatProcess (process) {
+      let arr = process.split('【')
+      arr.shift()
+      let result = arr.map(item => {
+        if (item.includes('术式')) {
+          let splitArr = item.replace('术式】', '').split('。')
+          let forMatArr = splitArr.map((item, index) => {
+            return `${item}。`
+          })
+          forMatArr.unshift('【术式】')
+          forMatArr.pop()
+          return [...forMatArr]
+        } else {
+          return item = `【${item}`
+        }
+      })
+      return result
     }
   },
   created () {
-
+    this.api.log('mianyi')
   },
   mounted () {
     this.fetch()

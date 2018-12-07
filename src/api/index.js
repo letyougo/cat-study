@@ -46,9 +46,9 @@ request.interceptors.request.use(
 
     return req
   },
-  /*function (error) {
+  function (error) {
     App.$message.error(error)
-  }*/
+  }
 )
 request.interceptors.response.use(function (res) {
   if (res.headers.token && res.headers.token === 'timeout') {
@@ -56,7 +56,7 @@ request.interceptors.response.use(function (res) {
   }
   let { code, desc } = res.data
   if (code !== 200) {
-    //return App.$message.error(desc)
+    return App.$message.error(desc)
   }
   return res
 })
@@ -250,7 +250,7 @@ const api = {
   // 疾病
   ill: {
     async list (params) {
-      const url = '/disease/listDiseaseByParam'
+      const url = '/disease/listByParam'
       let res = await request.get(url, { params })
       return res
     },
@@ -459,11 +459,6 @@ const api = {
       let res = await request.get(url, { params })
       return res
     },
-    async list3 (params) {
-      const url = '/disease/searchDisease'
-      let res = await request.get(url, { params })
-      return res
-    },
     async listDiseaseHightSymp (id) {
       const url = `/disease/listDiseaseHightSymp?diseaseId=${id}`
       const res = await request.get(url)
@@ -499,7 +494,13 @@ const api = {
       }
     })
     return res
-  }
+  },
+  log: (module) => request.get('/data/click', { params: {
+    day: moment().format('YYYYMMDD'),
+    tag: 'dianji',
+    module
+  } }),
+  getLog: (params) => request.get('/data/statistics', { params })
 }
 
 export default {

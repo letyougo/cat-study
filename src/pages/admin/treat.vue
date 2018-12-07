@@ -15,9 +15,9 @@
               <el-form-item label="使用情况">
                 <el-switch v-model="scope.row.isUsed" active-text="使用" inactive-text="不使用"></el-switch>
               </el-form-item>
-              <el-form-item label="接诊项" v-if="scope.row.options && scope.row.options.length>0">
+              <!-- <el-form-item label="接诊项" v-if="scope.row.options && scope.row.options.length>0">
                   <textarea style="font-size: 12px;width: 500px;height: 500px;" v-model="scope.row.json"></textarea>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="">
                 <el-button type="primary" size="mini" @click="update(scope.row)">确定</el-button>
               </el-form-item>

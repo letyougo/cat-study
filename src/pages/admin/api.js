@@ -1,4 +1,5 @@
 import request from 'axios'
+import moment from 'moment'
 
 export default {
   symptom: {
@@ -77,4 +78,5 @@ export default {
       return res
     }
   }
+
 }

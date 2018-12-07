@@ -37,7 +37,7 @@
       <div style="flex: 1">
         <span  @click="$router.push('/check')"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
             <el-tag :type="  $route.path.startsWith('/check') ? 'primary' :'info' "
-           >导诊首页</el-tag>
+            >导诊首页</el-tag>
         </span>
         <span v-for="item in tabs" :key="item.id"  @click="go(item)"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
             <el-tag :type=" item.id == $route.query.id ? 'primary' : 'info' " closable 
@@ -164,6 +164,7 @@ export default {
     closeTab (obj) {
       this.tabs = this.tabs.filter(item => item.id !== obj.id)
       localStorage.setItem('tabs', JSON.stringify(this.tabs))
+      this.$router.go(-1)
     },
     handleUpdate () {
       this.$refs.change.validate(async (valid) => {

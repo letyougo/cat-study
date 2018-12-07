@@ -57,7 +57,7 @@ export default {
     }
   },
   created () {
-
+    this.api.log('zhishi')
   },
   mounted () {
 

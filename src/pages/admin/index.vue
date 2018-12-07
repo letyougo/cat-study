@@ -27,39 +27,34 @@
         </div>
         <div class="admin-data">
             <div class="data-item">
-                <div class="data-value">4000</div>
+                <div class="data-value">12</div>
                 <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
-                <div class="data-value">4000</div>
+                <div class="data-value">12</div>
                 <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
-                <div class="data-value">4000</div>
+                <div class="data-value">12</div>
                 <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
-                <div class="data-value">4000</div>
+                <div class="data-value">12</div>
                 <div class="data-tip">总病历数（份）</div>
             </div>
         </div>
         <div class="admin-title search-action">
-            <div>
-                <corner></corner>昨日各功能模块点击量
-            </div>
+           
             <div>
                 <el-form inline>
-                  <el-form-item >
-                      <el-input  placeholder=""></el-input>
+                  <el-form-item label="昨日各功能模块点击量">
+                     <el-date-picker v-model="startTime" placeholder=""></el-date-picker>
                   </el-form-item>
                   <el-form-item >
-                      <el-input  placeholder=""></el-input>
+                    <el-date-picker v-model="endTime" placeholder=""></el-date-picker>
                   </el-form-item>
-                  <el-form-item >
-                      <el-input  placeholder=""></el-input>
-                  </el-form-item>
-                  <el-form-item >
-                      <el-input  placeholder=""></el-input>
+                  <el-form-item label="">
+                      <el-button type="primary" @click="fetch">查询</el-button>
                   </el-form-item>
                 </el-form>
             </div>
@@ -73,7 +68,7 @@
 </template>
 <script>
 import corner from '../../components/corner'
-
+import moment from 'moment'
 export default {
   name: 'admin',
   props: {
@@ -85,30 +80,58 @@ export default {
   data () {
     return {
       chartData: {
-        columns: ['日期', '访问用户', '下单用户', '下单率'],
+        columns: ['name', '诊室检查', '检查结果', '治疗与医嘱', '免疫与健康', '知识库查询'],
         rows: [
-          { '日期': '1/1', '访问用户': 1393, '下单用户': 1093, '下单率': 0.32 },
-          { '日期': '1/2', '访问用户': 3530, '下单用户': 3230, '下单率': 0.26 },
-          { '日期': '1/3', '访问用户': 2923, '下单用户': 2623, '下单率': 0.76 },
-          { '日期': '1/4', '访问用户': 1723, '下单用户': 1423, '下单率': 0.49 },
-          { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
-          { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 }
+
         ]
       },
-      showDetail: false
+      showDetail: false,
+      startTime: moment().add('days', -1),
+      endTime: moment().add('days', 1)
     }
   },
   computed: {
 
   },
   methods: {
+    async fetch () {
+      let startTime = moment(this.startTime).format('YYYYMMDD')
+      let endTime = moment(this.endTime).format('YYYYMMDD')
+      console.log(startTime, endTime)
+      let res = await this.api.getLog({ startTime, endTime, 'tag': 'dianji' })
+      let { data: { data } } = res
+      data = data.map(item => {
+        if (item.module === 'zhenshi') {
+          item['诊室检查'] = item.c
+          item.name = '诊室检查'
+        }
+        if (item.module === 'jiancha') {
+          item['检查结果'] = item.c
+          item.name = '检查结果'
+        }
+        if (item.module === 'mianyi') {
+          item['治疗与医嘱'] = item.c
+          item.name = '治疗与医嘱'
+        }
+        if (item.module === 'zhiliao') {
+          item['治疗与医嘱'] = item.c
+          item.name = '治疗与医嘱'
+        }
+        if (item.module === 'zhishi') {
+          item['知识库查询'] = item.c
+          item.name = '知识库查询'
+        }
 
+        return item
+      })
+      this.chartData.rows = data
+    }
   },
   created () {
 
   },
   mounted () {
-
+    this.fetch()
   }
 }
 </script>

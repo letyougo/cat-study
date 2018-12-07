@@ -148,7 +148,7 @@ export default {
     }
   },
   created () {
-
+    this.api.log('geren')
   },
   mounted () {
     this.reload()

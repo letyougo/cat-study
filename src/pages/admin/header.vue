@@ -27,30 +27,30 @@
                     <p>诊室检查</p>
                     <ul>
                         <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
-                            <span>O</span>疾病管理
+                            疾病管理
                         </li>
                         <!-- <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
                             <span>O</span>处方管理
                         </li> -->
 
                         <li @click="$router.push('/admin/ysbl')" :class="{active:$route.path === '/admin/ysbl' ? true : false}">
-                            <span>O</span>医生病历
+                            医生病历
                         </li>
                       
                         <li @click="$router.push('/admin/treat')" :class="{active:$route.path === '/admin/treat' ? true : false}">
-                            <span>O</span>诊疗模块管理
+                            诊疗模块管理
                         </li>
                         <!-- <li @click="$router.push('/admin/treat1')" :class="{active:$route.path === '/admin/treat1' ? true : false}">
                             <span>O</span>诊疗模块管理
                         </li> -->
                         <li @click="$router.push('/admin/daoyuan')" :class="{active:$route.path === '/admin/daoyuan' ? true : false}">
-                            <span>O</span>到医检查管理
+                            到医检查管理
                         </li>
                         <li @click="$router.push('/admin/check')" :class="{active:$route.path === '/admin/check' ? true : false}">
-                            <span>O</span>检查管理
+                            检查管理
                         </li>
                         <li @click="$router.push('/admin/operation')" :class="{active:$route.path === '/admin/operation' ? true : false}">
-                            <span>O</span>操作管理
+                            操作管理
                         </li>
                     </ul>
                 </div>
