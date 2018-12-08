@@ -5,7 +5,7 @@
           	<corner></corner>知识库查询
         </div>
 				<div>
-            <el-input v-model="keyword"  placeholder="搜索" icon="search" style="width:430px;">
+            <el-input v-model="keyword"  placeholder="搜索" icon="search" @keyup.enter.native="fetch" style="width:430px;">
               	<template slot="prefix">
                     <i class="el-icon-search icon-search"></i>
                     </template>

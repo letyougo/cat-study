@@ -10,6 +10,7 @@
               placeholder="搜索药品"
               icon="search"
               style="width:430px;"
+              @keyup.enter.native="searchMed"
             >
               <template slot="prefix">
                 <i class="el-icon-search icon-search"></i>

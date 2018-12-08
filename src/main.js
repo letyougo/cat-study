@@ -70,6 +70,10 @@ Object.assign(global, {
 Vue.filter('date', (val) => {
   return moment(val).format('YYYY-MM-DD')
 })
+Vue.filter('fix2', (val) => {
+  return parseInt(val)
+})
+
 Vue.use(api)
 
 /* eslint-disable no-new */

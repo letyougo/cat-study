@@ -4,10 +4,10 @@
 			<el-form :model="filter" :inline="true">
         
 				<el-form-item label="主人姓名">
-					<el-input v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
+					<el-input @keyup.enter.native="fetch" v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="猫咪姓名">
-					<el-input v-model="filter.catName" placeholder="" class="line-input"></el-input>
+					<el-input @keyup.enter.native="fetch" v-model="filter.catName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="入院时间">
 					<el-date-picker v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
@@ -132,7 +132,11 @@
               <div v-for="item in config.ghxm" :key="item.id" v-if="item.id == scope.row.type">{{item.name}}</div>
             </template>
           </el-table-column>
-          <el-table-column label="入院时间" prop="createTime"></el-table-column>
+          <el-table-column label="入院时间" prop="createTime">
+            <template scope="scope">
+              {{scope.row.createTime || 'date'}}
+            </template>
+          </el-table-column>
           <el-table-column label="姓名" prop="catName" width="280px">
               <template scope="scope">
                 <template v-if="$route.path === '/check/ing'">

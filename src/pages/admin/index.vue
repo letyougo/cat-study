@@ -27,20 +27,20 @@
         </div>
         <div class="admin-data">
             <div class="data-item">
-                <div class="data-value">12</div>
+                <div class="data-value">{{stats.doctorUseCount}}</div>
+                <div class="data-tip">医生使用数</div>
+            </div>
+               <div class="data-item">
+                <div class="data-value">{{stats.caseTotalCount}}</div>
                 <div class="data-tip">总病历数（份）</div>
             </div>
                <div class="data-item">
-                <div class="data-value">12</div>
-                <div class="data-tip">总病历数（份）</div>
+                <div class="data-value">{{stats.caseNewCount}}</div>
+                <div class="data-tip">新病例数</div>
             </div>
                <div class="data-item">
-                <div class="data-value">12</div>
-                <div class="data-tip">总病历数（份）</div>
-            </div>
-               <div class="data-item">
-                <div class="data-value">12</div>
-                <div class="data-tip">总病历数（份）</div>
+                <div class="data-value">{{stats.avgCaseFillPercent | 'fix2'}}</div>
+                <div class="data-tip">简历完成度</div>
             </div>
         </div>
         <div class="admin-title search-action">
@@ -87,7 +87,13 @@ export default {
       },
       showDetail: false,
       startTime: moment().add('days', -1),
-      endTime: moment().add('days', 1)
+      endTime: moment().add('days', 1),
+      stats: {
+        avgCaseFillPercent: '',
+        caseNewCount: '',
+        caseTotalCount: '',
+        doctorUseCount: ''
+      }
     }
   },
   computed: {
@@ -125,12 +131,19 @@ export default {
         return item
       })
       this.chartData.rows = data
+    },
+    async getStats () {
+      let res = await this.api.getStats()
+      let { data: { data } } = res
+      this.stats = data
+      this.stats.avgCaseFillPercent = parseInt(data.avgCaseFillPercent)
     }
   },
   created () {
 
   },
   mounted () {
+    this.getStats()
     this.fetch()
   }
 }

@@ -500,7 +500,8 @@ const api = {
     tag: 'dianji',
     module
   } }),
-  getLog: (params) => request.get('/data/statistics', { params })
+  getLog: (params) => request.get('/data/statistics', { params }),
+  getStats: (params) => request.get('/stats/getStats', { params })
 }
 
 export default {
