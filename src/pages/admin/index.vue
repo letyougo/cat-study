@@ -48,12 +48,12 @@
             <div>
                 <el-form inline>
                   <el-form-item label="昨日各功能模块点击量">
-                     <el-date-picker v-model="startTime" placeholder=""></el-date-picker>
+                     <el-date-picker v-model="startTime" placeholder=""  @change="fetch"></el-date-picker>
                   </el-form-item>
                   <el-form-item >
-                    <el-date-picker v-model="endTime" placeholder=""></el-date-picker>
+                    <el-date-picker v-model="endTime" placeholder=""  @change="fetch"></el-date-picker>
                   </el-form-item>
-                  <el-select v-model="tag" placeholder="">
+                  <el-select v-model="tag" placeholder="" @change="fetch">
                     <el-option value="dianji" label="点击率"></el-option>
                     <el-option value="jiezhen" label="接诊量"></el-option>
                     <el-option value="huayan" label="开具化验量"></el-option>
@@ -112,13 +112,14 @@ export default {
 
   },
   methods: {
-    async fetch (tag) {
+    async fetch () {
       let startTime = moment(this.startTime).format('YYYYMMDD')
       let endTime = moment(this.endTime).format('YYYYMMDD')
       console.log(startTime, endTime)
       let res = await this.api.getLog({ startTime, endTime, 'tag': this.tag })
+
       let { data: { data } } = res
-      if (tag === 'dianji') {
+      if (this.tag === 'dianji') {
         data = data.map(item => {
           if (item.module === 'zhenshi') {
             item['诊室检查'] = item.c
@@ -145,17 +146,23 @@ export default {
             item.name = '知识库查询'
             return item
           }
-          return null
+        //   return null
         })
         data = data.filter(item => item)
+        console.log(data, 'data')
         this.chartData.rows = data
       } else {
+        data = data.map(item => {
+          item.day = moment(item.day).format('YYYY-MM-DD')
+          return item
+        })
         this.chartData2.rows = data
       }
     },
     async getStats () {
       let res = await this.api.getStats()
       let { data: { data } } = res
+
       this.stats = data
       this.stats.avgCaseFillPercent = parseInt(data.avgCaseFillPercent)
     }
