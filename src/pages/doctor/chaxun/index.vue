@@ -34,6 +34,13 @@
                 <div v-html="scope.row.desc"></div>
               </template>
           </el-table-column>
+          <el-table-column label="操作">
+            <template scope="scope">
+                <el-button type="primary"
+                @click="openDialog1(scope.row)">详情</el-button>
+            </template>
+         
+          </el-table-column>
         </el-table>
 
         <el-table v-loading="loading2" :data="list2"  v-if="active===2" key="operator">
@@ -53,6 +60,38 @@
             </template>
             </el-table-column>
         </el-table>
+
+        <el-dialog title="疾病详情" class="chaxun-dialog" :visible.sync="dialog1.visible">
+          <div>
+              <p class="chaxun-dialog-title">疾病名称</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.names"></div>
+
+              <p class="chaxun-dialog-title">疾病症状</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.symptom"></div>
+
+              <p class="chaxun-dialog-title">疾病症状</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.desc"></div>
+          </div>
+          <span slot="footer">
+              <el-button type="" @click="dialog1.visible=false">关闭</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="操作详情" class="chaxun-dialog" :visible.sync="dialog2.visible">
+            <div>
+                <p class="chaxun-dialog-title">疾病名称</p>
+                <div class="chaxun-dialog-content" v-html="dialog2.names"></div>
+  
+                <p class="chaxun-dialog-title">疾病症状</p>
+                <div class="chaxun-dialog-content" v-html="dialog2.prescription"></div>
+  
+                <p class="chaxun-dialog-title">疾病症状</p>
+                <div class="chaxun-dialog-content" v-html="dialog2.process"></div>
+            </div>
+            <span slot="footer">
+              <el-button type="" @click="dialog2.visible=false">关闭</el-button>
+            </span>
+          </el-dialog>
       
           <!-- <el-dialog :title="detail.names" class="chaxun-dialog" :visible.sync="detail.visible">
               <div>
@@ -129,7 +168,19 @@ export default {
       // },
       diseases: [],
       operations: [],
-      keyword: ''
+      keyword: '',
+      dialog1: {
+        names: '',
+        symptom: '',
+        desc: '',
+        visible: false
+      },
+      dialog2: {
+        names: '',
+        prescription: '',
+        process: '',
+        visible: false
+      }
     }
   },
   computed: {
@@ -141,6 +192,15 @@ export default {
       this.detail = {
         visible: true,
         ...item
+      }
+    },
+    openDialog1 (row) {
+      console.log('rowm', row)
+      this.dialog1 = {
+        visible: true,
+        names: row.names,
+        desc: row.desc,
+        symptom: row.symptom
       }
     },
     async fetch1 () {
