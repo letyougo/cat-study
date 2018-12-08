@@ -486,6 +486,11 @@ const api = {
       const url = '/prescription/addPrescription'
       let res = await request.post(url, data)
       return res
+    },
+    async getOperationById(id) {
+      const url = `operation/getById?id=${id}`
+      let res = await request.get(url)
+      return res
     }
   },
   // 上传文件

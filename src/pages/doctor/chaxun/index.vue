@@ -54,10 +54,15 @@
               <div v-html="scope.row.prescription"></div>
             </template>
             </el-table-column>
-            <el-table-column label="操作" prop="process">
+            <el-table-column label="操作" prop="process" width="450px">
               <template scope="scope" >
               <div v-html="scope.row.process"></div>
             </template>
+            </el-table-column>
+            <el-table-column label="详情">
+              <template scope="scope" >
+                  <el-button type="primary" @click="openChuzhi(scope.row)">详情</el-button>
+              </template>
             </el-table-column>
         </el-table>
 
@@ -77,21 +82,40 @@
             </span>
         </el-dialog>
 
-        <el-dialog title="操作详情" class="chaxun-dialog" :visible.sync="dialog2.visible">
-            <div>
-                <p class="chaxun-dialog-title">疾病名称</p>
-                <div class="chaxun-dialog-content" v-html="dialog2.names"></div>
-  
-                <p class="chaxun-dialog-title">疾病症状</p>
-                <div class="chaxun-dialog-content" v-html="dialog2.prescription"></div>
-  
-                <p class="chaxun-dialog-title">疾病症状</p>
-                <div class="chaxun-dialog-content" v-html="dialog2.process"></div>
+      <el-dialog  :visible.sync="chuzhi.visible">
+        <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
+        <template v-if="typeof chuzhi.desc === 'object'">
+        <div v-for="(item, index) in chuzhi.desc" :key="index" class="flex-box">
+                <template v-if="typeof item === 'object'">
+                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''" class="no-flex">
+                        <template v-if="step.includes('】')">
+                            <div class="bold"><b>{{step.substring(0, step.indexOf('】') + 1)}}</b></div>
+                            <div class="desc">{{step.substring(step.indexOf('】') + 1)}}</div>
+                        </template>
+                        <template v-else>
+                            <div class="bold"></div>
+                            <div class="desc">{{step}}</div>
+                        </template>
+                    </div>
+                </template>
+                <template v-else>
+                    <template v-if="item.includes('】')">
+                        <div class="bold"><b>{{item.substring(0, item.indexOf('】') + 1)}}</b></div>
+                        <div class="desc">{{item.substring(item.indexOf('】') + 1)}}</div>
+                    </template>
+                    <template v-else>
+                        <div class="bold"></div>
+                            <div class="desc">{{item}}</div>
+                    </template>
+                </template>
             </div>
-            <span slot="footer">
-              <el-button type="" @click="dialog2.visible=false">关闭</el-button>
-            </span>
-          </el-dialog>
+        </template>
+        <template v-else>{{chuzhi.desc}}</template>
+        <span slot="footer">
+          <el-button type="" @click="chuzhi.visible=false">关闭</el-button>
+        </span>
+      </el-dialog>
+        
       
           <!-- <el-dialog :title="detail.names" class="chaxun-dialog" :visible.sync="detail.visible">
               <div>
@@ -159,6 +183,11 @@ export default {
       loading1: false,
       loading2: false,
       active: 1,
+      chuzhi: {
+        visible: false,
+        names: '',
+        desc: ''
+      },
       // detail: {
       //   visible: false,
       //   exam: '',
@@ -194,6 +223,14 @@ export default {
         ...item
       }
     },
+    async openChuzhi (row) {
+      console.log(row)
+      this.chuzhi.visible = true
+      let res = await this.api.operation.getOperationById(row.id)
+      let { data: { data, code } } = res
+      this.chuzhi.names = data.names
+      this.chuzhi.desc = this.formatProcess(data.process)
+    },
     openDialog1 (row) {
       console.log('rowm', row)
       this.dialog1 = {
@@ -224,7 +261,29 @@ export default {
         this.keyword = this.$route.query.likeStr
         this.fetch()
       }
-    }
+    },
+    formatProcess (process) {
+      if (process.includes('【')) {
+        let arr = process.split('【')
+        arr.shift()
+        let result = arr.map(item => {
+          if (item.includes('术式')) {
+            let splitArr = item.replace('术式】', '').split('。')
+            let forMatArr = splitArr.map((item, index) => {
+              return `${item}。`
+            })
+            forMatArr.unshift('【术式】')
+            forMatArr.pop()
+            return [...forMatArr]
+          } else {
+            return item = `【${item}`
+          }
+        })
+        return result
+      } else {
+        return process
+      }
+    },
   },
   created () {
 
@@ -240,5 +299,12 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 10px;
-	}
+  }
+  .bold {
+    width: 100px;
+    text-align: center;
+}
+.desc {
+    margin-left: 90px;
+}
 </style>
