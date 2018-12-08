@@ -134,7 +134,7 @@
           </el-table-column>
           <el-table-column label="入院时间" prop="createTime">
             <template scope="scope">
-              {{scope.row.createTime || 'date'}}
+              {{scope.row.createTime}}
             </template>
           </el-table-column>
           <el-table-column label="姓名" prop="catName" width="280px">
@@ -285,7 +285,12 @@ export default {
       let { data: { data, code, pageinfo } } = res
       if (code === 200) {
         this.loading = false
+        data = data.map(item => {
+          item.createTime = moment(item.createTime).format('YYYY-MM-DD')
+          return item
+        })
         this.list = data
+
         this.pageinfo = pageinfo
       }
     },

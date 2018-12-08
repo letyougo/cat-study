@@ -31,7 +31,17 @@ export default {
 	
 	        { name: 'Wiley Online Library', tip: 'http://onlinelibrary.wiely.com' },
 	        { name: 'VIN', tip: 'https://www.vin.com/vin/' },
-	        { name: '中国知网', tip: 'http://www.cnki.net/' }
+	        { name: '中国知网', tip: 'http://www.cnki.net/' },
+	
+	        { name: 'vetstreet', tip: 'http://www.vetstreet.com/' },
+	        { name: 'petmd', tip: 'http://www.petmd.com' },
+	        { name: 'catfriendly', tip: 'https://catfriendly.com/' },
+	        { name: 'catvets', tip: 'https://www.catvets.com/' },
+	        { name: '子猫', tip: 'https://www.konekono-heya.com/news/index.html' },
+	        { name: 'aspca', tip: 'https://www.aspca.org/' },
+	        { name: 'abcdcatsvets', tip: 'http://www.abcdcatsvets.org/' },
+	        { name: 'wsava', tip: 'http://www.wsava.org/' }
+
 	      ]
 	    }
   },
