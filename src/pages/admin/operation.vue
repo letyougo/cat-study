@@ -48,7 +48,7 @@
               
               </el-table-column>
               <el-table-column label="id" prop="id" width="80px"></el-table-column>
-              <el-table-column label="名字" prop="names" width="350px"></el-table-column>
+              <el-table-column label="名字" prop="names" width="150px"></el-table-column>
               <el-table-column label="操作" prop="process" width="450px" >
                 <template scope="scope">
                   <div style="-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;">{{scope.row.process}} </div>

@@ -69,25 +69,27 @@
       <el-dialog  :visible.sync="chuzhi.visible">
         <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
         <template v-if="typeof chuzhi.desc === 'object'">
-        <div v-for="(item, index) in chuzhi.desc" :key="index">
+        <div v-for="(item, index) in chuzhi.desc" :key="index" class="flex-box">
                 <template v-if="typeof item === 'object'">
-                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''">
+                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''" class="no-flex">
                         <template v-if="step.includes('】')">
-                            <b>{{step.substring(0, step.indexOf('】') + 1)}}</b>
-                            {{step.substring(step.indexOf('】') + 1)}}
+                            <div class="bold"><b>{{step.substring(0, step.indexOf('】') + 1)}}</b></div>
+                            <div class="desc">{{step.substring(step.indexOf('】') + 1)}}</div>
                         </template>
                         <template v-else>
-                            {{step}}
+                            <div class="bold"></div>
+                            <div class="desc">{{step}}</div>
                         </template>
                     </div>
                 </template>
                 <template v-else>
                     <template v-if="item.includes('】')">
-                        <b>{{item.substring(0, item.indexOf('】') + 1)}}</b>
-                        {{item.substring(item.indexOf('】') + 1)}}
+                        <div class="bold"><b>{{item.substring(0, item.indexOf('】') + 1)}}</b></div>
+                        <div class="desc">{{item.substring(item.indexOf('】') + 1)}}</div>
                     </template>
                     <template v-else>
-                        {{item}}
+                        <div class="bold"></div>
+                            <div class="desc">{{item}}</div>
                     </template>
                 </template>
             </div>
@@ -368,6 +370,13 @@ export default {
 </script>
 <style scoped lang="less">
   @import url("../../../global.less");
+  .bold {
+    width: 100px;
+    text-align: center;
+}
+.desc {
+    margin-left: 90px;
+}
 .desc {
           line-height: 20px;
           font-size: 14px;
@@ -439,9 +448,7 @@ export default {
         }
       }
     }
-    .padding-box {
-        padding-left: 20px;
-    }
+
   }
   .check {
           margin-top: 17px;

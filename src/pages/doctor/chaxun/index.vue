@@ -17,7 +17,7 @@
       </div>
 
       <el-button :type="  active===1 ? 'primary' :'default' " @click="active=1">疾病</el-button>
-      <el-button :type="  active===2 ? 'primary' :'default' "@click="active=2">操作</el-button>
+      <el-button :type="  active===2 ? 'primary' :'default' " @click="active=2">操作</el-button>
       <el-table :data="list1" v-loading="loading1" v-if="active===1">
           <el-table-column label="疾病名称" prop="names">
             <template scope="scope" >
@@ -36,10 +36,22 @@
           </el-table-column>
         </el-table>
 
-        <el-table v-loading="loading2" :data="list2"  v-if="active===2">
-            <el-table-column label="操作名称" prop="names"></el-table-column>
-            <el-table-column label="处方" prop="prescription"></el-table-column>
-            <el-table-column label="操作" prop="process"></el-table-column>
+        <el-table v-loading="loading2" :data="list2"  v-if="active===2" key="operator">
+            <el-table-column label="操作名称" prop="names">
+              <template scope="scope" >
+              <div v-html="scope.row.names"></div>
+            </template>
+            </el-table-column>
+            <el-table-column label="处方" prop="prescription">
+              <template scope="scope" >
+              <div v-html="scope.row.prescription"></div>
+            </template>
+            </el-table-column>
+            <el-table-column label="操作" prop="process">
+              <template scope="scope" >
+              <div v-html="scope.row.process"></div>
+            </template>
+            </el-table-column>
         </el-table>
       
           <!-- <el-dialog :title="detail.names" class="chaxun-dialog" :visible.sync="detail.visible">

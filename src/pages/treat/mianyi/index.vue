@@ -77,7 +77,7 @@
                         <el-radio label="没有过生育" v-model="bear[1]"></el-radio>
                     </div>
                 </div>
-                 <div class="item-detail"  @click="()=>{
+                 <div v-if="bear[0] !== ''" class="item-detail"  @click="()=>{
                         if(this.bear[0]==='公'){
                             this.fetchOperation('去势')
                         }
@@ -98,7 +98,7 @@
                         <el-radio label="拔牙"  v-model="tooth"></el-radio> 
                     </div>
                 </div>
-                 <div class="item-detail" @click="(e)=>{
+                 <div v-if="tooth !== ''" class="item-detail" @click="(e)=>{
                      if(this.tooth ==='洗牙'){
                         this.fetchOperation('洗牙')   
                      }else{
@@ -112,25 +112,27 @@
         
       <el-dialog  :visible.sync="chuzhi.visible">
             <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
-            <div v-for="(item, index) in chuzhi.process" :key="index">
+            <div v-for="(item, index) in chuzhi.process" :key="index" class="flex-box">
                 <template v-if="typeof item === 'object'">
-                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''">
+                    <div v-for="(step, index) in item" :key="`_${index}`" :class="index > 0 ? 'padding-box' : ''" class="no-flex">
                         <template v-if="step.includes('】')">
-                            <b>{{step.substring(0, step.indexOf('】') + 1)}}</b>
-                            {{step.substring(step.indexOf('】') + 1)}}
+                            <div class="bold"><b>{{step.substring(0, step.indexOf('】') + 1)}}</b></div>
+                            <div class="desc">{{step.substring(step.indexOf('】') + 1)}}</div>
                         </template>
                         <template v-else>
-                            {{step}}
+                            <div class="bold"></div>
+                            <div class="desc">{{step}}</div>
                         </template>
                     </div>
                 </template>
                 <template v-else>
                     <template v-if="item.includes('】')">
-                        <b>{{item.substring(0, item.indexOf('】') + 1)}}</b>
-                        {{item.substring(item.indexOf('】') + 1)}}
+                        <div class="bold"><b>{{item.substring(0, item.indexOf('】') + 1)}}</b></div>
+                        <div class="desc">{{item.substring(item.indexOf('】') + 1)}}</div>
                     </template>
                     <template v-else>
-                        {{item}}
+                        <div class="bold"></div>
+                            <div class="desc">{{item}}</div>
                     </template>
                 </template>
             </div>
@@ -261,6 +263,13 @@ export default {
 </script>
 <style scoped lang="less">
 @import url('../../../global.less');
+.bold {
+    width: 100px;
+    text-align: center;
+}
+.desc {
+    margin-left: 100px;
+}
 .mianyi{
 	.mianyi-title{
 		text-align: center;
@@ -309,9 +318,7 @@ export default {
         margin-top: 34px;
         
     }
-    .padding-box {
-        padding-left: 20px;
-    }
+
 }
 
 </style>

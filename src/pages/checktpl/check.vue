@@ -145,6 +145,7 @@ export default {
           desc: desc,
           isException: this.list[0].isException === 'no' ? 0 : 1
         }
+        await this.api.check.editCheck(this.reportId, obj)
       } else if (tplType === 4) {
         let obj = {
           desc: desc,

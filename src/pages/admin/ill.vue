@@ -62,7 +62,7 @@
             <el-table-column label="id" prop="id" width="80px"></el-table-column>
             <el-table-column label="疾病名字" prop="names" width="150px"></el-table-column>
             <el-table-column label="症状" prop="symptom"></el-table-column>
-            <el-table-column label="示例症状">
+            <el-table-column label="示病症状">
               <template scope="scope">
                 <span 
                 style="padding: 4px"
@@ -73,7 +73,7 @@
             </el-table-column>
             <el-table-column label="操作" width="250px">
               <template scope="scope" >
-                  <el-button type="primary" @click="openShili(scope.row.symptom,scope.$index)">示例症状</el-button>
+                  <el-button type="primary" @click="openShili(scope.row.symptom,scope.$index,scope.row.id)">示病症状</el-button>
                   <el-button type="danger" @click="del(scope.row)">删除</el-button>
               </template>
             </el-table-column>
@@ -125,7 +125,7 @@
               </el-form>
           </el-dialog>
 
-          <el-dialog title="示例症状" :visible.sync="shili.visible">
+          <el-dialog title="示病症状" :visible.sync="shili.visible">
             <span v-for="(item, index) in shili.list" :key="item" style="padding: 4px 6px" @click="addSelectIndex(index)">
                 <el-button size="mini" :type="selectIndex.indexOf(index) > -1 ? 'primary' : 'default' ">{{item}}</el-button>
               </span>
@@ -145,6 +145,7 @@
   </div>
 </template>
 <script>
+import api from './api'
 import corner from '../../components/corner'
 export default {
   props: {
@@ -186,7 +187,8 @@ export default {
       this.pageinfo.pageNum = pageNum
       this.fetch()
     },
-    async openShili (item, index) {
+    async openShili (item, index, id) {
+      console.log(item, index, id)
       /*this.shili.visible = true
       let res = await this.api.disease.listDiseaseHightSymp(item.id)
       let { data: { data } } = res
@@ -199,10 +201,12 @@ export default {
       this.selectIndex = []
       this.shili.visible = true
       let symptomArr = item.split('，')
+      console.log(symptomArr)
       this.shili.id = this.list[index].id
+      let {data: {data: data}} = await api.symptom.hightSymp(id)
       this.shili.list = symptomArr
       this.shili.list.forEach((item, index2) => {
-        this.list[index].distinctSymptom.forEach(sym => {
+        data.forEach(sym => {
           if (item === sym) this.selectIndex.push(index2)
         })
       })
@@ -212,7 +216,7 @@ export default {
         diseaseId: this.shili.id,
         symptom: this.shili.list.filter((item, index) => {return this.selectIndex.indexOf(index) > -1}).join(',')
       })
-      this.$message.success('更新示例症状成功')
+      this.$message.success('更新示病症状成功')
       this.shili.visible = false
       this.fetch()
     },

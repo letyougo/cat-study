@@ -27,6 +27,11 @@ export default {
       const url = `/manager/symptom/delete?id=${id}`
       const res = await request.get(url, data)
       return res
+    },
+    async hightSymp (id) {
+      const url = `/disease/listDiseaseHightSymp?diseaseId=${id}`
+      const res = await request.get(url)
+      return res
     }
   },
   operation: {
