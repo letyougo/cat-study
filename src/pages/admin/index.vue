@@ -110,26 +110,31 @@ export default {
         if (item.module === 'zhenshi') {
           item['诊室检查'] = item.c
           item.name = '诊室检查'
+          return item
         }
         if (item.module === 'jiancha') {
           item['检查结果'] = item.c
           item.name = '检查结果'
+          return item
         }
         if (item.module === 'mianyi') {
           item['治疗与医嘱'] = item.c
           item.name = '治疗与医嘱'
+          return item
         }
         if (item.module === 'zhiliao') {
           item['治疗与医嘱'] = item.c
           item.name = '治疗与医嘱'
+          return item
         }
         if (item.module === 'zhishi') {
           item['知识库查询'] = item.c
           item.name = '知识库查询'
+          return item
         }
-
-        return item
+        return null
       })
+      data = data.filter(item => item)
       this.chartData.rows = data
     },
     async getStats () {
