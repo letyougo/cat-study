@@ -53,6 +53,12 @@
                   <el-form-item >
                     <el-date-picker v-model="endTime" placeholder=""></el-date-picker>
                   </el-form-item>
+                  <el-select v-model="tag" placeholder="">
+                    <el-option value="dianji" label="点击率"></el-option>
+                    <el-option value="jiezhen" label="接诊量"></el-option>
+                    <el-option value="huayan" label="开具化验量"></el-option>
+                    <el-option value="chufang" label="开具处方量"></el-option>
+                  </el-select>
                   <el-form-item label="">
                       <el-button type="primary" @click="fetch">查询</el-button>
                   </el-form-item>
@@ -61,7 +67,8 @@
             
         </div>
         <div>
-              <ve-histogram :data="chartData"></ve-histogram>
+              <ve-histogram :data="chartData" v-if="tag==='dianji' "></ve-histogram>
+              <ve-line :data="chartData2" v-else></ve-line>
         </div>
     </div>
     
@@ -79,6 +86,10 @@ export default {
   },
   data () {
     return {
+      chartData2: {
+        columns: ['day', 'c'],
+        rows: []
+      },
       chartData: {
         columns: ['name', '诊室检查', '检查结果', '治疗与医嘱', '免疫与健康', '知识库查询'],
         rows: [
@@ -93,49 +104,54 @@ export default {
         caseNewCount: '',
         caseTotalCount: '',
         doctorUseCount: ''
-      }
+      },
+      tag: 'dianji'
     }
   },
   computed: {
 
   },
   methods: {
-    async fetch () {
+    async fetch (tag) {
       let startTime = moment(this.startTime).format('YYYYMMDD')
       let endTime = moment(this.endTime).format('YYYYMMDD')
       console.log(startTime, endTime)
-      let res = await this.api.getLog({ startTime, endTime, 'tag': 'dianji' })
+      let res = await this.api.getLog({ startTime, endTime, 'tag': this.tag })
       let { data: { data } } = res
-      data = data.map(item => {
-        if (item.module === 'zhenshi') {
-          item['诊室检查'] = item.c
-          item.name = '诊室检查'
-          return item
-        }
-        if (item.module === 'jiancha') {
-          item['检查结果'] = item.c
-          item.name = '检查结果'
-          return item
-        }
-        if (item.module === 'mianyi') {
-          item['治疗与医嘱'] = item.c
-          item.name = '治疗与医嘱'
-          return item
-        }
-        if (item.module === 'zhiliao') {
-          item['治疗与医嘱'] = item.c
-          item.name = '治疗与医嘱'
-          return item
-        }
-        if (item.module === 'zhishi') {
-          item['知识库查询'] = item.c
-          item.name = '知识库查询'
-          return item
-        }
-        return null
-      })
-      data = data.filter(item => item)
-      this.chartData.rows = data
+      if (tag === 'dianji') {
+        data = data.map(item => {
+          if (item.module === 'zhenshi') {
+            item['诊室检查'] = item.c
+            item.name = '诊室检查'
+            return item
+          }
+          if (item.module === 'jiancha') {
+            item['检查结果'] = item.c
+            item.name = '检查结果'
+            return item
+          }
+          if (item.module === 'mianyi') {
+            item['治疗与医嘱'] = item.c
+            item.name = '治疗与医嘱'
+            return item
+          }
+          if (item.module === 'zhiliao') {
+            item['治疗与医嘱'] = item.c
+            item.name = '治疗与医嘱'
+            return item
+          }
+          if (item.module === 'zhishi') {
+            item['知识库查询'] = item.c
+            item.name = '知识库查询'
+            return item
+          }
+          return null
+        })
+        data = data.filter(item => item)
+        this.chartData.rows = data
+      } else {
+        this.chartData2.rows = data
+      }
     },
     async getStats () {
       let res = await this.api.getStats()
