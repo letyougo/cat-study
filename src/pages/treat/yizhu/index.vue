@@ -23,8 +23,9 @@
             <el-button
               @click="pickItem(item,i)"
               :type=" item.pick? 'primary' : 'default' "
-              >{{ item.names }}</el-button
-            >
+              >{{ item.names }}
+              <i class="el-icon-close el-icon--right" @click.stop="closeHandler(i)"></i>
+              </el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="text" @click="openUncertain">不能确定?</el-button>
@@ -247,6 +248,9 @@ export default {
         otherTreatment: ''
       }
       this.uncertainTreatments = [data]
+    },
+    async closeHandler (index) {
+      this.list.splice(index, 1)
     },
     async saveTreatment (item, index) {
       console.log(this.list[index].med, 'med')

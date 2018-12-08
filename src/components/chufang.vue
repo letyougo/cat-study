@@ -1,24 +1,29 @@
 <template>
 <div class="chufang">
-  <el-dialog :visible="true" class="open-med-dia" >
+  <el-dialog :visible="true" class="open-med-dia" append-to-body>
     <div class="open-med">
         <div class="open-med-title" slot="title">
           <div>开具处方</div>
           <div>
-            <el-input
-              v-model="value"
-              placeholder="搜索药品"
-              icon="search"
-              style="width:430px;"
-              @keyup.enter.native="searchMed"
+            <el-select 
+              v-model=nowIndex
+              placeholder="搜索药品" 
+              filterable 
+              remote 
+              reserve-keyword 
+              :remote-method="searchRemote"
+              @change="addItem"
             >
-              <template slot="prefix">
-                <i class="el-icon-search icon-search"></i>
-              </template>
-              <template slot="suffix">
-                <el-button type="primary" @click="searchMed" size="mini" >搜索</el-button>
-              </template>
-            </el-input>
+              <el-option
+                v-for="(item, index) in options"
+                :key="index"
+                :value="index"
+                :label="item.names"
+              >
+                <span style="float: left">{{ item.names }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px; margin-left: 25px">{{ item.ingredient }}</span>
+              </el-option>
+            </el-select>
           </div>
         </div>
         <div >
@@ -93,7 +98,9 @@ export default {
     return {
       list: [],
       value: '',
-      loading: false
+      loading: false,
+      nowIndex: '',
+      options: []
     }
   },
   methods: {
@@ -117,7 +124,21 @@ export default {
       list = list.filter(item => !medIdArr.includes(item.id))
       return list
     },
-
+    addItem() {
+      let flag = true
+      this.list.forEach(item => {
+        if (item.names === this.options[this.nowIndex].names) {
+          flag = false
+        }
+      })
+      if (!flag) return
+      else this.list.push(this.options[this.nowIndex])
+    },
+    async searchRemote(query) {
+      let res = await this.api.med.list({ likeStr: query })
+      let { data: { data } } = res
+      this.options = [... data]
+    },
     async searchMed () {
       this.loading = true
       let res = await this.api.med.list({ likeStr: this.value })

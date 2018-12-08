@@ -337,5 +337,6 @@ export default {
     >div:last-child{
       margin-left: 20px;
     }
+    
   }
 </style>

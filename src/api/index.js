@@ -56,7 +56,7 @@ request.interceptors.response.use(function (res) {
   }
   let { code, desc } = res.data
   if (code !== 200) {
-    return App.$message.error(desc)
+    //return App.$message.error(desc)
   }
   return res
 })
@@ -456,6 +456,11 @@ const api = {
     },
     async list2 (params) {
       const url = '/disease/listByParam'
+      let res = await request.get(url, { params })
+      return res
+    },
+    async list3 (params) {
+      const url = '/disease/searchDisease'
       let res = await request.get(url, { params })
       return res
     },
