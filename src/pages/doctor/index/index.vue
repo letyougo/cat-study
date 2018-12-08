@@ -12,6 +12,7 @@
                 icon="search" 
                 style="width:100%;"
                 maxlength="15"
+                @keyup.enter.native="route"
             >
                     <template slot="prefix">
                     <i class="el-icon-search icon-search"></i>
