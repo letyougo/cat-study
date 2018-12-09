@@ -92,7 +92,8 @@ export default {
     'docAdvice',
     'otherTreatment',
     'diseaseId',
-    'needDefault'
+    'needDefault',
+    'diseaseName'
   ],
   data () {
     return {
@@ -159,6 +160,7 @@ export default {
       return data
     },
     async save () {
+      console.log(this.diseaseName)
       let data = [{
         caseId: this.$route.query.id,
         diseaseId: this.needDefault ? 0 : this.diseaseId,
@@ -166,8 +168,13 @@ export default {
         otherTreatment: this.otherTreatment,
         prescription: this.list
       }]
-      console.log(data)
-      let res = await this.api.operation.addPrescription({ jsonArray: data })
+      let res
+      if (!this.diseaseName) {
+        res = await this.api.operation.addPrescription({ jsonArray: data })
+      } else {
+        res = await this.api.operation.addPrescription({ jsonArray: data }, this.diseaseName)
+      }
+
       // this.$emit('close')
       this.print()
       return res

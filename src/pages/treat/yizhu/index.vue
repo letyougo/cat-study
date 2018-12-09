@@ -38,32 +38,21 @@
             <div class="title">治疗方案</div>
         </div>
         <p class="title-tip">处置/处方</p>
-        <div class="check">
-          <div v-for="(item, index) in uncertainTreatments" :key="index">
-            <p v-for="(op,index) in item.treatments" :key="index">
-            <el-checkbox-group v-model="item.med.st">
-                <template>
-                    <el-checkbox :label="op" :key="index" ></el-checkbox>
-                </template>
-                <template v-if="item.hasOperations.includes(op)">
-                 <a href="javascript:void(0)" @click="openChuzhi(op)"> &nbsp;&nbsp;处置详情</a>
-                </template>
-            </el-checkbox-group>
-          </p>
-          <chufang v-if="item.med.visible" v-bind="item.med" @close="item.med.visible=false" :needDefault="true"></chufang>
-          <p class="title-tip">医嘱</p>
-        <div class="desc" style="margin-bottom: 20px">
-          <el-input type="textarea" placeholder="" v-model="item.med.docAdvice"></el-input>
-        </div>
+        <chufang v-if="uncertain.med.visible" v-bind="uncertain.med" @close="uncertain.med.visible=false" :needDefault="true"></chufang>
+        <el-form>
+          <el-form-item label="确诊疾病">
+              <el-input placeholder="" v-model="uncertain.med.diseaseName"></el-input>
+          </el-form-item>
+          <el-form-item label="医嘱">
+            <el-input type="textarea" placeholder="" v-model="uncertain.med.docAdvice"></el-input>
+          </el-form-item>
+        </el-form>
         <div slot="footer">
-          <el-button type="primary" @click="saveTreatment2(item,index)">开具处方</el-button>
+          <el-button type="primary" 
+          @click="uncertain.med.visible=true">开具处方</el-button>
           <el-button type="" @click="uncertain.visible=false" style="float: right">取消</el-button>
-          <el-button type="primary" style="float: right">打印病历并结束诊疗</el-button>
+          <el-button @click="endunCertain" type="primary" style="float: right">打印病历并结束诊疗</el-button>
         </div>
-          </div>
-          
-        </div>
-        
       </el-dialog>
 
       <el-dialog  :visible.sync="chuzhi.visible">
@@ -170,7 +159,15 @@ export default {
       search: '',
       list: [],
       uncertain: {
-        visible: false
+        visible: false,
+        med: {
+          visible: false,
+          st: [],
+          docAdvice: '',
+          diseaseNam: '',
+          otherTreatment: '',
+          diseaseId: 0
+        }
       },
       bingli: {
         visible: false
@@ -191,6 +188,14 @@ export default {
     }
   },
   methods: {
+    async endunCertain () {
+      let res = await this.api.case.update({
+        status: 4,
+        id: this.$route.query.id
+      })
+      this.$message('已结束该病历')
+      this.$router.push('/check/ed')
+    },
     async fetchIll () {
       let res = await this.api.disease.list2({ names: this.search })
       let { data: { data } } = res

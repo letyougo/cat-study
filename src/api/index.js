@@ -56,7 +56,7 @@ request.interceptors.response.use(function (res) {
   }
   let { code, desc } = res.data
   if (code !== 200) {
-    //return App.$message.error(desc)
+    // return App.$message.error(desc)
   }
   return res
 })
@@ -444,6 +444,11 @@ const api = {
       const url = '/visit/update'
       let res = await request.post(url, data)
       return res
+    },
+    async searchSymptom (params) {
+      const url = '/visitOption/searchSymptom'
+      let res = await request.get(url, { params })
+      return res
     }
 
   },
@@ -482,12 +487,15 @@ const api = {
       let res = await request.get(url, { params })
       return res
     },
-    async addPrescription (data) {
-      const url = '/prescription/addPrescription'
+    async addPrescription (data, query) {
+      let url = '/prescription/addPrescription'
+      if (query) {
+        url = url + '?diseaseName=' + query
+      }
       let res = await request.post(url, data)
       return res
     },
-    async getOperationById(id) {
+    async getOperationById (id) {
       const url = `operation/getById?id=${id}`
       let res = await request.get(url)
       return res

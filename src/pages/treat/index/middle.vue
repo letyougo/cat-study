@@ -72,7 +72,7 @@
 
         </el-form>
 
-        <el-dialog title="主诉症状" :visible.sync="mainDialog" >
+        <!-- <el-dialog title="主诉症状" :visible.sync="mainDialog" >
              <div class="main-item" v-for="(l, index) in main.options" :key="index">
                 <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':main.value.includes(item.names)}">
                     <span >{{item.names}}</span>
@@ -88,7 +88,7 @@
                     this.add()
                   }"  type="primary">确定</el-button>
              </span>
-        </el-dialog>
+        </el-dialog> -->
 
         <template v-if="main.exist">
             <div class="main">
@@ -99,9 +99,15 @@
                         <el-form-item>
                             <el-select
                               @change="add"
-                            style="width: 90%;"  multiple filterable v-model="main.value">
+                            style="width: 90%;" 
+                            multiple
+                            filterable 
+                            reserve-keyword
+                            remote
+                            :remote-method="fetchMain"
+                            v-model="main.value">
                               <el-option 
-                                v-for="item in main2" 
+                                v-for="item in main.options" 
                                 :label="item.names"
                                 :value="item.names"
                                 @change="add"
@@ -110,7 +116,7 @@
                               </el-option>
                               
                             </el-select>
-                            <el-button @click="mainDialog=true" type="text">全部症状</el-button>
+                            <!-- <el-button @click="mainDialog=true" type="text">全部症状</el-button> -->
                         </el-form-item>
                     </el-form>
 
@@ -194,8 +200,8 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item>
-                      <el-select  v-if="checkBody2.abnomalBehavior.options.length>0" @change="add" placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
+                    <el-form-item  v-if="checkBody2.abnomalBehavior.options.length>0">
+                      <el-select  @change="add" placeholder="未见异常" v-model="checkBody2.abnomalBehavior.value" >  
                           <el-option v-for="item in checkBody2.abnomalBehavior.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                       </el-select>
                     </el-form-item>
@@ -643,34 +649,45 @@ export default {
     }
   },
   computed: {
-    main2 () {
-      let arr = []
-      this.main.options.forEach(element => {
-        element.forEach(item => {
-          arr.push(item)
-        })
-      })
-      return arr
-    }
+    // main2 () {
+    //   let arr = []
+    //   this.main.options.forEach(element => {
+    //     element.forEach(item => {
+    //       arr.push(item)
+    //     })
+    //   })
+    //   return arr
+    // }
   },
   methods: {
+    async fetchMain (names) {
+      let res = await this.api.visit.searchSymptom({ names })
+      let { data: { data } } = res
+      data = data.map(item => {
+        let obj = {}
+        obj.names = item
 
+        return obj
+      })
+      this.main.options = data
+      console.log('sss', res.data)
+    },
     setMain (index, j) {
-      let v = this.main.value
-      console.log('set-main', index, j, this.main, this.main.value, 'sss')
-      let options = this.main.options
-      if (options[index][j].picked) {
-        options[index][j].picked = false
-        let n = this.main.value.indexOf(options[index][j].names)
-        v.splice(n, 1)
-      } else {
-        options[index][j].picked = true
-        v.push(options[index][j].names)
-      }
-      this.main.value = v
-      this.add()
-      this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
-      this.mainDialog = false
+      // let v = this.main.value
+      // console.log('set-main', index, j, this.main, this.main.value, 'sss')
+      // let options = this.main.options
+      // if (options[index][j].picked) {
+      //   options[index][j].picked = false
+      //   let n = this.main.value.indexOf(options[index][j].names)
+      //   v.splice(n, 1)
+      // } else {
+      //   options[index][j].picked = true
+      //   v.push(options[index][j].names)
+      // }
+      // this.main.value = v
+      // this.add()
+      // this.$set(this.main.options, JSON.parse(JSON.stringify(options)))
+      // this.mainDialog = false
     },
 
     async fetchItem () {

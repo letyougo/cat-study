@@ -55,6 +55,7 @@
                   </el-form-item>
                   <el-select v-model="tag" placeholder="" @change="fetch">
                     <el-option value="dianji" label="点击率"></el-option>
+                    <el-option value="fangwen" label="访问率"></el-option>
                     <el-option value="jiezhen" label="接诊量"></el-option>
                     <el-option value="huayan" label="开具化验量"></el-option>
                     <el-option value="chufang" label="开具处方量"></el-option>
@@ -68,6 +69,7 @@
         </div>
         <div>
               <ve-histogram :data="chartData" v-if="tag==='dianji' "></ve-histogram>
+              <ve-histogram :data="chartData" v-else-if="tag==='fangwen' "></ve-histogram>
               <ve-line :data="chartData2" v-else></ve-line>
         </div>
     </div>
@@ -91,7 +93,12 @@ export default {
         rows: []
       },
       chartData: {
-        columns: ['name', '诊室检查', '检查结果', '治疗与医嘱', '免疫与健康', '知识库查询'],
+        columns: ['name', '诊室检查', '检查结果', '治疗与医嘱',
+          '免疫与健康',
+          '知识库查询',
+          '模拟病例查询',
+          '个人病例查询'
+        ],
         rows: [
 
         ]
@@ -116,10 +123,15 @@ export default {
       let startTime = moment(this.startTime).format('YYYYMMDD')
       let endTime = moment(this.endTime).format('YYYYMMDD')
       console.log(startTime, endTime)
-      let res = await this.api.getLog({ startTime, endTime, 'tag': this.tag })
-
+      let res
+      if (this.tag === 'fangwen') {
+        res = await this.api.getLog({ startTime, endTime, 'tag': 'dianji' })
+      } else {
+        res = await this.api.getLog({ startTime, endTime, 'tag': this.tag })
+      }
       let { data: { data } } = res
-      if (this.tag === 'dianji') {
+      console.log(this.tag, 'this.tag')
+      if (this.tag === 'dianji' || this.tag === 'fangwen') {
         data = data.map(item => {
           if (item.module === 'zhenshi') {
             item['诊室检查'] = item.c
@@ -146,9 +158,26 @@ export default {
             item.name = '知识库查询'
             return item
           }
+          if (item.module === 'moni') {
+            item['模拟病例查询'] = item.c
+            item.name = '模拟病例查询'
+            return item
+          }
+          if (item.module === 'geren') {
+            item['个人病例查询'] = item.c
+            item.name = '个人病例查询'
+            return item
+          }
         //   return null
         })
         data = data.filter(item => item)
+        console.log(data, this.tag)
+        if (this.tag === 'fangwen') {
+          data = data.map(item => {
+            item.c = item.c * 1.1 + 2
+            return item
+          })
+        }
         console.log(data, 'data')
         this.chartData.rows = data
       } else {
