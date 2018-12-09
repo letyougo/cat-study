@@ -80,7 +80,7 @@ global.moment = moment
         filter: {
           ownerName: '',
           catName: '',
-          startTime: '',
+          startTime: new Date().getTime(),
           endTime: ''
         },
         list: [],

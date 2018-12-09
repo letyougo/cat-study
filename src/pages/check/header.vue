@@ -199,7 +199,7 @@ export default {
       filter: {
         ownerName: '',
         catName: '',
-        startTime: '',
+        startTime: new Date().getTime(),
         endTime: ''
 
       },
