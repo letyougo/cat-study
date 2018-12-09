@@ -72,12 +72,17 @@
 
         </el-form>
 
-        <!-- <el-dialog title="主诉症状" :visible.sync="mainDialog" >
-             <div class="main-item" v-for="(l, index) in main.options" :key="index">
-                <div @click="setMain(index,j)" v-for="(item, j) in l" :key="j" :class="{'picked':main.value.includes(item.names)}">
-                    <span >{{item.names}}</span>
-                </div>
-             </div>
+        <el-dialog title="主诉症状" :visible.sync="mainDialog" >
+             <div style="display: inline-block;width: 33%" class="main-item" v-for="(l, index) in main.options" :key="index">
+                <!-- <div 
+                
+                v-for="(item, j) in l" 
+                :key="j" :class="{'picked':main.value.includes(item.names)}">
+                    
+                </div> -->
+                <div  >
+                  <span @click="setMain(l,index)" :class="{'picked':main.value.includes(l.names)}">{{l.names}}</span></div>
+              </div>
              <span slot="footer">
                 <el-button @click="(e)=>{
                     mainDialog=false
@@ -88,7 +93,7 @@
                     this.add()
                   }"  type="primary">确定</el-button>
              </span>
-        </el-dialog> -->
+        </el-dialog>
 
         <template v-if="main.exist">
             <div class="main">
@@ -116,7 +121,7 @@
                               </el-option>
                               
                             </el-select>
-                            <!-- <el-button @click="mainDialog=true" type="text">全部症状</el-button> -->
+                            <el-button @click="mainDialog=true" type="text">全部症状</el-button>
                         </el-form-item>
                     </el-form>
 
@@ -649,15 +654,9 @@ export default {
     }
   },
   computed: {
-    // main2 () {
-    //   let arr = []
-    //   this.main.options.forEach(element => {
-    //     element.forEach(item => {
-    //       arr.push(item)
-    //     })
-    //   })
-    //   return arr
-    // }
+    main2 () {
+
+    }
   },
   methods: {
     async fetchMain (names) {
@@ -672,7 +671,13 @@ export default {
       this.main.options = data
       console.log('sss', res.data)
     },
-    setMain (index, j) {
+    setMain (item, index) {
+      if (this.main.value.includes(item.names)) {
+        this.main.value = this.main.value.filter(o => o !== item.names)
+      } else {
+        this.main.value.push(item.names)
+      }
+
       // let v = this.main.value
       // console.log('set-main', index, j, this.main, this.main.value, 'sss')
       // let options = this.main.options
@@ -764,16 +769,17 @@ export default {
       this.checkBody2.eye.model = [...(visualConsult.split(','))].filter(item => !!item)
       this.main.value = [...(mainSymptom.split(','))].filter(item => !!item)
       this.main.options = this.main.options.map(item => {
-        item = item.map(l => {
-          l.picked = false
-          if (this.main.value.includes(l.names)) {
-            l.picked = true
-          }
-          return l
-        })
+        // item = item.map(l => {
+        //   l.picked = false
+        //   if (this.main.value.includes(l.names)) {
+        //     l.picked = true
+        //   }
+        //   return l
+        // })
+        item.picked = false
         return item
       })
-      console.log(this.main.options)
+      console.log(this.main.options, 'this.main.options')
 
       console.log(bear, catMonths, catYears)
     },
@@ -1033,15 +1039,18 @@ export default {
         let item = list.main.find(item => item.dimension === '主诉症状')
 
         let arr = []
-        while (item.options.length > 0) {
-          let l = []
-          for (let i = 0; i < 3; i++) {
-            if (item.options.length > 0) {
-              l.push(item.options.shift())
-            }
-          }
-          arr.push(l)
+        for (var i = 0; i < item.options.length; i++) {
+          arr.push(...item[i])
         }
+        // while (item.options.length > 0) {
+        //   let l = []
+        //   for (let i = 0; i < 3; i++) {
+        //     if (item.options.length > 0) {
+        //       l.push(item.options.shift())
+        //     }
+        //   }
+        //   arr.push(l)
+        // }
 
         this.main = {
           exist: item.isUsed,

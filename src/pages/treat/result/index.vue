@@ -11,8 +11,8 @@
         <el-date-picker  v-model="filter.endTime"  placeholder=""></el-date-picker>
       </el-form-item>
       <el-form-item label="报告单状态">
-        <el-radio-group v-model="filter.status">
-          <el-radio label="">已出结果</el-radio>
+        <el-radio-group v-model="filter.status" @change="fetch"
+          <el-radio label="yes">已出结果</el-radio>
           <el-radio label="no">未出结果</el-radio>
         </el-radio-group>
       </el-form-item>
@@ -102,7 +102,7 @@ export default {
         startTime: '',
         endTime: '',
         result: '',
-        status: ''
+        status: 'yes'
       },
       loading: false,
       edit: false,

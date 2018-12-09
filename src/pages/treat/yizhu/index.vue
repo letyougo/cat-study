@@ -40,6 +40,9 @@
         <p class="title-tip">处置/处方</p>
         <chufang v-if="uncertain.med.visible" v-bind="uncertain.med" @close="uncertain.med.visible=false" :needDefault="true"></chufang>
         <el-form>
+          <el-form-item label="处置/处方">
+            暂无建议治疗方案
+          </el-form-item>
           <el-form-item label="确诊疾病">
               <el-input placeholder="" v-model="uncertain.med.diseaseName"></el-input>
           </el-form-item>
@@ -190,7 +193,7 @@ export default {
   methods: {
     async endunCertain () {
       let res = await this.api.case.update({
-        status: 4,
+        status: 5,
         id: this.$route.query.id
       })
       this.$message('已结束该病历')

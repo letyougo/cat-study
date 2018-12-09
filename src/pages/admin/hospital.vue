@@ -198,6 +198,7 @@ export default {
         hospitalId,
         checkId
       })
+      this.$message.success('增加检查项成功')
       this.reload()
     },
     async addAction () {
@@ -225,6 +226,7 @@ export default {
       this.typeName = data
     },
     async fetchCheckName () {
+      this.dialog.checkName = ''
       let res = await this.api.check.manager.getCheckByType({ typeName: this.dialog.typeName })
       let { data: { data } } = res
       this.checkName = data
