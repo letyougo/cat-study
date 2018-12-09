@@ -10,10 +10,10 @@
 					<el-input @keyup.enter.native="fetch" v-model="filter.catName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
 				<el-form-item label="入院时间">
-					<el-date-picker v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
+					<el-date-picker @change="fetch" v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
 				</el-form-item>
 				<el-form-item >
-					<el-date-picker v-model="filter.endTime" placeholder="" class="line-input"></el-date-picker>
+					<el-date-picker @change="fetch" v-model="filter.endTime" placeholder="" class="line-input"></el-date-picker>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="fetch">查询</el-button>
@@ -278,6 +278,9 @@ export default {
       }
       if (this.filter.endTime) {
         filter.endTime = new Date(this.filter.endTime).getTime()
+      }
+      if (this.filter.startTime && !this.filter.endTime) {
+        filter.endTime = new Date(this.filter.startTime).getTime() + 3600 * 24 * 1000
       }
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)

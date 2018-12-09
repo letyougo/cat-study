@@ -35,9 +35,9 @@
               </el-form>       
             </div>
             <br/>
-            <p class="action">
+            <!-- <p class="action">
                 <el-button type="primary" @click="startHuayan2(kdmodel)">去化验</el-button>
-            </p>
+            </p> -->
             
         </div>
         <br/>
@@ -79,7 +79,7 @@
               </div>
             </el-dialog>
 
-            <el-collapse accordion class="collapse-right">
+            <el-collapse class="collapse-right">
                   <el-collapse-item v-for="(item,index) in list"  :key="item.id">
                    <template slot="title">
                       <div class="item-title">
@@ -123,12 +123,14 @@
                         <el-checkbox v-else style="height: 30px;"  :key="op" :label="op"></el-checkbox>
                       </el-checkbox-group>
                     </p>   
-                    <p class="action">
-                        <el-button type="primary" @click="startHuayan(item,index)">去化验</el-button>
-                    </p>
+              
                   </el-checkbox-group>
                 </el-collapse-item>
-            </el-collapse>      
+            </el-collapse> 
+            <br/>
+            <p class="action">
+                <el-button type="primary" @click="startHuayan">去化验</el-button>
+            </p>     
         </div>
                  
 <!--                  
@@ -376,18 +378,38 @@ export default {
       console.log('this.list.data', data)
     },
     startHuayan (item, index) {
-      this.dialog.visible = true
       let list = []
-      list = item.examsModel.map(item => {
-        return {
-          checkName: item,
+
+      this.list.forEach(element => {
+        let obj = element.examsModel.map(item => {
+          return {
+            checkName: item,
+            creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+            updateTime: moment().format('YYYY-MM-DD hh:mm:ss'),
+            doctorName: global.user.username,
+            checkDoctorName: ''
+          }
+        })
+        list.push(...obj)
+      })
+      this.kdmodel.forEach(element => {
+        list.push({
+          checkName: element,
           creataTime: moment().format('YYYY-MM-DD hh:mm:ss'),
           updateTime: moment().format('YYYY-MM-DD hh:mm:ss'),
           doctorName: global.user.username,
           checkDoctorName: ''
+        })
+      })
+      let newList = []
+      list.forEach(item => {
+        if (!newList.find(obj => obj.checkName === item.checkName)) {
+          newList.push(item)
         }
       })
-      this.dialog.list = list
+      this.dialog.visible = true
+
+      this.dialog.list = newList
     },
     startHuayan2 (l) {
       let list = []

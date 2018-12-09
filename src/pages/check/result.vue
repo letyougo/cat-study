@@ -4,16 +4,16 @@
         <el-form :model="filter" :inline="true">
           
           <el-form-item label="主人信息">
-            <el-input v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
+            <el-input @keyup.enter.native="fetch" v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
           </el-form-item>
           <el-form-item label="猫咪信息">
-            <el-input v-model="filter.catName" placeholder="" class="line-input"></el-input>
+            <el-input @keyup.enter.native="fetch" v-model="filter.catName" placeholder="" class="line-input"></el-input>
           </el-form-item>
           <el-form-item label="入院时间">
-            <el-date-picker v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
+            <el-date-picker @change="fetch" v-model="filter.startTime" placeholder="" class="line-input"></el-date-picker>
           </el-form-item>
           <el-form-item >
-            <el-date-picker v-model="filter.endTime" placeholder="" class="line-input"></el-date-picker>
+            <el-date-picker @change="fetch" v-model="filter.endTime" placeholder="" class="line-input"></el-date-picker>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="fetch">查询</el-button>
@@ -138,6 +138,9 @@ global.moment = moment
         }
         if (this.filter.endTime) {
           filter.endTime = new Date(this.filter.endTime).getTime()
+        }
+        if (this.filter.startTime && !this.filter.endTime) {
+          filter.endTime = new Date(this.filter.startTime).getTime() + 3600 * 24 * 1000
         }
         let res = await this.api.check.listReadyCheck({ doctorId: global.user.id, ...filter, start, limit })
         let { data: { data, code, pageinfo } } = res
