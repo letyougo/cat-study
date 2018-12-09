@@ -71,8 +71,8 @@
         <br/>
 
         <div class="open-med-action">
-            <el-button type="primary" @click="print">打印</el-button>
-          <el-button type="primary" @click="save">开具处方</el-button>
+            <el-button type="primary" @click="print">返回导诊页</el-button>
+          <el-button type="primary" @click="save">开具处方并打印</el-button>
           <el-button  @click="$emit('close')">关闭</el-button>
         </div>
       </div>
@@ -124,7 +124,7 @@ export default {
       list = list.filter(item => !medIdArr.includes(item.id))
       return list
     },
-    addItem() {
+    addItem () {
       let flag = true
       this.list.forEach(item => {
         if (item.names === this.options[this.nowIndex].names) {
@@ -134,10 +134,10 @@ export default {
       if (!flag) return
       else this.list.push(this.options[this.nowIndex])
     },
-    async searchRemote(query) {
+    async searchRemote (query) {
       let res = await this.api.med.list({ likeStr: query })
       let { data: { data } } = res
-      this.options = [... data]
+      this.options = [...data]
     },
     async searchMed () {
       this.loading = true
@@ -168,7 +168,8 @@ export default {
       }]
       console.log(data)
       let res = await this.api.operation.addPrescription({ jsonArray: data })
-      this.$emit('close')
+      // this.$emit('close')
+      this.print()
       return res
     }
   },
