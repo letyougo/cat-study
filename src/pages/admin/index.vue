@@ -3,12 +3,12 @@
         <!-- <div class="admin-title">
             <corner></corner>基本情况
         </div> -->
-        <div class="admin-action">
-            <!-- <div class="admin-open">
+        <!-- <div class="admin-action">
+            <div class="admin-open">
                 <dir> </dir>
                 <div>简历完成度</div>
                 <div>展开</div>
-            </div> -->
+            </div>
             <div class="admin-pannel">
                 <div class="admin-open">
                     <div> </div>
@@ -24,7 +24,7 @@
                     </el-table>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="admin-data">
             <div class="data-item">
                 <div class="data-value">{{stats.doctorUseCount}}</div>
