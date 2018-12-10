@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="admin-title search-action">
-           
+
             <div>
                 <el-form inline>
                   <el-form-item label="昨日各功能模块点击量">
@@ -65,7 +65,7 @@
                   </el-form-item>
                 </el-form>
             </div>
-            
+
         </div>
         <div>
               <ve-histogram :data="chartData" v-if="tag==='dianji' "></ve-histogram>
@@ -73,7 +73,7 @@
               <ve-line :data="chartData2" v-else></ve-line>
         </div>
     </div>
-    
+
 </template>
 <script>
 import corner from '../../components/corner'

@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-          <div class="header-title">
+          <!--<div class="header-title">
             <div>
                 病历号：132456
             </div>
@@ -19,11 +19,11 @@
             <div>
                 医生：张志刚
             </div>
-        </div>
+        </div>-->
         <div class="header-content">
             <div class="left">
                 <div @click="$router.push('/doctor')" :class="{active:$route.path === '/doctor' ? true : false}">
-                    
+
                     知识库查询
                 </div>
                 <!-- <div class="title2">检查结果</div> -->
@@ -34,27 +34,27 @@
                         </li>
                     </ul>
                 </div>                             -->
-                <div @click="$router.push('/doctor/moni')"  class="title2">                   
+                <div @click="$router.push('/doctor/moni')"  class="title2">
                     病历评测
                 </div>
                  <div>
                     <ul>
-                        <li @click="$router.push('/doctor/moni')" :class="{active:$route.path === '/doctor/moni' ? true : false}">
+                        <li style="margin-left: 15px;font-size: 12px;" @click="$router.push('/doctor/moni')" :class="{active:$route.path === '/doctor/moni' ? true : false}">
                             <!-- <span>O</span> -->
                             模拟病历学习
                         </li>
-                        <li @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
+                        <li style="margin-left: 15px;font-size: 12px;" @click="$router.push('/doctor/geren')" :class="{active:$route.path === '/doctor/geren' ? true : false}">
                             <!-- <span>O</span> -->
                             个人历史病历
                         </li>
-                        <li @click="$router.push('/doctor/xuexi')" :class="{active:$route.path === '/doctor/xuexi' ? true : false}">
+                        <li style="margin-left: 15px;font-size: 12px;" @click="$router.push('/doctor/xuexi')" :class="{active:$route.path === '/doctor/xuexi' ? true : false}">
                             <!-- <span>O</span> -->
                             学习历史病历
                         </li>
                     </ul>
                 </div>
                 <div  @click="$router.push('/doctor/wenxian')" class="title2" :class="{active:$route.path === '/doctor/wenxian' ? true : false}">文献查询</div>
-              
+
             </div>
 
             <div class="right">

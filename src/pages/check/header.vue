@@ -2,7 +2,7 @@
 	<div class="check">
 		<div class="check-filter">
 			<el-form :model="filter" :inline="true">
-        
+
 				<el-form-item label="主人姓名">
 					<el-input @keyup.enter.native="fetch" v-model="filter.ownerName" placeholder="" class="line-input"></el-input>
 				</el-form-item>
@@ -43,18 +43,18 @@
         </el-form-item>
         <el-form-item label="猫咪年龄" prop="ownerName">
           <div style="display:flex;">
-            <el-input 
+            <el-input
               type="number" min="0" max="40"
               v-model="addForm.catYears" placeholder="">
               <template slot="append">年</template>
             </el-input>
-            <el-input 
+            <el-input
               type="number" min="0" max="12"
                v-model="addForm.catMonths" placeholder="">
               <template slot="append">月</template>
             </el-input>
           </div>
-          
+
         </el-form-item>
         <el-form-item label="挂号项目" prop="ownerName">
           <el-select style="width:100%" v-model="addForm.type" placeholder="">
@@ -78,7 +78,7 @@
 			</div>
 			<br/>
 			<div class="check-table">
-				 <el-table :data="list" v-loading="loading">   
+				 <el-table :data="list" v-loading="loading">
            <el-table-column type="expand">
              <template scope="scope">
                <div style="display:flex;justify-content:center">
@@ -121,14 +121,14 @@
                   </div>
                 </div>
              </template>
-          </el-table-column> 
+          </el-table-column>
           <el-table-column label="病历id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
           <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
           <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
           <el-table-column label="挂号项目" prop="type">
             <template scope="scope">
-            
+
               <div v-for="item in config.ghxm" :key="item.id" v-if="item.id == scope.row.type">{{item.name}}</div>
             </template>
           </el-table-column>
@@ -164,7 +164,7 @@
 
 
       <el-dialog  :visible.sync="bingli.visible">
-    
+
         <bingli :id="bingli.id"></bingli>
         <span slot="footer">
             <el-button @click="bingli.visible=false">放弃打印</el-button>
@@ -199,7 +199,7 @@ export default {
       filter: {
         ownerName: '',
         catName: '',
-        startTime: new Date().getTime(),
+        startTime: '',
         endTime: ''
 
       },
@@ -363,4 +363,3 @@ export default {
   }
 }
 </style>
-	

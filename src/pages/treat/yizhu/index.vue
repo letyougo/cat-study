@@ -3,7 +3,7 @@
     <div class="top">
       <div class="title">根据检查结果判断为疾病</div>
       <div>
-        <el-select 
+        <el-select
                   v-model="selectItem"
                   filterable
                   remote
@@ -51,7 +51,7 @@
           </el-form-item>
         </el-form>
         <div slot="footer">
-          <el-button type="primary" 
+          <el-button type="primary"
           @click="uncertain.med.visible=true">开具处方</el-button>
           <el-button type="" @click="uncertain.visible=false" style="float: right">取消</el-button>
           <el-button @click="endunCertain" type="primary" style="float: right">打印病历并结束诊疗</el-button>
@@ -98,7 +98,7 @@
         </el-form>
       </div>
     </div>
- 
+
     <div class="record">
       <div class="record-item" v-for="(item,index) in pickedList" ::key="item.id">
         <p class="record-title">{{ item.names }}</p>
@@ -132,13 +132,13 @@
       </div>
     </div>
 
-    
+
     <el-dialog  :visible.sync="print">
       <div class="yizhu-bingli">
           <bingli v-if="print" :id="$route.query.id"></bingli>
       </div>
       <span slot="footer">
-        
+
         <el-button @click="startPrint" type="primary">打印并且结束诊疗</el-button>
          <el-button type="primary" @click="$router.push('/check')">去导诊页</el-button>
         <el-button type="" @click="print=false">关闭</el-button>
@@ -424,7 +424,7 @@ export default {
         padding: 25px 27px;
         color: #666666;
         flex-shrink: 0;
-        
+
         &:last-child {
           margin-right: 0;
         }

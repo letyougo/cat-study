@@ -11,7 +11,7 @@
         <el-date-picker  v-model="filter.endTime"  placeholder=""></el-date-picker>
       </el-form-item>
       <el-form-item label="报告单状态">
-        <el-radio-group v-model="filter.status" @change="fetch"
+        <el-radio-group v-model="filter.status" @change="fetch">
           <el-radio label="yes">已出结果</el-radio>
           <el-radio label="no">未出结果</el-radio>
         </el-radio-group>
@@ -20,24 +20,24 @@
         <el-button type="primary" @click="fetch">筛选</el-button>
       </el-form-item>
     </el-form>
-    
+
     <el-dialog :title="report.title" :visible.sync="report.visible" class="checktpl-dia">
       <checktpl :desc="report.note" :reportId="report.reportId" :edit="report.edit" ref="checktpl"></checktpl>
-      
+
       <el-form >
           <el-form-item label="备注">
-            <el-input  v-if="report.edit" type="textarea" v-model="report.desc"></el-input>    
+            <el-input  v-if="report.edit" type="textarea" v-model="report.desc"></el-input>
             <div v-else>{{report.desc}}</div>
          </el-form-item>
-        
+
       </el-form>
-      
+
       <span slot="footer">
         <el-button type="" @click="(e)=>{
             this.report.visible=false
-            this.fetch()  
+            this.fetch()
         }">关闭</el-button>
-        <el-button 
+        <el-button
         @click="print" type="primary"  v-if="!report.edit">打印</el-button>
         <el-button type="primary" @click="update" v-else>确定</el-button>
       </span>

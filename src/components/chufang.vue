@@ -5,12 +5,12 @@
         <div class="open-med-title" slot="title">
           <div>开具处方</div>
           <div>
-            <el-select 
+            <el-select
               v-model=nowIndex
-              placeholder="搜索药品" 
-              filterable 
-              remote 
-              reserve-keyword 
+              placeholder="搜索药品"
+              filterable
+              remote
+              reserve-keyword
               :remote-method="searchRemote"
               @change="addItem"
             >
@@ -29,7 +29,7 @@
         <div >
           <div class="chufang-table">
 
-      
+
             <el-table :data="list" v-loading="loading">
               <!-- <el-table-column label="详情" type="expand">
                 detail
@@ -53,12 +53,12 @@
                   <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
                 </template>
               </el-table-column> -->
-              
+
               <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
               <!-- <el-table-column label="天"></el-table-column> -->
               <el-table-column label="操作" >
                 <template scope="scope">
-                  <el-button 
+                  <el-button
                   @click="list.splice(scope.$index,1)"
                   type="danger" icon="el-icon-delete" size="mini"></el-button>
                 </template>
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     print () {
-      global.print('.chufang-table')
+      this.$router.push('/check')
     },
     async fetch () {
       let arr = []

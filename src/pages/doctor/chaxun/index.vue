@@ -39,7 +39,7 @@
                 <el-button type="primary"
                 @click="openDialog1(scope.row)">详情</el-button>
             </template>
-         
+
           </el-table-column>
         </el-table>
 
@@ -74,7 +74,7 @@
               <p class="chaxun-dialog-title">疾病症状</p>
               <div class="chaxun-dialog-content" v-html="dialog1.symptom"></div>
 
-              <p class="chaxun-dialog-title">疾病症状</p>
+              <p class="chaxun-dialog-title">描述</p>
               <div class="chaxun-dialog-content" v-html="dialog1.desc"></div>
           </div>
           <span slot="footer">
@@ -115,34 +115,34 @@
           <el-button type="" @click="chuzhi.visible=false">关闭</el-button>
         </span>
       </el-dialog>
-        
-      
+
+
           <!-- <el-dialog :title="detail.names" class="chaxun-dialog" :visible.sync="detail.visible">
               <div>
                 <p class="chaxun-dialog-title">疾病症状</p>
                 <div class="chaxun-dialog-content">{{detail.symptom}}</div>
-    
+
                 <p class="chaxun-dialog-title">检查项目</p>
                 <div class="chaxun-dialog-content">
                   {{detail.exam}}
                 </div>
                 <p class="chaxun-dialog-title">鉴别</p>
                 <div class="chaxun-dialog-content">{{detail.identification}}</div>
-    
+
                 <p class="chaxun-dialog-title">治疗原则</p>
                 <div class="chaxun-dialog-content">
                     {{detail.principle}}
                 </div>
-    
+
                 <p class="chaxun-dialog-title">治疗建议</p>
                 <div class="chaxun-dialog-content">{{detail.suggestTreatment}}</div>
-    
+
                 <p class="chaxun-dialog-title">病因</p>
                 <div class="chaxun-dialog-content">{{detail.causes}}</div>
-    
+
                 <p class="chaxun-dialog-title">预后</p>
                 <div class="chaxun-dialog-content">{{detail.prognosis}}</div>
-    
+
                 <template v-if="detail.treatments.length>0">
                     <p class="chaxun-dialog-title">疾病症状</p>
                     <div class="chaxun-dialog-content">
@@ -151,14 +151,14 @@
                       </p>
                     </div>
                 </template>
-            
+
               </div>
                 <span slot="footer" class="dialog-footer">
                   <el-button @click="detail.visible = false">关 闭</el-button>
               </span>
         </el-dialog> -->
-      
-			
+
+
 	</div>
 </template>
 <script>
