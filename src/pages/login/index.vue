@@ -29,7 +29,14 @@
 							<el-form-item label="">
                 <el-button 
                 style="float: right;"
-                type="text" @click="dialog.visible=true">忘记密码</el-button>
+                type="text" 
+                @click="()=>{
+                  this.$alert('请联系管理员修改密码','提示',{
+                    confirmButtonText: '确定',
+                  })
+                }"
+                
+                >忘记密码</el-button>
 								<!-- <router-link to="/account/forget" style="float:right">忘记密码</router-link> -->
 							</el-form-item>
 						</el-form>

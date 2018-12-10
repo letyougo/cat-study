@@ -704,7 +704,9 @@ export default {
         month: catMonths
       }
 
+
       let res2 = await this.api.visit.item({ caseId: this.$route.query.id })
+      console.log('fetch-item', res2.data)
       var { data: { data: {
         pastHistory,
         behaviorAbnormal,
@@ -893,8 +895,8 @@ export default {
         skinDamage: data.filter(item => item.title === '皮损部位')
       }
       this.second_class = second_class
-
-      console.log(list, 'list-option')
+   
+      console.group(list, 'list-option')
       if (list.basic.find(item => item.dimension === '年龄' && item.isUsed)) {
         this.basic.age = {
           exist: true,
@@ -904,6 +906,7 @@ export default {
           }
         }
       }
+      console.log('1')
       if (list.basic.find(item => item.dimension === '性别' && item.isUsed)) {
         let item = list.basic.find(item => item.dimension === '性别')
         this.basic.sex = {
@@ -912,12 +915,14 @@ export default {
           options: item.options
         }
       }
+      console.log('2')
       if (list.basic.find(item => item.dimension === '体重' && item.isUsed)) {
         this.basic.weight = {
           exist: true,
           value: ''
         }
       }
+      console.log('3')
       if (list.basic.find(item => item.dimension === '品种' && item.isUsed)) {
         let item = list.basic.find(item => item.dimension === '品种')
         this.basic.kind = {
@@ -936,6 +941,7 @@ export default {
           ).options
         }
       }
+      console.log('4')
 
       if (list.passHistory.find(item => item.dimension === '既往史' && item.isUsed)) {
         this.passHistory = {
@@ -946,6 +952,7 @@ export default {
           ).options
         }
       }
+      console.log('5')
       if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
         let options = list.main.find(
           item => item.dimension === '主诉症状' && item.isUsed
@@ -957,18 +964,21 @@ export default {
           options
         }
       }
+      console.log('6')
       if (list.checkBody.find(item => item.dimension === '体温' && item.isUsed)) {
         this.checkBody.temp = {
           exist: true,
           value: ''
         }
       }
+      console.log('7')
       if (list.checkBody.find(item => item.dimension === '血压' && item.isUsed)) {
         this.checkBody.blood = {
           exist: true,
           value: ''
         }
       }
+      console.log('8')
       if (list.checkBody.find(item => item.dimension === '心率' && item.isUsed)) {
         this.checkBody.heart = {
           exist: true,
@@ -981,12 +991,14 @@ export default {
           value: ''
         }
       }
+      console.log('9')
       if (list.checkBody.find(item => item.dimension === '毛细血管再充盈时间' && item.isUsed)) {
         this.checkBody.recharge = {
           exist: true,
           value: ''
         }
       }
+      console.log('10')
       if (list.checkBody.find(item => item.dimension === '行为异常' && item.isUsed)) {
         let item = list.checkBody.find(item => item.dimension === '行为异常')
         this.checkBody.abnomalBehavior = {
@@ -995,6 +1007,7 @@ export default {
           options: item.options
         }
       }
+      console.log('11')
       if (list.checkBody.find(item => item.dimension === '触诊' && item.isUsed)) {
         let item = list.checkBody.find(item => item.dimension === '触诊')
         this.checkBody.touch = {
@@ -1003,6 +1016,7 @@ export default {
           options: item.options
         }
       }
+      console.log('12')
       if (list.checkBody.find(item => item.dimension === '视诊' && item.isUsed)) {
         let item = list.checkBody.find(item => item.dimension === '视诊')
         this.checkBody.eye = {
@@ -1011,6 +1025,7 @@ export default {
           options: item.options
         }
       }
+      console.log('13')
       if (list.checkBody.find(item => item.dimension === '嗅诊' && item.isUsed)) {
         let item = list.checkBody.find(item => item.dimension === '嗅诊')
         this.checkBody.smell = {
@@ -1019,6 +1034,7 @@ export default {
           options: item.options
         }
       }
+      console.log('14')
       if (list.checkBody.find(item => item.dimension === '听诊' && item.isUsed)) {
         let item = list.checkBody.find(item => item.dimension === '听诊')
         this.checkBody.hear = {
@@ -1027,6 +1043,7 @@ export default {
           options: item.options
         }
       }
+      console.log('15')
       if (list.skinDamage.find(item => item.dimension === '皮损部位' && item.isUsed)) {
         let item = list.skinDamage.find(item => item.dimension === '皮损部位')
         this.checkBody.skinDamage = {
@@ -1035,13 +1052,14 @@ export default {
           options: item.options
         }
       }
+      console.log('16')
       if (list.main.find(item => item.dimension === '主诉症状' && item.isUsed)) {
         let item = list.main.find(item => item.dimension === '主诉症状')
-
+        console.log('item', item)
         let arr = []
-        for (var i = 0; i < item.options.length; i++) {
-          arr.push(...item[i])
-        }
+        // for (var i = 0; i < item.options.length; i++) {
+        //   arr.push(...item[i])
+        // }
         // while (item.options.length > 0) {
         //   let l = []
         //   for (let i = 0; i < 3; i++) {
@@ -1055,9 +1073,10 @@ export default {
         this.main = {
           exist: item.isUsed,
           value: [],
-          options: arr
+          options: item.options
         }
       }
+      console.log('17')
       this.list = list
       console.log('fetch-item', 'fetch-item')
       this.fetchItem()
