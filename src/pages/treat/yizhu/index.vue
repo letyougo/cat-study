@@ -186,6 +186,7 @@ export default {
   },
   computed: {
     pickedList () {
+      console.log('pick.list', this.list.filter(item => item.pick))
       return this.list.filter(item => item.pick)
     }
   },
@@ -264,9 +265,15 @@ export default {
     async saveTreatment (item, index) {
       console.log(this.list, 'this.list')
       console.log(this.list[index].med, 'med')
-      let obj = this.list[index]
+      let obj = this.pickedList[index]
       obj.med.visible = true
-      this.$set(this.list, index, Object.assign({}, this.list[index]))
+      this.list = this.list.map(item => {
+        if (obj.id === item.id) {
+          item.med = obj.med
+        }
+        return item
+      })
+      // this.$set(this.list, index, Object.assign({}, this.list[index]))
       // this.list[index].med.visible = true
       // console.log(item, index, 'item-index')
     },
