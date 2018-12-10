@@ -160,13 +160,13 @@
                           this.add()
                           this.passHistory2.value = ''
                         }" placeholder="请选择" v-model="passHistory.value">
-                            <el-option v-for="item in passHistory.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
+                            <el-option v-for="item in passHistory.options"  :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item v-if="passHistory2.options.length>0">
                         <el-select  @change="add" placeholder="请选择" v-model="passHistory2.value">
-                            <el-option v-for="item in passHistory2.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
+                            <el-option  :disabled="passHistory2.model.include" v-for="item in passHistory2.options" :label="item.names" :value="item.names" :key="item.names">{{item.names}}</el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item >
@@ -174,13 +174,19 @@
                        
                         @click="(e)=>{
                           if(this.passHistory2.options.length>0 && this.passHistory2.value){
+                           
                             let str = this.passHistory.value+';'+this.passHistory2.value
                             if(passHistory2.model.includes(str)){
                               return 
                             }
                            this.passHistory2.model.push(this.passHistory.value+';'+this.passHistory2.value)  
-                          }else
-                           this.passHistory2.model.push(this.passHistory.value)  
+                          }else{
+                            if(this.passHistory2.model.includes(this.passHistory.value)){
+                              return 
+                            }
+                            this.passHistory2.model.push(this.passHistory.value)  
+                          }
+                           
                         }"
                           > 新增</el-button>
                     </el-form-item>
@@ -225,8 +231,13 @@
                           return 
                         }
                        this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value+';'+this.checkBody2.abnomalBehavior.value)  
-                      }else
-                       this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value)  
+                      }else{
+                        if(this.checkBody2.abnomalBehavior.model(this.checkBody.abnomalBehavior.value)){
+                          return 
+                        }
+                        this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value)  
+                      }
+                      
                     }"
                     
                     icon="el-icon-plus"
@@ -397,8 +408,13 @@
                                       return 
                                     }
                                    this.checkBody2.eye.model.push(this.checkBody.eye.value+';'+this.checkBody2.eye.value)  
-                                  }else
-                                   this.checkBody2.eye.model.push(this.checkBody.eye.value)  
+                                  }else{
+                                    if(this.checkBody2.eye.model.includes(this.checkBody.eye.value)){
+                                      return
+                                    }
+                                    this.checkBody2.eye.model.push(this.checkBody.eye.value)  
+                                  }
+                            
                                 }"
                                 type="primary" icon="el-icon-plus"> 新增</el-button>
                            
@@ -445,8 +461,13 @@
                                          return
                                        }
                                       this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value+';'+this.checkBody2.skinDamage.value)  
-                                     }else
+                                     }else{
+                                       if(this.checkBody2.skinDamage.model.includes(this.checkBody.skinDamage.value)){
+                                         return
+                                       }
                                       this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value)  
+                                     }
+                                      
                                 }"
                                 > 新增</el-button>
                             </el-form-item>

@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="sign">
-          <div class="logo">x</div>
+        <img :src="logo" />
           <div class="name" style="cursor: pointer;"  @click="dialog.visible=true">{{user.username}}</div>
           <div class="action" @click="$router.push('/account')">
             退出
@@ -112,6 +112,7 @@ export default {
       tabs: [
 
       ],
+      logo:'http://img.maoyansuo.cn/avatar_chaojiguanliyuan',
       rules: {
         checkPass: [
           { validator: (rule, value, callback) => {
@@ -148,6 +149,9 @@ export default {
       global.isHuayan = roleName === '化验室'
       global.isYunyin = roleName === '运营管理员'
 
+      if(roleName === '超级管理员'){
+        this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
+      }
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
       this.hasCheckRight = ['超级管理员', '医生', '化验室'].includes(roleName)
