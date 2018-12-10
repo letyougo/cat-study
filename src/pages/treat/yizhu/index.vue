@@ -24,7 +24,7 @@
               @click="pickItem(item,i)"
               :type=" item.pick? 'primary' : 'default' "
               >{{ item.names }}
-              <i v-if="item.closeable" class="el-icon-close el-icon--right" @click.stop="closeHandler(i)"></i>
+              <i v-if="!item.closeable" class="el-icon-close el-icon--right" @click.stop="closeHandler(i)"></i>
               </el-button>
           </el-form-item>
           <el-form-item>
@@ -110,12 +110,11 @@
         <div class="check">
           <p v-for="(op,index) in item.treatments" >
             <el-checkbox-group v-model="item.med.st">
-                <template v-if="item.highlightTreatments.includes(op)">
-                    <el-checkbox :label="op" :key="index" style="color: red"></el-checkbox>
+                <template >
+                    
                 </template>
-                <template v-else>
-                    <el-checkbox :label="op" :key="index" ></el-checkbox>
-                </template>
+                <el-checkbox v-if="item.highlightTreatments.includes(op)" :label="op" :key="index" style="color: red"></el-checkbox>
+                <el-checkbox v-else :label="op" :key="index" ></el-checkbox>
                 <template v-if="item.operations.includes(op)">
                  <a href="javascript:void(0)" @click="openChuzhi(op)"> &nbsp;&nbsp;处置详情</a>
                 </template>
@@ -125,7 +124,7 @@
         <chufang v-if="item.med.visible" v-bind="item.med" @close="item.med.visible=false"></chufang>
         <p class="title-tip">医嘱</p>
         <div class="desc">
-          <el-input type="textarea" placeholder="" v-model="item.med.docAdvice"></el-input>
+          <el-input type="textarea" placeholder=""  v-model="item.med.docAdvice"></el-input>
         </div>
         <br>
         <el-button type="primary" @click="saveTreatment(item,index)">开具处方</el-button>
@@ -263,6 +262,7 @@ export default {
       this.list.splice(index, 1)
     },
     async saveTreatment (item, index) {
+      console.log(this.list, 'this.list')
       console.log(this.list[index].med, 'med')
       let obj = this.list[index]
       obj.med.visible = true
@@ -384,7 +384,7 @@ export default {
     text-align: center;
 }
 .desc {
-    margin-left: 90px;
+    /* margin-left: 90px; */
 }
 .desc {
           line-height: 20px;

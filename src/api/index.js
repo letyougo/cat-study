@@ -519,7 +519,8 @@ const api = {
     module
   } }),
   getLog: (params) => request.get('/data/statistics', { params }),
-  getStats: (params) => request.get('/stats/getStats', { params })
+  getStats: (params) => request.get('/stats/getStats', { params }),
+  updatePwd: (data) => request.post('/sysUser/updatePwd', data)
 }
 
 export default {

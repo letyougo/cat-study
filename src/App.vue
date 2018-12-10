@@ -59,10 +59,16 @@
             <el-input v-model="dialog.phoneNum" placeholder="手机号"></el-input>
           </el-form-item> -->
           <el-form-item label=""
-          prop="password"
+          prop="oldPwd"
           :rules="[{ required: true, message: '密码不能为空', trigger: 'blur' }]"
           >
-            <el-input type="password" v-model="dialog.password" placeholder="新密码"></el-input>
+            <el-input v-model="dialog.oldPwd" placeholder="旧密码"></el-input>
+          </el-form-item>
+          <el-form-item label=""
+          prop="newPwd"
+          :rules="[{ required: true, message: '密码不能为空', trigger: 'blur' }]"
+          >
+            <el-input type="password" v-model="dialog.newPwd" placeholder="新密码"></el-input>
           </el-form-item>
           <el-form-item label=""
           prop="newPassword"
@@ -106,20 +112,21 @@ export default {
       dialog: {
         visible: false,
         phoneNum: '',
+        oldPwd: '',
         password: '',
         newPassword: ''
       },
       tabs: [
 
       ],
-      logo:'http://img.maoyansuo.cn/avatar_chaojiguanliyuan',
+      logo: 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan',
       rules: {
         checkPass: [
           { validator: (rule, value, callback) => {
             console.log(value, this.dialog.newPassword, '-----')
             if (value === '') {
               callback(new Error('请再次输入密码'))
-            } else if (value !== this.dialog.password) {
+            } else if (value !== this.dialog.newPwd) {
               callback(new Error('两次输入密码不一致!'))
             } else {
               callback()
@@ -149,8 +156,17 @@ export default {
       global.isHuayan = roleName === '化验室'
       global.isYunyin = roleName === '运营管理员'
 
-      if(roleName === '超级管理员'){
+      if (roleName === '超级管理员') {
         this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
+      }
+      if (roleName === '运营管理员') {
+        this.logo = 'http://img.maoyansuo.cn/avatar_guanli'
+      }
+      if (roleName === '化验室') {
+        this.logo = 'http://img.maoyansuo.cn/avatar_huayanshi'
+      }
+      if (roleName === '医生') {
+        this.logo = 'http://img.maoyansuo.cn/avatar_yisheng'
       }
       this.hasAdminRight = ['超级管理员', '运营管理员', '化验室'].includes(roleName)
       this.hasDoctorRight = ['超级管理员', '化验室', '医生'].includes(roleName)
@@ -174,21 +190,24 @@ export default {
       this.$refs.change.validate(async (valid) => {
         if (valid) {
           let data = {
-            password: this.dialog.password,
-            id: global.user.id,
-            email: global.user.email,
-            phoneNum: global.user.phoneNum,
-            username: global.user.username
+            // password: this.dialog.password,
+            newPwd: this.dialog.newPwd,
+            oldPwd: this.dialog.oldPwd,
+            userId: global.user.id
+            // email: global.user.email,
+            // phoneNum: global.user.phoneNum,
+            // username: global.user.username
           }
-          let res = await this.api.role.update(data)
-          let { data: { code } } = res
-          this.dialog.visible = false
+          let res = await this.api.updatePwd(data)
+          let { data: { code, desc } } = res
+
           if (code === 200) {
+            this.dialog.visible = false
             this.$message.success('更新密码成功')
             this.$router.push('/account')
+          } else {
+            this.$message.error(desc)
           }
-        } else {
-
         }
       })
     }

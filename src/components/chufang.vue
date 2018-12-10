@@ -46,8 +46,8 @@
                       <el-input v-model="scope.row.quantity" placeholder=""></el-input>
                     </template>
               </el-table-column>
-              <!-- <el-table-column label="规范" prop="specification"></el-table-column> -->
-              <!-- <el-table-column label="分类" prop="classification"></el-table-column> -->
+              <el-table-column label="规范" prop="specification"></el-table-column> -->
+              <!-- <el-table-column label="分类" prop="classification"></el-table-column>
               <!-- <el-table-column label="时日">
                 <template scope="scope">
                   <el-input v-model="scope.row.timesDay" placeholder=""></el-input>

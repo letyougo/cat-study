@@ -25,7 +25,7 @@
                     <div @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
                         医院管理
                     </div>
-                    <p>诊室检查</p>
+                    <!-- <p>诊室检查</p> -->
                     <ul>
                         <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
                             疾病管理
