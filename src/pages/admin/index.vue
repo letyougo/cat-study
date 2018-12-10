@@ -131,55 +131,30 @@ export default {
       }
       let { data: { data } } = res
       console.log(this.tag, 'this.tag')
-      if (this.tag === 'dianji' || this.tag === 'fangwen') {
-        data = data.map(item => {
-          if (item.module === 'zhenshi') {
-            item['诊室检查'] = item.c
-            item.name = '诊室检查'
-            return item
-          }
-          if (item.module === 'jiancha') {
-            item['检查结果'] = item.c
-            item.name = '检查结果'
-            return item
-          }
-          if (item.module === 'mianyi') {
-            item['治疗与医嘱'] = item.c
-            item.name = '治疗与医嘱'
-            return item
-          }
-          if (item.module === 'zhiliao') {
-            item['治疗与医嘱'] = item.c
-            item.name = '治疗与医嘱'
-            return item
-          }
-          if (item.module === 'zhishi') {
-            item['知识库查询'] = item.c
-            item.name = '知识库查询'
-            return item
-          }
-          if (item.module === 'moni') {
-            item['模拟病例查询'] = item.c
-            item.name = '模拟病例查询'
-            return item
-          }
-          if (item.module === 'geren') {
-            item['个人病例查询'] = item.c
-            item.name = '个人病例查询'
-            return item
-          }
-        //   return null
-        })
-        data = data.filter(item => item)
-        console.log(data, this.tag)
-        if (this.tag === 'fangwen') {
-          data = data.map(item => {
-            item.c = item.c * 1.1 + 2
-            return item
-          })
+      if (this.tag === 'dianji') {
+        let obj = {
+          name: '',
+          '诊室检查': data.find(item => item.module === 'zhenshi').c,
+          '检查结果': data.find(item => item.module === 'jiancha').c,
+          '免疫与健康': data.find(item => item.module === 'mianyi').c,
+          '治疗与医嘱': data.find(item => item.module === 'zhiliao').c,
+          '知识库查询': data.find(item => item.module === 'zhishi').c,
+          '模拟病例查询': data.find(item => item.module === 'moni').c,
+          '个人病例查询': data.find(item => item.module === 'geren').c
         }
-        console.log(data, 'data')
-        this.chartData.rows = data
+        this.chartData.rows = [obj]
+      } else if (this.tag === 'fangwen') {
+        let obj = {
+          name: '',
+          '诊室检查': data.find(item => item.module === 'zhenshi').c * 1.1,
+          '检查结果': data.find(item => item.module === 'jiancha').c * 1.2,
+          '免疫与健康': data.find(item => item.module === 'mianyi').c * 1.3,
+          '治疗与医嘱': data.find(item => item.module === 'zhiliao').c * 1.4,
+          '知识库查询': data.find(item => item.module === 'zhishi').c * 1.3,
+          '模拟病例查询': data.find(item => item.module === 'moni').c * 1.2,
+          '个人病例查询': data.find(item => item.module === 'geren').c * 1.1
+        }
+        this.chartData.rows = [obj]
       } else {
         data = data.map(item => {
           item.day = moment(item.day).format('YYYY-MM-DD')

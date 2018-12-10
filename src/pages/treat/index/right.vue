@@ -100,17 +100,17 @@
 
                     <p>
                         <span v-for="op in item.symptoms"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
-                            <el-tag style="background: #ffffff" type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
-                            <el-tag type="warning" v-if="item.hightSymptoms.includes(op)">{{op}}</el-tag>
+                            <el-tag style="background: #ffffff" type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>                     
                             <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
+                            <el-tag type="warning" v-if="item.hightSymptoms.includes(op)">{{op}}</el-tag>
                         </span>
                     </p>
                     <p style="margin: 10px 0;font-size: 13px;">行为&查体</p>
                     <p>
                       <span v-for="op in item.checks"  :key="op" :label="op" size="mini'" style="padding: 4px 6px;display: inline-block">
                         <el-tag  style="background: #ffffff" type="primary" v-if="item.matchSymptoms.includes(op)">{{op}}</el-tag>
-                        <el-tag  type="warning" v-else-if="item.hightSymptoms.includes(op)">{{op}}</el-tag>
                         <el-tag v-else style="background: #ffffff;color: #333333;border-color: #dcdfe6">{{op}}</el-tag>
+                        <el-tag  type="warning" v-else-if="item.hightSymptoms.includes(op)">{{op}}</el-tag>
                       </span>
                     </p> 
                     <p style="display: flex;justify-content: space-between;align-items: center;margin: 10px 0">

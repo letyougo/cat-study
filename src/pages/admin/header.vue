@@ -27,7 +27,7 @@
                     </div>
                     <!-- <p>诊室检查</p> -->
                     <ul>
-                        <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
+                        <li style="border-top: 1px solid #f5f5f5"  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
                             疾病管理
                         </li>
                         <!-- <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">

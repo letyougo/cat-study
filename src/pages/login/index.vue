@@ -136,13 +136,13 @@ export default {
              global.user = data
              let roleName = data.role.roleName
              if (roleName === '医生') {
-               this.$router.push('/check/reing')
+               this.$router.push('/check')
              }
              if (roleName === '超级管理员') {
-               this.$router.push('/check/reing')
+               this.$router.push('/check')
              }
              if (roleName === '化验室') {
-               this.$router.push('/check/reing')
+               this.$router.push('/check')
              }
              if (roleName === '运营管理员') {
                this.$router.push('/admin')

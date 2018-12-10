@@ -53,11 +53,12 @@
                 </el-table-column>
                 <el-table-column label="id" prop="id"></el-table-column>
                 <el-table-column label="名字" prop="names"></el-table-column>
+                <el-table-column label="次/天" prop="timesDay"></el-table-column>
                 <el-table-column label="成分" prop="ingredient"></el-table-column>
-                <el-table-column label="量" prop="quantity"></el-table-column>
-                <el-table-column label="规范" prop="specification"></el-table-column>
+                <el-table-column label="剂量" prop="dosage"></el-table-column>      
+                <el-table-column label="规格" prop="specification"></el-table-column>
                 <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
-                <el-table-column label="天" prop="days"></el-table-column>
+                <el-table-column label="数量" prop="quantity"></el-table-column>
                 <el-table-column label="操作" width="220px">
                     <template scope="scope">
                         <el-button-group>
