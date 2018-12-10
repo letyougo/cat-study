@@ -31,7 +31,7 @@
                 style="float: right;"
                 type="text"
                 @click="()=>{
-                  this.$alert('请联系管理员修改密码','提示',{
+                  this.$alert('如果您忘记密码，请联系运营管理员重置密码','提示',{
                     confirmButtonText: '确定',
                   })
                 }"

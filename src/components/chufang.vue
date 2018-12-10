@@ -35,13 +35,13 @@
                 detail
               </el-table-column> -->
               <el-table-column label="名字" prop="names"></el-table-column>
-              <el-table-column label="剂量" prop="dosage">
+              <el-table-column label="次/天" prop="dosage">
                   <template scope="scope">
                       <el-input v-model="scope.row.dosage" placeholder=""></el-input>
                     </template>
               </el-table-column>
               <el-table-column label="成分" prop="ingredient"></el-table-column>
-              <el-table-column label="量" prop="quantity">
+              <el-table-column label="剂量" prop="quantity">
                   <template scope="scope">
                       <el-input v-model="scope.row.quantity" placeholder=""></el-input>
                     </template>
@@ -53,7 +53,7 @@
                   <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
                 </template>
               </el-table-column> -->
-
+              <el-table-column label="规格" prop="specification"></el-table-column>
               <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
               <!-- <el-table-column label="天"></el-table-column> -->
               <el-table-column label="操作" >

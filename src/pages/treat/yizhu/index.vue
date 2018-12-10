@@ -24,7 +24,7 @@
               @click="pickItem(item,i)"
               :type=" item.pick? 'primary' : 'default' "
               >{{ item.names }}
-              <i class="el-icon-close el-icon--right" @click.stop="closeHandler(i)"></i>
+              <i v-if="item.closeable" class="el-icon-close el-icon--right" @click.stop="closeHandler(i)"></i>
               </el-button>
           </el-form-item>
           <el-form-item>
@@ -299,6 +299,7 @@ export default {
       } = res
       data = data.map(item => {
         item.pick = false
+        item.closeable = true
         item.options = item.treatments.map(item => {
           return {
             pick: false,

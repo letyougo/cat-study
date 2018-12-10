@@ -116,6 +116,7 @@
                                 :label="item.names"
                                 :value="item.names"
                                 @change="add"
+                                :disabled="main.value.includes(item.names)"
                                 :key="item.names">
                                 {{item.names}}
                               </el-option>
@@ -173,6 +174,10 @@
                        
                         @click="(e)=>{
                           if(this.passHistory2.options.length>0 && this.passHistory2.value){
+                            let str = this.passHistory.value+';'+this.passHistory2.value
+                            if(passHistory2.model.includes(str)){
+                              return 
+                            }
                            this.passHistory2.model.push(this.passHistory.value+';'+this.passHistory2.value)  
                           }else
                            this.passHistory2.model.push(this.passHistory.value)  
@@ -215,6 +220,10 @@
                     <el-button type="primary" 
                     @click="(e)=>{
                       if(this.checkBody2.abnomalBehavior.options.length>0 && this.checkBody2.abnomalBehavior.value){
+                        let str = this.checkBody.abnomalBehavior.value+';'+this.checkBody2.abnomalBehavior.value
+                        if(checkBody2.abnomalBehavior.model.includes(str)){
+                          return 
+                        }
                        this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value+';'+this.checkBody2.abnomalBehavior.value)  
                       }else
                        this.checkBody2.abnomalBehavior.model.push(this.checkBody.abnomalBehavior.value)  
@@ -351,7 +360,7 @@
                         <el-form>
                             <el-form-item>
                                 <el-select  @change="add" style="width:400px" multiple placeholder="未见异常" v-model="checkBody.smell.value">
-                                    <el-option v-for="item in checkBody.smell.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
+                                    <el-option  v-for="item in checkBody.smell.options" :key="item.id" :label="item.names" :value="item.names">{{item.names}}</el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -383,6 +392,10 @@
                                 <el-button 
                                 @click="(e)=>{
                                   if(this.checkBody2.eye.options.length>0 && this.checkBody2.eye.value){
+                                    let str = this.checkBody.eye.value+';'+this.checkBody2.eye.value
+                                    if(checkBody2.eye.model.includes(str)){
+                                      return 
+                                    }
                                    this.checkBody2.eye.model.push(this.checkBody.eye.value+';'+this.checkBody2.eye.value)  
                                   }else
                                    this.checkBody2.eye.model.push(this.checkBody.eye.value)  
@@ -427,6 +440,10 @@
                                 <el-button type="primary" icon="el-icon-plus" 
                                 @click="(e)=>{
                                      if(this.checkBody.skinDamage.options.length>0 && this.checkBody2.skinDamage.value){
+                                       let str = this.checkBody.skinDamage.value+';'+this.checkBody2.skinDamage.value
+                                       if(checkBody2.skinDamage.model.includes(str)){
+                                         return
+                                       }
                                       this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value+';'+this.checkBody2.skinDamage.value)  
                                      }else
                                       this.checkBody2.skinDamage.model.push(this.checkBody.skinDamage.value)  
