@@ -662,13 +662,22 @@ export default {
     async fetchMain (names) {
       let res = await this.api.visit.searchSymptom({ names })
       let { data: { data } } = res
-      data = data.map(item => {
+      let data2 = []
+      for(var i=0;i<data.length;i++){
+        if(!data2.includes(data[i])){
+          data2.push(data[i])
+        }
+      }
+      data2= data2.map(item => {
         let obj = {}
         obj.names = item
 
         return obj
       })
-      this.main.options = data
+      // this.main.options = data
+      let options = []
+      
+      this.main.options = data2
       console.log('sss', res.data)
     },
     setMain (item, index) {
