@@ -11,7 +11,7 @@
 					<div class="login-form">
 						<el-form ref="form" :model="form">
               <el-form-item
-              
+
               :rules="[{ required: true, message: '手机号不能为空', trigger: 'blur' }]"
               prop="phoneNum"
               label="">
@@ -27,23 +27,23 @@
 								<el-button type="primary" style="width:100%" @click="login">登录</el-button>
 							</el-form-item>
 							<el-form-item label="">
-                <el-button 
+                <el-button
                 style="float: right;"
-                type="text" 
+                type="text"
                 @click="()=>{
                   this.$alert('请联系管理员修改密码','提示',{
                     confirmButtonText: '确定',
                   })
                 }"
-                
+
                 >忘记密码</el-button>
 								<!-- <router-link to="/account/forget" style="float:right">忘记密码</router-link> -->
 							</el-form-item>
 						</el-form>
 					</div>
-				
+
         </div>
-        
+
         <el-dialog :visible.sync="dialog.visible" width="500px">
           <h3 style="text-align: center">修改密码</h3>
           <el-form :model="dialog" ref="change">
@@ -108,7 +108,7 @@ export default {
          newPassword: ''
        },
        rules: {
- 
+
          checkPass: [
            { validator: (rule, value, callback) => {
              console.log(value, this.dialog.newPassword, '-----')
@@ -155,7 +155,7 @@ export default {
        })
      },
      change () {
- 
+
      },
      handleUpdate () {
        this.$refs.change.validate(async (valid) => {
@@ -175,7 +175,7 @@ export default {
              this.$router.push('/account')
            }
          } else {
- 
+
          }
        })
      }
@@ -194,13 +194,13 @@ export default {
   bottom: 0;
   background:url('/static/img/admin/cat.png') no-repeat center;
   background-size: cover;
-
+  z-index: 100;
   .login-pannel {
     position: absolute;
     right: 20px;
 		top: 85px;
 		width: 494px;
-   
+
     border-radius: 4px;
 
     .login-title {
@@ -216,7 +216,7 @@ export default {
 			font-size: 24px;
 			text-align: center;
 		}
-		
+
 		.login-form{
 			box-shadow: 0 0 30px @primaryColor;
       background:#ffffff;
