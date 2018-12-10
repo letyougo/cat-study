@@ -83,7 +83,7 @@
                   <el-collapse-item v-for="(item,index) in list"  :key="item.id">
                    <template slot="title">
                       <div class="item-title">
-                          <div>{{item.names}}</div>
+                          <div style="font-weight:bold">{{item.names}}</div>
                           <div>
                             <span v-for="i in item.index"></span>
                              <!-- {{item.rate}} -->
