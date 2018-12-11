@@ -1,6 +1,7 @@
 <template>
     <el-dialog  :visible="true" width="900px" class="checktpl-dia">
-        <h3 slot="title" style="text-align: center">{{title}}</h3> 
+      <div class="print-content">
+          <h3 slot="title" style="text-align: left;margin-bottom:10px">{{checkName}}</h3> 
         <!-- <template v-if="tplType === 0"> 
           blood
           <blood :columns="columns[tplType].options" :list="bloodList"></blood>
@@ -176,7 +177,7 @@
           </el-form>
         </template>
       
-           
+      </div>   
       
         <!-- <template v-else>
           <div>暂不支持改检查模板{{tplType}}</div>
@@ -185,7 +186,7 @@
         
         <span slot="footer">
           <el-button @click="$emit('close')">关闭</el-button>
-          <el-button @click="$emit('close')">打印</el-button>
+          <el-button @click="print">打印</el-button>
           <el-button type="primary" @click="updateTableCheck">保存</el-button> 
         </span>
     </el-dialog>
@@ -209,7 +210,8 @@ export default {
   props: [
     'reportId',
     'visible',
-    'title'
+    'title',
+    'checkName'
   ],
 
   components: {
@@ -300,6 +302,9 @@ export default {
     reload () {
       this.edit.table = false
       this.fetch()
+    },
+    print(){
+      global.print('.print-content')
     }
   },
   mounted () {

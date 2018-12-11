@@ -62,7 +62,10 @@
       </div>
 
         </div>
-        <checktpl v-if="dialog.visible" :reportId="dialog.reportId" @close="dialog.visible=false"></checktpl>
+        <checktpl v-if="dialog.visible" :checkName="dialog.checkName" :reportId="dialog.reportId" @close="(e)=>{
+          this.fetch()
+          this.dialog.visible=false  
+        }"></checktpl>
       </div>
     </div>
   </template>
@@ -88,7 +91,8 @@ global.moment = moment
         loading: false,
         dialog: {
           visible: false,
-          reportId: -1
+          reportId: -1,
+          checkName:''
         },
         pageinfo: {
           pageNum: 1,
@@ -112,6 +116,7 @@ global.moment = moment
         console.log(this.dialog, 'dialog', item)
         this.dialog.visible = true
         this.dialog.reportId = item.checkId
+        this.dialog.checkName = item.checkName
       },
       async fetch () {
         let status
