@@ -10,7 +10,7 @@
           智能诊疗
         </div>
         <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path.includes('/doctor')}">
-          
+
           医生知识库
         </div>
         <div v-if="hasAdminRight" @click="$router.push('/admin')" :class="{active:$route.path.includes('/admin')}" >
@@ -25,25 +25,25 @@
           </div>
       </div>
     </div>
- 
+
     <div class="content">
       <div class="content-body">
           <router-view></router-view>
       </div>
-      
+
     </div>
 
     <div class="bottom">
       <div style="flex: 1">
-        <span  @click="$router.push('/check')"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
+        <!--<span  @click="$router.push('/check')"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
             <el-tag :type="  $route.path.startsWith('/check') ? 'primary' :'info' "
             >导诊首页</el-tag>
         </span>
         <span v-for="item in tabs" :key="item.id"  @click="go(item)"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
-            <el-tag :type=" item.id == $route.query.id ? 'primary' : 'info' " closable 
+            <el-tag :type=" item.id == $route.query.id ? 'primary' : 'info' " closable
             @close="closeTab(item)"> {{item.ownerName}} ( {{item.catName}} )</el-tag>
-        </span>
-      
+        </span>-->
+
       </div>
       <div>台操作员：{{user.username}}（医生）</div>
       <div>{{user.hospital}}</div>
@@ -86,7 +86,7 @@
             </el-button>
         </span>
       </el-dialog>
-  
+
   </div>
 </template>
 <script>
@@ -266,7 +266,7 @@ export default {
     background: #ffffff;
     height: 60px;
     color: #333333;
-    
+
    .logo{
      width: 205px;
      background: #07b8a8;
@@ -299,17 +299,17 @@ export default {
       background-color: #faa032;
       border-color: #faa032;
       border-radius: 20px;
-      
+
     }
 
 
-  
+
   }
   .sign{
     display: flex;
-    
+
     align-items: center;
-  
+
     margin-right: 20px;
 
     .name{
@@ -322,18 +322,18 @@ export default {
         border-radius: 50%;
         text-align: center;
         line-height: 40px;
-        background:  #faa032; 
+        background:  #faa032;
     }
 
   .action{
       background: #f56c6c;
       padding: 7px 15px;
-      border-radius: 20px; 
+      border-radius: 20px;
       color: #fff;
       cursor: pointer;
     }
-    
-    
+
+
   }
 
   .content{
@@ -341,12 +341,12 @@ export default {
     padding: 0 30px;
     flex: 1;
     overflow-y: auto;
-  } 
+  }
 
   .bottom{
     margin: 0 30px;
     height: 40px;
-    
+
     line-height: 40px;
     justify-content: flex-end;
     display: flex;
@@ -360,6 +360,6 @@ export default {
     >div:last-child{
       margin-left: 20px;
     }
-    
+
   }
 </style>
