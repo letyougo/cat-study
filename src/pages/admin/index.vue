@@ -40,7 +40,7 @@
             </div>
                <div class="data-item">
                 <div class="data-value">{{stats.avgCaseFillPercent}}%</div>
-                <div class="data-tip">病例完成程度，</div>
+                <div class="data-tip">病例完成程度</div>
             </div>
         </div>
         <div class="admin-title search-action">

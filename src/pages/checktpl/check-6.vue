@@ -30,6 +30,12 @@
  export default {
    name: 'check-tpl0',
    props: ['list', 'edit', 'admin'],
+   data(){
+     let imgs = list[0].result.result.split(';')
+      return {
+        imgs
+     }
+   },
    methods: {
      seePic () {
        window.open(this.list[0].result)
