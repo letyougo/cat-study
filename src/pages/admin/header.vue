@@ -8,6 +8,11 @@
                     <!-- <span>O</span> -->
                     后台管理
                 </div>
+                <template v-if="right.isYunyin">
+                    <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
+                        权限管理
+                    </div>
+                </template>
                 <template v-if="right.isAdmin || right.isHuayan">
                         <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
                             权限管理

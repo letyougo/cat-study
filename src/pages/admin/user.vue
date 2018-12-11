@@ -13,7 +13,7 @@
 
         <div>
             <el-table :data="list">
-                <el-table-column type="expand">
+                <el-table-column type="expand" v-loading="loading1">
                     <template scope="scope">
                         <h3>编辑用户</h3>
                         <el-form>
@@ -101,7 +101,7 @@
         </div>
 
         <div>
-            <el-table :data="roles">
+            <el-table :data="roles" v-loading="loading2">
                 <!-- <el-table-column label="类型" prop="type"></el-table-column> -->
                 <!-- <el-table-column label="权限" type="expand" width="100px">
                     <template scope="scope">
@@ -133,14 +133,18 @@ export default {
   data () {
     return {
       list: [],
+      loading:1,
       add: {
-        username: 'siri',
-        phoneNum: '13683360717',
-        password: 'surui123',
+        username: '',
+        // phoneNum: '13683360717',
+        // password: 'surui123',
+        phoneNum: '',
+        password: '',
         roleId: '',
         hospitalId: '',
         visible: false
       },
+      loading:2,
       roles: [],
       roleOptions: [],
       hospitalOptions: []
@@ -200,8 +204,10 @@ export default {
       })
     },
     async fetchUser () {
+        this.loading1= true
       let res = await this.api.account.list()
       let { data: { data, code } } = res
+      this.loading1 = false
       if (code === 200) {
         data = data.map(item => {
           item.roles = item.roles || []
@@ -212,9 +218,11 @@ export default {
       }
     },
     async fetchRole () {
+        this.loading2 = true
       let res = await this.api.role.list()
 
       let { data: { data, code } } = res
+      this.loading2=false
       this.roleOptions = data.map(item => {
           return {
               value: item.roleId,
