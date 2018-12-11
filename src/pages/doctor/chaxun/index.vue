@@ -249,9 +249,7 @@ export default {
       this.chuzhi.desc = this.formatProcess(data.process)
     },
     async openDialog1 (row) {
-      console.log('rowm', row)
       let res = await this.api.ill.item({ id: row.id })
-      debugger;
         this.dialog1 = {
             visible: true,
             names: res.data.data.names,
