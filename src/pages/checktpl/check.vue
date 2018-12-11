@@ -164,7 +164,10 @@ export default {
       let f = e.target.files[0]
       let res = await this.api.upload(f)
       let { data: { data: { path } } } = res
-      this.list[0].result = path
+      console.log(this.list, 'this.list')
+      let result = this.list[0].result.split(';')
+      result.push(path)
+      this.list[0].result =  result
       this.update()
     }
   },

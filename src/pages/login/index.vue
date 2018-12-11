@@ -96,10 +96,10 @@ export default {
    data () {
      return {
        form: {
-          phoneNum: '',
-          password: '',
-        //  phoneNum: '18030086905',
-        //  password: '123456'
+          // phoneNum: '',
+          // password: '',
+         phoneNum: '18030086905',
+         password: '123456'
        },
        dialog: {
          visible: false,
