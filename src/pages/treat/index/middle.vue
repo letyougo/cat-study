@@ -50,7 +50,9 @@
                       <el-input
                       type="number"
                       step="0.01"
-                      @change="add" v-model="basic.weight.value"  :style="{width:'250px'}" class="inline-input" placeholder="">
+                      @change="add" v-model="basic.weight.value"
+                      @input="basic.weight.value=/^\d+\.?\d{0,2}$/.test(basic.weight.value)||basic.weight.value == '' ? basic.weight.value : basic.weight.value=''"
+                      :style="{width:'250px'}" class="inline-input" placeholder="限制小数点后两位">
                           <template slot="append">kg</template>
                       </el-input>
                   </el-form-item>
@@ -278,9 +280,9 @@
                         <template v-if="checkBody.blood.exist">
                             <el-form-item label="血压">
                                 <el-input
-                                type="number"
-                                step="0.1"
-                                @change="add" style="width:317px" placeholder=""  v-model="checkBody.blood.value">
+                                type="text"
+                                @change="add" style="width:317px" placeholder=""
+                                v-model="checkBody.blood.value">
                                     <template slot="append">
                                         mmHG
                                     </template>
@@ -697,7 +699,7 @@ export default {
     }
   },
   methods: {
-    async fetchMain (names) {
+      async fetchMain (names) {
       let res = await this.api.visit.searchSymptom({ names })
       let { data: { data } } = res
       let data2 = []
