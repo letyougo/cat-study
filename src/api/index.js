@@ -3,7 +3,7 @@ import moment from 'moment'
 import Vue from 'vue'
 import App from '../main'
 let axios = request.create()
-request.defaults.baseURL = 'http://39.104.82.5:8080'
+request.defaults.baseURL = 'http://47.99.183.50:8080'
 
 const noCheck = [
   '/login'

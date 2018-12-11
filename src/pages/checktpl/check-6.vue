@@ -1,9 +1,9 @@
 <template>
   <div class="check-6">
       <div class="check-img">
-          <div class="check-soure">
-            <img :src="list[0].result" style="max-width: 100%;max-height: 100%"/>
-
+          <div class="check-soure" v-for="(img,index) in imgs" :key="img">
+            <img :src="img" style="max-width: 100%;max-height: 100%"/>
+            <i class="el-icon-close" @click="imgs.splice(index,1)"></i>
           </div>
           <div class="check-action" v-if="edit">
             <div style="position: relative">上传图片
@@ -30,10 +30,20 @@
  export default {
    name: 'check-tpl0',
    props: ['list', 'edit', 'admin'],
+   data(){
+      return {
+        imgs:[]
+     }
+   },
    methods: {
      seePic () {
        window.open(this.list[0].result)
      }
+   },
+   mounted(){
+    let imgs = this.list[0].result.split(';')
+    console.log('imags', imgs)
+    this.imgs = imgs
    }
  }
 </script>
