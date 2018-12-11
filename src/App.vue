@@ -34,17 +34,22 @@
     </div>
 
     <div class="bottom">
-      <div style="flex: 1">
-        <!--<span  @click="$router.push('/check')"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
+      <template v-if="$route.path != '/admin' && $route.path != '/admin/user' && $route.path != '/admin/med' &&
+          $route.path != '/admin/hosmed' && $route.path != '/admin/hospital' && $route.path != '/admin/ill' && $route.path != '/admin/ysbl' &&
+          $route.path != '/admin/treat' && $route.path != '/admin/daoyuan' && $route.path != '/admin/check'&& $route.path != '/admin/operation'">
+        <div style="flex: 1">
+        <span  @click="$router.push('/check')"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
             <el-tag :type="  $route.path.startsWith('/check') ? 'primary' :'info' "
             >导诊首页</el-tag>
         </span>
-        <span v-for="item in tabs" :key="item.id"  @click="go(item)"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
+          <span v-for="item in tabs" :key="item.id"  @click="go(item)"   style="cursor: pointer;padding: 0 5px;display: inline-block;">
             <el-tag :type=" item.id == $route.query.id ? 'primary' : 'info' " closable
-            @close="closeTab(item)"> {{item.ownerName}} ( {{item.catName}} )</el-tag>
-        </span>-->
+                    @close="closeTab(item)"> {{item.ownerName}} ( {{item.catName}} )</el-tag>
+        </span>
 
-      </div>
+        </div>
+      </template>
+
       <div>台操作员：{{user.username}}（医生）</div>
       <div>{{user.hospital}}</div>
     </div>
