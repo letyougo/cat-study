@@ -278,7 +278,7 @@
                         <template v-if="checkBody.blood.exist">
                             <el-form-item label="血压">
                                 <el-input
-                                type="input"
+                                type="number"
                                 step="0.1"
                                 @change="add" style="width:317px" placeholder=""  v-model="checkBody.blood.value">
                                     <template slot="append">
