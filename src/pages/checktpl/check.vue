@@ -118,6 +118,10 @@ export default {
           })
         }
         this.list = data
+      } else if (tplType === 6) {
+        data.result = data.result || []
+        this.list = [data]
+        this.desc = data.note
       } else {
         data.result = data.result || ''
         this.list = [data]
@@ -164,10 +168,10 @@ export default {
       let f = e.target.files[0]
       let res = await this.api.upload(f)
       let { data: { data: { path } } } = res
-      console.log(this.list, 'this.list')
-      let result = this.list[0].result.split(';')
+      // console.log(this.list, 'this.list')
+      let result = this.list[0].result
       result.push(path)
-      this.list[0].result =  result
+      this.list[0].result = result
       this.update()
     }
   },

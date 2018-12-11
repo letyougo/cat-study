@@ -70,42 +70,42 @@
 
     <el-dialog title="疾病详情" class="chaxun-dialog" :visible.sync="dialog1.visible">
       <div style="width: 100%">
-        <div style="width: 100%">
-          <div style="width:50%;float:left">
+        <div style="display: flex;align-items: top;justify-content: space-between;">
+          <div style="flex: 1">
             <p class="chaxun-dialog-title">疾病名称</p>
             <div class="chaxun-dialog-content" v-html="dialog1.names"></div>
           </div>
-          <div style="width:50%;float:right">
+          <div style="flex: 1">
             <p class="chaxun-dialog-title">症状</p>
             <div class="chaxun-dialog-content" v-html="dialog1.symptom"></div>
           </div>
         </div>
         <br/>
-        <div style="width: 100%">
-          <div style="width:50%;float:left">
+        <div style="display: flex;align-items: top;justify-content: space-between;">
+          <div style="flex:1">
             <p class="chaxun-dialog-title">鉴别</p>
             <div class="chaxun-dialog-content" v-html="dialog1.identification"></div>
           </div>
-          <div style="width:50%;float:right">
+          <div style="flex:1">
             <p class="chaxun-dialog-title">治疗原则</p>
             <div class="chaxun-dialog-content" v-html="dialog1.principle"></div>
           </div>
         </div>
         <br/>
-        <div style="width: 100%">
-          <div style="width:50%;float:left">
+        <div  style="display: flex;align-items: top;justify-content: space-between;">
+          <div style="flex:1">
             <p class="chaxun-dialog-title">治疗建议</p>
             <div class="chaxun-dialog-content" v-html="dialog1.suggestTreatment"></div>
           </div>
           <br/>
-          <div style="width:50%;float:right">
+          <div style="flex:1">
             <p class="chaxun-dialog-title">病因</p>
             <div class="chaxun-dialog-content" v-html="dialog1.causes"></div>
           </div>
           <br/>
 
         </div>
-        <div style="width: 100%">
+        <div style="display: flex;align-items: top;">
           <div style="width:50%;float:left">
             <p class="chaxun-dialog-title">预后</p>
             <div class="chaxun-dialog-content" v-html="dialog1.prognosis"></div>
@@ -208,12 +208,12 @@
     components: {
       corner
     },
-    data() {
+    data () {
       return {
         list: [
-          {name: 'surui', status: 25, desc: 'man'},
-          {name: 'liuhua', status: 25, desc: 'girl'},
-          {name: 'aaa', status: 25, desc: 'ccc'}
+          { name: 'surui', status: 25, desc: 'man' },
+          { name: 'liuhua', status: 25, desc: 'girl' },
+          { name: 'aaa', status: 25, desc: 'ccc' }
         ],
         list1: [],
         list2: [],
@@ -259,23 +259,23 @@
     },
     computed: {},
     methods: {
-      showDetail(item) {
+      showDetail (item) {
         console.log(item, 'show detail item')
         this.detail = {
           visible: true,
           ...item
         }
       },
-      async openChuzhi(row) {
+      async openChuzhi (row) {
         console.log(row)
         this.chuzhi.visible = true
         let res = await this.api.operation.getOperationById(row.id)
-        let {data: {data, code}} = res
+        let { data: { data, code } } = res
         this.chuzhi.names = data.names
         this.chuzhi.desc = this.formatProcess(data.process)
       },
-      async openDialog1(row) {
-        let res = await this.api.ill.item({id: row.id})
+      async openDialog1 (row) {
+        let res = await this.api.ill.item({ id: row.id })
         this.dialog1 = {
           visible: true,
           names: res.data.data.names,
@@ -289,29 +289,29 @@
           identification: res.data.data.identification
         }
       },
-      async fetch1() {
+      async fetch1 () {
         this.loading1 = true
-        let res = await api.search({keyword: this.keyword})
+        let res = await api.search({ keyword: this.keyword })
         this.loading1 = false
         this.list1 = res.data
       },
-      async fetch2() {
+      async fetch2 () {
         this.loading2 = true
-        let res = await api.searchOpt({keyword: this.keyword})
+        let res = await api.searchOpt({ keyword: this.keyword })
         this.loading2 = false
         this.list2 = res.data
       },
-      fetch() {
+      fetch () {
         this.fetch1()
         this.fetch2()
       },
-      reload() {
+      reload () {
         if (this.$route.query.likeStr) {
           this.keyword = this.$route.query.likeStr
           this.fetch()
         }
       },
-      formatProcess(process) {
+      formatProcess (process) {
         if (process.includes('【')) {
           let arr = process.split('【')
           arr.shift()
@@ -332,12 +332,12 @@
         } else {
           return process
         }
-      },
+      }
     },
-    created() {
+    created () {
 
     },
-    mounted() {
+    mounted () {
       this.reload()
     }
   }

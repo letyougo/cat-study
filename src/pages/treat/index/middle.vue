@@ -703,12 +703,12 @@ export default {
       let res = await this.api.visit.searchSymptom({ names })
       let { data: { data } } = res
       let data2 = []
-      for(var i=0;i<data.length;i++){
-        if(!data2.includes(data[i])){
+      for (var i = 0; i < data.length; i++) {
+        if (!data2.includes(data[i])) {
           data2.push(data[i])
         }
       }
-      data2= data2.map(item => {
+      data2 = data2.map(item => {
         let obj = {}
         obj.names = item
 
@@ -752,7 +752,6 @@ export default {
         year: catYears,
         month: catMonths
       }
-
 
       let res2 = await this.api.visit.item({ caseId: this.$route.query.id })
       console.log('fetch-item', res2.data)

@@ -28,6 +28,19 @@
             </el-table>
           </template>
         </el-table-column> -->
+        <el-table-column label="子项" type="expand" width="100px">
+          <template scope="scope">
+            <el-button type="primary" @click="addChild2(scope.row)">增加</el-button>
+            <el-table :data="scope.row.child">
+              <el-table-column label="名称" prop="names"></el-table-column>
+              <el-table-column label="操作">
+                <template scope="scope">
+                  <el-button type="danger" @click="del(scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-table-column>
         <el-table-column label="id" prop="id"></el-table-column>
         <el-table-column label="名称" prop="names">
           <template scope="scope">
@@ -37,7 +50,7 @@
         </el-table-column>
         <el-table-column label="子项">
           <template scope="scope">
-            <div v-if="scope.row.child && scope.row.child.length>0">有</div>
+            <div v-if="scope.row.child && scope.row.child.length>0"><el-button type="text">有</el-button></div>
             <div v-else>无</div>
           </template>
         </el-table-column>
@@ -82,6 +95,7 @@
             let res = await api.visit.delVisitOpt({
               id: item.id
             })
+            this.$message.success('删除选项成功')
             this.fetch()
           } catch (e) {
     
@@ -115,6 +129,18 @@
             level: 'f',
             parentId: '0'
           })
+          this.$message.success('增加选项成功')
+          this.fetch()
+        },
+        async addChild2 (item) {
+          let { value } = await this.$prompt('请输入名称')
+          let res = await api.visit.addVisitOpt({
+            dimensionId: this.$route.query.id,
+            names: value,
+            level: 's',
+            parentId: item.id
+          })
+          this.$message.success('增加选项成功')
           this.fetch()
         }
       },
