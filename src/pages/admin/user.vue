@@ -48,7 +48,7 @@
                 </el-table-column>
                 <el-table-column label="用户名" prop="username"></el-table-column>
                 <el-table-column label="电话号码" prop="phoneNum"></el-table-column>
-                <el-table-column label="hospitalId" prop="hospitalId"></el-table-column>
+                <el-table-column label="医院名称" prop="hospitalName"></el-table-column>
                 <el-table-column label="角色">
                     <template scope="scope">
                         <el-tag v-for="item in scope.row.roles" type="primary">{{item.roleName}}</el-tag>
@@ -150,8 +150,8 @@ export default {
   methods: {
     async addUser () {
       let res = await this.api.account.post(this.add)
-      let { data: { code, data } } = res
-      this.tip(code, '增加用户成功', '增加用户失败', () => {
+      let { data: { code, data ,desc} } = res
+      this.tip(code, '增加用户成功', desc, () => {
         this.add.visible = false
         this.reload()
       })
@@ -160,8 +160,8 @@ export default {
       try {
         await this.$confirm('确定删除用户吗？')
         let res = await this.api.account.del({ userId: item.id })
-        let { data: { code, data } } = res
-        this.tip(code, '删除用户成功', '删除用户失败', () => {
+        let { data: { code, data,desc } } = res
+        this.tip(code, '删除用户成功', desc, () => {
           this.reload()
         })
       } catch (e) {
@@ -178,8 +178,8 @@ export default {
         if (dir === 'left') {
           res = await this.api.role.del({ userId: item.id, roleId: ids[i] })
         }
-        let { data: { code } } = res
-        this.tip(code, '更新角色成功', '更新角色失败', () => {
+        let { data: { code ,desc} } = res
+        this.tip(code, '更新角色成功', desc, () => {
           this.reload()
         })
       }
@@ -194,8 +194,8 @@ export default {
         id: item.id
       }
       let res = await this.api.role.update(data)
-      let { data: { code } } = res
-      this.tip(code, '更新数据成功', '更新数据失败', () => {
+      let { data: { code ,desc} } = res
+      this.tip(code, '更新数据成功', desc, () => {
         this.reload()
       })
     },

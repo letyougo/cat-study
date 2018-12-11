@@ -39,7 +39,7 @@
                 <div class="data-tip">新病例数</div>
             </div>
                <div class="data-item">
-                <div class="data-value">{{stats.avgCaseFillPercent | 'fix2'}}</div>
+                <div class="data-value">{{stats.avgCaseFillPercent}}%</div>
                 <div class="data-tip">简历完成度</div>
             </div>
         </div>

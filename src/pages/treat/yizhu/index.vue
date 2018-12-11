@@ -422,6 +422,11 @@ export default {
     }
 
     .record {
+
+      .el-checkbox__label{
+        background: red !importand;
+      }
+
       display: flex;
       overflow-x: auto;
       .record-item {
@@ -452,7 +457,7 @@ export default {
         .check {
           margin-top: 17px;
           > p {
-            height: 30px;
+            min-height: 30px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -469,7 +474,7 @@ export default {
   .check {
           margin-top: 17px;
           > p {
-            height: 30px;
+            min-height: 30px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
