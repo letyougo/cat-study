@@ -69,7 +69,7 @@
       <div class="result-ana-title">根据检查结果显示:</div>
       <div class="result-ana-content">
         <p v-for="(item,index) in descList" ::key="item.id">
-          <span class="index">{{index}}</span><label>{{item.note}}</label>
+          <span class="index">{{index+1}}</span><label>{{item.note}}</label>
         </p>
       </div>
     </div>

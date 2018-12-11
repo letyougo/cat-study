@@ -7,6 +7,7 @@
                   v-model="selectItem"
                   filterable
                   remote
+                  clearable
                   reserve-keyword
                   placeholder="搜索疾病"
                   :remote-method="searchIll"
@@ -111,7 +112,7 @@
           <p v-for="(op,index) in item.treatments" >
             <el-checkbox-group v-model="item.med.st">
                 <template >
-                    
+
                 </template>
                 <el-checkbox v-if="item.highlightTreatments.includes(op)" :label="op" :key="index" style="color: red"></el-checkbox>
                 <el-checkbox v-else :label="op" :key="index" ></el-checkbox>
@@ -260,6 +261,7 @@ export default {
       this.uncertainTreatments = [data]
     },
     async closeHandler (index) {
+      this.selectItem=''
       this.list.splice(index, 1)
     },
     async saveTreatment (item, index) {

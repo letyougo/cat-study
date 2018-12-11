@@ -70,12 +70,21 @@
           <div>
               <p class="chaxun-dialog-title">疾病名称</p>
               <div class="chaxun-dialog-content" v-html="dialog1.names"></div>
-
-              <p class="chaxun-dialog-title">疾病症状</p>
+              <p class="chaxun-dialog-title">症状</p>
               <div class="chaxun-dialog-content" v-html="dialog1.symptom"></div>
+              <p class="chaxun-dialog-title">鉴别</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.identification"></div>
+              <p class="chaxun-dialog-title">治疗原则</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.principle"></div>
+              <p class="chaxun-dialog-title">治疗建议</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.suggestTreatment"></div>
+            <p class="chaxun-dialog-title">病因</p>
+            <div class="chaxun-dialog-content" v-html="dialog1.causes"></div>
+              <p class="chaxun-dialog-title">预后</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.prognosis"></div>
 
-              <p class="chaxun-dialog-title">描述</p>
-              <div class="chaxun-dialog-content" v-html="dialog1.desc"></div>
+           <!--   <p class="chaxun-dialog-title">描述</p>
+              <div class="chaxun-dialog-content" v-html="dialog1.desc"></div>-->
           </div>
           <span slot="footer">
               <el-button type="" @click="dialog1.visible=false">关闭</el-button>
@@ -202,6 +211,14 @@ export default {
         names: '',
         symptom: '',
         desc: '',
+        exam: '',
+        principle: '',
+        suggestTreatment: '',
+        prognosis: '',
+        causes: '',
+        identification: '',
+        prescription: '',
+        process: '',
         visible: false
       },
       dialog2: {
@@ -231,14 +248,22 @@ export default {
       this.chuzhi.names = data.names
       this.chuzhi.desc = this.formatProcess(data.process)
     },
-    openDialog1 (row) {
+    async openDialog1 (row) {
       console.log('rowm', row)
-      this.dialog1 = {
-        visible: true,
-        names: row.names,
-        desc: row.desc,
-        symptom: row.symptom
-      }
+      let res = await this.api.ill.item({ id: row.id })
+      debugger;
+        this.dialog1 = {
+            visible: true,
+            names: res.data.data.names,
+            symptom: res.data.data.symptom,
+            desc: res.data.data.desc,
+            exam: res.data.data.exam,
+            principle: res.data.data.principle,
+            suggestTreatment: res.data.data.suggestTreatment,
+            prognosis: res.data.data.prognosis,
+            causes: res.data.data.causes,
+            identification: res.data.data.identification
+        }
     },
     async fetch1 () {
       this.loading1 = true
