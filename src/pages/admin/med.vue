@@ -30,21 +30,27 @@
                           <el-form-item label="名字">
                               <el-input v-model="scope.row.names" placeholder=""></el-input>
                           </el-form-item>
+                          <el-form-item label="次/天">
+                              <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
+                          </el-form-item>
                           <el-form-item label="成分">
                                 <el-input v-model="scope.row.ingredient" placeholder=""></el-input>
                           </el-form-item>
-                          <el-form-item label="量">
-                                <el-input v-model="scope.row.quantity" placeholder=""></el-input>
+                          <el-form-item label="剂量">
+                                <el-input v-model="scope.row.dosage" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="规范">
-                                <el-input v-model="scope.row.specification" placeholder=""></el-input>
+                            <el-input v-model="scope.row.specification" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="药用用法">
                                 <el-input v-model="scope.row.medicineUsage" placeholder=""></el-input>
                           </el-form-item>
-                          <el-form-item label="天">
-                              <el-input v-model="scope.row.days" placeholder="" type="number"></el-input>
+                          <el-form-item label="数量">
+                            <el-input v-model="scope.row.quantity" placeholder=""></el-input>
                           </el-form-item>
+                         <!-- <el-form-item label="天">
+                              <el-input v-model="scope.row.days" placeholder="" type="number"></el-input>
+                          </el-form-item>-->
                           <el-form-item>
                               <el-button type="primary" @click="update(scope.row)">修改</el-button>
                           </el-form-item>
@@ -55,7 +61,7 @@
                 <el-table-column label="名字" prop="names"></el-table-column>
                 <el-table-column label="次/天" prop="timesDay"></el-table-column>
                 <el-table-column label="成分" prop="ingredient"></el-table-column>
-                <el-table-column label="剂量" prop="dosage"></el-table-column>      
+                <el-table-column label="剂量" prop="dosage"></el-table-column>
                 <el-table-column label="规格" prop="specification"></el-table-column>
                 <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
                 <el-table-column label="数量" prop="quantity"></el-table-column>
@@ -65,7 +71,7 @@
                             <el-button type="primary" @click="addToHospital(scope.row)">添加到医院</el-button>
                             <el-button type="danger" @click="del(scopr.row)">删除</el-button>
                         </el-button-group>
-                    
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -96,21 +102,29 @@
                 <el-form-item label="名字">
                         <el-input v-model="addForm.names" placeholder=""></el-input>
                 </el-form-item>
+                <el-form-item label="次/天">
+                      <el-input v-model="addForm.ingredient" placeholder=""></el-input>
+                 </el-form-item>
                 <el-form-item label="成分">
                       <el-input v-model="addForm.ingredient" placeholder=""></el-input>
                  </el-form-item>
-                <el-form-item label="量">
-                        <el-input v-model="addForm.quantity" placeholder=""></el-input>
-                </el-form-item>
+                <el-form-item label="剂量">
+                      <el-input v-model="addForm.dosage" placeholder=""></el-input>
+                 </el-form-item>
+
                 <el-form-item label="规范">
                         <el-input v-model="addForm.specification" placeholder=""></el-input>
                  </el-form-item>
+
                 <el-form-item label="药用用法">
                         <el-input v-model="addForm.medicineUsage" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="天">
-                    <el-input v-model="addForm.days" placeholder="" type="number"></el-input>
-                </el-form-item>
+              <el-form-item label="数量">
+                <el-input v-model="addForm.quantity" placeholder=""></el-input>
+              </el-form-item>
+            <!--  <el-form-item label="天">
+                  <el-input v-model="addForm.days" placeholder="" type="number"></el-input>
+              </el-form-item>-->
             </el-form>
             <div slot="footer">
                 <el-button @click="addForm.visible=false">取消</el-button>

@@ -239,7 +239,7 @@ export default {
       console.log(data, 'roles-sss')
       this.roles = data
     },
-    async fetchHospital () { 
+    async fetchHospital () {
         let res = await this.api.hospital.list()
         let {data: {data, code}} = res
         this.hospitalOptions = data.map(item => {

@@ -64,7 +64,7 @@
         <br/>
 
         <div class="open-med-action">
-            <el-button type="primary" @click="print">返回导诊页</el-button>
+            <el-button type="primary" @click="returnCheck">返回导诊页</el-button>
           <el-button type="primary" @click="save">开具处方并打印</el-button>
           <el-button  @click="$emit('close')">关闭</el-button>
         </div>
@@ -98,8 +98,11 @@ export default {
     }
   },
   methods: {
-    print () {
+    returnCheck () {
       this.$router.push('/check')
+    },
+    print () {
+      global.print('.chufang-table')
     },
     async fetch () {
       let arr = []
