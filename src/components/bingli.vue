@@ -48,7 +48,7 @@
 
     <div class="ill">
         <template v-for="(item,index) in ill">
-            <div class="title" v-if="!hide">
+            <div class="title" v-if="!hide" style="text-align:center">
                 {{item.diseaseName}}
             </div>
             <div class="treatments">

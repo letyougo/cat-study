@@ -27,12 +27,13 @@
             
             
                 <div v-if="right.isAdmin">
-                    <div @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
-                        医院管理
-                    </div>
+                   
                     <!-- <p>诊室检查</p> -->
                     <ul>
-                        <li style="border-top: 1px solid #f5f5f5"  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
+                            <li @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
+                                医院管理
+                            </li>
+                        <li  @click="$router.push('/admin/ill')" :class="{active:$route.path === '/admin/ill' ? true : false}">
                             疾病管理
                         </li>
                         <!-- <li  @click="$router.push('/admin/chufang')" :class="{active:$route.path === '/admin/chufang' ? true : false}">
