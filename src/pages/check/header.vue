@@ -137,16 +137,18 @@
               {{scope.row.createTime}}
             </template>
           </el-table-column>
-          <el-table-column label="姓名" prop="catName" width="280px">
+          <el-table-column label="操作" prop="catName" width="280px">
               <template scope="scope">
                 <template v-if="$route.path === '/check/ing'">
                   <el-button type="primary"  @click="$router.push(`/treat/result?id=${scope.row.id}`)">查看</el-button>
                 </template>
                 <template v-else>
+                  <template v-if="$route.path != '/check/ed'">
                     <el-button type="primary"  @click="route(scope)">接诊</el-button>
+                  </template>
                 </template>
                 <!-- <el-button type="primary" @click="checkBingli(scope.row)">查看病历</el-button> -->
-                <el-button v-if="right.isAdmin || right.isDoctor" type="danger" @click="del(scope.row)">删除</el-button>
+                  <el-button v-if="right.isAdmin || right.isDoctor" type="danger" @click="del(scope.row)">删除</el-button>
               </template>
           </el-table-column>
       </el-table>

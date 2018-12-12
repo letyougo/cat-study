@@ -20,7 +20,7 @@
       <div class="sign">
         <img :src="logo" />
           <div class="name" style="cursor: pointer;"  @click="dialog.visible=true">{{user.username}}</div>
-          <div class="action" @click="$router.push('/account')">
+          <div class="action" @click="goOut">
             退出
           </div>
       </div>
@@ -146,6 +146,10 @@ export default {
 
   },
   methods: {
+    goOut(){
+      this.tabs=[];
+      this.$router.push('/account');
+    },
     set () {
       let roleName
       if (!global.user) {

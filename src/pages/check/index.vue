@@ -1,6 +1,6 @@
 <template>
   <div>
-      <el-table :data="list">      
+      <el-table :data="list">
         <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
         <el-table-column label="手机号码" prop="ownerPhone"></el-table-column>
         <el-table-column label="猫咪姓名" prop="catName"></el-table-column>
@@ -45,7 +45,7 @@
     methods: {
       async fetch() {
         let res = await this.api.case.list()
-        let {data:{data,code}} = res 
+        let {data:{data,code}} = res
         if(code === 200){
             this.list = data
         }
