@@ -95,6 +95,10 @@ export default{
     hideResult: {
       type: Boolean,
       default: false
+    },
+    hide:{
+      type:Boolean,
+      default:false
     }
   },
   data () {
@@ -105,9 +109,8 @@ export default{
       check: {},
       ill: [
         { prescription: [] }
-      ],
-      hide: false
-
+      ]
+     
     }
   },
   components: {

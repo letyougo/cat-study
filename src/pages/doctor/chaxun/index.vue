@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column label="操作" prop="process" width="450px">
         <template scope="scope">
-          <div v-html="scope.row.process" max-height:68px;overflow: hidden;text-overflow: ellipsis></div>
+          <div v-html="scope.row.process" style="max-height:68px;overflow: hidden;text-overflow: ellipsis"></div>
         </template>
       </el-table-column>
       <el-table-column label="详情">

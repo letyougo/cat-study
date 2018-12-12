@@ -135,10 +135,11 @@
 
     <el-dialog  :visible.sync="print">
       <div class="yizhu-bingli">
-          <bingli v-if="print" :id="$route.query.id"></bingli>
+          <bingli v-if="print" :id="$route.query.id" :hide="hide"></bingli>
       </div>
       <span slot="footer">
-
+        <el-button v-if="hide" @click="hide=false">显示 疾病名称</el-button>
+        <el-button v-else="!hide" @click="hide=true">隐藏 疾病名称</el-button>
         <el-button @click="startPrint" type="primary">打印并且结束诊疗</el-button>
          <el-button type="primary" @click="$router.push('/check')">去导诊页</el-button>
         <el-button type="" @click="print=false">关闭</el-button>
@@ -159,6 +160,7 @@ export default {
   data () {
     return {
       print: false,
+      hide:false,
       search: '',
       list: [],
       uncertain: {

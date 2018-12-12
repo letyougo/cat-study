@@ -64,10 +64,12 @@
 				</div>
 				<el-dialog class="chaxun-dialog" :visible.sync="show">
           <div class="geren-bingli">
-              <bingli v-if="show" :id="id"></bingli>
+              <bingli v-if="show" :id="id" :hide="hide"></bingli>
           </div>
 					
 					<span slot="footer">
+              <el-button v-if="hide" @click="hide=false">显示疾病名称</el-button>
+              <el-button v-else="!hide" @click="hide=true">隐藏疾病名称</el-button>
             <el-button type="" @click="show=false">关闭</el-button>
             <el-button type="primary" @click="print">打印</el-button>
 					</span>
@@ -99,7 +101,8 @@ export default {
       pageinfo: {
         totalCount: 0,
         pageNum: 1
-      }
+      },
+      hide:false
     }
   },
   computed: {
