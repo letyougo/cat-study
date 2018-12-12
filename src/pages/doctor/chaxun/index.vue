@@ -73,42 +73,90 @@
         <div style="display: flex;align-items: top;justify-content: space-between;">
           <div style="flex: 1">
             <p class="chaxun-dialog-title">疾病名称</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.names"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="3"
+                readonly
+                v-model="dialog1.names">
+              </el-input>
+            </div>
           </div>
           <div style="flex: 1">
             <p class="chaxun-dialog-title">症状</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.symptom"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="3"
+                readonly
+                v-model="dialog1.symptom">
+              </el-input>
+            </div>
           </div>
         </div>
         <br/>
         <div style="display: flex;align-items: top;justify-content: space-between;">
           <div style="flex:1">
             <p class="chaxun-dialog-title">鉴别</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.identification"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="10"
+                readonly
+                v-model="dialog1.identification">
+              </el-input>
+            </div>
           </div>
           <div style="flex:1">
             <p class="chaxun-dialog-title">治疗原则</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.principle"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="10"
+                readonly
+                v-model="dialog1.principle">
+              </el-input>
+            </div>
           </div>
         </div>
         <br/>
         <div  style="display: flex;align-items: top;justify-content: space-between;">
           <div style="flex:1">
             <p class="chaxun-dialog-title">治疗建议</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.suggestTreatment"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="8"
+                readonly
+                v-model="dialog1.suggestTreatment">
+              </el-input>
+            </div>
           </div>
           <br/>
-          <div style="flex:1">
+          <div style="flex:1;width: 95%">
             <p class="chaxun-dialog-title">病因</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.causes"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="8"
+                readonly
+                v-model="dialog1.causes">
+              </el-input>
+            </div>
           </div>
           <br/>
-
         </div>
         <div style="display: flex;align-items: top;">
           <div style="width:50%;float:left">
             <p class="chaxun-dialog-title">预后</p>
-            <div class="chaxun-dialog-content" v-html="dialog1.prognosis"></div>
+            <div class="chaxun-dialog-content" style="width: 95%">
+              <el-input
+                type="textarea"
+                :rows="8"
+                readonly
+                v-model="dialog1.prognosis">
+              </el-input>
+            </div>
           </div>
         </div>
         <!--   <p class="chaxun-dialog-title">描述</p>
@@ -286,7 +334,7 @@
           suggestTreatment: res.data.data.suggestTreatment,
           prognosis: res.data.data.prognosis,
           causes: res.data.data.causes,
-          identification: res.data.data.identification
+          identification: res.data.data.identification,
         }
       },
       async fetch1 () {
