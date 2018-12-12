@@ -49,9 +49,13 @@
                       <el-form-item label="病因">
                         <el-input type="textarea" v-model="scope.row.causes" placeholder="" :rows="10"></el-input>
                       </el-form-item>
-                      <el-form-item label="预后">
-                          <el-input type="textarea" v-model="scope.row.prognosis" placeholder="" :rows="10"></el-input>
-                        </el-form-item>
+             
+                        <el-form-item label="预后">
+                            <el-input type="textarea" v-model="scope.row.prognosis" placeholder="" :rows="10"></el-input>
+                          </el-form-item>
+                          <el-form-item label="检查">
+                              <el-input type="textarea" v-model="scope.row.exam" placeholder="" :rows="10"></el-input>
+                            </el-form-item>
                         <el-form-item label="">
                           <el-button type="primary" @click="update(scope.row)">确定</el-button>
                         </el-form-item>
@@ -71,6 +75,7 @@
                 </span>
               </template>
             </el-table-column>
+            <el-table-column label="检查" prop="exam"></el-table-column>
             <el-table-column label="操作" width="250px">
               <template scope="scope" >
                   <el-button type="primary" @click="openShili(scope.row.symptom,scope.$index,scope.row.id)">示病症状</el-button>

@@ -48,7 +48,7 @@
 
     <div class="ill">
         <template v-for="(item,index) in ill">
-            <div class="title" v-if="!hide">
+            <div class="title" v-if="!hide" style="text-align:center">
                 {{item.diseaseName}}
             </div>
             <div class="treatments">
@@ -95,6 +95,10 @@ export default{
     hideResult: {
       type: Boolean,
       default: false
+    },
+    hide:{
+      type:Boolean,
+      default:false
     }
   },
   data () {
@@ -105,9 +109,8 @@ export default{
       check: {},
       ill: [
         { prescription: [] }
-      ],
-      hide: false
-
+      ]
+     
     }
   },
   components: {
