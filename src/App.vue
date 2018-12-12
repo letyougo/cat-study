@@ -6,14 +6,28 @@
         <div>猫研所</div>
       </div>
       <div class="tab-list">
-        <div v-if="hasCheckRight" @click="$router.push('/check/tobe')" :class="{active:$route.path.includes('/check/') || $route.path.includes('/treat') &&  !$route.path.includes('/admin/')}">
+        <div v-if="hasCheckRight" @click="(e)=>{
+            if(this.isHuayan){
+              this.$router.push('/checkresult') 
+            }else{
+              this.$router.push('/check/tobe') 
+            }
+             
+        }" :class="{active:$route.path.includes('/check/') || $route.path.includes('/treat') &&  !$route.path.includes('/admin/')}">
           智能诊疗
         </div>
         <div v-if="hasDoctorRight" @click="$router.push('/doctor')" :class="{active:$route.path.includes('/doctor')}">
 
           医生知识库
         </div>
-        <div v-if="hasAdminRight" @click="$router.push('/admin')" :class="{active:$route.path.includes('/admin')}" >
+        <div v-if="hasAdminRight" @click="()=>{
+            if(this.isHuayan){
+              this.$router.push('/admin/med') 
+            }else{
+              this.$router.push('/admin') 
+            }
+           
+        }" :class="{active:$route.path.includes('/admin')}" >
           运营后台
         </div>
       </div>
@@ -114,6 +128,7 @@ export default {
       hasAdminRight: false,
       hasDoctorRight: false,
       hasCheckRight: false,
+      isHuayan:false,
       dialog: {
         visible: false,
         phoneNum: '',
@@ -164,7 +179,10 @@ export default {
       global.isDoctor = roleName === '医生'
       global.isHuayan = roleName === '化验室'
       global.isYunyin = roleName === '运营管理员'
-
+      this.isHuayan = isHuayan
+      this.isAdmin = isAdmin
+      this.isDoctor = isDoctor
+      this.isYunyin = isYunyin
       if (roleName === '超级管理员') {
         this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
       }
