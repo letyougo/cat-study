@@ -40,7 +40,7 @@
                             </el-form-item>
 
                             <el-form-item label="角色">
-                                <el-transfer @change="(e,dir)=>roleChange(e,dir,scope.row)" :titles="['Source', 'Target']" v-model="scope.row.roles2" :data="roles"></el-transfer>
+                                <el-transfer @change="(e,dir)=>roleChange(e,dir,scope.row)" :titles="['所有权限', '已有权限']" v-model="scope.row.roles2" :data="roles"></el-transfer>
                             </el-form-item>
 
                         </el-form>
@@ -173,6 +173,14 @@ export default {
       }
     },
     async roleChange (ids, dir, item) {
+       
+        let oldIds = item.roles.map(item=>item.roleId)
+      
+        
+        if(dir === 'left'){
+            ids = oldIds.filter(item=> !ids.includes(item))
+        }
+        console.log('dir', dir,ids,oldIds)
       for (let i = 0; i < ids.length; i++) {
         let res
         if (dir === 'right') {
@@ -183,11 +191,11 @@ export default {
           res = await this.api.role.del({ userId: item.id, roleId: ids[i] })
         }
         let { data: { code ,desc} } = res
-        this.tip(code, '更新角色成功', desc, () => {
-          this.reload()
-        })
+        // this.tip(code, '更新角色成功', desc, () => {
+        //   this.reload()
+        // })
       }
-      this.reload()
+    //   this.reload()
     },
     async update (item) {
       let data = {
