@@ -69,7 +69,7 @@
                     <template scope="scope">
                         <el-button-group>
                             <el-button type="primary" @click="addToHospital(scope.row)">添加到医院</el-button>
-                            <el-button type="danger" @click="del(scopr.row)">删除</el-button>
+                            <el-button type="danger" @click="del(scope.row)">删除</el-button>
                         </el-button-group>
 
                     </template>
@@ -99,22 +99,28 @@
 
         <el-dialog title="增加药品" :visible="addForm.visible">
             <el-form label-width="100px">
+                <el-form-item label="分类">
+                    <el-input v-model="addForm.classification" placeholder=""></el-input>
+                </el-form-item>
                 <el-form-item label="名字">
                         <el-input v-model="addForm.names" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="次/天">
-                      <el-input v-model="addForm.ingredient" placeholder=""></el-input>
-                 </el-form-item>
                 <el-form-item label="成分">
-                      <el-input v-model="addForm.ingredient" placeholder=""></el-input>
+                    <el-input v-model="addForm.ingredient" placeholder=""></el-input>
+               </el-form-item>
+               
+               <el-form-item label="剂量">
+                  <el-input v-model="addForm.dosage" placeholder=""></el-input>
+             </el-form-item>
+             
+             <el-form-item label="规范">
+                <el-input v-model="addForm.specification" placeholder=""></el-input>
+         </el-form-item>
+                <el-form-item label="次/天">
+                      <el-input v-model="addForm.timesDay" placeholder=""></el-input>
                  </el-form-item>
-                <el-form-item label="剂量">
-                      <el-input v-model="addForm.dosage" placeholder=""></el-input>
-                 </el-form-item>
+          
 
-                <el-form-item label="规范">
-                        <el-input v-model="addForm.specification" placeholder=""></el-input>
-                 </el-form-item>
 
                 <el-form-item label="药用用法">
                         <el-input v-model="addForm.medicineUsage" placeholder=""></el-input>
@@ -146,6 +152,7 @@ export default {
       likeStr: '',
       loading: false,
       addForm: {
+        classification: '',
         names: '',
         ingredient: '',
         quantity: '',
@@ -197,11 +204,11 @@ export default {
         hospitalId: row.id,
         medicineId
       })
-      let { data: { data, code } } = res
+      let { data: { data, code, desc } } = res
       if (code === 200) {
         this.$message.success('添加药品成功')
       } else {
-        this.$message.error('添加药品失败')
+        this.$message.error(data)
       }
       this.hospital.visible = false
     },

@@ -286,7 +286,7 @@ export default {
       }
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
-      let res = await this.api.case.list({ status, ...filter, start, limit })
+      let res = await this.api.case.list({ status, ...filter, start, limit, doctorId: global.user.id })
       let { data: { data, code, pageinfo } } = res
       if (code === 200) {
         this.loading = false

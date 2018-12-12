@@ -38,7 +38,7 @@
                 <!-- <el-table-column label="天" prop="days"></el-table-column> -->
                 <el-table-column label="操作">
                     <template scope="scope">
-                        <el-button type="danger">删除</el-button>
+                        <el-button type="danger" @click="del(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -77,6 +77,7 @@
 </template>
 <script>
 import corner from '../../components/corner'
+import api from './api'
 export default {
   props: {},
   components: {
@@ -127,9 +128,7 @@ export default {
         this.fetch({ hospitalId: list[0].id })
       }
     },
-    async del () {
 
-    },
     async fetch () {
       // let {startDate,endDate} = this.search
       // if(startDate){
@@ -150,7 +149,16 @@ export default {
     },
     async add () {},
     async update () {},
-    async del () {}
+    async del (item) {
+      try {
+        await this.$confirm('确定删除数据吗')
+        await api.delHosmed({ hospitalId: this.filter.hospital, medicineId: item.id })
+
+        this.reload()
+      } catch (e) {
+
+      }
+    }
   },
   created () {},
   mounted () {

@@ -131,7 +131,7 @@ export default {
       }
       let { data: { data } } = res
       console.log(this.tag, 'this.tag')
-      if (this.tag === 'dianji') {
+      if (this.tag === 'dianji' || this.tag === 'fangwen') {
         let obj = {
           name: '',
           '诊室检查': data.find(item => item.module === 'zhenshi').c,
@@ -141,18 +141,6 @@ export default {
           '知识库查询': data.find(item => item.module === 'zhishi').c,
           '模拟病例查询': data.find(item => item.module === 'moni').c,
           '个人病例查询': data.find(item => item.module === 'geren').c
-        }
-        this.chartData.rows = [obj]
-      } else if (this.tag === 'fangwen') {
-        let obj = {
-          name: '',
-          '诊室检查': data.find(item => item.module === 'zhenshi').c * 1.1,
-          '检查结果': data.find(item => item.module === 'jiancha').c * 1.2,
-          '免疫与健康': data.find(item => item.module === 'mianyi').c * 1.3,
-          '治疗与医嘱': data.find(item => item.module === 'zhiliao').c * 1.4,
-          '知识库查询': data.find(item => item.module === 'zhishi').c * 1.3,
-          '模拟病例查询': data.find(item => item.module === 'moni').c * 1.2,
-          '个人病例查询': data.find(item => item.module === 'geren').c * 1.1
         }
         this.chartData.rows = [obj]
       } else {

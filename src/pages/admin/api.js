@@ -82,6 +82,8 @@ export default {
       let res = await request.get(`/visitOption/delete`, { params })
       return res
     }
-  }
+  },
+  delmed: (id) => request.get('/medicine/delete?id=' + id),
+  delHosmed: (params) => request.get('/hospMedicine/delete', { params })
 
 }

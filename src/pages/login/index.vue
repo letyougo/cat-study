@@ -96,8 +96,8 @@ export default {
    data () {
      return {
        form: {
-          // phoneNum: '',
-          // password: '',
+         // phoneNum: '',
+         // password: '',
          phoneNum: '18030086905',
          password: '123456'
        },
@@ -142,10 +142,10 @@ export default {
                this.$router.push('/check')
              }
              if (roleName === '化验室') {
-               this.$router.push('/admin/med')
+               this.$router.push('/admin/hosmed')
              }
              if (roleName === '运营管理员') {
-               this.$router.push('/admin')
+               this.$router.push('/admin/user')
              }
              window.localStorage.setItem('cat-study-user', JSON.stringify(data))
            }

@@ -64,7 +64,7 @@
         </div>
       </template>
 
-      <div>台操作员：{{user.username}}（医生）</div>
+      <div>台操作员：{{user.username}}</div>
       <div>{{user.hospital}}</div>
     </div>
 
@@ -128,7 +128,7 @@ export default {
       hasAdminRight: false,
       hasDoctorRight: false,
       hasCheckRight: false,
-      isHuayan:false,
+      isHuayan: false,
       dialog: {
         visible: false,
         phoneNum: '',
@@ -161,9 +161,9 @@ export default {
 
   },
   methods: {
-    goOut(){
-      this.tabs=[];
-      this.$router.push('/account');
+    goOut () {
+      this.tabs = []
+      this.$router.push('/account')
     },
     set () {
       let roleName

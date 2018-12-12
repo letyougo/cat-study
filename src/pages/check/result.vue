@@ -28,11 +28,12 @@
               <div :class="{active:$route.path === '/check/reing' ? true : false}" @click="$router.push('/check/reing')">接诊中</div>
               <div :class="{active:$route.path === '/check/ing' ? true : false}" @click="$router.push('/check/ing')">检查中</div>
               <div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/check/ed')">已结束</div>
+              <div :class="{active:$route.path === '/checkresult' ? true : false}" @click="$router.push('/checkresult')">已查出结果
+                <template v-if="readStatus==1"><span style="color: red">!</span></template>
+              </div>
           </template>
 
-          <div :class="{active:$route.path === '/checkresult' ? true : false}" @click="$router.push('/checkresult')">已查出结果
-            <template v-if="readStatus==1"><span style="color: red">!</span></template>
-          </div>
+          
         </div>
         <br/>
         <div class="check-table">
@@ -97,14 +98,14 @@ global.moment = moment
         dialog: {
           visible: false,
           reportId: -1,
-          checkName:''
+          checkName: ''
         },
         pageinfo: {
           pageNum: 1,
           totalCount: 10
         },
-        readStatus:0,
-        isHuayan:global.isHuayan
+        readStatus: 0,
+        isHuayan: global.isHuayan
       }
     },
     watch: {
@@ -125,13 +126,13 @@ global.moment = moment
         this.dialog.reportId = item.checkId
         this.dialog.checkName = item.checkName
 
-        for(var i=0;i<this.list.length;i++){
-          if(this.list[i].status==='yes_unRead'){
-            this.readStatus=1;
-            break;
-          }else{
-            this.readStatus=0;
-          }
+        for (var i = 0; i < this.list.length; i++) {
+          if (this.list[i].status === 'yes_unRead') {
+            this.readStatus = 1
+          break;
+          } else{
+            this.readStatus = 0
+        }
         }
       },
       async fetch () {
@@ -169,13 +170,13 @@ global.moment = moment
         if (code === 200) {
           this.loading = false
           this.list = data
-          for(var i=0;i<this.list.length;i++){
-            if(this.list[i].status==='yes_unRead'){
-              this.readStatus=1;
-              break;
-            }else{
-              this.readStatus=0;
-            }
+          for (var i = 0; i < this.list.length; i++) {
+            if (this.list[i].status === 'yes_unRead') {
+              this.readStatus = 1
+            break;
+            }else {
+              this.readStatus = 0
+          }
           }
           this.pageinfo = pageinfo
         }
