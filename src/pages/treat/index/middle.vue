@@ -515,7 +515,9 @@ export default {
     passHistory: {
       handler (obj) {
         let item = this.passHistory.options.find(item => item.names === obj.value)
-        this.passHistory2.options = item.child || []
+        if(item!=undefined){
+          this.passHistory2.options = item.child || []
+        }
       },
       deep: true
     },
@@ -803,7 +805,6 @@ export default {
         this.basic.kind.value = v[0]
         this.basic.kind2.value = v[1]
       }
-
       this.lifeHistory.value = [...(lifeHistory.split(','))].filter(item => !!item)
       this.passHistory2.model = [...(pastHistory.split(','))].filter(item => !!item)
 
@@ -846,7 +847,6 @@ export default {
       }
 
       console.log(this.basic.sex.value, 'basic.sex.value.includes')
-
       if (this.basic.sex.value) {
         if (this.basic.sex.value.includes('去势')) {
           obj.bear = '去势'
@@ -1129,7 +1129,7 @@ export default {
       this.list = list
       console.log('fetch-item', 'fetch-item')
       this.fetchItem()
-      this.add()
+      // this.add()
     }
   },
   created () {},
