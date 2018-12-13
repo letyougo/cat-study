@@ -174,7 +174,7 @@ export default {
         this.user = global.user
         roleName = global.user.role.roleName
       }
-
+debugger;
       global.isAdmin = roleName === '超级管理员'
       global.isDoctor = roleName === '医生'
       global.isHuayan = roleName === '化验室'
@@ -183,7 +183,11 @@ export default {
       this.isAdmin = isAdmin
       this.isDoctor = isDoctor
       this.isYunyin = isYunyin;
-      localStorage.setItem('isYunyin', this.isYunyin);
+      if(roleName=="化验室"){
+        localStorage.setItem('isHuayanFlag', true);
+      }else{
+        localStorage.setItem('isHuayanFlag', false);
+      }
       if (roleName === '超级管理员') {
         this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
       }

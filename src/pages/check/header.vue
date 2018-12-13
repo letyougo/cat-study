@@ -70,7 +70,7 @@
 
 		<div class="check-data">
 			<div class="check-tab">
-        <template v-if="!isHuayan">
+        <template v-if="isHuayanFlag=='false'">
 				<div :class="{active:$route.path === '/check/tobe' ? true : false}" @click="$router.push('/check/tobe')">待接诊</div>
 				<div :class="{active:$route.path === '/check/reing' ? true : false}" @click="$router.push('/check/reing')">接诊中</div>
 				<div :class="{active:$route.path === '/check/ing' ? true : false}" @click="$router.push('/check/ing')">检查中</div>
@@ -234,7 +234,7 @@ export default {
         isHuayan: global.isHuayan,
         isYunyin: global.isYunyin
       },
-      isHuayan: localStorage.getItem('isYunyin')
+      isHuayanFlag: localStorage.getItem('isHuayanFlag')
     }
   },
   watch: {

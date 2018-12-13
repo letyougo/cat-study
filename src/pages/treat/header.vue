@@ -22,7 +22,7 @@
         </div>
         <div class="header-content">
             <div class="left">
-              <template v-if="!isHuayan">
+              <template v-if="isHuayanFlag=='false'">
                 <div @click="$router.push('/treat/index?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}" class="title2">
                     <!-- <span>X</span> -->
                     诊室检查
@@ -53,7 +53,7 @@
                 <!-- <div @click="$router.push('/')" class="title2">
                     诊疗
                 </div> -->
-              <template v-if="!isHuayan">
+              <template v-if="isHuayanFlag=='false'">
                 <div @click="$router.push('/treat/yizhu?id='+$route.query.id)" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
                     治疗与医嘱
                 </div>
@@ -83,7 +83,7 @@ export default {
       },
       print: false,
       item: {},
-      isHuayan: localStorage.getItem('isYunyin')
+      isHuayanFlag: localStorage.getItem('isHuayanFlag')
     }
   },
   computed: {},
