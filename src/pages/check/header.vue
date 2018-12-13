@@ -260,7 +260,6 @@ export default {
       this.fetch()
     },
     async fetch () {
-      debugger;
       let status
       switch (this.$route.path) {
         case '/check/tobe':
@@ -288,7 +287,6 @@ export default {
       if (this.filter.startTime && !this.filter.endTime) {
         filter.endTime = new Date(this.filter.startTime).getTime() + 3600 * 24 * 1000
       }
-      debugger;
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       let res = await this.api.case.list({ status, ...filter, start, limit, doctorId: global.user.id })

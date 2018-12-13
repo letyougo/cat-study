@@ -131,7 +131,6 @@ global.moment = moment
         }
       },
       async fetch () {
-        debugger;
         let status
         switch (this.$route.path) {
           case '/check/tobe':
