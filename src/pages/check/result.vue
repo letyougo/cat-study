@@ -143,7 +143,7 @@ global.moment = moment
             status = 3
             break
           case '/check/ed':
-            status = 4
+            status = 5
             break
         }
         this.loading = true

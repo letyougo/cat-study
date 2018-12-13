@@ -10,14 +10,15 @@
       <el-form-item label="-">
         <el-date-picker  v-model="filter.endTime"  placeholder=""></el-date-picker>
       </el-form-item>
+      <el-form-item >
+        <el-button type="primary" @click="fetch">筛选</el-button>
+      </el-form-item>
       <el-form-item label="报告单状态">
         <el-radio-group v-model="filter.status" @change="fetch">
+          <el-radio label="">全选</el-radio>
           <el-radio label="yes">已出结果</el-radio>
           <el-radio label="no">未出结果</el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item >
-        <el-button type="primary" @click="fetch">筛选</el-button>
       </el-form-item>
     </el-form>
 
@@ -128,6 +129,10 @@ export default {
       let { data: { data } } = res
       this.loading = false
       this.list = data
+    },
+    async clear () {
+      this.filter.status="";
+      this.fetch();
     },
     async fetchReport (item) {
       this.report.visible = true

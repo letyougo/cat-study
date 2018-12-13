@@ -57,11 +57,7 @@ request.interceptors.response.use(function (res) {
   }
   let {code, desc} = res.data
   if (code !== 200) {
-    var mes = "系统异常";
-    if (desc !="") {
-      mes = desc;
-    }
-    return App.$message.error(mes)
+    // return App.$message.error(desc)
   }
   return res
 })

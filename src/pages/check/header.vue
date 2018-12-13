@@ -42,17 +42,21 @@
           <el-input v-model="addForm.ownerPhone" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="猫咪年龄" prop="ownerName">
-          <div style="display:flex;">
+          <div >
             <el-input
-              type="number" min="0" max="40"
-              v-model="addForm.catYears" placeholder="">
-              <template slot="append">年</template>
-            </el-input>
+              type="text"
+              v-model="addForm.catYears" placeholder=""
+              onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="2"
+              style="width: 70px;">
+              <!--<template  style="padding-left: 0px;padding-right: 0px;">年</template>-->
+            </el-input>年
             <el-input
-              type="number" min="0" max="12"
-               v-model="addForm.catMonths" placeholder="">
-              <template slot="append">月</template>
-            </el-input>
+              type="text" style="width: 70px;"
+               v-model="addForm.catMonths" placeholder=""
+              onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="2"
+              onkeypress="return event.keyCode>=48&&event.keyCode<=57"
+            >
+            </el-input>月
           </div>
 
         </el-form-item>
@@ -192,6 +196,22 @@ export default {
   },
   data () {
     return {
+      options: [{
+        value: '1',
+        label: '1'
+      }, {
+        value: '2',
+        label: '2'
+      }, {
+        value: '3',
+        label: '3'
+      }, {
+        value: '4',
+        label: '4'
+      }, {
+        value: '5',
+        label: '5'
+      }],
       bingli: {
         visible: false,
         id: 0
@@ -250,7 +270,7 @@ export default {
   },
   computed: {},
   methods: {
-    checkBingli (item) {
+      checkBingli (item) {
       console.log(item, 'bingli item')
       this.bingli.visible = true
       this.bingli.id = item.id
@@ -272,7 +292,7 @@ export default {
           status = 3
           break
         case '/check/ed':
-          status = 4
+          status = 5
           break
       }
       this.loading = true

@@ -83,7 +83,7 @@
                         }
                         if(this.bear[0]==='母'){
                             this.fetchOperation('绝育')
-                        }              
+                        }
                     }">
                     处置详情
                 </div>
@@ -92,24 +92,24 @@
                 <div class="item-name">牙齿</div>
                 <div>
                     <div>
-                        <el-radio label="洗牙" v-model="tooth"></el-radio> 
+                        <el-radio label="洗牙" v-model="tooth"></el-radio>
                     </div>
                     <div>
-                        <el-radio label="拔牙"  v-model="tooth"></el-radio> 
+                        <el-radio label="拔牙"  v-model="tooth"></el-radio>
                     </div>
                 </div>
                  <div v-if="tooth !== ''" class="item-detail" @click="(e)=>{
                      if(this.tooth ==='洗牙'){
-                        this.fetchOperation('洗牙')   
+                        this.fetchOperation('洗牙')
                      }else{
-                        this.fetchOperation('拔牙')   
+                        this.fetchOperation('拔牙')
                      }
                 }">
                     处置详情
                 </div>
             </div>
         </div>
-        
+
       <el-dialog  :visible.sync="chuzhi.visible">
             <h3 slot="title" style="text-align: center">{{chuzhi.names}}</h3>
             <div v-for="(item, index) in chuzhi.process" :key="index" class="flex-box">
@@ -211,6 +211,7 @@ export default {
       let res = await this.api.operation.list({ names })
       let { data: { data } } = res
       data = data[0]
+      debugger;
       this.chuzhi.names = names
       this.chuzhi.process = this.formatProcess(data.process)
     },
@@ -279,7 +280,7 @@ export default {
     .mianyi-content{
         border: 1px solid @borderColor;
         padding:0 20px;
-        
+
         .content-item{
             display: flex;
             border-bottom: 1px solid @borderColor;
@@ -287,13 +288,13 @@ export default {
                 border-bottom: none
             }
             >div{
-                padding:30px 0; 
+                padding:30px 0;
                 div:nth-child(1){
                     margin-bottom: 10px
                 }
                 div:nth-child(2){
                     margin-top: 10px
-                } 
+                }
             }
             .item-name{
                 width: 110px;
@@ -302,21 +303,21 @@ export default {
                 width: 211px;
             }
             >div:nth-child(3){
-                width: 220px;               
+                width: 220px;
             }
             .item-detail{
                 color: @primaryColor;
                 cursor: pointer;
             }
-            
+
         }
-        
+
     }
     .mianyi-action{
         display: flex;
         justify-content: flex-end;
         margin-top: 34px;
-        
+
     }
 
 }

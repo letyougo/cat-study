@@ -45,6 +45,7 @@
           </el-table-column>
           <el-table-column label="入院时间" prop="createTime"></el-table-column>
 					<el-table-column label="姓名" prop="catName"></el-table-column>
+					<el-table-column label="完成度" prop="fillPercent1"></el-table-column>
 					<el-table-column label="操作" width="200">
 						<template scope="scope">
 							<el-button
@@ -147,6 +148,9 @@ export default {
       this.loading = false
       if (code === 200) {
         this.loading = false
+        for(var i=0;i<data.length;i++){
+          data[i].fillPercent1 = data[i].fillPercent*100+"%"
+        }
         this.list = data
         this.pageinfo = pageinfo
       }

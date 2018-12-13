@@ -180,7 +180,9 @@
               </template>
               <template v-else>
                 <div class="bold"></div>
-                <div class="desc">{{step}}</div>
+                <div class="desc">
+                  {{step}}
+                </div>
               </template>
             </div>
           </template>
@@ -302,7 +304,8 @@
           prescription: '',
           process: '',
           visible: false
-        }
+        },
+        item1:''
       }
     },
     computed: {},
@@ -316,6 +319,7 @@
       },
       async openChuzhi (row) {
         console.log(row)
+
         this.chuzhi.visible = true
         let res = await this.api.operation.getOperationById(row.id)
         let { data: { data, code } } = res
