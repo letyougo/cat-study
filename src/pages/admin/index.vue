@@ -46,8 +46,8 @@
         <div class="admin-title search-action">
 
             <div>
-                <el-form inline>
-                  <el-form-item label="昨日各功能模块点击量">
+                <el-form inline style="margin-left: 80px;">
+                  <el-form-item label="">
                      <el-date-picker v-model="startTime" placeholder=""  @change="fetch"></el-date-picker>
                   </el-form-item>
                   <el-form-item >

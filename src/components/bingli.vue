@@ -11,11 +11,11 @@
           猫咪姓名：{{owner.catName}}
       </div>
       <div>性别：{{owner.gender === 1 ? '男' : '女'}}</div>
-      <div>年龄：{{owner.catYears}}岁{{owner.catMonths}}个月</div>  
+      <div>年龄：{{owner.catYears}}岁{{owner.catMonths}}个月</div>
       <div>
           日期：{{owner.createTime | date}}
       </div>
-     
+
     </div>
     <div class="basic">
       <div class="title">
@@ -58,15 +58,15 @@
             </div>
             <el-table :data="item.prescription" v-if="!hideResult">
                 <el-table-column label="药品名称" prop="medicineName">
-                   
+
                   </el-table-column>
                 <el-table-column label="剂量" prop="dosage">
-                   
+
                 </el-table-column>
                 <el-table-column label="规格" prop="quantity"></el-table-column>
                 <el-table-column label="次/天" prop="days"></el-table-column>
             </el-table>
-               
+
           <div class="after" v-if="!hideResult">
               <div class="title">
                   预后护理
@@ -75,8 +75,16 @@
                 {{item.prognosis}}
               </div>
           </div>
+          <div class="after" v-if="!hideResult">
+              <div class="title">
+                  医嘱
+              </div>
+              <div>
+                {{item.docAdvice}}
+              </div>
+          </div>
 
-    
+
         </template>
 
     </div>
@@ -110,7 +118,7 @@ export default{
       ill: [
         { prescription: [] }
       ]
-     
+
     }
   },
   components: {
@@ -152,7 +160,7 @@ export default{
 </script>
 <style scoped lang="less">
   .bingli{
-  
+
   }
   .bingli-title{
     color: #4D4D4D;
@@ -187,5 +195,5 @@ export default{
 
     }
   }
-  
+
 </style>
