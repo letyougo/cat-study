@@ -70,11 +70,13 @@
 
 		<div class="check-data">
 			<div class="check-tab">
+        <template v-if="!isHuayan">
 				<div :class="{active:$route.path === '/check/tobe' ? true : false}" @click="$router.push('/check/tobe')">待接诊</div>
 				<div :class="{active:$route.path === '/check/reing' ? true : false}" @click="$router.push('/check/reing')">接诊中</div>
 				<div :class="{active:$route.path === '/check/ing' ? true : false}" @click="$router.push('/check/ing')">检查中</div>
         <div :class="{active:$route.path === '/check/ed' ? true : false}" @click="$router.push('/check/ed')">已结束</div>
         <div :class="{active:$route.path === '/checkresult' ? true : false}" @click="$router.push('/checkresult')">已查出结果</div>
+        </template>
 			</div>
 			<br/>
 			<div class="check-table">
@@ -231,7 +233,8 @@ export default {
         isDoctor: global.isDoctor,
         isHuayan: global.isHuayan,
         isYunyin: global.isYunyin
-      }
+      },
+      isHuayan: localStorage.getItem('isYunyin')
     }
   },
   watch: {
@@ -257,6 +260,7 @@ export default {
       this.fetch()
     },
     async fetch () {
+      debugger;
       let status
       switch (this.$route.path) {
         case '/check/tobe':
@@ -284,6 +288,7 @@ export default {
       if (this.filter.startTime && !this.filter.endTime) {
         filter.endTime = new Date(this.filter.startTime).getTime() + 3600 * 24 * 1000
       }
+      debugger;
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       let res = await this.api.case.list({ status, ...filter, start, limit, doctorId: global.user.id })

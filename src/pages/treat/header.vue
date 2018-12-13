@@ -22,10 +22,12 @@
         </div>
         <div class="header-content">
             <div class="left">
+              <template v-if="!isHuayan">
                 <div @click="$router.push('/treat/index?id='+$route.query.id)" :class="{active:$route.path === '/treat/index' ? true : false}" class="title2">
                     <!-- <span>X</span> -->
                     诊室检查
                 </div>
+              </template>
                 <div @click="$router.push('/treat/result?id='+$route.query.id)" :class="{active:$route.path === '/treat/result' ? true : false}" class="title2">
                     <!-- <span>X</span> -->
                     检查结果
@@ -51,12 +53,14 @@
                 <!-- <div @click="$router.push('/')" class="title2">
                     诊疗
                 </div> -->
+              <template v-if="!isHuayan">
                 <div @click="$router.push('/treat/yizhu?id='+$route.query.id)" :class="{active:$route.path === '/treat/yizhu' ? true : false}" class="title2">
                     治疗与医嘱
                 </div>
                 <div @click="$router.push('/treat/mianyi?id='+$route.query.id)" :class="{active:$route.path === '/treat/mianyi' ? true : false}" class="title2">
                     免疫与健康
                 </div>
+              </template>
             </div>
 
             <div class="right">
@@ -78,7 +82,8 @@ export default {
         }
       },
       print: false,
-      item: {}
+      item: {},
+      isHuayan: localStorage.getItem('isYunyin')
     }
   },
   computed: {},

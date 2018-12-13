@@ -75,7 +75,7 @@
         </el-form>
 
         <el-dialog title="主诉症状" :visible.sync="mainDialog" >
-             <div style="display: inline-block;width: 33%" class="main-item" v-for="(l, index) in main.options" :key="index">
+             <div style="display: inline-block;width: 33%" class="main-item" v-for="(l, index) in main.options2" :key="index">
                 <!-- <div
 
                 v-for="(item, j) in l"
@@ -717,7 +717,8 @@ export default {
       // this.main.options = data
       let options = []
 
-      this.main.options = data2
+      this.main.options = data2;
+
       console.log('sss', res.data)
     },
     setMain (item, index) {
@@ -818,7 +819,7 @@ export default {
       this.checkBody2.skinDamage.model = [...(skinLesion.split(','))].filter(item => !!item)
       this.checkBody2.eye.model = [...(visualConsult.split(','))].filter(item => !!item)
       this.main.value = [...(mainSymptom.split(','))].filter(item => !!item)
-      this.main.options = this.main.options.map(item => {
+      this.main.options2 = this.main.options.map(item => {
         // item = item.map(l => {
         //   l.picked = false
         //   if (this.main.value.includes(l.names)) {

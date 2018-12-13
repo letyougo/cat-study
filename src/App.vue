@@ -8,11 +8,11 @@
       <div class="tab-list">
         <div v-if="hasCheckRight" @click="(e)=>{
             if(this.isHuayan){
-              this.$router.push('/checkresult') 
+              this.$router.push('/check/ing')
             }else{
-              this.$router.push('/check/tobe') 
+              this.$router.push('/check/tobe')
             }
-             
+
         }" :class="{active:$route.path.includes('/check/') || $route.path.includes('/treat') &&  !$route.path.includes('/admin/')}">
           智能诊疗
         </div>
@@ -22,11 +22,11 @@
         </div>
         <div v-if="hasAdminRight" @click="()=>{
             if(this.isHuayan){
-              this.$router.push('/admin/med') 
+              this.$router.push('/admin/hosmed')
             }else{
-              this.$router.push('/admin') 
+              this.$router.push('/admin')
             }
-           
+
         }" :class="{active:$route.path.includes('/admin')}" >
           运营后台
         </div>
@@ -182,7 +182,8 @@ export default {
       this.isHuayan = isHuayan
       this.isAdmin = isAdmin
       this.isDoctor = isDoctor
-      this.isYunyin = isYunyin
+      this.isYunyin = isYunyin;
+      localStorage.setItem('isYunyin', this.isYunyin);
       if (roleName === '超级管理员') {
         this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
       }

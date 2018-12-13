@@ -2,6 +2,7 @@ import request from 'axios'
 import moment from 'moment'
 import Vue from 'vue'
 import App from '../main'
+
 let axios = request.create()
 request.defaults.baseURL = 'http://47.99.183.50:8080'
 
@@ -54,9 +55,13 @@ request.interceptors.response.use(function (res) {
   if (res.headers.token && res.headers.token === 'timeout') {
     window.location.hash = '/account'
   }
-  let { code, desc } = res.data
+  let {code, desc} = res.data
   if (code !== 200) {
-    // return App.$message.error(desc)
+    var mes = "系统异常";
+    if (desc !="") {
+      mes = desc;
+    }
+    return App.$message.error(mes)
   }
   return res
 })
@@ -75,34 +80,34 @@ const api = {
 
   // 通过症状，来做检查
   symptom: {
-    async check (data) {
+    async check(data) {
       const url = '/disease/listDiseaseBySymptom'
-      const res = await request.get(url, { params: data })
+      const res = await request.get(url, {params: data})
       return res
     }
   },
 
   // 治疗相关
   zhiliao2: {
-    async diseaseList (caseId) {
+    async diseaseList(caseId) {
       const url = '/disease/listDiagDisease'
       const res = await request.get(`${url}?caseId=${caseId}`)
       return res
     },
-    async getMedByST (st) {
+    async getMedByST(st) {
       const url = '/disease/getMedByST'
-      let res = await request.get(url, { params: { st } })
+      let res = await request.get(url, {params: {st}})
       return res
     }
 
   },
   mianyi: {
-    async item (caseId) {
+    async item(caseId) {
       const url = '/caseImmune/getByCaseId'
-      const res = await request.get(url, { params: { caseId } })
+      const res = await request.get(url, {params: {caseId}})
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/caseImmune/add'
       const res = await request.post(url, data)
       return res
@@ -111,80 +116,80 @@ const api = {
 
   // 检查相关
   check: {
-    async addReport (caseId, data) {
+    async addReport(caseId, data) {
       const url = `/check/addReport?caseId=${caseId}`
       const res = await request.post(url, data)
       return res
     },
-    async list (params) {
+    async list(params) {
       const url = `/check/listReportByCaseId`
-      const res = await request.get(url, { params })
+      const res = await request.get(url, {params})
       return res
     },
-    async getCheckInfo (reportId) {
+    async getCheckInfo(reportId) {
       const url = `/check/getCheckInfo?reportId=${reportId}`
       const res = await request.get(url)
       return res
     },
-    async listCheckBySymptom (params) {
+    async listCheckBySymptom(params) {
       const url = '/check/listCheckBySymptom'
-      const res = await request.get(url, { params })
+      const res = await request.get(url, {params})
       return res
     },
-    async listReadyCheck (params) {
+    async listReadyCheck(params) {
       const url = '/check/listReadyCheck'
-      const res = await request.get(url, { params })
+      const res = await request.get(url, {params})
       return res
     },
-    async editCheck (reportId, data) {
+    async editCheck(reportId, data) {
       const url = `/check/editCheck?reportId=${reportId}`
       const res = await request.post(url, data)
       return res
     },
-    async isAllReady (id) {
+    async isAllReady(id) {
       const url = `/check/isAllReady?caseId=${id}`
       const res = await request.get(url)
       return res
     },
-    async findCheckByHospitalId (name) {
+    async findCheckByHospitalId(name) {
       const url = `/check/findCheckByHospitalId?hospitalId=${global.user.id}&checkName=${name}`
       const res = await request.get(url)
       return res
     },
     manager: {
-      async getCheckType () {
+      async getCheckType() {
         const url = '/manager/check/getCheckType'
         const res = await request.get(url)
         return res
       },
-      async getCheckByType (params) {
+      async getCheckByType(params) {
         const url = '/manager/check/getCheckByType'
-        const res = await request.get(url, { params })
+        const res = await request.get(url, {params})
         return res
       },
-      async list (param) {
+      async list(param) {
         const url = '/manager/check/listCheckHospita'
-        const res = await request.get(url, { params })
+        const res = await request.get(url, {params})
         return res
       },
-      async listCheckHospital (params) {
+      async listCheckHospital(params) {
         const url = '/manager/check/listCheckHospital'
-        const res = await request.get(url, { params })
+        const res = await request.get(url, {params})
         return res
       },
-      async addCheck (params) {
+      async addCheck(params) {
         const url = '/manager/check/addCheck'
-        const res = await request.get(url, { params })
+        const res = await request.get(url, {params})
         return res
       },
-      async updateCheckTemplate (id, data) {
+      async updateCheckTemplate(id, data) {
         const url = `/manager/check/updateCheckTemplate?itemId=${id}`
         const res = await request.post(url, data)
         return res
       },
-      async deleteCheckHospital (params) {
+      async deleteCheckHospital(params) {
         const url = '/manager/check/deleteCheckHospital'
-        const res = await request.get(url, { params })
+        const res = await request.get(url, {params})
         return res
       }
     }
@@ -192,29 +197,29 @@ const api = {
   },
 
   account: {
-    async login (data) {
+    async login(data) {
       const url = '/login'
       let res = await request.post(
         `${url}?phoneNum=${data.phoneNum}&password=${data.password}`
       )
       return res
     },
-    async list (data) {
+    async list(data) {
       const url = '/sysUser/listUserWithRole'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async post (data) {
+    async post(data) {
       const url = '/sysUser/addUser'
       let res = await request.post(url, data)
       return res
     },
-    async del (data) {
+    async del(data) {
       const url = '/sysUser/deleteUser '
       let res = await request.post(url, data)
       return res
     },
-    async update () {
+    async update() {
       const url = '/sysUser/updateUser'
     }
   },
@@ -222,25 +227,25 @@ const api = {
   // 处方
 
   chufang: {
-    async list (params) {
+    async list(params) {
       const url = '/prescription/listByParam'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async item () {
+    async item() {
 
     },
-    async add (data) {
+    async add(data) {
       const url = '/prescription/add'
       let res = await request.post(url, data)
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/prescription/update'
       let res = await request.post(url, data)
       return res
     },
-    async del (data) {
+    async del(data) {
       const url = '/prescription/delete'
       let res = await request.post(url, data)
       return res
@@ -249,66 +254,66 @@ const api = {
 
   // 疾病
   ill: {
-    async list (params) {
+    async list(params) {
       const url = '/disease/listByParam'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async item (params) {
+    async item(params) {
       const url = '/disease/getById'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/disease/add'
       let res = await request.post(url, data)
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/disease/update'
       let res = await request.post(url, data)
       return res
     },
-    async del (id) {
+    async del(id) {
       const url = `/disease/delete?id=${id}`
       let res = await request.get(url)
       return res
     },
-    async listUncertainTreatments (params) {
+    async listUncertainTreatments(params) {
       const url = '/disease/listUncertainTreatments'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async listDiagDisease (params) {
+    async listDiagDisease(params) {
       const url = '/disease/listDiseaseBySymptom'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async getCaseDiseaseWithPrescription (caseId) {
+    async getCaseDiseaseWithPrescription(caseId) {
       const url = `/case/getCaseDiseaseWithPrescription`
-      let res = await request.get(url, { caseId })
+      let res = await request.get(url, {caseId})
       return res
     }
   },
 
   // 角色
   role: {
-    async list () {
+    async list() {
       const url = '/sysRole/listRoleWithPerm'
       let res = await request.get(url)
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/sysUser/addRoleForUser'
       let res = await request.post(url, data)
       return res
     },
-    async del (data) {
+    async del(data) {
       const url = '/sysUser/deleteRoleForUser'
       let res = await request.post(url, data)
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/sysUser/updateUser'
       let res = await request.post(url, data)
       return res
@@ -317,7 +322,7 @@ const api = {
 
   // 接诊
   caseVisit: {
-    update (data) {
+    update(data) {
       const url = '/caseVisit/update'
       let res = request.post(queryUrl(url, data))
       return res
@@ -326,7 +331,7 @@ const api = {
 
   // 权限
   perm: {
-    async list () {
+    async list() {
       const url = '/sysPermission/listPermissionByParam'
       let res = await request.get(url)
       return res
@@ -334,42 +339,42 @@ const api = {
   },
   // 病历
   case: {
-    async list (data) {
+    async list(data) {
       const url = '/case/listByParam'
       data.isDeleted = false
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async item (data) {
+    async item(data) {
       const url = '/case/getById'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/case/add'
       let res = await request.post(url, data)
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/case/update'
       let res = await request.post(url, data)
       return res
     },
-    async del (data) {
+    async del(data) {
       const url = '/case/delete'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     }
 
   },
 
   hosmed: {
-    async list (data) {
+    async list(data) {
       const url = '/hospMedicine/listByParam'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/hospMedicine/add'
       let res = await request.post(queryUrl(url, data))
       return res
@@ -377,22 +382,22 @@ const api = {
   },
   // 药品
   med: {
-    async list (data) {
+    async list(data) {
       const url = '/medicine/listByParam'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/medicine/update'
       let res = await request.post(url, data)
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/medicine/add'
       let res = await request.post(url, data)
       return res
     },
-    async del (id) {
+    async del(id) {
       const url = '/medicine/del'
       let res = await request.get(url)
       return res
@@ -400,81 +405,81 @@ const api = {
   },
   // 医院
   hospital: {
-    async list (data) {
+    async list(data) {
       const url = '/hospital/listByParam'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/hospital/update'
       let res = await request.post(url, data)
       return res
     },
-    async del (id) {
+    async del(id) {
       const url = `/hospital/delete?id=${id}`
       let res = await request.get(url)
       return res
     },
-    async add (data) {
+    async add(data) {
       const url = '/hospital/add'
       let res = await request.post(url, data)
       return res
     },
-    async listById (data) {
+    async listById(data) {
       const url = '/manager/check/listCheckHospitalId/'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     }
   },
   // 接诊
   visit: {
-    async list () {
+    async list() {
       const url = '/visit/listAllItemWithOptions'
       let res = await request.get(url)
-      let { data: { data } } = res
+      let {data: {data}} = res
 
       return res
     },
-    async item (data) {
+    async item(data) {
       const url = '/caseVisit/getByCaseId'
-      let res = await request.get(url, { params: data })
+      let res = await request.get(url, {params: data})
       return res
     },
-    async update (data) {
+    async update(data) {
       const url = '/visit/update'
       let res = await request.post(url, data)
       return res
     },
-    async searchSymptom (params) {
+    async searchSymptom(params) {
       const url = '/visitOption/searchSymptom'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     }
 
   },
   // 检查
   disease: {
-    async list (params) {
+    async list(params) {
       const url = '/disease/listDiseaseBySymptom'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async list2 (params) {
+    async list2(params) {
       const url = '/disease/listByParam'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async list3 (params) {
+    async list3(params) {
       const url = '/disease/searchDisease'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async listDiseaseHightSymp (id) {
+    async listDiseaseHightSymp(id) {
       const url = `/disease/listDiseaseHightSymp?diseaseId=${id}`
       const res = await request.get(url)
       return res
     },
-    async updateDiseaseHightSymp (data) {
+    async updateDiseaseHightSymp(data) {
       const url = '/disease/updateDiseaseHightSymp'
       const res = request.post(url, data)
       return res
@@ -482,12 +487,12 @@ const api = {
   },
   // operation
   operation: {
-    async list (params) {
+    async list(params) {
       const url = '/operation/listByParam'
-      let res = await request.get(url, { params })
+      let res = await request.get(url, {params})
       return res
     },
-    async addPrescription (data, query) {
+    async addPrescription(data, query) {
       let url = '/prescription/addPrescription'
       if (query) {
         url = url + '?diseaseName=' + query
@@ -495,14 +500,14 @@ const api = {
       let res = await request.post(url, data)
       return res
     },
-    async getOperationById (id) {
+    async getOperationById(id) {
       const url = `operation/getById?id=${id}`
       let res = await request.get(url)
       return res
     }
   },
   // 上传文件
-  async upload (file) {
+  async upload(file) {
     let form = new FormData()
     form.append('file', file, file.name)
     form.append('key', new Date().getTime())
@@ -513,13 +518,15 @@ const api = {
     })
     return res
   },
-  log: (module) => request.get('/data/click', { params: {
-    day: moment().format('YYYYMMDD'),
-    tag: 'dianji',
-    module
-  } }),
-  getLog: (params) => request.get('/data/statistics', { params }),
-  getStats: (params) => request.get('/stats/getStats', { params }),
+  log: (module) => request.get('/data/click', {
+    params: {
+      day: moment().format('YYYYMMDD'),
+      tag: 'dianji',
+      module
+    }
+  }),
+  getLog: (params) => request.get('/data/statistics', {params}),
+  getStats: (params) => request.get('/stats/getStats', {params}),
   updatePwd: (data) => request.post('/sysUser/updatePwd', data)
 }
 
@@ -541,60 +548,60 @@ export default {
         limit: 20
       },
       ghxm: [
-        { name: '问诊', id: 1 },
-        { name: '免疫', id: 2 },
-        { name: '绝育/去势', id: 3 },
-        { name: '驱虫', id: 4 },
-        { name: '拔牙', id: 5 }
+        {name: '问诊', id: 1},
+        {name: '免疫', id: 2},
+        {name: '绝育/去势', id: 3},
+        {name: '驱虫', id: 4},
+        {name: '拔牙', id: 5}
       ],
       ghzt: [
-        { name: '待接诊', id: 1 },
-        { name: '接诊中', id: 2 },
-        { name: '检查中', id: 3 },
-        { name: '已出检查结果', id: 4 }
+        {name: '待接诊', id: 1},
+        {name: '接诊中', id: 2},
+        {name: '检查中', id: 3},
+        {name: '已出检查结果', id: 4}
       ],
       check: {
         options: {
           0: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '单位名称', prop: 'unit' },
-            { label: '最大', prop: 'refMax' },
-            { label: '最小', prop: 'refMin' },
-            { label: '结果值', prop: 'param' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '单位名称', prop: 'unit'},
+            {label: '最大', prop: 'refMax'},
+            {label: '最小', prop: 'refMin'},
+            {label: '结果值', prop: 'param'}
           ],
           1: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '检查结果', prop: 'isException' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '检查结果', prop: 'isException'}
           ],
           5: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '单位名称', prop: 'unit' },
-            { label: '最大', prop: 'refMax' },
-            { label: '最小', prop: 'refMin' },
-            { label: '结果值', prop: 'param' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '单位名称', prop: 'unit'},
+            {label: '最大', prop: 'refMax'},
+            {label: '最小', prop: 'refMin'},
+            {label: '结果值', prop: 'param'}
           ],
           7: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '单位名称', prop: 'unit' },
-            { label: '幼年猫-最低', prop: 'refMin' },
-            { label: '幼年猫-最高', prop: 'refMax' },
-            { label: '成年猫-最低', prop: 'refMin2' },
-            { label: '成年猫-最高', prop: 'refMax2' },
-            { label: '老年猫-最低', prop: 'refMin3' },
-            { label: '老年猫-最高', prop: 'refMax3' },
-            { label: '结果值', prop: 'param' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '单位名称', prop: 'unit'},
+            {label: '幼年猫-最低', prop: 'refMin'},
+            {label: '幼年猫-最高', prop: 'refMax'},
+            {label: '成年猫-最低', prop: 'refMin2'},
+            {label: '成年猫-最高', prop: 'refMax2'},
+            {label: '老年猫-最低', prop: 'refMin3'},
+            {label: '老年猫-最高', prop: 'refMax3'},
+            {label: '结果值', prop: 'param'}
           ],
           8: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '幼年猫-最低', prop: 'refMin' },
-            { label: '幼年猫-最高', prop: 'refMax' },
-            { label: '结果值', prop: 'param' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '幼年猫-最低', prop: 'refMin'},
+            {label: '幼年猫-最高', prop: 'refMax'},
+            {label: '结果值', prop: 'param'}
           ],
           11: [
-            { label: '项目名称', prop: 'projectName' },
-            { label: '幼年猫-最低', prop: 'refMin' },
-            { label: '幼年猫-最高', prop: 'refMax' },
-            { label: '结果值', prop: 'param' }
+            {label: '项目名称', prop: 'projectName'},
+            {label: '幼年猫-最低', prop: 'refMin'},
+            {label: '幼年猫-最高', prop: 'refMax'},
+            {label: '结果值', prop: 'param'}
           ]
         }
       }
