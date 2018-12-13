@@ -211,7 +211,6 @@ export default {
       let res = await this.api.operation.list({ names })
       let { data: { data } } = res
       data = data[0]
-      debugger;
       this.chuzhi.names = names
       this.chuzhi.process = this.formatProcess(data.process)
     },
