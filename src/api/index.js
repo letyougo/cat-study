@@ -293,6 +293,11 @@ const api = {
       const url = `/case/getCaseDiseaseWithPrescription`
       let res = await request.get(url, {caseId})
       return res
+    },
+    async delete(id) {
+      const url = `/case/delete?id=${id}`
+      let res = await request.get(url)
+      return res
     }
   },
 
@@ -399,6 +404,11 @@ const api = {
     },
     async del(id) {
       const url = '/medicine/del'
+      let res = await request.get(url)
+      return res
+    },
+    async getList() {
+      const url = '/medicine/listClassification'
       let res = await request.get(url)
       return res
     }

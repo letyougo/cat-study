@@ -4,7 +4,7 @@
 				<div>
 					<el-form inline>
 						<el-form-item label="入院时间">
-							<el-date-picker v-model="filter.startTime"></el-date-picker> 
+							<el-date-picker v-model="filter.startTime"></el-date-picker>
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -15,7 +15,7 @@
 						</el-form-item>
 
 						<el-form-item >
-							<el-date-picker v-model="filter.endTime"></el-date-picker> 
+							<el-date-picker v-model="filter.endTime"></el-date-picker>
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -29,10 +29,10 @@
 							<el-button type="primary" @click="fetch">查询</el-button>
 						</el-form-item>
 					</el-form>
-					
+
         </div>
 			</div>
-			 
+
 				<el-table :data="list" v-loading="loading">
           <el-table-column label="病历id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
@@ -45,12 +45,14 @@
           </el-table-column>
           <el-table-column label="入院时间" prop="createTime"></el-table-column>
 					<el-table-column label="姓名" prop="catName"></el-table-column>
-					<el-table-column label="操作">
+					<el-table-column label="操作" width="200">
 						<template scope="scope">
-							<el-button 
+							<el-button
 							@click="detail(scope.row)"
 							>详情</el-button>
+              <el-button type="danger" @click="del(scope.row)">删除</el-button>
 						</template>
+
 					</el-table-column>
 				</el-table>
 				<div style="display: flex;justify-content:flex-end;padding-top: 10px">
@@ -66,7 +68,7 @@
           <div class="geren-bingli">
               <bingli v-if="show" :id="id" :hide="hide"></bingli>
           </div>
-					
+
 					<span slot="footer">
               <el-button v-if="hide" @click="hide=false">显示疾病名称</el-button>
               <el-button v-else="!hide" @click="hide=true">隐藏疾病名称</el-button>
@@ -148,6 +150,14 @@ export default {
         this.list = data
         this.pageinfo = pageinfo
       }
+    },
+    async del (item) {
+      try {
+        await this.$confirm('确定删除该条数据吗?')
+        await this.api.ill.delete(item.id)
+        this.reload();
+      } catch (e) {
+      }
     }
   },
   created () {
@@ -160,7 +170,7 @@ export default {
 </script>
 <style scoped lang="less">
 	.chaxun-top{
-		
+
 		margin-bottom: 10px;
 	}
 </style>

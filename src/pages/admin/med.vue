@@ -28,25 +28,34 @@
                     <template scope="scope">
                         <el-form label-width="100px">
                           <el-form-item label="名字">
-                              <el-input v-model="scope.row.names" placeholder=""></el-input>
+                              <el-input v-model="scope.row.names1" placeholder=""></el-input>
+                          </el-form-item>
+                          <el-form-item label="分类">
+                              <el-select v-model="scope.row.classification1" placeholder="请选择">
+                                <el-option
+                                  v-for="item in mesType"
+                                  :label="item"
+                                  :value="item">
+                                </el-option>
+                              </el-select>
                           </el-form-item>
                           <el-form-item label="次/天">
-                              <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
+                              <el-input v-model="scope.row.timesDay1" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="成分">
-                                <el-input v-model="scope.row.ingredient" placeholder=""></el-input>
+                                <el-input v-model="scope.row.ingredient1" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="剂量">
-                                <el-input v-model="scope.row.dosage" placeholder=""></el-input>
+                                <el-input v-model="scope.row.dosage1" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="规范">
-                            <el-input v-model="scope.row.specification" placeholder=""></el-input>
+                            <el-input v-model="scope.row.specification1" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="药用用法">
-                                <el-input v-model="scope.row.medicineUsage" placeholder=""></el-input>
+                                <el-input v-model="scope.row.medicineUsage1" placeholder=""></el-input>
                           </el-form-item>
                           <el-form-item label="数量">
-                            <el-input v-model="scope.row.quantity" placeholder=""></el-input>
+                            <el-input v-model="scope.row.quantity1" placeholder=""></el-input>
                           </el-form-item>
                          <!-- <el-form-item label="天">
                               <el-input v-model="scope.row.days" placeholder="" type="number"></el-input>
@@ -58,6 +67,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="id" prop="id"></el-table-column>
+                <el-table-column label="分类" prop="classification"></el-table-column>
                 <el-table-column label="名字" prop="names"></el-table-column>
                 <el-table-column label="次/天" prop="timesDay"></el-table-column>
                 <el-table-column label="成分" prop="ingredient"></el-table-column>
@@ -100,7 +110,16 @@
         <el-dialog title="增加药品" :visible="addForm.visible">
             <el-form label-width="100px">
                 <el-form-item label="分类">
-                    <el-input v-model="addForm.classification" placeholder=""></el-input>
+                  <template>
+                    <el-select v-model="addForm.classification" placeholder="请选择">
+                      <el-option
+                        v-for="item in mesType"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                    </el-select>
+                  </template>
                 </el-form-item>
                 <el-form-item label="名字">
                         <el-input v-model="addForm.names" placeholder=""></el-input>
@@ -108,18 +127,18 @@
                 <el-form-item label="成分">
                     <el-input v-model="addForm.ingredient" placeholder=""></el-input>
                </el-form-item>
-               
+
                <el-form-item label="剂量">
                   <el-input v-model="addForm.dosage" placeholder=""></el-input>
              </el-form-item>
-             
+
              <el-form-item label="规范">
                 <el-input v-model="addForm.specification" placeholder=""></el-input>
          </el-form-item>
                 <el-form-item label="次/天">
                       <el-input v-model="addForm.timesDay" placeholder=""></el-input>
                  </el-form-item>
-          
+
 
 
                 <el-form-item label="药用用法">
@@ -172,14 +191,17 @@ export default {
       search: {
         startDate: '',
         endDate: ''
-      }
+      },
+      mesType:[]
     }
   },
-  computed: {},
+  computed: {
+  },
   watch: {
     pageNum () {
-      this.reload()
-    }
+      this.reload();
+      this.listClass();//药品类型
+    },
   },
   methods: {
     async addToHospital (row) {
@@ -231,8 +253,20 @@ export default {
         start: (this.pageNum - 1) * 20
       })
       let { data: { data, code, desc, pageinfo: { totalCount } } } = res
-      this.list = data
-      this.totalCount = totalCount
+
+      for(var i=0;i<data.length;i++){
+       data[i]['names1']=data[i].names;
+        data[i]['classification1']=data[i].classification;
+        data[i]['timesDay1']=data[i].timesDay;
+        data[i]['ingredient1']=data[i].ingredient;
+        data[i]['dosage1']=data[i].dosage;
+        data[i]['specification1']=data[i].specification;
+        data[i]['medicineUsage1']=data[i].medicineUsage;
+        data[i]['quantity1']=data[i].quantity;
+      }
+      this.list = data;
+      console.log(this.list)
+      this.totalCount = totalCount;
       this.loading = false
     },
     async add () {
@@ -240,10 +274,26 @@ export default {
       this.addForm.visible = false
       this.reload()
     },
+    async listClass (){
+      var res = await this.api.med.getList();
+      this.mesType=res.data.data;
+    },
+
+
+
     async update (data) {
-      delete data.updateTime
-      delete data.createTime
-      await this.api.med.update(data)
+      data.names=data.names1;
+      data.classification=data.classification1;
+      data.timesDay=data.timesDay1;
+      data.ingredient=data.ingredient1;
+      data.dosage=data.dosage1;
+      data.specification=data.specification1;
+      data.medicineUsage=data.medicineUsage1;
+      data.quantity=data.quantity1;
+
+      delete data.updateTime;
+      delete data.createTime;
+      await this.api.med.update(data);
       this.reload()
     },
     async del (item) {
@@ -257,7 +307,9 @@ export default {
       }
     }
   },
-  created () {},
+  created () {
+    this.listClass();
+  },
   mounted () {
     this.reload()
   }

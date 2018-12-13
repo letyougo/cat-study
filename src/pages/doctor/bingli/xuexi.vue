@@ -4,7 +4,7 @@
 				<div>
 					<el-form inline>
 						<el-form-item label="入院时间">
-							<el-date-picker v-model="filter.startTime"></el-date-picker> 
+							<el-date-picker v-model="filter.startTime"></el-date-picker>
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -15,7 +15,7 @@
 						</el-form-item>
 
 						<el-form-item >
-							<el-date-picker v-model="filter.endTime"></el-date-picker> 
+							<el-date-picker v-model="filter.endTime"></el-date-picker>
 								<template slot="prefix">
 										<i class="el-icon-search icon-search"></i>
 										</template>
@@ -29,10 +29,10 @@
 							<el-button type="primary" @click="fetch">查询</el-button>
 						</el-form-item>
 					</el-form>
-					
+
         </div>
 			</div>
-			 
+
 				<el-table :data="list">
           <el-table-column label="病历id" prop="id"></el-table-column>
           <el-table-column label="主人姓名" prop="ownerName"></el-table-column>
@@ -56,7 +56,7 @@
 						:page-size="config.page.limit"
 						:pager-count="pageinfo.pageNum"
 						layout="prev, pager, next"
-						
+
 						:total="pageinfo.totalCount">
 					</el-pagination>
 				</div> -->
@@ -65,7 +65,7 @@
 						<p style="margin-bottom:18px;">主人：王凌薇 猫咪姓名：咪咪 性别：公 年龄：1岁6个月 日期：2018/08/09</p>
 						<p class="chaxun-dialog-title">疾病症状</p>
 						<div class="chaxun-dialog-content">幼年猫，多猫环境，室外生活，未按时免疫，精神沉郁，厌食，脱水，发热，呕吐，腹泻</div>
-						
+
 						<p class="chaxun-dialog-title">一般信息</p>
 						<div class="chaxun-dialog-content">
 							<div class="chaxun-dialog-basic">
@@ -73,8 +73,8 @@
 								<div>体重：3.6 kg</div>
 								<div>体重：3.6 kg</div>
 							</div>
-							
-							<div  class="chaxun-dialog-basic">	
+
+							<div  class="chaxun-dialog-basic">
 								<div>体重：3.6 kg</div>
 								<div>体重：3.6 kg</div>
 								<div>体重：3.6 kg</div>
@@ -87,8 +87,8 @@
 								<div>主诉症状：呕吐、厌食</div>
 								<div>主诉症状：呕吐、厌食</div>
 							</div>
-							
-							<div  class="chaxun-dialog-check">	
+
+							<div  class="chaxun-dialog-check">
 								<div>体重：3.6 kg</div>
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 								</el-table-column>
 								<el-table-column label="症状" prop="status"></el-table-column>
 								<el-table-column label="简介" prop="desc"></el-table-column>
-								
+
         			</el-table>
 							<p class="chaxun-dialog-title" style="text-align:center;margin-top:10px">FE/LV</p>
 							<el-table :data="list">
@@ -121,7 +121,7 @@
 								<el-table-column label="简介" prop="desc"></el-table-column>
         			</el-table>
 						</div>
-					
+
 						<p class="chaxun-dialog-title">治疗方案</p>
 						<div class="chaxun-dialog-content">
 							<el-table :data="list">
@@ -132,17 +132,17 @@
 								</el-table-column>
 								<el-table-column label="症状" prop="status"></el-table-column>
 								<el-table-column label="简介" prop="desc"></el-table-column>
-							
+
         			</el-table>
 						</div>
-						
+
 
 						<p class="chaxun-dialog-title">预后护理</p>
 						<div class="chaxun-dialog-content">
 							猫瘟疫苗为核心疫苗，建议定期进行免疫接种，以保证体内的抗体水平一直在相对高的情况下，预防猫瘟发病，尽量少外出活动，外出活动之后要进行消毒
 						</div>
 
-						
+
 					</div>
 					  <span slot="footer" class="dialog-footer">
     					<el-button @click="show = false">关 闭</el-button>
@@ -203,7 +203,7 @@ export default {
         this.list = data
         this.pageinfo = pageinfo
       }
-    }
+    },
   },
   created () {
 
@@ -215,7 +215,7 @@ export default {
 </script>
 <style scoped lang="less">
 	.chaxun-top{
-		
+
 		margin-bottom: 10px;
 	}
 </style>

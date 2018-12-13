@@ -102,7 +102,7 @@ export default {
         startTime: '',
         endTime: '',
         result: '',
-        status: 'yes'
+        status: ''
       },
       loading: false,
       edit: false,

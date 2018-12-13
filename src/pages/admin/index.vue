@@ -54,8 +54,8 @@
                     <el-date-picker v-model="endTime" placeholder=""  @change="fetch"></el-date-picker>
                   </el-form-item>
                   <el-select v-model="tag" placeholder="" @change="fetch">
-                    <el-option value="dianji" label="点击率"></el-option>
-                    <el-option value="fangwen" label="访问率"></el-option>
+                    <el-option value="dianji" label="点击量"></el-option>
+                    <el-option value="fangwen" label="访问量"></el-option>
                     <el-option value="jiezhen" label="接诊量"></el-option>
                     <el-option value="huayan" label="开具化验量"></el-option>
                     <el-option value="chufang" label="开具处方量"></el-option>

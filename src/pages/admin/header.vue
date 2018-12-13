@@ -1,18 +1,18 @@
 <template>
     <div class="header">
         <div class="header-content">
-            
-            
+
+
             <div class="left" >
-                
+
                 <template v-if="right.isYunyin">
                     <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
                         权限管理
                     </div>
                 </template>
                 <template v-if="right.isAdmin">
-                        <div @click="$router.push('/admin/index')" :class="{active:$route.path === '/admin/index' ? true : false}" class="title2">
-                            数据统计
+                        <div @click="$router.push('/admin')" :class="{active:$route.path === '/admin' ? true : false}" class="title2">
+                            后台管理
                         </div>
                         <div @click="$router.push('/admin/user')" :class="{active:$route.path === '/admin/user' ? true : false}" class="title2">
                             权限管理
@@ -36,7 +36,7 @@
                     <div @click="$router.push('/admin/ysbl')" :class="{active:$route.path === '/admin/ysbl' ? true : false}">
                         医生病历
                     </div>
-                  
+
                     <div @click="$router.push('/admin/treat')" :class="{active:$route.path === '/admin/treat' ? true : false}">
                         诊疗模块管理
                     </div>
@@ -54,7 +54,7 @@
                     </div>
                 </template>
 
-                <template v-if="right.isHuayan">            
+                <template v-if="right.isHuayan">
                     <div  @click="$router.push('/admin/hosmed')" :class="{active:$route.path === '/admin/hosmed' ? true : false}" class="title2">
                         医院药品管理
                     </div>
@@ -62,9 +62,9 @@
                         检查管理
                     </div>
                 </template>
-            
-            
-                
+
+
+
             </div>
 
             <div class="right">

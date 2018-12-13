@@ -9,14 +9,23 @@
 
             <div>
                 <el-form :inline="true">
-                    <el-form-item>
-                        <el-select v-model="filter.hospital" placeholder="">
+                  <el-form-item>
+                  <template v-if="isHuayanFlag=='true'">
+                        <el-select v-model="filter.hospital" placeholder="" disabled >
                           <el-option v-for="item in hospital" :key="item.id" :value="item.id" :label="item.names">{{item.names}}</el-option>
                         </el-select>
-                    </el-form-item>
+                  </template>
+                  <template v-else>
+                      <el-select v-model="filter.hospital" placeholder="" >
+                        <el-option v-for="item in hospital" :key="item.id" :value="item.id" :label="item.names">{{item.names}}</el-option>
+                      </el-select>
+                  </template>
+                  </el-form-item>
+                  <template v-if="isHuayanFlag=='false'">
                     <el-form-item>
                         <el-button type="primary" @click="fetch">查询</el-button>
                     </el-form-item>
+                  </template>
                     <!-- <el-form-item>
                         <el-button @click="add.visible=true">增加药品</el-button>
                     </el-form-item> -->
@@ -31,7 +40,7 @@
                 <el-table-column label="次/天" prop="timesDay"></el-table-column>
                 <el-table-column label="成分" prop="ingredient"></el-table-column>
                 <el-table-column label="剂量" prop="dosage"></el-table-column>
-                
+
                 <el-table-column label="规格" prop="specification"></el-table-column>
                 <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
                 <el-table-column label="数量" prop="quantity"></el-table-column>
@@ -103,7 +112,8 @@ export default {
         hospital: 0
       },
       hospital: [],
-      loading: false
+      loading: false,
+      isHuayanFlag: localStorage.getItem('isHuayanFlag')
     }
   },
   computed: {},

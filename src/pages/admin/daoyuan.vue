@@ -1,13 +1,13 @@
 <template>
   <div class="admin-daoyuan">
       <div class="admin-daoyuan-title">
-          <div 
+          <div
           style=" color: #4D4D4D;
               font-size: 16px;"
           >
             <corner></corner>到医检查管理
           </div>
-          
+
           <div>
               <el-form inline>
                   <el-form-item>
@@ -20,10 +20,10 @@
                     <el-button type="primary" @click="add.visible=true">新增症状</el-button>
                   </el-form-item>
                 </el-form>
-          </div> 
+          </div>
       </div>
       <br/>
-      <el-table :data="list" v-loading="loading">        
+      <el-table :data="list" v-loading="loading">
           <el-table-column width="100px" label="id" prop="id"></el-table-column>
           <el-table-column width="150px" label="症状" prop="symptom"></el-table-column>
           <el-table-column label="主要检查" prop="checkListMajor">
@@ -55,7 +55,7 @@
 
 
             layout="prev, pager, next"
-            
+
             :total="pageinfo.totalCount">
           </el-pagination>
         </div>
@@ -68,7 +68,7 @@
             <el-button @click="checkListMajorSearch" >编辑</el-button>
                   <el-button type="primary" @click="(e) => {add.checkListMajorOptions = add.checkListMajor}">确定</el-button>
               <br/><br/>
-              
+
               <el-button
               @click="(e)=>{
                 if(add.checkListMajor.includes(item)){
@@ -76,7 +76,7 @@
                 }else{
                   add.checkListMajor.push(item)
                 }
-              }"  
+              }"
               style="margin: 4px" size="mini"  :type=" add.checkListMajor.includes(item) ? 'primary' :'' " v-for="item in add.checkListMajorOptions" :key="item.id">
                 {{item}}
               </el-button>
@@ -85,14 +85,14 @@
               <el-button @click="checkListMinorSearch" >编辑</el-button>
                   <el-button type="primary" @click="(e) => {add.checkListMinorOptions = add.checkListMinor}">确定</el-button>
               <br/><br/>
-              <el-button 
+              <el-button
               @click="(e)=>{
                 if(add.checkListMinor.includes(item)){
                   add.checkListMinor = add.checkListMinor.filter((name)=>name!==item)
                 }else{
                   add.checkListMinor.push(item)
                 }
-              }"  
+              }"
               style="margin: 4px" size="mini"  :type=" add.checkListMinor.includes(item) ? 'primary' :'' " v-for="(item,index) in add.checkListMinorOptions" :key="item.id">
                   {{item}}
                 </el-button>
@@ -106,12 +106,12 @@
       <el-dialog title="编辑检查" :visible.sync="edit.visible">
           <el-form >
               <el-form-item label="症状">
-                <el-input v-model="edit.symptom"  placeholder=""></el-input>
+                <el-input v-model="edit.symptom"  placeholder="" readonly></el-input>
               </el-form-item>
               <el-form-item label="主要检查">
                   <el-button @click="checkListMajorSearch2" >编辑</el-button>
                   <el-button type="primary" @click="(e) => {edit.checkListMajorOptions = edit.checkListMajor}">确定</el-button>
-                  <br/>                 
+                  <br/>
                   <el-button
                     v-if="item"
                     @click="(e)=>{
@@ -120,7 +120,7 @@
                       }else{
                         edit.checkListMajor.push(item)
                       }
-                    }"  
+                    }"
                   style="margin: 4px" size="mini"  :type=" edit.checkListMajor.includes(item) ? 'primary' :'' " v-for="item in edit.checkListMajorOptions" :key="item.id">
                     {{item}}
                   </el-button>
@@ -128,8 +128,8 @@
               <el-form-item label="辅助检查">
                   <el-button @click="checkListMinorSearch2" >编辑</el-button>
                   <el-button type="primary" @click="(e) => {edit.checkListMinorOptions = edit.checkListMinor}">确定</el-button>
-                  <br/>                
-                  <el-button 
+                  <br/>
+                  <el-button
                     v-if="item"
                     @click="(e)=>{
                       if(edit.checkListMinor.includes(item)){
@@ -137,7 +137,7 @@
                       }else{
                         edit.checkListMinor.push(item)
                       }
-                    }"  
+                    }"
                   style="margin: 4px" size="mini"  :type=" edit.checkListMinor.includes(item) ? 'primary' :'' " v-for="(item,index) in edit.checkListMinorOptions" :key="item.id">
                       {{item}}
                     </el-button>
@@ -238,7 +238,7 @@
           visible: true
         }
       },
-  
+
       checkListMajorSearch () {
         clearTimeout(checkListMajorSearchTimer)
         checkListMajorSearching = true
@@ -265,7 +265,7 @@
           }
         }, 200)
       },
-  
+
       checkListMajorSearch2 () {
         clearTimeout(checkListMajorSearchTimer2)
         checkListMajorSearching2 = true
@@ -298,7 +298,7 @@
           checkListMajor: this.add.checkListMajor.join('，'),
           checkListMinor: this.add.checkListMinor.join('，')
         })
-  
+
         this.add = {
           visible: false,
           symptom: '',
@@ -338,7 +338,7 @@
         console.log(this.pageinfo)
         this.fetch()
       }
-  
+
     },
     mounted () {
       this.fetch()
