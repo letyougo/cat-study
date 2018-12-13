@@ -5,13 +5,16 @@
             style=" color: #4D4D4D;
                 font-size: 16px;"
         >
-            <corner></corner>医院管理
+            <template v-if="!isHuayan"> <corner></corner>医院管理</template>
+            <template>
+              <corner></corner>检查管理
+            </template>
         </div>
             
 
             <div>
                 <el-button type="primary" @click="dialog.visible=true">增加检查项</el-button>
-                <el-button type="primary" @click="add.visible=true">增加医院</el-button>
+                <el-button v-if="!isHuayan" type="primary" @click="add.visible=true">增加医院</el-button>
             </div>
         </div>
         
@@ -19,8 +22,9 @@
             <el-table :data="list" @expand-change="expandChange" v-loading="loading">
               <el-table-column label="详情" type="expand" width="150">
                 <template scope="scope" >
-                    <h3>医院编辑</h3>
-                    <el-form label-width="100px" inline>
+                  
+                    <el-form label-width="100px" inline v-if="!isHuayan">
+                        <h3>医院编辑</h3>
                       <el-form-item label="医院名称">
                         <el-input v-model="scope.row.names" placeholder=""></el-input>
                       </el-form-item>
@@ -73,7 +77,7 @@
               <el-table-column label="id" prop="id"></el-table-column>
               <el-table-column label="医院名字" prop="names"></el-table-column>
               <el-table-column label="创建时间" prop="createTime"></el-table-column>
-              <el-table-column label="操作">
+              <el-table-column label="操作" v-if="!isHuayan">
                 <template scope="scope">
                   <el-button type="danger" @click="deleteItem(scope.row.id)">删除</el-button>
                 </template>
@@ -86,7 +90,7 @@
 
         </el-dialog>
 
-        <el-dialog title="增加医院" :visible.sync="add.visible">
+        <el-dialog  title="增加医院" :visible.sync="add.visible">
           <el-form :model="add" label-width="100px" ref="addForm">
             <el-form-item label="医院名称" prop="names" :rules="[{ required: true, message: '医院名称不能为空', trigger: 'blur' }]">
               <el-input v-model="add.names" placeholder=""></el-input>
@@ -110,7 +114,10 @@
         <el-dialog title="检查项" :visible.sync="dialog.visible">
             <el-form label-width="150px">
                 <el-form-item label="医院">
-                  <el-select v-model="dialog.hospital" placeholder="">
+                  <el-select
+                   v-model="dialog.hospital" placeholder=""
+                   :disabled="isHuayan"
+                   >
                     <el-option v-for="item in list" :label="item.names" :value="item.id"></el-option>
                   </el-select>
                 </el-form-item>
@@ -156,7 +163,7 @@ export default {
       checkName: [],
       dialog: {
         visible: false,
-        hospital: '',
+        hospital: global.user.hospitalId,
         typeName: '',
         checkName: ''
       },
@@ -165,7 +172,9 @@ export default {
         itemId: 0,
         tplType: 0
       },
-      value: ''
+      value: '',
+      isHuayan: global.user.role.roleName === '化验室',
+      hospitalId: global.user.hospitalId
     }
   },
   computed: {
@@ -239,6 +248,11 @@ export default {
         item.checks = []
         return item
       })
+
+      if (this.isHuayan) {
+        data = data.filter(item => item.id === this.hospitalId)
+      }
+
       this.list = data
       this.loading = false
     },
