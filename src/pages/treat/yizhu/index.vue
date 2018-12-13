@@ -195,12 +195,14 @@ export default {
   },
   methods: {
     async endunCertain () {
+      this.print=true;
       let res = await this.api.case.update({
         status: 5,
         id: this.$route.query.id
       })
-      this.$message('已结束该病历')
-      this.$router.push('/check/ed')
+      // this.$message('已结束该病历');
+      // this.$router.push('/check/ed')
+
     },
     async fetchIll () {
       let res = await this.api.disease.list2({ names: this.search })
@@ -290,7 +292,7 @@ export default {
       // console.log(item, index, 'item-index')
     },
     async startPrint () {
-      this.printPage()
+      this.printPage();
       let id = this.$route.query.id
       let res = await this.api.case.update({
         status: 4,
