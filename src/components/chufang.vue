@@ -9,9 +9,6 @@
               v-model=nowIndex
               placeholder="搜索药品"
               filterable
-              remote
-              reserve-keyword
-              :remote-method="searchRemote"
               @change="addItem"
             >
               <el-option
@@ -94,7 +91,8 @@ export default {
       value: '',
       loading: false,
       nowIndex: '',
-      options: []
+      options: [],
+      hospitalId:window.localStorage.getItem('hospitalId')
     }
   },
   methods: {
@@ -115,12 +113,12 @@ export default {
       this.list = arr
     },
 
-    getUnique (list) {
+   /* getUnique (list) {
       let medIdArr = list.map(item => item.id)
       console.log(medIdArr, list, 'medidarr-list', this.st)
       list = list.filter(item => !medIdArr.includes(item.id))
       return list
-    },
+    },*/
     addItem () {
       let flag = true
       this.list.forEach(item => {
@@ -131,13 +129,14 @@ export default {
       if (!flag) return
       else this.list.push(this.options[this.nowIndex])
     },
-    async searchRemote (query) {
+   /* async searchRemote (query) {
       let res = await this.api.med.list({ likeStr: query })
       let { data: { data } } = res
       this.options = [...data]
-    },
-    async searchMed () {
+    },*/
+ /*   async searchMed () {
       this.loading = true
+
       let res = await this.api.med.list({ likeStr: this.value })
       let { data: { data } } = res
       this.loading = false
@@ -147,7 +146,7 @@ export default {
       let a = this.getUnique(this.list)
       console.log(a, 'a')
       console.log('list', this.list)
-    },
+    },*/
     async getMed (name) {
       let res = await this.api.zhiliao2.getMedByST(name)
       let {
@@ -174,10 +173,20 @@ export default {
       // this.$emit('close')
       this.print()
       return res
-    }
+    },
+    async listByParam () {
+      var mesList = await this.api.med.listByParam(Number(this.hospitalId));
+      if(mesList.data.code==200){
+        if(mesList.data.data.length>0){
+          this.options=mesList.data.data;
+        }
+      }
+    },
   },
+
   mounted () {
-    this.fetch()
+    this.fetch();
+    this.listByParam();
     console.log(this, 'this.st')
   }
 }

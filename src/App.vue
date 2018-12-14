@@ -22,7 +22,7 @@
         </div>
         <div v-if="hasAdminRight" @click="()=>{
             if(this.isHuayan){
-              this.$router.push('/admin/hosmed')
+              this.$router.push('/admin/med1')
             }else{
               this.$router.push('/admin')
             }

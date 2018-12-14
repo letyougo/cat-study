@@ -142,7 +142,7 @@ export default {
                this.$router.push('/check')
              }
              if (roleName === '化验室') {
-               this.$router.push('/admin/hosmed')
+               this.$router.push('/admin/med1')
              }
              if (roleName === '运营管理员') {
                this.$router.push('/admin/user')
