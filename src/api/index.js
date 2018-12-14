@@ -388,6 +388,11 @@ const api = {
       let res = await request.get(url, {params: data})
       return res
     },
+    async listByParam(hospitalId) {
+      const url = `/hospMedicine/listByParam?hospitalId=${hospitalId}`
+      let res = await request.get(url)
+      return res
+    },
     async update(data) {
       const url = '/medicine/update'
       let res = await request.post(url, data)
@@ -434,6 +439,10 @@ const api = {
     async listById(data) {
       const url = '/manager/check/listCheckHospitalId/'
       let res = await request.get(url, {params: data})
+      return res
+    },
+    async deleteHospMedicine (params) {
+      let res = await request.get(`/hospMedicine/delete`, { params })
       return res
     }
   },

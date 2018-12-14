@@ -55,10 +55,9 @@
                 </template>
 
                 <template v-if="right.isHuayan">
-                    <div  @click="$router.push('/admin/hosmed')" :class="{active:$route.path === '/admin/hosmed' ? true : false}" class="title2">
-                        医院药品管理
-                    </div>
-                  
+                  <div  @click="$router.push('/admin/med1')" :class="{active:$route.path === '/admin/med1' ? true : false}" class="title2">
+                    医院药品管理
+                  </div>
                     <div @click="$router.push('/admin/hospital')" :class="{active:$route.path === '/admin/hospital' ? true : false}" class="title2">
                         检查管理
                     </div>

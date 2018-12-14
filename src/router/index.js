@@ -21,6 +21,7 @@ import AdminHeader from '@/pages/admin/header'
 import AdminIndex from '@/pages/admin/index'
 import AdminUser from '@/pages/admin/user'
 import AdminMed from '@/pages/admin/med'
+import AdminMed1 from '@/pages/admin/med1'
 import AdminHosMed from '@/pages/admin/hosmed'
 import AdminHospital from '@/pages/admin/hospital'
 import AdminIll from '@/pages/admin/ill'
@@ -155,6 +156,10 @@ const router = new Router({
         {
           path: 'med',
           component: AdminMed
+        },
+        {
+          path: 'med1',
+          component: AdminMed1
         },
         {
           path: 'hosmed',
