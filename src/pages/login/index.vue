@@ -98,8 +98,8 @@ export default {
        form: {
         //  phoneNum: '',
         //  password: ''
-          phoneNum: '18030086905',
-          password: '123456'
+          phoneNum: '15201425498',
+          password: 'mys20170721'
        },
        dialog: {
          visible: false,
@@ -128,10 +128,18 @@ export default {
    computed: {},
    methods: {
      async login () {
+      
        this.$refs.form.validate(async (valid) => {
          if (valid) {
+          
            let res = await this.api.account.login({ phoneNum: this.form.phoneNum, password: this.form.password })
-           let { data: { data, code } } = res
+           
+           let { data: { data, code ,desc = '服务器错误'} } = res
+           console.log(data, code ,desc)
+           if(code!==200){
+            
+            return this.$message.error(desc)
+           }
            if (code === 200) {
              global.user = data
              let roleName = data.role.roleName
@@ -149,8 +157,6 @@ export default {
              }
              window.localStorage.setItem('cat-study-user', JSON.stringify(data))
            }
-         } else {
-           return false
          }
        })
      },
