@@ -44,7 +44,7 @@
             </template>
           </el-table-column>
           <el-table-column label="入院时间" prop="createTime"></el-table-column>
-					<el-table-column label="姓名" prop="catName"></el-table-column>
+					<el-table-column label="医生名称" prop="doctorName"></el-table-column>
 					<el-table-column label="完成度" prop="fillPercent1"></el-table-column>
 					<el-table-column label="操作" width="200">
 						<template scope="scope">
