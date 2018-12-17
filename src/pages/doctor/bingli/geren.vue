@@ -99,13 +99,15 @@ export default {
       loading: false,
       filter: {
         startTime: '',
-        endTime: ''
+        endTime: '',
+        doctorId:''
       },
       pageinfo: {
         totalCount: 0,
         pageNum: 1
       },
-      hide:false
+      hide:false,
+      doctorId:window.localStorage.getItem('doctorId')
     }
   },
   computed: {
@@ -134,15 +136,18 @@ export default {
     },
     async fetch () {
       let filter = {}
+      filter.doctorId = this.doctorId;
       if (this.filter.startTime) {
         filter.startTime = new Date(this.filter.startTime).getTime()
       }
       if (this.filter.endTime) {
         filter.endTime = new Date(this.filter.endTime).getTime()
       }
+      filter.doctorId = this.doctorId;
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       this.loading = true
+      debugger;
       let res = await this.api.case.list({ ...filter, limit, start })
       let { data: { data, code, pageinfo } } = res
       this.loading = false
