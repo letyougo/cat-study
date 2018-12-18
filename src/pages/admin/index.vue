@@ -36,11 +36,11 @@
             </div>
                <div class="data-item">
                 <div class="data-value">{{stats.caseNewCount}}</div>
-                <div class="data-tip">新病例数</div>
+                <div class="data-tip">新病历数</div>
             </div>
                <div class="data-item">
                 <div class="data-value">{{stats.avgCaseFillPercent}}%</div>
-                <div class="data-tip">病例完成程度</div>
+                <div class="data-tip">病历完成程度</div>
             </div>
         </div>
         <div class="admin-title search-action">
@@ -96,8 +96,8 @@ export default {
         columns: ['name', '诊室检查', '检查结果', '治疗与医嘱',
           '免疫与健康',
           '知识库查询',
-          '模拟病例查询',
-          '个人病例查询'
+          '模拟病历查询',
+          '个人病历查询'
         ],
         rows: [
 

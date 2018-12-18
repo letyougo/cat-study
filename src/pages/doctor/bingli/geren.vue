@@ -107,7 +107,8 @@ export default {
         pageNum: 1
       },
       hide:false,
-      doctorId:window.localStorage.getItem('doctorId')
+      doctorId:window.localStorage.getItem('doctorId'),
+      roleName:window.localStorage.getItem('roleName')
     }
   },
   computed: {
@@ -143,7 +144,11 @@ export default {
       if (this.filter.endTime) {
         filter.endTime = new Date(this.filter.endTime).getTime()
       }
-      filter.doctorId = this.doctorId;
+      if(this.roleName=="超级管理员"){
+        filter.doctorId = "";
+      }else{
+        filter.doctorId = this.doctorId;
+      }
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       this.loading = true
