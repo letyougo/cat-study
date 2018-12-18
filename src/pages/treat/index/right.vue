@@ -234,7 +234,8 @@
           content: ''
         },
         searchResult: [],
-        selectItem: ''
+        selectItem: '',
+        hospitalId:window.localStorage.getItem('hospitalId')
       }
     },
     computed: {
@@ -331,7 +332,7 @@
           console.log('query', query)
 
           this.fetchDiagDisease(query)
-          let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query, hospitalId: global.user.id })
+          let res = await this.api.check.listCheckBySymptom({ caseId: obj.caseId, symptoms: query, hospitalId: this.hospitalId })
           let { data: { data } } = res
           console.log(data, 'kdexams')
           this.kdexams = data

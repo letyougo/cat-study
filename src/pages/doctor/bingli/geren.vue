@@ -147,7 +147,6 @@ export default {
       let limit = this.config.page.limit
       let start = this.config.page.limit * (this.pageinfo.pageNum - 1)
       this.loading = true
-      debugger;
       let res = await this.api.case.list({ ...filter, limit, start })
       let { data: { data, code, pageinfo } } = res
       this.loading = false
