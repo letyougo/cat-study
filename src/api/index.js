@@ -5,6 +5,7 @@ import App from '../main'
 
 let axios = request.create()
 request.defaults.baseURL = 'http://47.99.183.50:8080'
+// request.defaults.baseURL = 'http://39.104.82.5:8880'
 
 const noCheck = [
   '/login'
@@ -389,7 +390,7 @@ const api = {
       return res
     },
     async listByParam(hospitalId) {
-      const url = `/hospMedicine/listByParam?hospitalId=${hospitalId}`
+      const url = `/hospMedicine/listByParam?hospitalId=${hospitalId}+&limit=-1`
       let res = await request.get(url)
       return res
     },

@@ -188,7 +188,7 @@ export default {
         localStorage.setItem('isHuayanFlag', false);
       }
       localStorage.setItem('hospitalId', global.user.hospitalId);
-      localStorage.setItem('hospitalId', global.user.hospitalId);
+      localStorage.setItem('doctorId', global.user.id);
       localStorage.setItem('roleName', roleName);
       if (roleName === '超级管理员') {
         this.logo = 'http://img.maoyansuo.cn/avatar_chaojiguanliyuan'
