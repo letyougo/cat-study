@@ -115,6 +115,7 @@ export default {
       if(res.data.code==200){
         if(res.data.data=="success"){
           this.$alert("上架成功");
+          this.reload();
         }else{
           this.$alert("上架失败");
         }
@@ -159,6 +160,7 @@ export default {
         if(res.data.code==200){
           if(res.data.data.isSuccess=="true"){
             this.$alert("下架成功");
+            this.reload();
           }else{
             this.$alert("下架失败");
           }

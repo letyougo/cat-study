@@ -295,7 +295,7 @@ export default {
       this.printPage();
       let id = this.$route.query.id
       let res = await this.api.case.update({
-        status: 4,
+        status: 5,
         id
       })
       // this.$message.success('已结束该病历')
