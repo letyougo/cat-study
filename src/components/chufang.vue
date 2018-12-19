@@ -34,7 +34,7 @@
               <el-table-column label="名字" prop="names"></el-table-column>
               <el-table-column label="次/天" prop="timesDay">
                   <template scope="scope">
-                      <el-input v-model="scope.row.dosage" placeholder=""></el-input>
+                      <el-input v-model="scope.row.timesDay" placeholder=""></el-input>
                     </template>
               </el-table-column>
               <el-table-column label="成分" prop="ingredient"></el-table-column>
@@ -44,7 +44,11 @@
                     </template>
               </el-table-column>
               <el-table-column label="规格" prop="specification"></el-table-column>
-              <el-table-column label="药用用法" prop="medicineUsage"></el-table-column>
+              <el-table-column label="药用用法" prop="medicineUsage">
+                <template scope="scope">
+                  <el-input v-model="scope.row.medicineUsage" placeholder=""></el-input>
+                </template>
+              </el-table-column>
               <el-table-column label="数量" prop="quantity"></el-table-column>
               <el-table-column label="操作" >
                 <template scope="scope">
