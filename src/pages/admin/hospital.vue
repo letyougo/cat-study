@@ -1,7 +1,7 @@
 <template>
     <div class="admin-hospital">
         <div class="admin-hospital-title">
-            <div 
+            <div
             style=" color: #4D4D4D;
                 font-size: 16px;"
         >
@@ -10,19 +10,19 @@
               <corner></corner>检查管理
             </template>
         </div>
-            
+
 
             <div>
                 <el-button type="primary" @click="dialog.visible=true">增加检查项</el-button>
                 <el-button v-if="!isHuayan" type="primary" @click="add.visible=true">增加医院</el-button>
             </div>
         </div>
-        
+
         <div>
             <el-table :data="list" @expand-change="expandChange" v-loading="loading">
               <el-table-column label="详情" type="expand" width="150">
                 <template scope="scope" >
-                  
+
                     <el-form label-width="100px" inline v-if="!isHuayan">
                         <h3>医院编辑</h3>
                       <el-form-item label="医院名称">
@@ -82,7 +82,7 @@
                   <el-button type="danger" @click="deleteItem(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
-              
+
             </el-table>
         </div>
 
@@ -127,12 +127,12 @@
                       </el-select>
                 </el-form-item>
                 <el-form-item label="检查名称">
-                    <el-select v-model="dialog.checkName" placeholder="" >
+                    <el-select v-model="checkNames" multiple placeholder="" >
                         <el-option v-for="item in checkName" :label="item.checkName" :value="item.id"></el-option>
                       </el-select>
                 </el-form-item>
                 <el-form-item label="">
-                  <el-button type="" @click="dialog.visible=false">关闭</el-button>
+                  <el-button type="" @click="closeCheck">关闭</el-button>
                   <el-button type="primary" @click="addCheck">增加</el-button>
                 </el-form-item>
               </el-form>
@@ -165,7 +165,7 @@ export default {
         visible: false,
         hospital: global.user.hospitalId,
         typeName: '',
-        checkName: ''
+        checkName:''
       },
       showMoreDialog: {
         visible: false,
@@ -174,7 +174,8 @@ export default {
       },
       value: '',
       isHuayan: global.user.role.roleName === '化验室',
-      hospitalId: global.user.hospitalId
+      hospitalId: global.user.hospitalId,
+      checkNames:[]
     }
   },
   computed: {
@@ -189,13 +190,30 @@ export default {
         tplType: item.templateType
       }
     },
+    async closeCheck(){
+      this.dialog.typeName='';
+      this.checkNames=[];
+      this.dialog.visible=false;
+    },
     async addCheck () {
       console.log('tag', this.dialog)
       let hospitalId = this.dialog.hospital
       console.log('host', hospitalId)
       let hospitalName = this.list.find(item => item.id === hospitalId).names
       console.log('name', hospitalName)
-      let checkId = this.dialog.checkName
+      // let checkId = this.dialog.checkName
+      var ids = "";
+      var checkNames=this.checkNames;
+      for(var i=0;i<checkNames.length;i++){
+        if(i==checkNames.length-1){//说明是最后一次，不传 ’，‘
+          ids+=checkNames[i];
+        }else{
+          ids+=checkNames[i]+",";
+        }
+      }
+
+      // let checkId = this.dialog.checkName
+      let checkId = ids;
       console.log('id', checkId)
       console.log('tag', {
         hospitalName,
@@ -208,6 +226,8 @@ export default {
         checkId
       })
       this.$message.success('增加检查项成功')
+      this.dialog.typeName='';
+      this.checkNames=[];
       this.reload()
     },
     async addAction () {
@@ -235,7 +255,8 @@ export default {
       this.typeName = data
     },
     async fetchCheckName () {
-      this.dialog.checkName = ''
+      this.checkNames=[];
+      // this.dialog.checkName = ''
       let res = await this.api.check.manager.getCheckByType({ typeName: this.dialog.typeName })
       let { data: { data } } = res
       this.checkName = data
@@ -305,7 +326,7 @@ export default {
 }
 </script>
 <style scoped lang="less">
-    
+
     .admin-hospital-title{
         display: flex;
         justify-content: space-between;

@@ -6,6 +6,10 @@
                 font-size: 16px;">
                 <corner></corner>医院药品管理
             </div>
+          <div>
+            <el-button type="primary" @click="updateBatchMed(1)" >批量上架</el-button>
+            <el-button type="danger" @click="updateBatchMed(0)" >批量下架</el-button>
+          </div>
 
             <div>
                 <el-form :inline="true">
@@ -20,7 +24,11 @@
         </div>
         <br>
         <div>
-            <el-table :data="list" v-loading="loading">
+            <el-table :data="list" v-loading="loading" @selection-change="handleSelectionChange">
+              <el-table-column
+                type="selection"
+                width="55">
+              </el-table-column>
                 <el-table-column label="id" prop="id"></el-table-column>
                 <el-table-column label="分类" prop="classification"></el-table-column>
                 <el-table-column label="名字" prop="names"></el-table-column>
@@ -96,6 +104,7 @@ export default {
         hospitalId: '',
         medicineId: ''
       },
+      multipleSelection: [],
       hospitalId:localStorage.getItem('hospitalId')
     }
   },
@@ -107,23 +116,47 @@ export default {
     },
   },
   methods: {
+
+    async handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    //批量
+    async updateBatchMed(type){
+      var meList = this.multipleSelection;
+      var ids = "";
+      for(var i=0;i<meList.length;i++){
+        if(i==meList.length-1){//说明是最后一次，不传 ’，‘
+          ids+=meList[i].id;
+        }else{
+          ids+=meList[i].id+",";
+        }
+      }
+      if(type==1){
+        this.addMes.medicineId=ids;
+        this.addHospital();
+      }else{
+        this.delMed(ids);
+      }
+
+    },
+    //单个上架
     async addToHospital (row) {
-      this.addMes.hospitalId=this.hospitalId;
       this.addMes.medicineId=row.id;
+      this.addHospital();
+    },
+    async addHospital(){
+      this.addMes.hospitalId=this.hospitalId;
       await this.$confirm('确定上架吗');
       var res = await this.api.hosmed.add(this.addMes);
       if(res.data.code==200){
-        if(res.data.data=="success"){
-          this.$alert("上架成功");
-          this.reload();
-        }else{
-          this.$alert("上架失败");
-        }
+        this.$alert("上架成功");
+        this.reload();
       }else{
         this.$alert("上架失败");
       }
       this.reload()
     },
+
     async reload () {
       var mesList = await this.api.med.listByParam(Number(this.hospitalId));
       await this.fetch(mesList)
@@ -153,10 +186,14 @@ export default {
       this.totalCount = totalCount;
       this.loading = false
     },
+    //单个上架
     async del (row) {
+     this.delMed(row.id);
+    },
+    async delMed(medicineId){
       try {
         await this.$confirm('确定下架吗');
-        var res = await this.api.hospital.deleteHospMedicine({ hospitalId: this.hospitalId, medicineId: row.id });
+        var res = await this.api.hospital.deleteHospMedicine({ hospitalId: this.hospitalId, medicineId: medicineId });
         if(res.data.code==200){
           if(res.data.data.isSuccess=="true"){
             this.$alert("下架成功");
