@@ -1,43 +1,44 @@
 <template>
   <div class="check-tpl">
       <template v-if="tplType===0">
-          <check-0 :list="list" :edit="edit"></check-0>    
+          <check-0 :list="list" :edit="edit"></check-0>
       </template>
       <template v-if="tplType===1">
-          <check-1 :list="list" :edit="edit"></check-1>    
+          <check-1 :list="list" :edit="edit"></check-1>
       </template>
       <template v-if="tplType===2">
-          <check-2 :list="list" :edit="edit"></check-2>    
+          <check-2 :list="list" :edit="edit"></check-2>
       </template>
       <template v-if="tplType===3">
-          <check-3 :list="list" :edit="edit"></check-3>    
+          <check-3 :list="list" :edit="edit"></check-3>
       </template>
       <template v-if="tplType===4">
-          <check-4 :list="list" :edit="edit"></check-4>    
+          <check-4 :list="list" :edit="edit"></check-4>
       </template>
       <template v-if="tplType===5">
-          <check-5 :list="list" :edit="edit"></check-5>    
+          <check-5 :list="list" :edit="edit"></check-5>
       </template>
       <template v-if="tplType===6">
-          <check-6 :list="list" :edit="edit" @upload="upload"></check-6>    
+          <check-6 :list="list" :edit="edit" @upload="upload"></check-6>
       </template>
       <template v-if="tplType===7">
-          <check-7 :list="list" :edit="edit"></check-7>    
+        {{list}}
+          <check-7 :list="list" :edit="edit"></check-7>
       </template>
       <template v-if="tplType===8">
-          <check-8 :list="list" :edit="edit"></check-8>    
+          <check-8 :list="list" :edit="edit"></check-8>
       </template>
       <template v-if="tplType===9">
-          <check-9 :list="list"  :edit="edit"></check-9>    
+          <check-9 :list="list"  :edit="edit"></check-9>
       </template>
       <template v-if="tplType===10">
-          <check-10 :list="list" :edit="edit"></check-10>    
+          <check-10 :list="list" :edit="edit"></check-10>
       </template>
       <template v-if="tplType===11">
-          <check-11 :list="list" :edit="edit"></check-11>    
+          <check-11 :list="list" :edit="edit"></check-11>
       </template>
       <template v-if="tplType===12">
-          <check-12 :list="list" :edit="edit" ></check-12>    
+          <check-12 :list="list" :edit="edit" ></check-12>
       </template>
   </div>
 </template>
@@ -129,6 +130,7 @@ export default {
       }
     },
     async update (desc) {
+      var res="";
       let tplType = this.tplType
       if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
         let list = JSON.parse(JSON.stringify(this.list))
@@ -140,7 +142,7 @@ export default {
             return item
           })
         }
-        await this.api.check.editCheck(this.reportId, {
+        res=await this.api.check.editCheck(this.reportId, {
           data: list, desc
         })
       } else if (tplType === 6) {
@@ -149,20 +151,24 @@ export default {
           desc: desc,
           isException: this.list[0].isException === 'no' ? 0 : 1
         }
-        await this.api.check.editCheck(this.reportId, obj)
+        res=await this.api.check.editCheck(this.reportId, obj)
       } else if (tplType === 4) {
         let obj = {
           desc: desc,
           isException: this.list[0].isException === 'no' ? 0 : 1
         }
-        await this.api.check.editCheck(this.reportId, obj)
+        res=await this.api.check.editCheck(this.reportId, obj)
       } else {
-        await this.api.check.editCheck(this.reportId, {
+        res=await this.api.check.editCheck(this.reportId, {
           value: this.list[0].result,
           desc
         })
       }
-      this.$message.success('修改成功')
+      if(res.data.code===200){
+        this.$message.success('修改成功')
+      }else{
+        this.$message.error('修改失败')
+      }
     },
     async upload (e) {
       let f = e.target.files[0]
