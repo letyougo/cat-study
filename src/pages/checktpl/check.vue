@@ -22,7 +22,6 @@
           <check-6 :list="list" :edit="edit" @upload="upload"></check-6>
       </template>
       <template v-if="tplType===7">
-        {{list}}
           <check-7 :list="list" :edit="edit"></check-7>
       </template>
       <template v-if="tplType===8">
