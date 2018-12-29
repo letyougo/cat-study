@@ -96,10 +96,10 @@ export default {
    data () {
      return {
        form: {
-        //  phoneNum: '',
-        //  password: ''
-          phoneNum: '15201425498',
-          password: 'mys20170721'
+         phoneNum: '',
+         password: ''
+        //   phoneNum: '15201425498',
+        //   password: 'mys20170721'
        },
        dialog: {
          visible: false,
@@ -128,16 +128,15 @@ export default {
    computed: {},
    methods: {
      async login () {
-      
        this.$refs.form.validate(async (valid) => {
          if (valid) {
-          
+
            let res = await this.api.account.login({ phoneNum: this.form.phoneNum, password: this.form.password })
-           
+
            let { data: { data, code ,desc = '服务器错误'} } = res
            console.log(data, code ,desc)
            if(code!==200){
-            
+
             return this.$message.error(desc)
            }
            if (code === 200) {
