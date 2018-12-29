@@ -98,7 +98,7 @@ export default{
   name: 'bingli',
   props: {
     id: {
-      type: Number
+      type: ''
     },
     hideResult: {
       type: Boolean,
