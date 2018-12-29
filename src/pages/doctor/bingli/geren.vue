@@ -158,7 +158,8 @@ export default {
       if (code === 200) {
         this.loading = false
         for(var i=0;i<data.length;i++){
-          data[i].fillPercent1 = data[i].fillPercent*100+"%"
+          var percent =data[i].fillPercent;
+          data[i].fillPercent1 = (percent*100).toFixed(2)+"%"
         }
         this.list = data
         this.pageinfo = pageinfo

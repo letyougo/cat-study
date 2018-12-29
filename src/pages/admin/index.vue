@@ -156,7 +156,7 @@ export default {
       let { data: { data } } = res
 
       this.stats = data
-      this.stats.avgCaseFillPercent = parseInt(data.avgCaseFillPercent)
+      this.stats.avgCaseFillPercent = data.avgCaseFillPercent.toFixed(2)
     }
   },
   created () {
