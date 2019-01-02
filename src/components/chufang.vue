@@ -84,7 +84,7 @@ export default {
     'visible',
     'st',
     'docAdvice',
-    'otherTreatment',
+    '',
     'diseaseId',
     'needDefault',
     'diseaseName'
@@ -96,7 +96,8 @@ export default {
       loading: false,
       nowIndex: '',
       options: [],
-      hospitalId:window.localStorage.getItem('hospitalId')
+      hospitalId:window.localStorage.getItem('hospitalId'),
+      otherTreatment:'',
     }
   },
   methods: {
@@ -108,13 +109,17 @@ export default {
     },
     async fetch () {
       let arr = []
+      let st_s = "";
       for (var i = 0; i < this.st.length; i++) {
         let data = await this.getMed(this.st[i])
         if (data) {
           arr.push(data)
+        }else{
+          st_s+= this.st[i]+",";
         }
       }
-      this.list = arr
+      this.list = arr;
+      this.otherTreatment=st_s;
     },
 
    /* getUnique (list) {
