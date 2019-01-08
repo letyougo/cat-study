@@ -100,33 +100,38 @@ export default {
   methods: {
     async fetch () {
       let res = await this.api.check.getCheckInfo(this.reportId)
-      let { data: { data: { tplType, data } } } = res
-      this.tplType = tplType
-      if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
-        if (tplType === 5) {
-          data = data.map(item => {
-            item.value = item.value || '0,0'
-            item.value = item.value.split(',')
-            item.hint = item.hint || 'empty,empty'
-            item.hint = item.hint.split(',')
-            return item
-          })
+      if(res.data.code===200){
+        let { data: { data: { tplType, data } } } = res
+        this.tplType = tplType
+        if (tplType === 0 || tplType === 5 || tplType === 7 || tplType === 8 || tplType === 9 || tplType === 10 || tplType === 11 || tplType === 12) {
+          if (tplType === 5) {
+            data = data.map(item => {
+              item.value = item.value || '0,0'
+              item.value = item.value.split(',')
+              item.hint = item.hint || 'empty,empty'
+              item.hint = item.hint.split(',')
+              return item
+            })
+          } else {
+            data = data.map(item => {
+              item.value = item.value || ''
+              return item
+            })
+          }
+          this.list = data
+        } else if (tplType === 6) {
+          data.result = data.result || []
+          this.list = [data]
+          this.desc = data.note
         } else {
-          data = data.map(item => {
-            item.value = item.value || ''
-            return item
-          })
+          data.result = data.result || ''
+          this.list = [data]
+          this.desc = data.note
         }
-        this.list = data
-      } else if (tplType === 6) {
-        data.result = data.result || []
-        this.list = [data]
-        this.desc = data.note
-      } else {
-        data.result = data.result || ''
-        this.list = [data]
-        this.desc = data.note
+      }else{
+        this.$message.error("请求失败");
       }
+
     },
     async update (desc) {
       var res="";

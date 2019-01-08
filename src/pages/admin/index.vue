@@ -156,7 +156,7 @@ export default {
       let { data: { data } } = res
 
       this.stats = data
-      this.stats.avgCaseFillPercent = data.avgCaseFillPercent.toFixed(2)
+      this.stats.avgCaseFillPercent = (data.avgCaseFillPercent.toFixed(2))*100;
     }
   },
   created () {
