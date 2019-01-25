@@ -19,7 +19,7 @@
     </div>
     <div class="basic">
       <div class="title">
-          诊室检查
+          一般信息
       </div>
       <div class="basic-content">
         <div>
@@ -37,6 +37,37 @@
           <p v-if="basic.pressure">血压：{{basic.pressure}}</p>
         </div>
       </div>
+      <div class="title">
+        诊室检查
+      </div>
+      <div class="">
+        <div style="padding-bottom: 10px;">
+            <span v-if="basic.mainSymptom">主诉症状： {{basic.mainSymptom}}</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span v-if="basic.behaviorAbnormal">行为异常：{{basic.behaviorAbnormal}}</span>
+        </div>
+        <div>
+        </div>
+        <div>
+          <span >查&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;体：
+            <template v-if="basic.palpation">
+              触诊：{{basic.palpation}}
+            </template>
+            <template v-if="basic.auscultation">
+              &nbsp;&nbsp;听诊：{{basic.auscultation}}
+            </template>
+            <template v-if="basic.noseConsult">
+              &nbsp;&nbsp;嗅诊：{{basic.noseConsult}}
+            </template>
+            <template v-if="basic.visualConsult">
+              &nbsp;&nbsp;视诊：{{basic.visualConsult}}
+            </template>
+            <template v-if="basic.skinLesion">
+              &nbsp;&nbsp;皮损：{{basic.skinLesion}}
+            </template>
+          </span>
+        </div>
+      </div>
     </div>
     <div class="treat">
         <div class="title">
@@ -48,8 +79,8 @@
 
     <div class="ill">
         <template v-for="(item,index) in ill">
-            <div class="title" v-if="!hide" style="text-align:center">
-                {{item.diseaseName}}
+            <div class="title" v-if="!hide" >
+                确认疾病：{{item.diseaseName}}
             </div>
             <div class="treatments">
                 <div class="title">
