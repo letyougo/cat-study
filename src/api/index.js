@@ -366,6 +366,11 @@ const api = {
       const url = '/case/delete'
       let res = await request.get(url, {params: data})
       return res
+    },
+    async updateByCaseIdAndDiseaseId(data) {
+      const url = '/case/updateByCaseIdAndDiseaseId'
+      let res = await request.post(url, data)
+      return res
     }
 
   },

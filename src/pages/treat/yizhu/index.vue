@@ -135,7 +135,7 @@
 
     <el-dialog  :visible.sync="print">
       <div class="yizhu-bingli">
-          <bingli v-if="print" :id="$route.query.id" :hide="hide"></bingli>
+          <bingli v-if="print" :id="$route.query.id" :hide="hide" @childIll="parentIll"></bingli>
       </div>
       <span slot="footer">
         <el-button v-if="hide" @click="hide=false">显示 疾病名称</el-button>
@@ -184,7 +184,8 @@ export default {
       },
       uncertainTreatments: [],
       searchResult: [],
-      selectItem: ''
+      selectItem: '',
+      ill:[]
     }
   },
   computed: {
@@ -291,9 +292,20 @@ export default {
       // this.list[index].med.visible = true
       // console.log(item, index, 'item-index')
     },
+    async parentIll(ill){
+     this.ill=ill;
+    },
     async startPrint () {
       this.printPage();
-      let id = this.$route.query.id
+      var that = this;
+      for(var i=0;i<this.ill.length;i++){
+          await this.api.case.updateByCaseIdAndDiseaseId({
+          caseId: that.ill[i].caseId,
+          diseaseId:that.ill[i].diseaseId,
+          docAdvice:that.ill[i].docAdvice
+        })
+      }
+      let id = this.$route.query.id;
       let res = await this.api.case.update({
         status: 5,
         id
@@ -306,7 +318,6 @@ export default {
     async fetch () {
       console.log(this.api, 'zhiliao2')
       let res = await this.api.zhiliao2.diseaseList(this.$route.query.id)
-
       let {
         data: { data }
       } = res
@@ -375,6 +386,7 @@ export default {
   },
   async mounted () {
     const res = await this.api.check.isAllReady(this.$route.query.id)
+    console.log(res);
     let { data: { status } } = res
     console.log(status, 'this is status')
     // if (status === 'no') {

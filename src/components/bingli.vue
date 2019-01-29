@@ -111,7 +111,7 @@
                   医嘱
               </div>
               <div>
-                {{item.docAdvice}}
+                <el-input type="textarea" placeholder="" :value="item.docAdvice" v-model="item.docAdvice" @change="changeDocAdvice(item)"></el-input>
               </div>
           </div>
 
@@ -156,6 +156,14 @@ export default{
     report, check
   },
   methods: {
+    async changeDocAdvice(item){
+      for(var i=0;i<this.ill.length;i++){
+        if(item.id===this.ill[i].id){
+          this.ill[i].docAdvice=item.docAdvice;
+        }
+      }
+      this.$emit('childIll', this.ill);
+    },
     async fetchOwner (id) {
       let res = await this.api.case.item({ id })
       let { data: { data } } = res
